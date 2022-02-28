@@ -9,3 +9,11 @@ editor_options:
 ---
 
 Welcome to my research website.
+
+## [Import data](import_data.html)
+
+## [Data summary](Data_summary.html)
+
+## [Dudas](dudas.html)
+
+

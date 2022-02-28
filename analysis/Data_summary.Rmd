@@ -18,14 +18,18 @@ library(kableExtra)
 
 ## Metadata 
 
-Get medatada file and check data concordance
+Get metdatada file and check data concordance
 ```{r}
-metadata<-read_csv("data/Metadata/metadata.csv")
-ariba_samples<-list.files("data/aribaData")%>%str_extract(pattern = "Sample_[:digit:]+")
-groot_samples<-list.files("data/grootData")%>%str_extract(pattern = "Sample_[:digit:]+")
+dataTable <- readRDS("~/Documentos/Repos/2022_Rubio_MetaHIV/data/Metadata/dataTable.rds")%>%select(SampleID, InitialReads)%>%
+  unique()
+
+metadata<-read_csv("data/Metadata/metadata.csv")%>%inner_join(., dataTable, by="SampleID")
+
+ariba_samples<-list.files("data/aribaData")%>%str_extract(pattern = "Sample_\\d+")
+groot_samples<-list.files("data/grootData")%>%str_extract(pattern = "Sample_\\d+")
 all.equal(ariba_samples, groot_samples)
-all.equal(ariba_samples, metadata$SampleID) ## One extra sample in metadata file
-metadata<-metadata%>%filter(SampleID %in% ariba_samples)
+all.equal(ariba_samples, metadata$SampleID) ## One Ariba sample is missing
+all.equal(groot_samples, metadata$SampleID) ##Groot samples match with metadata
 ```
 
 Get CARD database: 
@@ -103,8 +107,10 @@ ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
 Falta el total number of reads de cada mostra
 
 ```{r eval=FALSE, include=TRUE}
+metadata_ariba<-metadata%>%filter(SampleID %in% ariba_samples)
+
 for (i in 1:length(ariba_data)){
- ariba_data[[i]]$RPKM<-ariba_data[[i]]$`reads`/(ariba_data[[i]]$`ref_len`/1000 * metadata$totalNumReads[i]/1000000)}
+ ariba_data[[i]]$RPKM<-ariba_data[[i]]$`reads`/(ariba_data[[i]]$`ref_len`/1000 * metadata_ariba$InitialReads[i]/1000000)}
 ```
 
 
@@ -112,7 +118,7 @@ for (i in 1:length(ariba_data)){
 
 ```{r}
 transform_data<-function(list_df){
-df_filt<-lapply(list_df, function(x) select(x, ref_name, reads)) ##select variables
+df_filt<-lapply(list_df, function(x) select(x, ref_name, RPKM)) ##select variables
 
 for (i in 1:length(df_filt)){
  names(df_filt[[i]])[2]<-ariba_samples[i]} ##change reads column name to sample name
@@ -123,10 +129,24 @@ return(df_transform)}
 ```
 
 ```{r}
-ariba_counts<-transform_data(ariba_data)
-head(ariba_counts, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+ariba_rpkm<-transform_data(ariba_data)
+head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
 
+## Groot
 
+### Get all report files (list of dataframes) and assign names:
+
+```{r}
+groot_names<-list.files("output/grootData", full.names = FALSE, pattern ="groot.report.tsv")%>%str_extract("Sample_\\d+")
+groot_files<-list.files("output/grootData", full.names = TRUE, pattern ="groot.report.tsv")
+groot_data <- lapply(groot_files, read_tsv)
+names(groot_data)<-groot_names
+
+length(groot_files); length(groot_samples)
+
+missing<-which(!(groot_samples %in% groot_names))
+groot_samples[missing]
+```
 
 

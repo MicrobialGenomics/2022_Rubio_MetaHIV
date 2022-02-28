@@ -51,10 +51,3 @@ rm -r output/grootData/tmp; fi
 ```
 
 
-##Generate reports (3 reports per sample):
-​
-ls *-uniqseq.bam | parallel --gnu "groot report -c 0 --bamFile {} > {/.}-0report "
-ls *-uniqseq.bam | parallel --gnu "groot report --bamFile {} > {/.}-0.97report "
-ls *-uniqseq.bam | parallel --gnu "groot report --bamFile {} --lowCov> {/.}-lowCov-report "
-​
-echo "Report: This will report gene, read count, gene length, coverage cigar"
