@@ -1,0 +1,132 @@
+---
+title: "Data summary"
+author: "Elisa Rubio"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+```
+
+## Metadata 
+
+Get medatada file and check data concordance
+```{r}
+metadata<-read_csv("data/Metadata/metadata.csv")
+ariba_samples<-list.files("data/aribaData")%>%str_extract(pattern = "Sample_[:digit:]+")
+groot_samples<-list.files("data/grootData")%>%str_extract(pattern = "Sample_[:digit:]+")
+all.equal(ariba_samples, groot_samples)
+all.equal(ariba_samples, metadata$SampleID) ## One extra sample in metadata file
+metadata<-metadata%>%filter(SampleID %in% ariba_samples)
+```
+
+Get CARD database: 
+
+```{r}
+aro_index<-read_tsv("data/cardData/aro_index_v314.tsv")%>%
+  mutate(`ARO Accession`=str_extract(`ARO Accession`, "[:digit:]+"),
+         `ARO Accession`=as.numeric(`ARO Accession`))%>%                                                                   
+  select(-starts_with("Model"))
+
+str(aro_index)
+```
+
+
+
+## ARIBA
+
+### Get all report files (list of dataframes) and assign names:
+
+```{r}
+ariba_files<-list.files("output/aribaData", full.names = TRUE, pattern ="ariba_report.tsv")
+ariba_data <- lapply(ariba_files, read_tsv)
+names(ariba_data)<-ariba_samples
+```
+
+### Remove contig and variant data from ARIBA:
+
+```{r}
+vars<-c("#ariba_ref_name", "ref_name" , "gene",  "var_only", "flag", "reads", "cluster", "ref_len", "free_text" )
+aribasubs<-function(x){x%>%select(vars)%>%unique()}
+##aribasubs2<-function(x){x%>% filter(gene==1)%>%select(c(1:8,31))%>%unique()} ##Only coding sequences
+ariba_data<-lapply(ariba_data, aribasubs)
+```
+
+### Merge with CARD data in order to obtain resistance genes information (AMR gene family...)
+
+```{r}
+## test reference name structures
+
+refname<-lapply(ariba_data, function(x) x%>%select(ref_name))
+refname<-unlist(refname)%>%unique()%>%as.data.frame()%>%rename(ref_name=1)
+refname<-refname%>%
+  separate(ref_name, sep="\\.", into =c("ARO Term", "ARO Accession","NCBI","init_final","Model Sequence ID","v1") , remove = FALSE)%>%
+  mutate(`ARO Accession` = as.numeric(`ARO Accession`),
+         `ARO Accession`=ifelse(`ARO Accession` <300000, NCBI, `ARO Accession`),
+        NCBI=ifelse(str_detect(init_final, "_"), NCBI, paste(NCBI, ".", init_final)),
+         init_final=ifelse(str_detect(init_final, "_"), init_final, `Model Sequence ID`),
+         `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "_"), v1, `Model Sequence ID`),
+         `ARO Accession` = as.numeric(`ARO Accession`))%>%
+  select(-v1, -`Model Sequence ID`)
+refname_all<-inner_join(refname, aro_index, by="ARO Accession")%>%unique()
+
+head(refname_all, 15)%>%kable(caption="**Ariba detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+
+```{r}
+aribanotation<-function(x, aro_index){
+  x<-x%>%separate(ref_name, sep="\\.", into =c("ARO Term", "ARO Accession","NCBI","init_final","Model Sequence ID","v1") , remove = FALSE)%>%
+  mutate(`ARO Accession` = as.numeric(`ARO Accession`),
+         `ARO Accession`=ifelse(`ARO Accession` <300000, NCBI, `ARO Accession`),
+        NCBI=ifelse(str_detect(init_final, "_"), NCBI, paste(NCBI, ".", init_final)),
+         init_final=ifelse(str_detect(init_final, "_"), init_final, `Model Sequence ID`),
+         `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "_"), v1, `Model Sequence ID`),
+        `ARO Accession` = as.numeric(`ARO Accession`))%>%
+  select(-v1, -`Model Sequence ID`)%>%inner_join(aro_index, by="ARO Accession")%>%unique()
+  return(x)}
+
+ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
+
+```
+
+### Calculate RPKM
+
+Falta el total number of reads de cada mostra
+
+```{r eval=FALSE, include=TRUE}
+for (i in 1:length(ariba_data)){
+ ariba_data[[i]]$RPKM<-ariba_data[[i]]$`reads`/(ariba_data[[i]]$`ref_len`/1000 * metadata$totalNumReads[i]/1000000)}
+```
+
+
+### Transform data to obtain matrix 
+
+```{r}
+transform_data<-function(list_df){
+df_filt<-lapply(list_df, function(x) select(x, ref_name, reads)) ##select variables
+
+for (i in 1:length(df_filt)){
+ names(df_filt[[i]])[2]<-ariba_samples[i]} ##change reads column name to sample name
+
+df_transform<-df_filt %>% reduce(full_join, by='ref_name')
+df_transform[is.na(df_transform)] <- 0
+return(df_transform)}
+```
+
+```{r}
+ariba_counts<-transform_data(ariba_data)
+head(ariba_counts, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+
+
+
