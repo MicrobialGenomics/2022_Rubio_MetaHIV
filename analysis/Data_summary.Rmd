@@ -104,7 +104,6 @@ ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
 
 ### Calculate RPKM
 
-Falta el total number of reads de cada mostra
 
 ```{r eval=FALSE, include=TRUE}
 metadata_ariba<-metadata%>%filter(SampleID %in% ariba_samples)
@@ -138,15 +137,37 @@ head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper
 ### Get all report files (list of dataframes) and assign names:
 
 ```{r}
-groot_names<-list.files("output/grootData", full.names = FALSE, pattern ="groot.report.tsv")%>%str_extract("Sample_\\d+")
 groot_files<-list.files("output/grootData", full.names = TRUE, pattern ="groot.report.tsv")
-groot_data <- lapply(groot_files, read_tsv)
+groot_data <- lapply(groot_files, function(x) read_tsv (x, col_names = c("ref_name", "read_count", "gene_length", "coverage_cigar")))
 names(groot_data)<-groot_names
-
-length(groot_files); length(groot_samples)
-
-missing<-which(!(groot_samples %in% groot_names))
-groot_samples[missing]
 ```
+
+```{r}
+x<-groot_data$Sample_001
+```
+
+```{r}
+## test reference name structures
+
+refname_groot<-lapply(groot_data, function(x) x%>%select(ref_name))%>%unlist()%>%unique()%>%as.data.frame()%>%rename(ref_name=1)
+
+refname_groot<-refname_groot%>%
+  separate(ref_name, sep="\\.", into =c("ARO Term", "ARO Accession","NCBI","init_final","Model Sequence ID","v1") , remove = FALSE)%>%
+  mutate(`ARO Accession` = as.numeric(`ARO Accession`),
+         `ARO Accession`=ifelse(`ARO Accession` <300000, NCBI, `ARO Accession`),
+        NCBI=ifelse(str_detect(init_final, "-"), NCBI, paste(NCBI, ".", init_final)),
+         init_final=ifelse(str_detect(init_final, "-"), init_final, `Model Sequence ID`),
+         `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "-"), v1, `Model Sequence ID`),
+         `ARO Accession` = as.numeric(`ARO Accession`))%>%
+  select(-v1)
+refname_all_groot<-left_join(refname_groot, aro_index, by="ARO Accession")%>%unique()
+
+which(is.na(refname_all_groot$`AMR Gene Family`))
+refname_all_groot%>%slice(n=569)
+
+
+head(refname_all_groot, 15)%>%kable(caption="**Groot detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
 
 
