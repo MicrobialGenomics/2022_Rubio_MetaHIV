@@ -12,8 +12,7 @@ Welcome to my research website.
 
 ## [Import data](import_data.html)
 
-## [Data summary](Data_summary.html)
+## [Summarize data](summarize_data.html)
 
-## [Dudas](dudas.html)
 
 

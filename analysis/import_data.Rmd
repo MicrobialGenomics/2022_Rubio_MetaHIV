@@ -8,7 +8,7 @@ editor_options:
 
 ## Untar Files
 
-```{r eval=TRUE, warning=FALSE, include=TRUE}
+```{r warning=FALSE, include=TRUE}
 if (!dir.exists("output/aribaData")){
 aribaData<-list.files("data/aribaData", full.names = TRUE)
 dir.create("output/aribaData")

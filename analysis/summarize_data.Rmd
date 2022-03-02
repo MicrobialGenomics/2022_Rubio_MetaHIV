@@ -44,7 +44,6 @@ str(aro_index)
 ```
 
 
-
 ## ARIBA
 
 ### Get all report files (list of dataframes) and assign names:
@@ -80,9 +79,9 @@ refname<-refname%>%
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "_"), v1, `Model Sequence ID`),
          `ARO Accession` = as.numeric(`ARO Accession`))%>%
   select(-v1, -`Model Sequence ID`)
-refname_all<-inner_join(refname, aro_index, by="ARO Accession")%>%unique()
+refname_all_ariba<-left_join(refname, aro_index, by="ARO Accession")%>%unique()
 
-head(refname_all, 15)%>%kable(caption="**Ariba detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+head(refname_all_ariba, 8)%>%kable(caption="**Ariba detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
 
 
@@ -105,7 +104,7 @@ ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
 ### Calculate RPKM
 
 
-```{r eval=FALSE, include=TRUE}
+```{r eval=TRUE, include=TRUE}
 metadata_ariba<-metadata%>%filter(SampleID %in% ariba_samples)
 
 for (i in 1:length(ariba_data)){
@@ -116,11 +115,11 @@ for (i in 1:length(ariba_data)){
 ### Transform data to obtain matrix 
 
 ```{r}
-transform_data<-function(list_df){
+transform_data<-function(list_df, sample_names){
 df_filt<-lapply(list_df, function(x) select(x, ref_name, RPKM)) ##select variables
 
 for (i in 1:length(df_filt)){
- names(df_filt[[i]])[2]<-ariba_samples[i]} ##change reads column name to sample name
+ names(df_filt[[i]])[2]<-sample_names[i]} ##change reads column name to sample name
 
 df_transform<-df_filt %>% reduce(full_join, by='ref_name')
 df_transform[is.na(df_transform)] <- 0
@@ -128,8 +127,8 @@ return(df_transform)}
 ```
 
 ```{r}
-ariba_rpkm<-transform_data(ariba_data)
-head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+ariba_rpkm<-transform_data(ariba_data, ariba_samples)
+head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba RPKM** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
 
 ## Groot
@@ -139,12 +138,10 @@ head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba counts** ")%>%kable_paper
 ```{r}
 groot_files<-list.files("output/grootData", full.names = TRUE, pattern ="groot.report.tsv")
 groot_data <- lapply(groot_files, function(x) read_tsv (x, col_names = c("ref_name", "read_count", "gene_length", "coverage_cigar")))
-names(groot_data)<-groot_names
+names(groot_data)<-groot_samples
 ```
 
-```{r}
-x<-groot_data$Sample_001
-```
+### Merge with CARD data in order to obtain resistance genes information (AMR gene family...)
 
 ```{r}
 ## test reference name structures
@@ -163,11 +160,48 @@ refname_groot<-refname_groot%>%
 refname_all_groot<-left_join(refname_groot, aro_index, by="ARO Accession")%>%unique()
 
 which(is.na(refname_all_groot$`AMR Gene Family`))
-refname_all_groot%>%slice(n=569)
+refname_all_groot%>%slice(n=569) ##one missig arg gene, not in card databasse
 
 
-head(refname_all_groot, 15)%>%kable(caption="**Groot detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+head(refname_all_groot, 8)%>%kable(caption="**Groot detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+```{r}
+grootnotation<-function(x, aro_index){
+  
+  x<-x%>%separate(ref_name, sep="\\.", into =c("ARO Term", "ARO Accession","NCBI","init_final","Model Sequence ID","v1") , remove = FALSE)%>%
+  mutate(`ARO Accession` = as.numeric(`ARO Accession`),
+         `ARO Accession`=ifelse(`ARO Accession` <300000, NCBI, `ARO Accession`),
+        NCBI=ifelse(str_detect(init_final, "-"), NCBI, paste(NCBI, ".", init_final)),
+         init_final=ifelse(str_detect(init_final, "-"), init_final, `Model Sequence ID`),
+         `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "-"), v1, `Model Sequence ID`),
+         `ARO Accession` = as.numeric(`ARO Accession`))%>%
+  select(-v1)%>%left_join(aro_index, by="ARO Accession")%>%unique()
+  return(x)}
+  
+groot_data<-lapply(groot_data, function (x) grootnotation (x, aro_index ))
+```
+
+### Calculate RPKM
+
+
+```{r}
+for (i in 1:length(groot_data)){
+ groot_data[[i]]$RPKM<-groot_data[[i]]$read_count/(groot_data[[i]]$gene_length/1000 * metadata$InitialReads[i]/1000000)
+}
 ```
 
 
+### Transform data to obtain matrix 
+
+```{r}
+groot_rpkm<-transform_data(groot_data, groot_samples)
+head(groot_rpkm, 15)%>%kable(caption="**Table. Groot RPKM** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+## Save obtained matrix and AMR genes metadata
+
+```{r}
+save(ariba_rpkm, refname_all_ariba, groot_rpkm, refname_all_groot, file="output/summarized_data.RDA")
+```
 
