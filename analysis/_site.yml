@@ -5,6 +5,10 @@ navbar:
   left:
   - text: Home
     href: index.html
+  - text: Import data
+    href: import_data.html
+  - text: summarize
+    href: summarize_data.html
   - text: About
     href: about.html
   - text: License
