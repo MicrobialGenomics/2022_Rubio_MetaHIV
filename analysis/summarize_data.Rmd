@@ -20,7 +20,7 @@ library(kableExtra)
 
 Get metdatada file and check data concordance
 ```{r}
-dataTable <- readRDS("~/Documentos/Repos/2022_Rubio_MetaHIV/data/Metadata/dataTable.rds")%>%select(SampleID, InitialReads)%>%
+dataTable <- readRDS("data/Metadata/dataTable.rds")%>%select(SampleID, InitialReads)%>%
   unique()
 
 metadata<-read_csv("data/Metadata/metadata.csv")%>%inner_join(., dataTable, by="SampleID")
