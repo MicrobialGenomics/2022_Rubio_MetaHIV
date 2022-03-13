@@ -1,0 +1,95 @@
+---
+title: "Alpha diversity analysis"
+author: "Elisa Rubio"
+date: "2022-03-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+```
+
+## Load summarized data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+```
+
+## Create functions:
+
+### Calculate apha diversity indexes:
+
+```{r}
+alpha_div<-function(d_rpkm, d_counts){
+shannon<-diversity(d_rpkm[ ,-1], MARGIN = 2, index="shannon")
+simpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="simpson")
+invsimpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="invsimpson")
+nARG<-specnumber(d_rpkm[, -1], MARGIN = 2)
+fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2)
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  filter(SampleID %in% names(d_rpkm))%>%
+  mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
+```
+
+### Plot a diversity index for a clinical variable
+
+```{r}
+alpha_div_plot<-function(data, clin_var, alpha_var){
+  clin_var<-enquo(clin_var)
+  alpha_var<-enquo(alpha_var)
+ggplot(data, aes(x=!!clin_var, y=!!alpha_var))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  stat_compare_means()+
+  theme_classic()+
+  theme(legend.position = "none")}
+```
+
+### Plot all diversity indexes for a clinical variable
+
+```{r}
+alpha_div_plot_all<-function(data, clin_var){
+clin_var<-enquo(clin_var)
+data%>%
+  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+  ggplot(aes(x=!!clin_var, y=Alpha_value))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+  stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
+  theme_bw()+
+  labs(y="Alpha diversity", caption = "P values calculated by Wilcoxon test", title = clin_var)+
+  theme(legend.position = "none", axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}
+
+```
+
+## ARIBA
+
+```{r ariba_alphadiv}
+ariba_alpha<-alpha_div(ariba_rpkm, ariba_counts)
+
+alpha_div_plot_all(ariba_alpha, HIV_Status)
+alpha_div_plot_all(ariba_alpha, Profile)
+```
+
+## Groot
+
+```{r groot_alphadiv}
+groot_alpha<-alpha_div(groot_rpkm, groot_counts)
+alpha_div_plot_all(groot_alpha, HIV_Status)
+alpha_div_plot_all(groot_alpha, Profile)
+```
+

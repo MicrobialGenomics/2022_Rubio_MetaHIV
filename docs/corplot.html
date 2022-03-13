@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Elisa Rubio" />
 
+<meta name="date" content="2022-03-02" />
 
-<title>Home</title>
+<title>corplot</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -228,6 +233,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -235,6 +303,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -258,13 +336,7 @@ $(document).ready(function () {
   <a href="import_data.html">Import data</a>
 </li>
 <li>
-  <a href="summarize_data.html">Summarize data</a>
-</li>
-<li>
-  <a href="alpha_div.html">Alpha diversity analysis</a>
-</li>
-<li>
-  <a href="beta_div.html">Beta diversity analysis</a>
+  <a href="summarize_data.html">summarize</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -284,7 +356,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">corplot</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-03-02</h4>
 
 </div>
 
@@ -309,10 +383,10 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-13
+<strong>Last updated:</strong> 2022-03-06
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -340,6 +414,66 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
 <a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a> </a>
 </p>
 </div>
@@ -361,11 +495,7 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Untracked files:
-    Untracked:  analysis/beta_div.Rmd
-
 Unstaged changes:
-    Modified:   analysis/_site.yml
     Modified:   analysis/alpha_div.Rmd
     Modified:   analysis/corplot.Rmd
     Modified:   analysis/index.Rmd
@@ -387,7 +517,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/corplot.Rmd</code>) and HTML (<code>docs/corplot.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -416,67 +546,16 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b92c39766add66b425fb4328046f6f0c573c71fd/analysis/index.Rmd" target="_blank">b92c397</a>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/3dc9ecaafacad1a143aed005eb4789afd8e01419/analysis/corplot.Rmd" target="_blank">3dc9eca</a>
 </td>
 <td>
 Elisa
 </td>
 <td>
-2022-03-02
+2022-03-03
 </td>
 <td>
-Summarize data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/b92c39766add66b425fb4328046f6f0c573c71fd/docs/index.html" target="_blank">b92c397</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-02
-</td>
-<td>
-Summarize data
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/2a70c3bd0ed5d6676fcd41d44a3f69c213578bd0/analysis/index.Rmd" target="_blank">2a70c3b</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Execute files (git ignore output)
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/fca5d2d666a0895466d2caa6c7b10ad502a215ba/analysis/index.Rmd" target="_blank">fca5d2d</a>
-</td>
-<td>
-Marc Noguera-Julian
-</td>
-<td>
-2022-02-02
-</td>
-<td>
-Start workflowr project.
+030322
 </td>
 </tr>
 </tbody>
@@ -486,18 +565,73 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
-<div id="import-data" class="section level2">
-<h2><a href="import_data.html">Import data</a></h2>
-</div>
-<div id="summarize-data" class="section level2">
-<h2><a href="summarize_data.html">Summarize data</a></h2>
-</div>
-<div id="alpha-diversity-analysis" class="section level2">
-<h2><a href="alpha_div.html">Alpha diversity analysis</a></h2>
-</div>
-<div id="beta-diversity-analysis" class="section level2">
-<h2><a href="beta_div.html">Beta diversity analysis</a></h2>
+<pre class="r"><code>library(tidyverse)
+library(kableExtra)
+library(corrplot)
+library(Hmisc)</code></pre>
+<pre class="r"><code>load(&quot;output/summarized_data.RDA&quot;)
+ref_name&lt;-pull(ariba_rpkm, ref_name); ariba_rpkm&lt;-select(ariba_rpkm, -ref_name); rownames(ariba_rpkm)&lt;-ref_name</code></pre>
+<pre class="r"><code>res2 &lt;- rcorr(as.matrix(t(ariba_rpkm)))</code></pre>
+<pre class="r"><code>flattenCorrMatrix &lt;- function(cormat, pmat) {
+  ut &lt;- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+    )
+}
+
+x&lt;-flattenCorrMatrix(res2$r, res2$P)%&gt;%mutate(padj=p.adjust(p, method = &quot;BH&quot;))%&gt;%filter(padj&lt;0.01 &amp; abs(cor)&gt; 0.5)
+x&lt;-x%&gt;%select(-p, -padj)%&gt;%pivot_wider(names_from = column, values_from = cor)%&gt;%as.matrix()
+class(x)
+
+mtx_corr &lt;- reshape2::acast(x, row~column, value.var=&quot;cor&quot;)
+
+corrplot(mtx_corr, is.corr=FALSE, tl.col=&quot;black&quot;, na.label=&quot; &quot;)</code></pre>
+<pre class="r"><code>corr = cor(t(ariba_rpkm))
+corr[lower.tri(corr,diag=TRUE)] &lt;- NA 
+corr[corr == 1] &lt;- NA 
+corr &lt;- as.data.frame(as.table(corr))
+corr &lt;- na.omit(corr) 
+corr &lt;- subset(corr, abs(Freq) &gt; 0.5) </code></pre>
+<pre class="r"><code>corr_simple &lt;- function(data=df,sig=0.5){
+  #convert data to numeric in order to run correlations
+  #convert to factor first to keep the integrity of the data - each value will become a number rather than turn into NA
+  df_cor &lt;- data %&gt;% mutate_if(is.character, as.factor)
+  df_cor &lt;- df_cor %&gt;% mutate_if(is.factor, as.numeric)
+  #run a correlation and drop the insignificant ones
+  corr &lt;- cor(df_cor)
+  #prepare to drop duplicates and correlations of 1     
+  corr[lower.tri(corr,diag=TRUE)] &lt;- NA 
+  #drop perfect correlations
+  corr[corr == 1] &lt;- NA 
+  #turn into a 3-column table
+  corr &lt;- as.data.frame(as.table(corr))
+  #remove the NA values from above 
+  corr &lt;- na.omit(corr) 
+  #select significant values  
+  corr &lt;- subset(corr, abs(Freq) &gt; sig) 
+  #sort by highest correlation
+  corr &lt;- corr[order(-abs(corr$Freq)),] 
+  #print table
+  print(corr)
+  #turn corr back into matrix in order to plot with corrplot
+  mtx_corr &lt;- reshape2::acast(corr, Var1~Var2, value.var=&quot;Freq&quot;)
+  
+  #plot correlations visually
+  corrplot(mtx_corr, is.corr=FALSE, tl.col=&quot;black&quot;, na.label=&quot; &quot;)
+}
+corr_simple()</code></pre>
+<p><a href="https://towardsdatascience.com/how-to-create-a-correlation-matrix-with-too-many-variables-309cc0c0a57" class="uri">https://towardsdatascience.com/how-to-create-a-correlation-matrix-with-too-many-variables-309cc0c0a57</a></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
 </div>
 
 
@@ -516,6 +650,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -548,6 +684,35 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Elisa Rubio" />
+
+<meta name="date" content="2022-03-06" />
+
+<title>beta_div</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">2022_Rubio_MetaHIV</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="import_data.html">Import data</a>
+</li>
+<li>
+  <a href="summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="alpha_div.html">Alpha diversity analysis</a>
+</li>
+<li>
+  <a href="beta_div.html">Beta diversity analysis</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">beta_div</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-03-06</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-13
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    output/aribaData/
+    Ignored:    output/grootData/
+
+Untracked files:
+    Untracked:  analysis/beta_div.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/alpha_div.Rmd
+    Modified:   analysis/corplot.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/summarize_data.Rmd
+
+Staged changes:
+    New:        analysis/alpha_div.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(vegan)
+library(glue)</code></pre>
+<div id="load-summarized-data" class="section level2">
+<h2>Load summarized data</h2>
+<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
+load(&quot;output/summarized_groot.RDA&quot;)
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)
+metadata_ariba&lt;-metadata%&gt;%filter(SampleID %in% colnames(ariba_counts[-1]))</code></pre>
+</div>
+<div id="bray-curtis-distance-from-rpkm-values" class="section level2">
+<h2>Bray Curtis Distance from RPKM values:</h2>
+<pre class="r"><code>dist_rpkm&lt;-vegdist(t(ariba_rpkm[ ,-1]), method = &quot;bray&quot;)</code></pre>
+</div>
+<div id="bray-curtis-distance-from-rarefied-count-values" class="section level2">
+<h2>Bray Curtis Distance from rarefied count values</h2>
+<pre class="r"><code>nCounts&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
+ggplot(nCounts, aes(counts)) +
+  coord_cartesian(xlim = c(0,NA))+
+  geom_density()+
+  labs(title = &quot;Number of Reads per sample distribution&quot;)+
+  scale_x_continuous(breaks=seq(0,150000,10000))+
+  theme_bw()+
+  theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())</code></pre>
+<p><img src="figure/beta_div.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>minCounts&lt;-min(nCounts$counts)</code></pre>
+<pre class="r"><code>set.seed(200889)
+dist_rar&lt;- avgdist(t(ariba_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)</code></pre>
+<div id="function-to-calculate-both-distances" class="section level3">
+<h3>Function to calculate both distances</h3>
+<pre class="r"><code>dist_func&lt;-function(d_rpkm, d_counts){
+  dist_rpkm&lt;-vegdist(t(d_rpkm[ ,-1]), method = &quot;bray&quot;)
+  nCounts&lt;-apply(d_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
+  minCounts&lt;-min(nCounts$counts)
+  set.seed(200889)
+  dist_rar&lt;- avgdist(t(d_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)
+  d&lt;-list(dist_rpkm, dist_rar)
+  names(d)&lt;-c(&quot;dist_rpkm&quot;, &quot;dist_rar&quot;)
+  return(d)
+}</code></pre>
+<pre class="r"><code>ariba_dist&lt;-dist_func(ariba_rpkm, ariba_counts)
+groot_dist&lt;-dist_func(groot_rpkm, groot_counts)</code></pre>
+</div>
+<div id="nmds" class="section level3">
+<h3>NMDS</h3>
+<div id="nmds-function-for-variables-with-max-3-levels" class="section level4">
+<h4>NMDS function (for variables with max 3 levels)</h4>
+<pre class="r"><code>beta_nmds&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  clin_var2&lt;-metadata%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  
+  set.seed(200889)
+  nmds &lt;- metaMDS(dist)
+  
+  scores(nmds) %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var, fill=!!clin_var)) + 
+    stat_ellipse(geom=&quot;polygon&quot;, show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;))+ 
+        scale_fill_manual(values = c(&quot;dodgerblue&quot;, &quot;pink&quot;, &quot;green&quot;))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}</code></pre>
+</div>
+<div id="nmds-function-for-variables-with-4-8-levels" class="section level4">
+<h4>NMDS function (for variables with 4-8 levels)</h4>
+<pre class="r"><code>beta_nmds2&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  clin_var2&lt;-metadata%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  
+  set.seed(200889)
+  nmds &lt;- metaMDS(dist)
+  
+  scores(nmds) %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) + 
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}</code></pre>
+<pre class="r"><code>beta_nmds(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2618917 
+Run 1 stress 0.2632119 
+Run 2 stress 0.2621124 
+... Procrustes: rmse 0.01706144  max resid 0.1140403 
+Run 3 stress 0.2621201 
+... Procrustes: rmse 0.02675554  max resid 0.2289721 
+Run 4 stress 0.2657602 
+Run 5 stress 0.2658877 
+Run 6 stress 0.2636648 
+Run 7 stress 0.2642868 
+Run 8 stress 0.2629732 
+Run 9 stress 0.2710029 
+Run 10 stress 0.2625215 
+Run 11 stress 0.2667473 
+Run 12 stress 0.263955 
+Run 13 stress 0.2635732 
+Run 14 stress 0.2623382 
+... Procrustes: rmse 0.02824957  max resid 0.2295447 
+Run 15 stress 0.2658625 
+Run 16 stress 0.2627324 
+Run 17 stress 0.2653591 
+Run 18 stress 0.2638188 
+Run 19 stress 0.2637502 
+Run 20 stress 0.2674921 
+*** No convergence -- monoMDS stopping criteria:
+     5: no. of iterations &gt;= maxit
+    15: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds2(ariba_dist$dist_rpkm, metadata_ariba, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds2(ariba_dist$dist_rar, metadata_ariba, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2618917 
+Run 1 stress 0.2632119 
+Run 2 stress 0.2621124 
+... Procrustes: rmse 0.01706144  max resid 0.1140403 
+Run 3 stress 0.2621201 
+... Procrustes: rmse 0.02675554  max resid 0.2289721 
+Run 4 stress 0.2657602 
+Run 5 stress 0.2658877 
+Run 6 stress 0.2636648 
+Run 7 stress 0.2642868 
+Run 8 stress 0.2629732 
+Run 9 stress 0.2710029 
+Run 10 stress 0.2625215 
+Run 11 stress 0.2667473 
+Run 12 stress 0.263955 
+Run 13 stress 0.2635732 
+Run 14 stress 0.2623382 
+... Procrustes: rmse 0.02824957  max resid 0.2295447 
+Run 15 stress 0.2658625 
+Run 16 stress 0.2627324 
+Run 17 stress 0.2653591 
+Run 18 stress 0.2638188 
+Run 19 stress 0.2637502 
+Run 20 stress 0.2674921 
+*** No convergence -- monoMDS stopping criteria:
+     5: no. of iterations &gt;= maxit
+    15: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.1588664 
+Run 1 stress 0.1642337 
+Run 2 stress 0.1636576 
+Run 3 stress 0.1682236 
+Run 4 stress 0.156548 
+... New best solution
+... Procrustes: rmse 0.04547664  max resid 0.2324751 
+Run 5 stress 0.1657083 
+Run 6 stress 0.162819 
+Run 7 stress 0.1574414 
+Run 8 stress 0.1603271 
+Run 9 stress 0.151538 
+... New best solution
+... Procrustes: rmse 0.03955989  max resid 0.2202202 
+Run 10 stress 0.1557259 
+Run 11 stress 0.1629994 
+Run 12 stress 0.1582707 
+Run 13 stress 0.1536591 
+Run 14 stress 0.1497357 
+... New best solution
+... Procrustes: rmse 0.04236057  max resid 0.2398044 
+Run 15 stress 0.1589346 
+Run 16 stress 0.1555004 
+Run 17 stress 0.1551458 
+Run 18 stress 0.161488 
+Run 19 stress 0.1491921 
+... New best solution
+... Procrustes: rmse 0.02279961  max resid 0.2281182 
+Run 20 stress 0.1605846 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.1924846 
+Run 1 stress 0.189623 
+... New best solution
+... Procrustes: rmse 0.03520576  max resid 0.1822078 
+Run 2 stress 0.1892024 
+... New best solution
+... Procrustes: rmse 0.06035491  max resid 0.2591955 
+Run 3 stress 0.2005598 
+Run 4 stress 0.1842685 
+... New best solution
+... Procrustes: rmse 0.04120382  max resid 0.2249151 
+Run 5 stress 0.184776 
+Run 6 stress 0.1924247 
+Run 7 stress 0.1908322 
+Run 8 stress 0.1868456 
+Run 9 stress 0.1877726 
+Run 10 stress 0.1772866 
+... New best solution
+... Procrustes: rmse 0.05250883  max resid 0.2340857 
+Run 11 stress 0.1863004 
+Run 12 stress 0.1930061 
+Run 13 stress 0.1819975 
+Run 14 stress 0.1873666 
+Run 15 stress 0.1880836 
+Run 16 stress 0.1890585 
+Run 17 stress 0.1843246 
+Run 18 stress 0.1831432 
+Run 19 stress 0.1944867 
+Run 20 stress 0.1867752 
+*** No convergence -- monoMDS stopping criteria:
+     2: no. of iterations &gt;= maxit
+    17: stress ratio &gt; sratmax
+     1: scale factor of the gradient &lt; sfgrmin</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="pcoa" class="section level3">
+<h3>PCoA</h3>
+<div id="pcoa-function-for-variables-with-max-3-levels" class="section level4">
+<h4>PCoA function (for variables with max 3 levels)</h4>
+<pre class="r"><code>beta_pcoa&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  clin_var2&lt;-metadata%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+
+  pcoa &lt;- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions &lt;- pcoa$points
+  colnames(positions) &lt;- c(&quot;pcoa1&quot;, &quot;pcoa2&quot;)
+  
+  percent_explained &lt;- 100 * pcoa$eig / sum(pcoa$eig)
+  
+  pretty_pe &lt;- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+  
+  labels &lt;- c(glue(&quot;PCo Axis 1 ({pretty_pe[1]}%)&quot;),
+              glue(&quot;PCo Axis 2 ({pretty_pe[2]}%)&quot;))
+  
+  positions %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(geom=&quot;polygon&quot;, show.legend = FALSE, alpha=0.2)+
+    geom_point() +
+    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;), x=labels[1], y=labels[2])+
+    coord_fixed(ratio = 0.8)+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c(&quot;blue&quot;, &quot;red&quot;, &quot;gray&quot;))+ 
+        scale_fill_manual(values = c(&quot;dodgerblue&quot;, &quot;pink&quot;, &quot;lightgray&quot;))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}</code></pre>
+</div>
+<div id="pcoa-function-for-variables-with-4-8-levels" class="section level4">
+<h4>PCoA function (for variables with 4-8 levels)</h4>
+<pre class="r"><code>beta_pcoa2&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  clin_var2&lt;-metadata%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+
+  pcoa &lt;- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions &lt;- pcoa$points
+  colnames(positions) &lt;- c(&quot;pcoa1&quot;, &quot;pcoa2&quot;)
+  
+  percent_explained &lt;- 100 * pcoa$eig / sum(pcoa$eig)
+  
+  pretty_pe &lt;- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+  
+  labels &lt;- c(glue(&quot;PCo Axis 1 ({pretty_pe[1]}%)&quot;),
+              glue(&quot;PCo Axis 2 ({pretty_pe[2]}%)&quot;))
+  
+  positions %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}</code></pre>
+<pre class="r"><code>beta_pcoa(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20pcoa%20hiv-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_pcoa(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20pcoa%20hiv-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_pcoa(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20pcoa%20hiv-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_pcoa(groot_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20pcoa%20hiv-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="pretty-plot" class="section level4">
+<h4>Pretty plot</h4>
+<pre class="r"><code>  set.seed(200889)
+  nmds &lt;- metaMDS(ariba_dist$dist_rar)
+  
+  test&lt;-adonis(ariba_dist$dist_rar~metadata_ariba$HIV_Status, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  
+  scores(nmds) %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=HIV_Status, fill=HIV_Status)) + 
+    stat_ellipse(geom=&quot;polygon&quot;, show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    scale_color_manual(name=NULL, 
+                       breaks = c(&quot;negative&quot;, &quot;positive&quot;), 
+                       values = c(&quot;blue&quot;, &quot;red&quot;), 
+                       labels=c(&quot;HIV negative&quot;, &quot;HIV positive&quot;))+
+    scale_fill_manual(name=NULL, 
+                       breaks = c(&quot;negative&quot;, &quot;positive&quot;), 
+                       values = c(&quot;dodgerblue&quot;, &quot;pink&quot;), 
+                       labels=c(&quot;HIV negative&quot;, &quot;HIV positive&quot;))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] glue_1.6.0      vegan_2.5-7     lattice_0.20-45 permute_0.9-7  
+ [5] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7     purrr_0.3.4    
+ [9] readr_2.1.1     tidyr_1.1.4     tibble_3.1.6    ggplot2_3.3.5  
+[13] tidyverse_1.3.1 workflowr_1.7.0
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2       bit64_4.0.5      vroom_1.5.7      jsonlite_1.7.2  
+ [5] splines_4.1.2    modelr_0.1.8     assertthat_0.2.1 getPass_0.2-2   
+ [9] highr_0.9        cellranger_1.1.0 yaml_2.2.1       pillar_1.6.4    
+[13] backports_1.4.1  digest_0.6.29    promises_1.2.0.1 rvest_1.0.2     
+[17] colorspace_2.0-2 htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0    
+[21] pkgconfig_2.0.3  broom_0.7.11     haven_2.4.3      scales_1.1.1    
+[25] processx_3.5.2   whisker_0.4      later_1.3.0      tzdb_0.2.0      
+[29] git2r_0.29.0     mgcv_1.8-38      farver_2.1.0     generics_0.1.1  
+[33] ellipsis_0.3.2   withr_2.4.3      cli_3.1.0        magrittr_2.0.1  
+[37] crayon_1.4.2     readxl_1.3.1     evaluate_0.14    ps_1.6.0        
+[41] fs_1.5.2         fansi_0.5.0      nlme_3.1-153     MASS_7.3-54     
+[45] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
+[49] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    callr_3.7.0     
+[53] compiler_4.1.2   jquerylib_0.1.4  rlang_0.4.12     grid_4.1.2      
+[57] rstudioapi_0.13  labeling_0.4.2   rmarkdown_2.11   gtable_0.3.0    
+[61] DBI_1.1.2        R6_2.5.1         lubridate_1.8.0  knitr_1.37      
+[65] bit_4.0.4        fastmap_1.1.0    utf8_1.2.2       rprojroot_2.0.2 
+[69] stringi_1.7.6    parallel_4.1.2   Rcpp_1.0.7       vctrs_0.3.8     
+[73] dbplyr_2.1.1     tidyselect_1.1.1 xfun_0.29       </code></pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

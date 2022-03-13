@@ -7,8 +7,12 @@ navbar:
     href: index.html
   - text: Import data
     href: import_data.html
-  - text: summarize
+  - text: Summarize data
     href: summarize_data.html
+  - text: Alpha diversity analysis
+    href: alpha_div.html
+  - text: Beta diversity analysis
+    href: beta_div.html
   - text: About
     href: about.html
   - text: License

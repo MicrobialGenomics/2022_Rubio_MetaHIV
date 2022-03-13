@@ -115,8 +115,9 @@ for (i in 1:length(ariba_data)){
 ### Transform data to obtain matrix 
 
 ```{r}
-transform_data<-function(list_df, sample_names){
-df_filt<-lapply(list_df, function(x) select(x, ref_name, RPKM)) ##select variables
+transform_data<-function(list_df, sample_names, df_variable){
+  df_variable<-enquo(df_variable)
+df_filt<-lapply(list_df, function(x) select(x, ref_name, !!df_variable)) ##select variables
 
 for (i in 1:length(df_filt)){
  names(df_filt[[i]])[2]<-sample_names[i]} ##change reads column name to sample name
@@ -127,9 +128,15 @@ return(df_transform)}
 ```
 
 ```{r}
-ariba_rpkm<-transform_data(ariba_data, ariba_samples)
+ariba_rpkm<-transform_data(ariba_data, ariba_samples, RPKM)
 head(ariba_rpkm, 15)%>%kable(caption="**Table 1. Ariba RPKM** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
+
+```{r}
+ariba_counts<-transform_data(ariba_data, ariba_samples, reads)
+head(ariba_counts, 15)%>%kable(caption="**Table 1. Ariba Counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
 
 ## Groot
 
@@ -195,13 +202,19 @@ for (i in 1:length(groot_data)){
 ### Transform data to obtain matrix 
 
 ```{r}
-groot_rpkm<-transform_data(groot_data, groot_samples)
+groot_rpkm<-transform_data(groot_data, groot_samples, RPKM)
 head(groot_rpkm, 15)%>%kable(caption="**Table. Groot RPKM** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+```{r}
+groot_counts<-transform_data(groot_data, groot_samples, read_count)
+head(groot_counts, 15)%>%kable(caption="**Table. Groot Counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
 
 ## Save obtained matrix and AMR genes metadata
 
 ```{r}
-save(ariba_rpkm, refname_all_ariba, groot_rpkm, refname_all_groot, file="output/summarized_data.RDA")
+save(groot_rpkm, groot_counts, refname_all_groot, file="output/summarized_groot.RDA")
+save(ariba_rpkm, ariba_counts, refname_all_ariba, file="output/summarized_ariba.RDA")
 ```
 

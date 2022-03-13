@@ -1,0 +1,272 @@
+---
+title: "beta_div"
+author: "Elisa Rubio"
+date: "2022-03-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(vegan)
+library(glue)
+```
+
+## Load summarized data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+metadata_ariba<-metadata%>%filter(SampleID %in% colnames(ariba_counts[-1]))
+```
+
+## Bray Curtis Distance from RPKM values:
+
+```{r}
+dist_rpkm<-vegdist(t(ariba_rpkm[ ,-1]), method = "bray")
+```
+
+## Bray Curtis Distance from rarefied count values
+
+```{r}
+nCounts<-apply(ariba_counts[ ,-1], 2, sum)%>%as.data.frame()%>%rename(counts=1)
+ggplot(nCounts, aes(counts)) +
+  coord_cartesian(xlim = c(0,NA))+
+  geom_density()+
+  labs(title = "Number of Reads per sample distribution")+
+  scale_x_continuous(breaks=seq(0,150000,10000))+
+  theme_bw()+
+  theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())
+
+minCounts<-min(nCounts$counts)
+```
+
+
+```{r}
+set.seed(200889)
+dist_rar<- avgdist(t(ariba_counts[ ,-1]), dmethod="bray", sample=minCounts)
+```
+
+
+### Function to calculate both distances
+
+```{r}
+dist_func<-function(d_rpkm, d_counts){
+  dist_rpkm<-vegdist(t(d_rpkm[ ,-1]), method = "bray")
+  nCounts<-apply(d_counts[ ,-1], 2, sum)%>%as.data.frame()%>%rename(counts=1)
+  minCounts<-min(nCounts$counts)
+  set.seed(200889)
+  dist_rar<- avgdist(t(d_counts[ ,-1]), dmethod="bray", sample=minCounts)
+  d<-list(dist_rpkm, dist_rar)
+  names(d)<-c("dist_rpkm", "dist_rar")
+  return(d)
+}
+```
+
+```{r}
+ariba_dist<-dist_func(ariba_rpkm, ariba_counts)
+groot_dist<-dist_func(groot_rpkm, groot_counts)
+```
+
+
+### NMDS
+#### NMDS function (for variables with max 3 levels)
+```{r}
+beta_nmds<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  
+  set.seed(200889)
+  nmds <- metaMDS(dist)
+  
+  scores(nmds) %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var, fill=!!clin_var)) + 
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue("ADONIS p value= {ptest}"))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c("blue", "red","green4"))+ 
+        scale_fill_manual(values = c("dodgerblue", "pink", "green"))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}
+
+```
+
+
+#### NMDS function (for variables with 4-8 levels)
+```{r}
+beta_nmds2<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  
+  set.seed(200889)
+  nmds <- metaMDS(dist)
+  
+  scores(nmds) %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) + 
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue("ADONIS p value= {ptest}"))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+ 
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}
+
+```
+
+```{r ariba nmds HIV, message=FALSE, warning=FALSE}
+beta_nmds(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+```{r ariba nmds profile}
+beta_nmds2(ariba_dist$dist_rpkm, metadata_ariba, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds2(ariba_dist$dist_rar, metadata_ariba, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+
+```{r groot nmds HIV}
+beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+
+### PCoA
+
+#### PCoA function (for variables with max 3 levels)
+
+```{r}
+
+beta_pcoa<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+
+  pcoa <- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions <- pcoa$points
+  colnames(positions) <- c("pcoa1", "pcoa2")
+  
+  percent_explained <- 100 * pcoa$eig / sum(pcoa$eig)
+  
+  pretty_pe <- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+  
+  labels <- c(glue("PCo Axis 1 ({pretty_pe[1]}%)"),
+              glue("PCo Axis 2 ({pretty_pe[2]}%)"))
+  
+  positions %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point() +
+    labs(caption = glue("ADONIS p value= {ptest}"), x=labels[1], y=labels[2])+
+    coord_fixed(ratio = 0.8)+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c("blue", "red", "gray"))+ 
+        scale_fill_manual(values = c("dodgerblue", "pink", "lightgray"))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}
+  
+```
+
+
+#### PCoA function (for variables with 4-8 levels)
+```{r}
+beta_pcoa2<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+
+  pcoa <- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions <- pcoa$points
+  colnames(positions) <- c("pcoa1", "pcoa2")
+  
+  percent_explained <- 100 * pcoa$eig / sum(pcoa$eig)
+  
+  pretty_pe <- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+  
+  labels <- c(glue("PCo Axis 1 ({pretty_pe[1]}%)"),
+              glue("PCo Axis 2 ({pretty_pe[2]}%)"))
+  
+  positions %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue("ADONIS p value= {ptest}"))+
+    scale_color_manual(name=quo_name(clin_var), 
+                           values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+ 
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}
+```
+
+```{r ariba pcoa hiv}
+beta_pcoa(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_pcoa(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+```{r groot pcoa hiv}
+beta_pcoa(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_pcoa(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+
+#### Pretty plot
+
+```{r eval=FALSE, include=TRUE}
+
+  set.seed(200889)
+  nmds <- metaMDS(ariba_dist$dist_rar)
+  
+  test<-adonis(ariba_dist$dist_rar~metadata_ariba$HIV_Status, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  
+  scores(nmds) %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=HIV_Status, fill=HIV_Status)) + 
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue("ADONIS p value= {ptest}"))+
+    scale_color_manual(name=NULL, 
+                       breaks = c("negative", "positive"), 
+                       values = c("blue", "red"), 
+                       labels=c("HIV negative", "HIV positive"))+
+    scale_fill_manual(name=NULL, 
+                       breaks = c("negative", "positive"), 
+                       values = c("dodgerblue", "pink"), 
+                       labels=c("HIV negative", "HIV positive"))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))
+```
