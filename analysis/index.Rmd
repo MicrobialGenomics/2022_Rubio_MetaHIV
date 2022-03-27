@@ -14,6 +14,8 @@ Welcome to my research website.
 
 ## [Summarize data](summarize_data.html)
 
+## [Rarefy data](rarefaction.html)
+
 ## [Alpha diversity analysis](alpha_div.html)
 
 ## [Beta diversity analysis](beta_div.html)

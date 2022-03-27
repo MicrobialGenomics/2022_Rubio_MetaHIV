@@ -1,0 +1,138 @@
+---
+title: "barplot"
+author: "Elisa Rubio"
+date: "2022-03-16"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(glue)
+library(ggtext)
+```
+
+## Load summarized data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+metadata_ariba<-metadata%>%filter(SampleID %in% colnames(ariba_counts[-1]))
+```
+
+```{r}
+colors<-c("darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1",
+            "darkorange1", "cyan1", "royalblue4", "darksalmon", "chartreuse1","darkorchid4",
+            "gold","forestgreen", "deeppink","green", "red","darkgrey","blue","aquamarine", "burlywood1",
+            "darkslateblue", "chartreuse3","firebrick3", "aquamarine4","azure1","chocolate1","deeppink4","aquamarine2", "burlywood1",
+            "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1", "darkslateblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1",
+            "darkorange1", "cyan1", "royalblue4", "darksalmon", "chartreuse1","darkorchid4",
+            "gold","forestgreen", "deeppink","green", "red","darkgrey","blue","aquamarine", "burlywood1",
+            "darkslateblue", "chartreuse3","firebrick3", "aquamarine4","azure1","chocolate1","deeppink4","aquamarine2", "burlywood1",
+            "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1", "darkslateblue")
+```
+
+
+```{r}
+x<-ariba_counts%>%
+  pivot_longer(-ref_name, names_to = "sample", values_to = "counts")%>%
+  left_join(., refname_all_ariba, by="ref_name")%>%
+  group_by(sample, `Resistance Mechanism`)%>%                                               
+  summarize(glomcount=sum(counts), .groups = "drop")%>% 
+  inner_join(., metadata, by=c("sample"="SampleID"))%>%
+  group_by(HIV_Status)%>%
+    mutate(rel_abund=glomcount*100/sum(glomcount))%>%
+    ungroup()%>%
+  select(sample, `Resistance Mechanism`, glomcount, rel_abund, everything())
+
+ggplot(data=x, aes(x=HIV_Status, y=glomcount, fill=`Resistance Mechanism`))+
+    geom_bar(aes(), stat="identity", position="stack") +
+    scale_fill_manual("Resistance Mechanism", values =colors ) + 
+    labs(y="Relative abundabce")+
+    theme_bw()+
+    theme(legend.position="bottom",
+          legend.text = element_markdown(),
+          axis.text.y.left = element_blank(),
+          axis.text.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          axis.ticks.y=element_blank(),
+          strip.text.x = element_text(face = "bold"),
+          title = element_text(size = 10) ) + guides(fill=guide_legend(nrow=4))
+  
+```
+
+```{r}
+refname_all_ariba$`AMR Gene Family`
+metadata$HIV_Status
+```
+
+
+```{r}
+barplot_perc<-function(table_path, tree_path, taxonomy_path, metadata, taxa_level, glom_var, percentage, nrow_legend=5){
+
+  colors<-c("darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1",
+            "darkorange1", "cyan1", "royalblue4", "darksalmon", "chartreuse1","darkorchid4",
+            "gold","forestgreen", "deeppink","green", "red","darkgrey","blue","aquamarine", "burlywood1",
+            "darkslateblue", "chartreuse3","firebrick3", "aquamarine4","azure1","chocolate1","deeppink4","aquamarine2", "burlywood1",
+            "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1", "darkslateblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1",
+            "darkorange1", "cyan1", "royalblue4", "darksalmon", "chartreuse1","darkorchid4",
+            "gold","forestgreen", "deeppink","green", "red","darkgrey","blue","aquamarine", "burlywood1",
+            "darkslateblue", "chartreuse3","firebrick3", "aquamarine4","azure1","chocolate1","deeppink4","aquamarine2", "burlywood1",
+            "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1", "darkslateblue")
+  taxa_level<-enquo(taxa_level)
+  glom_var<-enquo(glom_var)
+  
+  data<-qza_to_phyloseq(
+    features=table_path,
+    tree=tree_path,
+    taxonomy=taxonomy_path)%>%                               ##Obtengo el objeto phyloseq a partir de qiime
+    psmelt()%>% ##Transformo el objeto a un dataframe
+    mutate(Family=ifelse(is.na(Family), paste("Unclassified", Order), Family),      ##Familias no identificads como Orden unlassified
+           Family=ifelse(Family=="uncultured", paste ("Uncultured", Order), Family),## Faimilas unculterd como orden uncultured 
+           Genus=ifelse(is.na(Genus), paste("Unclassified", Family), Genus))%>%    ##G?nero no identificado como Familia unlassified
+    group_by(Sample, !!taxa_level)%>%                                                     ##Agrupamos a nivel de familia
+    summarize(count=sum(Abundance), .groups = "drop")%>%                            ##Abundancia relativa de cada familia (cambiar si necesario)
+    inner_join(metadata, by="Sample")%>%                                            ## Unifico con metadatos
+    group_by(!!glom_var)%>%
+    mutate(rel_abund=count*100/sum(count))%>%
+    ungroup()%>%
+    mutate(tax_level=!!taxa_level, 
+           tax_level=str_replace(tax_level, "(.*)", "*\\1*"),
+           tax_level=str_replace(tax_level, "\\*Uncultured (.*)", "Uncultured *\\1" ),
+           tax_level=str_replace(tax_level, "\\*Unclassified (.*)", "Unclassified *\\1" ),
+           tax_level=if_else(rel_abund<percentage, glue("Families < {percentage}% abundance"), tax_level),
+           tax_level=factor(tax_level),
+           tax_level=fct_relevel(tax_level, glue("Families < {percentage}% abundance"), after=Inf))%>%
+    select(Sample, tax_level, everything())
+
+  ggplot(data=data, aes(x=!!glom_var, y=rel_abund, fill=tax_level))+
+      geom_bar(aes(), stat="identity", position="stack") +
+      scale_fill_manual(quo_name(taxa_level), values =colors ) + 
+      labs(y="Relative abundabce")+
+      theme_bw()+
+      theme(legend.position="bottom",
+            legend.text = element_markdown(),
+            axis.text.y.left = element_blank(),
+            axis.text.x = element_text(size = 10),
+            axis.title.y = element_text(size = 10),
+            axis.ticks.y=element_blank(),
+            strip.text.x = element_text(face = "bold"),
+            title = element_text(size = 10) ) + guides(fill=guide_legend(nrow=nrow_legend))}
+```
+

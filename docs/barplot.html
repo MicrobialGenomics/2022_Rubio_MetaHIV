@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Elisa Rubio" />
+
+<meta name="date" content="2022-03-16" />
+
+<title>barplot</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">2022_Rubio_MetaHIV</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="import_data.html">Import data</a>
+</li>
+<li>
+  <a href="summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="rarefaction.html">Rarefy data</a>
+</li>
+<li>
+  <a href="alpha_div.html">Alpha diversity analysis</a>
+</li>
+<li>
+  <a href="beta_div.html">Beta diversity analysis</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">barplot</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-03-16</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-03-27
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    output/aribaData/
+    Ignored:    output/grootData/
+
+Untracked files:
+    Untracked:  analysis/barplot.Rmd
+    Untracked:  analysis/rarefaction.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/index.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(glue)
+library(ggtext)</code></pre>
+<div id="load-summarized-data" class="section level2">
+<h2>Load summarized data</h2>
+<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
+load(&quot;output/summarized_groot.RDA&quot;)
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)
+metadata_ariba&lt;-metadata%&gt;%filter(SampleID %in% colnames(ariba_counts[-1]))</code></pre>
+<pre class="r"><code>colors&lt;-c(&quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;,
+            &quot;darkorange1&quot;, &quot;cyan1&quot;, &quot;royalblue4&quot;, &quot;darksalmon&quot;, &quot;chartreuse1&quot;,&quot;darkorchid4&quot;,
+            &quot;gold&quot;,&quot;forestgreen&quot;, &quot;deeppink&quot;,&quot;green&quot;, &quot;red&quot;,&quot;darkgrey&quot;,&quot;blue&quot;,&quot;aquamarine&quot;, &quot;burlywood1&quot;,
+            &quot;darkslateblue&quot;, &quot;chartreuse3&quot;,&quot;firebrick3&quot;, &quot;aquamarine4&quot;,&quot;azure1&quot;,&quot;chocolate1&quot;,&quot;deeppink4&quot;,&quot;aquamarine2&quot;, &quot;burlywood1&quot;,
+            &quot;darkblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;, &quot;darkslateblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;,
+            &quot;darkorange1&quot;, &quot;cyan1&quot;, &quot;royalblue4&quot;, &quot;darksalmon&quot;, &quot;chartreuse1&quot;,&quot;darkorchid4&quot;,
+            &quot;gold&quot;,&quot;forestgreen&quot;, &quot;deeppink&quot;,&quot;green&quot;, &quot;red&quot;,&quot;darkgrey&quot;,&quot;blue&quot;,&quot;aquamarine&quot;, &quot;burlywood1&quot;,
+            &quot;darkslateblue&quot;, &quot;chartreuse3&quot;,&quot;firebrick3&quot;, &quot;aquamarine4&quot;,&quot;azure1&quot;,&quot;chocolate1&quot;,&quot;deeppink4&quot;,&quot;aquamarine2&quot;, &quot;burlywood1&quot;,
+            &quot;darkblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;, &quot;darkslateblue&quot;)</code></pre>
+<pre class="r"><code>x&lt;-ariba_counts%&gt;%
+  pivot_longer(-ref_name, names_to = &quot;sample&quot;, values_to = &quot;counts&quot;)%&gt;%
+  left_join(., refname_all_ariba, by=&quot;ref_name&quot;)%&gt;%
+  group_by(sample, `Resistance Mechanism`)%&gt;%                                               
+  summarize(glomcount=sum(counts), .groups = &quot;drop&quot;)%&gt;% 
+  inner_join(., metadata, by=c(&quot;sample&quot;=&quot;SampleID&quot;))%&gt;%
+  group_by(HIV_Status)%&gt;%
+    mutate(rel_abund=glomcount*100/sum(glomcount))%&gt;%
+    ungroup()%&gt;%
+  select(sample, `Resistance Mechanism`, glomcount, rel_abund, everything())
+
+ggplot(data=x, aes(x=HIV_Status, y=glomcount, fill=`Resistance Mechanism`))+
+    geom_bar(aes(), stat=&quot;identity&quot;, position=&quot;stack&quot;) +
+    scale_fill_manual(&quot;Resistance Mechanism&quot;, values =colors ) + 
+    labs(y=&quot;Relative abundabce&quot;)+
+    theme_bw()+
+    theme(legend.position=&quot;bottom&quot;,
+          legend.text = element_markdown(),
+          axis.text.y.left = element_blank(),
+          axis.text.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          axis.ticks.y=element_blank(),
+          strip.text.x = element_text(face = &quot;bold&quot;),
+          title = element_text(size = 10) ) + guides(fill=guide_legend(nrow=4))</code></pre>
+<p><img src="figure/barplot.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>refname_all_ariba$`AMR Gene Family`</code></pre>
+<pre><code>  [1] &quot;APH(3&#39;)&quot;                                                                                                                                                                                                                                        
+  [2] &quot;CblA beta-lactamase&quot;                                                                                                                                                                                                                            
+  [3] &quot;CfxA beta-lactamase&quot;                                                                                                                                                                                                                            
+  [4] &quot;CfxA beta-lactamase&quot;                                                                                                                                                                                                                            
+  [5] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+  [6] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+  [7] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+  [8] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+  [9] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [10] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [11] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [12] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [13] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [14] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [15] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [16] &quot;streptothricin acetyltransferase (SAT)&quot;                                                                                                                                                                                                         
+ [17] &quot;23S rRNA with mutation conferring resistance to linezolid antibiotics&quot;                                                                                                                                                                          
+ [18] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics&quot;                                                                                               
+ [19] &quot;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics&quot;                                                                                                                                                                      
+ [20] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+ [21] &quot;antibiotic-resistant isoleucyl-tRNA synthetase (ileS)&quot;                                                                                                                                                                                          
+ [22] &quot;lincosamide nucleotidyltransferase (LNU)&quot;                                                                                                                                                                                                       
+ [23] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+ [24] &quot;rifamycin-resistant beta-subunit of RNA polymerase (rpoB)&quot;                                                                                                                                                                                      
+ [25] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [26] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [27] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [28] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [29] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [30] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [31] &quot;tetracycline inactivation enzyme&quot;                                                                                                                                                                                                               
+ [32] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [33] &quot;ANT(6)&quot;                                                                                                                                                                                                                                         
+ [34] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [35] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [36] &quot;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics&quot;                                                                                                                                                                      
+ [37] &quot;tetracycline inactivation enzyme&quot;                                                                                                                                                                                                               
+ [38] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [39] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+ [40] &quot;chloramphenicol acetyltransferase (CAT)&quot;                                                                                                                                                                                                        
+ [41] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [42] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+ [43] &quot;ANT(6)&quot;                                                                                                                                                                                                                                         
+ [44] &quot;sulfonamide resistant sul&quot;                                                                                                                                                                                                                      
+ [45] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [46] &quot;glycopeptide resistance gene cluster;vanW&quot;                                                                                                                                                                                                      
+ [47] &quot;ACI beta-lactamase&quot;                                                                                                                                                                                                                             
+ [48] &quot;CfxA beta-lactamase&quot;                                                                                                                                                                                                                            
+ [49] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+ [50] &quot;16S rRNA with mutation conferring resistance to tetracycline derivatives&quot;                                                                                                                                                                       
+ [51] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+ [52] &quot;16S rRNA with mutation conferring resistance to tetracycline derivatives&quot;                                                                                                                                                                       
+ [53] &quot;ANT(6)&quot;                                                                                                                                                                                                                                         
+ [54] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [55] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+ [56] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [57] &quot;tetracycline inactivation enzyme&quot;                                                                                                                                                                                                               
+ [58] &quot;fluoroquinolone resistant gyrA&quot;                                                                                                                                                                                                                 
+ [59] &quot;fluoroquinolone resistant parC&quot;                                                                                                                                                                                                                 
+ [60] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+ [61] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+ [62] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+ [63] &quot;APH(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+ [64] &quot;APH(6)&quot;                                                                                                                                                                                                                                         
+ [65] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [66] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [67] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [68] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [69] &quot;CTX-M beta-lactamase&quot;                                                                                                                                                                                                                           
+ [70] &quot;cepA beta-lactamase&quot;                                                                                                                                                                                                                            
+ [71] &quot;EC beta-lactamase&quot;                                                                                                                                                                                                                              
+ [72] &quot;elfamycin resistant EF-Tu&quot;                                                                                                                                                                                                                      
+ [73] &quot;antibiotic-resistant UhpT&quot;                                                                                                                                                                                                                      
+ [74] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [75] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+ [76] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+ [77] &quot;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                  
+ [78] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [79] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [80] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [81] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [82] &quot;ampC-type beta-lactamase&quot;                                                                                                                                                                                                                       
+ [83] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [84] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+ [85] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [86] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [87] &quot;pmr phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+ [88] &quot;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                    
+ [89] &quot;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                    
+ [90] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [91] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [92] &quot;triclosan resistant gyrA&quot;                                                                                                                                                                                                                       
+ [93] &quot;aminocoumarin resistant gyrB&quot;                                                                                                                                                                                                                   
+ [94] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [95] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [96] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+ [97] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [98] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+ [99] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[100] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[101] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[102] &quot;antibiotic-resistant murA transferase&quot;                                                                                                                                                                                                          
+[103] &quot;antibiotic resistant nfsA&quot;                                                                                                                                                                                                                      
+[104] &quot;fluoroquinolone resistant parC&quot;                                                                                                                                                                                                                 
+[105] &quot;fluoroquinolone resistant parE&quot;                                                                                                                                                                                                                 
+[106] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[107] &quot;rifamycin-resistant beta-subunit of RNA polymerase (rpoB)&quot;                                                                                                                                                                                      
+[108] &quot;vancomycin-resistant beta prime subunit of RNA polymerase (rpoC)&quot;                                                                                                                                                                               
+[109] &quot;16S rRNA with mutation conferring resistance to tetracycline derivatives&quot;                                                                                                                                                                       
+[110] &quot;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                  
+[111] &quot;pmr phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+[112] &quot;AAC(6&#39;)&quot;                                                                                                                                                                                                                                        
+[113] &quot;ACC beta-lactamase&quot;                                                                                                                                                                                                                             
+[114] &quot;APH(2&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[115] &quot;pmr phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+[116] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+[117] &quot;antibiotic-resistant ptsI phosphotransferase&quot;                                                                                                                                                                                                   
+[118] &quot;fosfomycin thiol transferase&quot;                                                                                                                                                                                                                   
+[119] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[120] &quot;ATP-binding cassette (ABC) antibiotic efflux pump;pmr phosphoethanolamine transferase&quot;                                                                                                                                                          
+[121] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[122] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[123] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[124] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[125] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[126] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[127] &quot;LEN beta-lactamase&quot;                                                                                                                                                                                                                             
+[128] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[129] &quot;MCR phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+[130] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[131] &quot;SHV beta-lactamase&quot;                                                                                                                                                                                                                             
+[132] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[133] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[134] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[135] &quot;pmr phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+[136] &quot;antibiotic resistant fabG&quot;                                                                                                                                                                                                                      
+[137] &quot;fluoroquinolone resistant gyrA&quot;                                                                                                                                                                                                                 
+[138] &quot;fluoroquinolone resistant gyrB&quot;                                                                                                                                                                                                                 
+[139] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[140] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[141] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[142] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[143] &quot;elfamycin resistant EF-Tu&quot;                                                                                                                                                                                                                      
+[144] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[145] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[146] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[147] &quot;CfxA beta-lactamase&quot;                                                                                                                                                                                                                            
+[148] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[149] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[150] &quot;chloramphenicol acetyltransferase (CAT)&quot;                                                                                                                                                                                                        
+[151] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[152] &quot;cepA beta-lactamase&quot;                                                                                                                                                                                                                            
+[153] &quot;antibiotic-resistant GlpT&quot;                                                                                                                                                                                                                      
+[154] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[155] &quot;16s rRNA with mutation conferring resistance to peptide antibiotics&quot;                                                                                                                                                                            
+[156] &quot;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;
+[157] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[158] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[159] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[160] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[161] &quot;AAC(6&#39;)&quot;                                                                                                                                                                                                                                        
+[162] &quot;elfamycin resistant EF-Tu&quot;                                                                                                                                                                                                                      
+[163] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[164] &quot;glycopeptide resistance gene cluster;van ligase&quot;                                                                                                                                                                                                
+[165] &quot;glycopeptide resistance gene cluster;vanT&quot;                                                                                                                                                                                                      
+[166] &quot;glycopeptide resistance gene cluster;vanXY&quot;                                                                                                                                                                                                     
+[167] &quot;macrolide phosphotransferase (MPH)&quot;                                                                                                                                                                                                             
+[168] &quot;daptomycin resistant cls&quot;                                                                                                                                                                                                                       
+[169] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[170] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+[171] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[172] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[173] &quot;undecaprenyl pyrophosphate related proteins&quot;                                                                                                                                                                                                    
+[174] &quot;MipA-interacting Protein&quot;                                                                                                                                                                                                                       
+[175] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[176] &quot;sulfonamide resistant sul&quot;                                                                                                                                                                                                                      
+[177] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[178] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+[179] &quot;cepA beta-lactamase&quot;                                                                                                                                                                                                                            
+[180] &quot;Sugar Porin (SP)&quot;                                                                                                                                                                                                                               
+[181] &quot;antibiotic-resistant cya adenylate cyclase&quot;                                                                                                                                                                                                     
+[182] &quot;Erm 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+[183] &quot;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                    
+[184] &quot;pmr phosphoethanolamine transferase&quot;                                                                                                                                                                                                            
+[185] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[186] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[187] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[188] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[189] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[190] &quot;antibiotic resistant fabI&quot;                                                                                                                                                                                                                      
+[191] &quot;sulfonamide resistant dihydropteroate synthase folP&quot;                                                                                                                                                                                            
+[192] &quot;kdpDE&quot;                                                                                                                                                                                                                                          
+[193] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[194] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[195] &quot;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                                                                                               
+[196] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[197] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[198] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[199] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[200] &quot;ATP-binding cassette (ABC) antibiotic efflux pump;pmr phosphoethanolamine transferase&quot;                                                                                                                                                          
+[201] &quot;General Bacterial Porin with reduced permeability to beta-lactams&quot;                                                                                                                                                                              
+[202] &quot;fluoroquinolone resistant parC&quot;                                                                                                                                                                                                                 
+[203] &quot;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics&quot;                                                                                                                                                                      
+[204] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[205] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[206] &quot;chloramphenicol acetyltransferase (CAT)&quot;                                                                                                                                                                                                        
+[207] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[208] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[209] &quot;daptomycin resistant YybT&quot;                                                                                                                                                                                                                      
+[210] &quot;daptomycin resistant cls&quot;                                                                                                                                                                                                                       
+[211] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[212] &quot;multidrug and toxic compound extrusion (MATE) transporter&quot;                                                                                                                                                                                      
+[213] &quot;daptomycin resistant gshF&quot;                                                                                                                                                                                                                      
+[214] &quot;daptomycin resistant liaF&quot;                                                                                                                                                                                                                      
+[215] &quot;daptomycin resistant liaR&quot;                                                                                                                                                                                                                      
+[216] &quot;daptomycin resistant liaS&quot;                                                                                                                                                                                                                      
+[217] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+[218] &quot;AAC(6&#39;)&quot;                                                                                                                                                                                                                                        
+[219] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[220] &quot;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[221] &quot;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics&quot;                                                                                                                                                          
+[222] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[223] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[224] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[225] &quot;APH(2&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[226] &quot;lincosamide nucleotidyltransferase (LNU)&quot;                                                                                                                                                                                                       
+[227] &quot;EC beta-lactamase&quot;                                                                                                                                                                                                                              
+[228] &quot;elfamycin resistant EF-Tu&quot;                                                                                                                                                                                                                      
+[229] &quot;antibiotic-resistant UhpT&quot;                                                                                                                                                                                                                      
+[230] &quot;ampC-type beta-lactamase&quot;                                                                                                                                                                                                                       
+[231] &quot;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump&quot;                                                                                                             
+[232] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[233] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+[234] &quot;CfxA beta-lactamase&quot;                                                                                                                                                                                                                            
+[235] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[236] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+[237] &quot;rifamycin-resistant beta-subunit of RNA polymerase (rpoB)&quot;                                                                                                                                                                                      
+[238] &quot;AAC(3)&quot;                                                                                                                                                                                                                                         
+[239] &quot;APH(3&#39;)&quot;                                                                                                                                                                                                                                        
+[240] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[241] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[242] &quot;APH(2&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[243] &quot;cepA beta-lactamase&quot;                                                                                                                                                                                                                            
+[244] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[245] &quot;ACC beta-lactamase&quot;                                                                                                                                                                                                                             
+[246] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+[247] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+[248] &quot;tetracycline-resistant ribosomal protection protein&quot;                                                                                                                                                                                            
+[249] &quot;glycopeptide resistance gene cluster;vanS&quot;                                                                                                                                                                                                      
+[250] &quot;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics&quot;                                                                                                                                                                     
+[251] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[252] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+[253] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[254] &quot;AAC(6&#39;);APH(2&#39;&#39;)&quot;                                                                                                                                                                                                                               
+[255] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[256] &quot;AAC(6&#39;)&quot;                                                                                                                                                                                                                                        
+[257] &quot;EC beta-lactamase&quot;                                                                                                                                                                                                                              
+[258] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[259] &quot;small multidrug resistance (SMR) antibiotic efflux pump&quot;                                                                                                                                                                                        
+[260] &quot;daptomycin resistant liaF&quot;                                                                                                                                                                                                                      
+[261] &quot;daptomycin resistant liaR&quot;                                                                                                                                                                                                                      
+[262] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[263] &quot;ANT(9)&quot;                                                                                                                                                                                                                                         
+[264] &quot;23S rRNA with mutation conferring resistance to macrolide antibiotics&quot;                                                                                                                                                                          
+[265] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[266] &quot;CfiA beta-lactamase&quot;                                                                                                                                                                                                                            
+[267] &quot;ATP-binding cassette (ABC) antibiotic efflux pump&quot;                                                                                                                                                                                              
+[268] &quot;macrolide esterase&quot;                                                                                                                                                                                                                             
+[269] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+[270] &quot;CfiA beta-lactamase&quot;                                                                                                                                                                                                                            
+[271] &quot;ampC-type beta-lactamase&quot;                                                                                                                                                                                                                       
+[272] &quot;OXA beta-lactamase&quot;                                                                                                                                                                                                                             
+[273] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[274] &quot;ABC-F ATP-binding cassette ribosomal protection protein&quot;                                                                                                                                                                                        
+[275] &quot;daptomycin resistant liaS&quot;                                                                                                                                                                                                                      
+[276] &quot;EC beta-lactamase&quot;                                                                                                                                                                                                                              
+[277] &quot;amp acetyltransferase&quot;                                                                                                                                                                                                                          
+[278] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[279] &quot;sulfonamide resistant sul&quot;                                                                                                                                                                                                                      
+[280] &quot;Cfr 23S ribosomal RNA methyltransferase&quot;                                                                                                                                                                                                        
+[281] &quot;APH(2&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[282] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[283] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[284] &quot;triclosan resistant gyrA&quot;                                                                                                                                                                                                                       
+[285] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[286] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[287] &quot;AAC(3)&quot;                                                                                                                                                                                                                                         
+[288] &quot;APH(4)&quot;                                                                                                                                                                                                                                         
+[289] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[290] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[291] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[292] &quot;ACT beta-lactamase&quot;                                                                                                                                                                                                                             
+[293] &quot;CMY beta-lactamase&quot;                                                                                                                                                                                                                             
+[294] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[295] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[296] &quot;major facilitator superfamily (MFS) antibiotic efflux pump&quot;                                                                                                                                                                                     
+[297] &quot;SHV beta-lactamase&quot;                                                                                                                                                                                                                             
+[298] &quot;EC beta-lactamase&quot;                                                                                                                                                                                                                              
+[299] &quot;TEM beta-lactamase&quot;                                                                                                                                                                                                                             
+[300] &quot;ANT(3&#39;&#39;)&quot;                                                                                                                                                                                                                                       
+[301] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[302] &quot;trimethoprim resistant dihydrofolate reductase dfr&quot;                                                                                                                                                                                             
+[303] &quot;CMY beta-lactamase&quot;                                                                                                                                                                                                                             
+[304] &quot;chloramphenicol acetyltransferase (CAT)&quot;                                                                                                                                                                                                        
+[305] &quot;CfiA beta-lactamase&quot;                                                                                                                                                                                                                            
+[306] &quot;tetracycline inactivation enzyme&quot;                                                                                                                                                                                                               
+[307] &quot;CfiA beta-lactamase&quot;                                                                                                                                                                                                                            
+[308] &quot;CfiA beta-lactamase&quot;                                                                                                                                                                                                                            </code></pre>
+<pre class="r"><code>metadata$HIV_Status</code></pre>
+<pre><code>  [1] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;negative&quot; &quot;negative&quot;
+  [7] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot;
+ [13] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot;
+ [19] &quot;negative&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [25] &quot;negative&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot;
+ [31] &quot;negative&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [37] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [43] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [49] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [55] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [61] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [67] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot;
+ [73] &quot;negative&quot; &quot;negative&quot; &quot;negative&quot; &quot;negative&quot; &quot;negative&quot; &quot;positive&quot;
+ [79] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [85] &quot;negative&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [91] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+ [97] &quot;positive&quot; &quot;negative&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+[103] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+[109] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot;
+[115] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;
+[121] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot;
+[127] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot;
+[133] &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;positive&quot;
+[139] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot;
+[145] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;negative&quot; &quot;positive&quot; &quot;negative&quot;
+[151] &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot; &quot;positive&quot;</code></pre>
+<pre class="r"><code>barplot_perc&lt;-function(table_path, tree_path, taxonomy_path, metadata, taxa_level, glom_var, percentage, nrow_legend=5){
+
+  colors&lt;-c(&quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;,
+            &quot;darkorange1&quot;, &quot;cyan1&quot;, &quot;royalblue4&quot;, &quot;darksalmon&quot;, &quot;chartreuse1&quot;,&quot;darkorchid4&quot;,
+            &quot;gold&quot;,&quot;forestgreen&quot;, &quot;deeppink&quot;,&quot;green&quot;, &quot;red&quot;,&quot;darkgrey&quot;,&quot;blue&quot;,&quot;aquamarine&quot;, &quot;burlywood1&quot;,
+            &quot;darkslateblue&quot;, &quot;chartreuse3&quot;,&quot;firebrick3&quot;, &quot;aquamarine4&quot;,&quot;azure1&quot;,&quot;chocolate1&quot;,&quot;deeppink4&quot;,&quot;aquamarine2&quot;, &quot;burlywood1&quot;,
+            &quot;darkblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;, &quot;darkslateblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;,
+            &quot;darkorange1&quot;, &quot;cyan1&quot;, &quot;royalblue4&quot;, &quot;darksalmon&quot;, &quot;chartreuse1&quot;,&quot;darkorchid4&quot;,
+            &quot;gold&quot;,&quot;forestgreen&quot;, &quot;deeppink&quot;,&quot;green&quot;, &quot;red&quot;,&quot;darkgrey&quot;,&quot;blue&quot;,&quot;aquamarine&quot;, &quot;burlywood1&quot;,
+            &quot;darkslateblue&quot;, &quot;chartreuse3&quot;,&quot;firebrick3&quot;, &quot;aquamarine4&quot;,&quot;azure1&quot;,&quot;chocolate1&quot;,&quot;deeppink4&quot;,&quot;aquamarine2&quot;, &quot;burlywood1&quot;,
+            &quot;darkblue&quot;, &quot;darkgoldenrod1&quot;, &quot;darkseagreen&quot;, &quot;darkorchid&quot;, &quot;darkolivegreen1&quot;,
+            &quot;lightskyblue&quot;, &quot;darkgreen&quot;, &quot;darkseagreen3&quot;, &quot;khaki2&quot;, &quot;firebrick&quot;, &quot;brown1&quot;, &quot;darkslateblue&quot;)
+  taxa_level&lt;-enquo(taxa_level)
+  glom_var&lt;-enquo(glom_var)
+  
+  data&lt;-qza_to_phyloseq(
+    features=table_path,
+    tree=tree_path,
+    taxonomy=taxonomy_path)%&gt;%                               ##Obtengo el objeto phyloseq a partir de qiime
+    psmelt()%&gt;% ##Transformo el objeto a un dataframe
+    mutate(Family=ifelse(is.na(Family), paste(&quot;Unclassified&quot;, Order), Family),      ##Familias no identificads como Orden unlassified
+           Family=ifelse(Family==&quot;uncultured&quot;, paste (&quot;Uncultured&quot;, Order), Family),## Faimilas unculterd como orden uncultured 
+           Genus=ifelse(is.na(Genus), paste(&quot;Unclassified&quot;, Family), Genus))%&gt;%    ##G?nero no identificado como Familia unlassified
+    group_by(Sample, !!taxa_level)%&gt;%                                                     ##Agrupamos a nivel de familia
+    summarize(count=sum(Abundance), .groups = &quot;drop&quot;)%&gt;%                            ##Abundancia relativa de cada familia (cambiar si necesario)
+    inner_join(metadata, by=&quot;Sample&quot;)%&gt;%                                            ## Unifico con metadatos
+    group_by(!!glom_var)%&gt;%
+    mutate(rel_abund=count*100/sum(count))%&gt;%
+    ungroup()%&gt;%
+    mutate(tax_level=!!taxa_level, 
+           tax_level=str_replace(tax_level, &quot;(.*)&quot;, &quot;*\\1*&quot;),
+           tax_level=str_replace(tax_level, &quot;\\*Uncultured (.*)&quot;, &quot;Uncultured *\\1&quot; ),
+           tax_level=str_replace(tax_level, &quot;\\*Unclassified (.*)&quot;, &quot;Unclassified *\\1&quot; ),
+           tax_level=if_else(rel_abund&lt;percentage, glue(&quot;Families &lt; {percentage}% abundance&quot;), tax_level),
+           tax_level=factor(tax_level),
+           tax_level=fct_relevel(tax_level, glue(&quot;Families &lt; {percentage}% abundance&quot;), after=Inf))%&gt;%
+    select(Sample, tax_level, everything())
+
+  ggplot(data=data, aes(x=!!glom_var, y=rel_abund, fill=tax_level))+
+      geom_bar(aes(), stat=&quot;identity&quot;, position=&quot;stack&quot;) +
+      scale_fill_manual(quo_name(taxa_level), values =colors ) + 
+      labs(y=&quot;Relative abundabce&quot;)+
+      theme_bw()+
+      theme(legend.position=&quot;bottom&quot;,
+            legend.text = element_markdown(),
+            axis.text.y.left = element_blank(),
+            axis.text.x = element_text(size = 10),
+            axis.title.y = element_text(size = 10),
+            axis.ticks.y=element_blank(),
+            strip.text.x = element_text(face = &quot;bold&quot;),
+            title = element_text(size = 10) ) + guides(fill=guide_legend(nrow=nrow_legend))}</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] ggtext_0.1.1    glue_1.6.2      forcats_0.5.1   stringr_1.4.0  
+ [5] dplyr_1.0.8     purrr_0.3.4     readr_2.1.2     tidyr_1.2.0    
+ [9] tibble_3.1.6    ggplot2_3.3.5   tidyverse_1.3.1 workflowr_1.7.0
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2       sass_0.4.1       bit64_4.0.5      vroom_1.5.7     
+ [5] jsonlite_1.8.0   modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1
+ [9] getPass_0.2-2    highr_0.9        cellranger_1.1.0 yaml_2.3.5      
+[13] pillar_1.7.0     backports_1.4.1  digest_0.6.29    promises_1.2.0.1
+[17] gridtext_0.1.4   rvest_1.0.2      colorspace_2.0-3 htmltools_0.5.2 
+[21] httpuv_1.6.5     pkgconfig_2.0.3  broom_0.7.12     haven_2.4.3     
+[25] scales_1.1.1     processx_3.5.3   whisker_0.4      later_1.3.0     
+[29] tzdb_0.2.0       git2r_0.30.1     generics_0.1.2   farver_2.1.0    
+[33] ellipsis_0.3.2   withr_2.5.0      cli_3.2.0        magrittr_2.0.2  
+[37] crayon_1.5.0     readxl_1.3.1     evaluate_0.15    ps_1.6.0        
+[41] fs_1.5.2         fansi_1.0.3      xml2_1.3.3       tools_4.1.2     
+[45] hms_1.1.1        lifecycle_1.0.1  munsell_0.5.0    reprex_2.0.1    
+[49] callr_3.7.0      compiler_4.1.2   jquerylib_0.1.4  rlang_1.0.2     
+[53] grid_4.1.2       rstudioapi_0.13  labeling_0.4.2   rmarkdown_2.13  
+[57] gtable_0.3.0     DBI_1.1.2        markdown_1.1     R6_2.5.1        
+[61] lubridate_1.8.0  knitr_1.38       fastmap_1.1.0    bit_4.0.4       
+[65] utf8_1.2.2       rprojroot_2.0.2  stringi_1.7.6    parallel_4.1.2  
+[69] Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1     tidyselect_1.1.2
+[73] xfun_0.30       </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

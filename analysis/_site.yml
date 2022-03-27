@@ -9,6 +9,8 @@ navbar:
     href: import_data.html
   - text: Summarize data
     href: summarize_data.html
+  - text: Rarefy data
+    href: rarefaction.html
   - text: Alpha diversity analysis
     href: alpha_div.html
   - text: Beta diversity analysis

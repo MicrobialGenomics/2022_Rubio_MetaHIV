@@ -20,11 +20,13 @@ library(vegan)
 library(ggpubr)
 ```
 
-## Load summarized data
+## Load summarized and rarefied data
 
 ```{r}
 load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/rarefied2500_groot.RDA")
 ```
 
 ## Create functions:
@@ -80,8 +82,10 @@ data%>%
 
 ```{r ariba_alphadiv}
 ariba_alpha<-alpha_div(ariba_rpkm, ariba_counts)
+ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
 
 alpha_div_plot_all(ariba_alpha, HIV_Status)
+alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = "Ariba Rarefied counts")
 alpha_div_plot_all(ariba_alpha, Profile)
 ```
 
@@ -89,7 +93,10 @@ alpha_div_plot_all(ariba_alpha, Profile)
 
 ```{r groot_alphadiv}
 groot_alpha<-alpha_div(groot_rpkm, groot_counts)
+groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
+
 alpha_div_plot_all(groot_alpha, HIV_Status)
+alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = "Groot Rarefied counts")
 alpha_div_plot_all(groot_alpha, Profile)
 ```
 

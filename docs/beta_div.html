@@ -13,9 +13,9 @@
 
 <meta name="date" content="2022-03-06" />
 
-<title>beta_div</title>
+<title>Beta diversity analysis</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -75,6 +75,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -95,6 +96,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -320,7 +324,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -337,6 +341,9 @@ div.tocify {
 </li>
 <li>
   <a href="summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="rarefaction.html">Rarefy data</a>
 </li>
 <li>
   <a href="alpha_div.html">Alpha diversity analysis</a>
@@ -362,7 +369,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">beta_div</h1>
+<h1 class="title toc-ignore">Beta diversity analysis</h1>
 <h4 class="author">Elisa Rubio</h4>
 <h4 class="date">2022-03-06</h4>
 
@@ -389,7 +396,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-13
+<strong>Last updated:</strong> 2022-03-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -413,7 +420,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -480,16 +487,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -502,17 +509,14 @@ Ignored files:
     Ignored:    output/grootData/
 
 Untracked files:
-    Untracked:  analysis/beta_div.Rmd
+    Untracked:  analysis/barplot.Rmd
+    Untracked:  analysis/rarefaction.Rmd
 
 Unstaged changes:
     Modified:   analysis/_site.yml
     Modified:   analysis/alpha_div.Rmd
-    Modified:   analysis/corplot.Rmd
+    Modified:   analysis/beta_div.Rmd
     Modified:   analysis/index.Rmd
-    Modified:   analysis/summarize_data.Rmd
-
-Staged changes:
-    New:        analysis/alpha_div.Rmd
 
 </code></pre>
 <p>
@@ -525,55 +529,116 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/beta_div.Rmd</code>) and HTML (<code>docs/beta_div.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/analysis/beta_div.Rmd" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+<td>
+Alpha and beta diversity analyses
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/beta_div.html" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+<td>
+Alpha and beta diversity analyses
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
 </div>
 <pre class="r"><code>library(tidyverse)
 library(vegan)
-library(glue)</code></pre>
-<div id="load-summarized-data" class="section level2">
-<h2>Load summarized data</h2>
+library(glue)
+library(patchwork)</code></pre>
+<div id="load-summarized-and-rarefied-data" class="section level2">
+<h2>Load summarized and rarefied data</h2>
 <pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
 load(&quot;output/summarized_groot.RDA&quot;)
-metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)
-metadata_ariba&lt;-metadata%&gt;%filter(SampleID %in% colnames(ariba_counts[-1]))</code></pre>
+load(&quot;output/rarefied_ariba.RDA&quot;)
+load(&quot;output/rarefied2500_groot.RDA&quot;)
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)</code></pre>
 </div>
-<div id="bray-curtis-distance-from-rpkm-values" class="section level2">
-<h2>Bray Curtis Distance from RPKM values:</h2>
+<div id="create-functions" class="section level2">
+<h2>Create functions</h2>
+<div id="bray-curtis-distance-from-rpkm-values-or-rarefied-values-vegdist-function" class="section level3">
+<h3>Bray Curtis Distance from RPKM values or rarefied values (vegdist function)</h3>
 <pre class="r"><code>dist_rpkm&lt;-vegdist(t(ariba_rpkm[ ,-1]), method = &quot;bray&quot;)</code></pre>
 </div>
-<div id="bray-curtis-distance-from-rarefied-count-values" class="section level2">
-<h2>Bray Curtis Distance from rarefied count values</h2>
-<pre class="r"><code>nCounts&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
-ggplot(nCounts, aes(counts)) +
-  coord_cartesian(xlim = c(0,NA))+
-  geom_density()+
-  labs(title = &quot;Number of Reads per sample distribution&quot;)+
-  scale_x_continuous(breaks=seq(0,150000,10000))+
-  theme_bw()+
-  theme(axis.title = element_blank(), axis.text.y = element_blank(), axis.ticks.y = element_blank())</code></pre>
-<p><img src="figure/beta_div.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>minCounts&lt;-min(nCounts$counts)</code></pre>
-<pre class="r"><code>set.seed(200889)
-dist_rar&lt;- avgdist(t(ariba_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)</code></pre>
-<div id="function-to-calculate-both-distances" class="section level3">
-<h3>Function to calculate both distances</h3>
-<pre class="r"><code>dist_func&lt;-function(d_rpkm, d_counts){
+<div id="bray-curtis-distance-with-avgdist-function-performs-rarefaction" class="section level3">
+<h3>Bray Curtis Distance with avgdist function (performs rarefaction)</h3>
+<pre class="r"><code>nCounts_ariba&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
+minCounts&lt;-min(nCounts_ariba$counts)
+set.seed(200889)
+##dist_rar&lt;- avgdist(t(ariba_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)</code></pre>
+</div>
+<div id="function-to-calculate-all-distances" class="section level3">
+<h3>Function to calculate all distances</h3>
+<pre class="r"><code>dist_func&lt;-function(d_rpkm, d_rar, d_counts, metadata){
   dist_rpkm&lt;-vegdist(t(d_rpkm[ ,-1]), method = &quot;bray&quot;)
+  dist_rar&lt;-vegdist(t(d_rar[ ,-1]), method = &quot;bray&quot;)
   nCounts&lt;-apply(d_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
   minCounts&lt;-min(nCounts$counts)
   set.seed(200889)
-  dist_rar&lt;- avgdist(t(d_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)
-  d&lt;-list(dist_rpkm, dist_rar)
-  names(d)&lt;-c(&quot;dist_rpkm&quot;, &quot;dist_rar&quot;)
+  dist_avgd&lt;- avgdist(t(d_counts[ ,-1]), dmethod=&quot;bray&quot;, sample=minCounts)
+  
+  meta_rpkm&lt;-metadata%&gt;%filter(SampleID %in% colnames(d_rpkm[-1]))
+  meta_rar&lt;-metadata%&gt;%filter(SampleID %in% colnames(d_rar[-1]))
+  meta_avgd&lt;-metadata%&gt;%filter(SampleID %in% colnames(d_counts[-1]))
+  
+  d&lt;-list(dist_rpkm, dist_rar, dist_avgd, meta_rpkm, meta_rar, meta_avgd)
+  names(d)&lt;-c(&quot;dist_rpkm&quot;, &quot;dist_rar&quot;, &quot;dist_avgd&quot;, &quot;meta_rpkm&quot;, &quot;meta_rar&quot;, &quot;meta_avgd&quot;)
   return(d)
 }</code></pre>
-<pre class="r"><code>ariba_dist&lt;-dist_func(ariba_rpkm, ariba_counts)
-groot_dist&lt;-dist_func(groot_rpkm, groot_counts)</code></pre>
 </div>
 <div id="nmds" class="section level3">
 <h3>NMDS</h3>
@@ -629,205 +694,6 @@ groot_dist&lt;-dist_func(groot_rpkm, groot_counts)</code></pre>
                            values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
     theme_bw()+
     theme(legend.text = element_text(size=10))}</code></pre>
-<pre class="r"><code>beta_nmds(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2486241 
-Run 1 stress 0.2486688 
-... Procrustes: rmse 0.002921123  max resid 0.03232354 
-Run 2 stress 0.2496518 
-Run 3 stress 0.2486503 
-... Procrustes: rmse 0.002719418  max resid 0.03224038 
-Run 4 stress 0.2488234 
-... Procrustes: rmse 0.007291362  max resid 0.07156585 
-Run 5 stress 0.2487869 
-... Procrustes: rmse 0.006794286  max resid 0.07184174 
-Run 6 stress 0.2524771 
-Run 7 stress 0.2488573 
-... Procrustes: rmse 0.006489633  max resid 0.07181505 
-Run 8 stress 0.249641 
-Run 9 stress 0.2498946 
-Run 10 stress 0.2488563 
-... Procrustes: rmse 0.007030332  max resid 0.07164832 
-Run 11 stress 0.2496531 
-Run 12 stress 0.2486444 
-... Procrustes: rmse 0.001086834  max resid 0.01049294 
-Run 13 stress 0.2486165 
-... New best solution
-... Procrustes: rmse 0.001823109  max resid 0.01580782 
-Run 14 stress 0.2516208 
-Run 15 stress 0.2486463 
-... Procrustes: rmse 0.002706895  max resid 0.03221644 
-Run 16 stress 0.2495862 
-Run 17 stress 0.2496288 
-Run 18 stress 0.2496519 
-Run 19 stress 0.2496403 
-Run 20 stress 0.2496276 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_nmds(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2618917 
-Run 1 stress 0.2632119 
-Run 2 stress 0.2621124 
-... Procrustes: rmse 0.01706144  max resid 0.1140403 
-Run 3 stress 0.2621201 
-... Procrustes: rmse 0.02675554  max resid 0.2289721 
-Run 4 stress 0.2657602 
-Run 5 stress 0.2658877 
-Run 6 stress 0.2636648 
-Run 7 stress 0.2642868 
-Run 8 stress 0.2629732 
-Run 9 stress 0.2710029 
-Run 10 stress 0.2625215 
-Run 11 stress 0.2667473 
-Run 12 stress 0.263955 
-Run 13 stress 0.2635732 
-Run 14 stress 0.2623382 
-... Procrustes: rmse 0.02824957  max resid 0.2295447 
-Run 15 stress 0.2658625 
-Run 16 stress 0.2627324 
-Run 17 stress 0.2653591 
-Run 18 stress 0.2638188 
-Run 19 stress 0.2637502 
-Run 20 stress 0.2674921 
-*** No convergence -- monoMDS stopping criteria:
-     5: no. of iterations &gt;= maxit
-    15: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_nmds2(ariba_dist$dist_rpkm, metadata_ariba, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2486241 
-Run 1 stress 0.2486688 
-... Procrustes: rmse 0.002921123  max resid 0.03232354 
-Run 2 stress 0.2496518 
-Run 3 stress 0.2486503 
-... Procrustes: rmse 0.002719418  max resid 0.03224038 
-Run 4 stress 0.2488234 
-... Procrustes: rmse 0.007291362  max resid 0.07156585 
-Run 5 stress 0.2487869 
-... Procrustes: rmse 0.006794286  max resid 0.07184174 
-Run 6 stress 0.2524771 
-Run 7 stress 0.2488573 
-... Procrustes: rmse 0.006489633  max resid 0.07181505 
-Run 8 stress 0.249641 
-Run 9 stress 0.2498946 
-Run 10 stress 0.2488563 
-... Procrustes: rmse 0.007030332  max resid 0.07164832 
-Run 11 stress 0.2496531 
-Run 12 stress 0.2486444 
-... Procrustes: rmse 0.001086834  max resid 0.01049294 
-Run 13 stress 0.2486165 
-... New best solution
-... Procrustes: rmse 0.001823109  max resid 0.01580782 
-Run 14 stress 0.2516208 
-Run 15 stress 0.2486463 
-... Procrustes: rmse 0.002706895  max resid 0.03221644 
-Run 16 stress 0.2495862 
-Run 17 stress 0.2496288 
-Run 18 stress 0.2496519 
-Run 19 stress 0.2496403 
-Run 20 stress 0.2496276 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_nmds2(ariba_dist$dist_rar, metadata_ariba, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2618917 
-Run 1 stress 0.2632119 
-Run 2 stress 0.2621124 
-... Procrustes: rmse 0.01706144  max resid 0.1140403 
-Run 3 stress 0.2621201 
-... Procrustes: rmse 0.02675554  max resid 0.2289721 
-Run 4 stress 0.2657602 
-Run 5 stress 0.2658877 
-Run 6 stress 0.2636648 
-Run 7 stress 0.2642868 
-Run 8 stress 0.2629732 
-Run 9 stress 0.2710029 
-Run 10 stress 0.2625215 
-Run 11 stress 0.2667473 
-Run 12 stress 0.263955 
-Run 13 stress 0.2635732 
-Run 14 stress 0.2623382 
-... Procrustes: rmse 0.02824957  max resid 0.2295447 
-Run 15 stress 0.2658625 
-Run 16 stress 0.2627324 
-Run 17 stress 0.2653591 
-Run 18 stress 0.2638188 
-Run 19 stress 0.2637502 
-Run 20 stress 0.2674921 
-*** No convergence -- monoMDS stopping criteria:
-     5: no. of iterations &gt;= maxit
-    15: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.1588664 
-Run 1 stress 0.1642337 
-Run 2 stress 0.1636576 
-Run 3 stress 0.1682236 
-Run 4 stress 0.156548 
-... New best solution
-... Procrustes: rmse 0.04547664  max resid 0.2324751 
-Run 5 stress 0.1657083 
-Run 6 stress 0.162819 
-Run 7 stress 0.1574414 
-Run 8 stress 0.1603271 
-Run 9 stress 0.151538 
-... New best solution
-... Procrustes: rmse 0.03955989  max resid 0.2202202 
-Run 10 stress 0.1557259 
-Run 11 stress 0.1629994 
-Run 12 stress 0.1582707 
-Run 13 stress 0.1536591 
-Run 14 stress 0.1497357 
-... New best solution
-... Procrustes: rmse 0.04236057  max resid 0.2398044 
-Run 15 stress 0.1589346 
-Run 16 stress 0.1555004 
-Run 17 stress 0.1551458 
-Run 18 stress 0.161488 
-Run 19 stress 0.1491921 
-... New best solution
-... Procrustes: rmse 0.02279961  max resid 0.2281182 
-Run 20 stress 0.1605846 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.1924846 
-Run 1 stress 0.189623 
-... New best solution
-... Procrustes: rmse 0.03520576  max resid 0.1822078 
-Run 2 stress 0.1892024 
-... New best solution
-... Procrustes: rmse 0.06035491  max resid 0.2591955 
-Run 3 stress 0.2005598 
-Run 4 stress 0.1842685 
-... New best solution
-... Procrustes: rmse 0.04120382  max resid 0.2249151 
-Run 5 stress 0.184776 
-Run 6 stress 0.1924247 
-Run 7 stress 0.1908322 
-Run 8 stress 0.1868456 
-Run 9 stress 0.1877726 
-Run 10 stress 0.1772866 
-... New best solution
-... Procrustes: rmse 0.05250883  max resid 0.2340857 
-Run 11 stress 0.1863004 
-Run 12 stress 0.1930061 
-Run 13 stress 0.1819975 
-Run 14 stress 0.1873666 
-Run 15 stress 0.1880836 
-Run 16 stress 0.1890585 
-Run 17 stress 0.1843246 
-Run 18 stress 0.1831432 
-Run 19 stress 0.1944867 
-Run 20 stress 0.1867752 
-*** No convergence -- monoMDS stopping criteria:
-     2: no. of iterations &gt;= maxit
-    17: stress ratio &gt; sratmax
-     1: scale factor of the gradient &lt; sfgrmin</code></pre>
-<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="pcoa" class="section level3">
@@ -900,14 +766,684 @@ Run 20 stress 0.1867752
                            values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
     theme_bw()+
     theme(legend.text = element_text(size=10))}</code></pre>
-<pre class="r"><code>beta_pcoa(ariba_dist$dist_rpkm, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+</div>
+</div>
+</div>
+<div id="ariba" class="section level2">
+<h2>Ariba</h2>
+<pre class="r"><code>ariba_dist&lt;-dist_func(ariba_rpkm, ariba_rar, ariba_counts, metadata)</code></pre>
+<pre class="r"><code>beta_nmds(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-nmds-HIV-1">
+Past versions of "ariba nmds HIV-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-nmds-HIV-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba nmds HIV-1.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds(ariba_dist$dist_rar, ariba_dist$meta_rar, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2619113 
+Run 1 stress 0.2630689 
+Run 2 stress 0.2623743 
+... Procrustes: rmse 0.01744429  max resid 0.1090825 
+Run 3 stress 0.2617397 
+... New best solution
+... Procrustes: rmse 0.02391724  max resid 0.2272323 
+Run 4 stress 0.2658973 
+Run 5 stress 0.2660067 
+Run 6 stress 0.2619111 
+... Procrustes: rmse 0.0172414  max resid 0.2050288 
+Run 7 stress 0.2666912 
+Run 8 stress 0.2637621 
+Run 9 stress 0.2715775 
+Run 10 stress 0.2637698 
+Run 11 stress 0.2670776 
+Run 12 stress 0.2640943 
+Run 13 stress 0.2634628 
+Run 14 stress 0.2665223 
+Run 15 stress 0.2660558 
+Run 16 stress 0.2630005 
+Run 17 stress 0.2655312 
+Run 18 stress 0.2642923 
+Run 19 stress 0.2641417 
+Run 20 stress 0.2687306 
+*** No convergence -- monoMDS stopping criteria:
+     4: no. of iterations &gt;= maxit
+    16: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-nmds-HIV-2">
+Past versions of "ariba nmds HIV-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-nmds-HIV-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba nmds HIV-2.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds(ariba_dist$dist_avgd, ariba_dist$meta_avgd, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2618917 
+Run 1 stress 0.2632119 
+Run 2 stress 0.2621124 
+... Procrustes: rmse 0.01706144  max resid 0.1140403 
+Run 3 stress 0.2621201 
+... Procrustes: rmse 0.02675554  max resid 0.2289721 
+Run 4 stress 0.2657602 
+Run 5 stress 0.2658877 
+Run 6 stress 0.2636648 
+Run 7 stress 0.2642868 
+Run 8 stress 0.2629732 
+Run 9 stress 0.2710029 
+Run 10 stress 0.2625215 
+Run 11 stress 0.2667473 
+Run 12 stress 0.263955 
+Run 13 stress 0.2635732 
+Run 14 stress 0.2623382 
+... Procrustes: rmse 0.02824957  max resid 0.2295447 
+Run 15 stress 0.2658625 
+Run 16 stress 0.2627324 
+Run 17 stress 0.2653591 
+Run 18 stress 0.2638188 
+Run 19 stress 0.2637502 
+Run 20 stress 0.2674921 
+*** No convergence -- monoMDS stopping criteria:
+     5: no. of iterations &gt;= maxit
+    15: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20HIV-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_nmds2(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-nmds-profile-1">
+Past versions of "ariba nmds profile-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-nmds-profile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba nmds profile-1.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds2(ariba_dist$dist_rar, ariba_dist$meta_rar, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2619113 
+Run 1 stress 0.2630689 
+Run 2 stress 0.2623743 
+... Procrustes: rmse 0.01744429  max resid 0.1090825 
+Run 3 stress 0.2617397 
+... New best solution
+... Procrustes: rmse 0.02391724  max resid 0.2272323 
+Run 4 stress 0.2658973 
+Run 5 stress 0.2660067 
+Run 6 stress 0.2619111 
+... Procrustes: rmse 0.0172414  max resid 0.2050288 
+Run 7 stress 0.2666912 
+Run 8 stress 0.2637621 
+Run 9 stress 0.2715775 
+Run 10 stress 0.2637698 
+Run 11 stress 0.2670776 
+Run 12 stress 0.2640943 
+Run 13 stress 0.2634628 
+Run 14 stress 0.2665223 
+Run 15 stress 0.2660558 
+Run 16 stress 0.2630005 
+Run 17 stress 0.2655312 
+Run 18 stress 0.2642923 
+Run 19 stress 0.2641417 
+Run 20 stress 0.2687306 
+*** No convergence -- monoMDS stopping criteria:
+     4: no. of iterations &gt;= maxit
+    16: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-nmds-profile-2">
+Past versions of "ariba nmds profile-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-nmds-profile-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba nmds profile-2.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds2(ariba_dist$dist_avgd, ariba_dist$meta_avgd, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
+<pre><code>Run 0 stress 0.2618917 
+Run 1 stress 0.2632119 
+Run 2 stress 0.2621124 
+... Procrustes: rmse 0.01706144  max resid 0.1140403 
+Run 3 stress 0.2621201 
+... Procrustes: rmse 0.02675554  max resid 0.2289721 
+Run 4 stress 0.2657602 
+Run 5 stress 0.2658877 
+Run 6 stress 0.2636648 
+Run 7 stress 0.2642868 
+Run 8 stress 0.2629732 
+Run 9 stress 0.2710029 
+Run 10 stress 0.2625215 
+Run 11 stress 0.2667473 
+Run 12 stress 0.263955 
+Run 13 stress 0.2635732 
+Run 14 stress 0.2623382 
+... Procrustes: rmse 0.02824957  max resid 0.2295447 
+Run 15 stress 0.2658625 
+Run 16 stress 0.2627324 
+Run 17 stress 0.2653591 
+Run 18 stress 0.2638188 
+Run 19 stress 0.2637502 
+Run 20 stress 0.2674921 
+*** No convergence -- monoMDS stopping criteria:
+     5: no. of iterations &gt;= maxit
+    15: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/ariba%20nmds%20profile-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_pcoa(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
 <p><img src="figure/beta_div.Rmd/ariba%20pcoa%20hiv-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_pcoa(ariba_dist$dist_rar, metadata_ariba, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-pcoa-hiv-1">
+Past versions of "ariba pcoa hiv-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-pcoa-hiv-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba pcoa hiv-1.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_pcoa(ariba_dist$dist_rar, ariba_dist$meta_rar, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
 <p><img src="figure/beta_div.Rmd/ariba%20pcoa%20hiv-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_pcoa(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-ariba-pcoa-hiv-2">
+Past versions of "ariba pcoa hiv-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-ariba-pcoa-hiv-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/ariba pcoa hiv-2.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="groot" class="section level2">
+<h2>Groot</h2>
+<pre class="r"><code>groot_dist&lt;-dist_func(groot_rpkm, groot_rar, groot_counts, metadata)</code></pre>
+<pre class="r"><code>beta_nmds(groot_dist$dist_rpkm, groot_dist$meta_rpkm, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
+<pre><code>Run 0 stress 0.1588664 
+Run 1 stress 0.1642337 
+Run 2 stress 0.1636576 
+Run 3 stress 0.1682236 
+Run 4 stress 0.156548 
+... New best solution
+... Procrustes: rmse 0.04547664  max resid 0.2324751 
+Run 5 stress 0.1657083 
+Run 6 stress 0.162819 
+Run 7 stress 0.1574414 
+Run 8 stress 0.1603271 
+Run 9 stress 0.151538 
+... New best solution
+... Procrustes: rmse 0.03955989  max resid 0.2202202 
+Run 10 stress 0.1557259 
+Run 11 stress 0.1629994 
+Run 12 stress 0.1582707 
+Run 13 stress 0.1536591 
+Run 14 stress 0.1497357 
+... New best solution
+... Procrustes: rmse 0.04236057  max resid 0.2398044 
+Run 15 stress 0.1589346 
+Run 16 stress 0.1555004 
+Run 17 stress 0.1551458 
+Run 18 stress 0.161488 
+Run 19 stress 0.1491921 
+... New best solution
+... Procrustes: rmse 0.02279961  max resid 0.2281182 
+Run 20 stress 0.1605846 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-groot-nmds-HIV-1">
+Past versions of "groot nmds HIV-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-groot-nmds-HIV-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/groot nmds HIV-1.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds(groot_dist$dist_rar, groot_dist$meta_rar, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<pre><code>Run 0 stress 0.1803599 
+Run 1 stress 0.1788383 
+... New best solution
+... Procrustes: rmse 0.03873502  max resid 0.2398207 
+Run 2 stress 0.179452 
+Run 3 stress 0.1824486 
+Run 4 stress 0.188978 
+Run 5 stress 0.18197 
+Run 6 stress 0.1901835 
+Run 7 stress 0.1833 
+Run 8 stress 0.1776509 
+... New best solution
+... Procrustes: rmse 0.03414292  max resid 0.2442929 
+Run 9 stress 0.1740271 
+... New best solution
+... Procrustes: rmse 0.02613701  max resid 0.1594867 
+Run 10 stress 0.1837995 
+Run 11 stress 0.1816011 
+Run 12 stress 0.1746082 
+Run 13 stress 0.1784326 
+Run 14 stress 0.1745717 
+Run 15 stress 0.1806955 
+Run 16 stress 0.1771005 
+Run 17 stress 0.1841789 
+Run 18 stress 0.1793796 
+Run 19 stress 0.1800953 
+Run 20 stress 0.1875857 
+*** No convergence -- monoMDS stopping criteria:
+     2: no. of iterations &gt;= maxit
+    18: stress ratio &gt; sratmax</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-groot-nmds-HIV-2">
+Past versions of "groot nmds HIV-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-groot-nmds-HIV-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/groot nmds HIV-2.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_nmds(groot_dist$dist_avgd, groot_dist$meta_avgd, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
+<pre><code>Run 0 stress 0.1924846 
+Run 1 stress 0.189623 
+... New best solution
+... Procrustes: rmse 0.03520576  max resid 0.1822078 
+Run 2 stress 0.1892024 
+... New best solution
+... Procrustes: rmse 0.06035491  max resid 0.2591955 
+Run 3 stress 0.2005598 
+Run 4 stress 0.1842685 
+... New best solution
+... Procrustes: rmse 0.04120382  max resid 0.2249151 
+Run 5 stress 0.184776 
+Run 6 stress 0.1924247 
+Run 7 stress 0.1908322 
+Run 8 stress 0.1868456 
+Run 9 stress 0.1877726 
+Run 10 stress 0.1772866 
+... New best solution
+... Procrustes: rmse 0.05250883  max resid 0.2340857 
+Run 11 stress 0.1863004 
+Run 12 stress 0.1930061 
+Run 13 stress 0.1819975 
+Run 14 stress 0.1873666 
+Run 15 stress 0.1880836 
+Run 16 stress 0.1890585 
+Run 17 stress 0.1843246 
+Run 18 stress 0.1831432 
+Run 19 stress 0.1944867 
+Run 20 stress 0.1867752 
+*** No convergence -- monoMDS stopping criteria:
+     2: no. of iterations &gt;= maxit
+    17: stress ratio &gt; sratmax
+     1: scale factor of the gradient &lt; sfgrmin</code></pre>
+<p><img src="figure/beta_div.Rmd/groot%20nmds%20HIV-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>beta_pcoa(groot_dist$dist_rpkm, groot_dist$meta_rpkm, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from RPKM&quot;)</code></pre>
 <p><img src="figure/beta_div.Rmd/groot%20pcoa%20hiv-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>beta_pcoa(groot_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-groot-pcoa-hiv-1">
+Past versions of "groot pcoa hiv-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-groot-pcoa-hiv-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/groot pcoa hiv-1.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>beta_pcoa(groot_dist$dist_rar,  groot_dist$meta_rar, HIV_Status)+labs(title=&quot;Groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts&quot;)</code></pre>
 <p><img src="figure/beta_div.Rmd/groot%20pcoa%20hiv-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-groot-pcoa-hiv-2">
+Past versions of "groot pcoa hiv-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-groot-pcoa-hiv-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/beta_div.Rmd/groot pcoa hiv-2.png" target="_blank">e88cb56</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="pretty-plot" class="section level4">
 <h4>Pretty plot</h4>
@@ -963,32 +1499,31 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] glue_1.6.0      vegan_2.5-7     lattice_0.20-45 permute_0.9-7  
- [5] forcats_0.5.1   stringr_1.4.0   dplyr_1.0.7     purrr_0.3.4    
- [9] readr_2.1.1     tidyr_1.1.4     tibble_3.1.6    ggplot2_3.3.5  
-[13] tidyverse_1.3.1 workflowr_1.7.0
+ [1] patchwork_1.1.1 glue_1.6.2      vegan_2.5-7     lattice_0.20-45
+ [5] permute_0.9-7   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
+ [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
+[13] ggplot2_3.3.5   tidyverse_1.3.1
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2       bit64_4.0.5      vroom_1.5.7      jsonlite_1.7.2  
- [5] splines_4.1.2    modelr_0.1.8     assertthat_0.2.1 getPass_0.2-2   
- [9] highr_0.9        cellranger_1.1.0 yaml_2.2.1       pillar_1.6.4    
-[13] backports_1.4.1  digest_0.6.29    promises_1.2.0.1 rvest_1.0.2     
-[17] colorspace_2.0-2 htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0    
-[21] pkgconfig_2.0.3  broom_0.7.11     haven_2.4.3      scales_1.1.1    
-[25] processx_3.5.2   whisker_0.4      later_1.3.0      tzdb_0.2.0      
-[29] git2r_0.29.0     mgcv_1.8-38      farver_2.1.0     generics_0.1.1  
-[33] ellipsis_0.3.2   withr_2.4.3      cli_3.1.0        magrittr_2.0.1  
-[37] crayon_1.4.2     readxl_1.3.1     evaluate_0.14    ps_1.6.0        
-[41] fs_1.5.2         fansi_0.5.0      nlme_3.1-153     MASS_7.3-54     
-[45] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
-[49] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    callr_3.7.0     
-[53] compiler_4.1.2   jquerylib_0.1.4  rlang_0.4.12     grid_4.1.2      
-[57] rstudioapi_0.13  labeling_0.4.2   rmarkdown_2.11   gtable_0.3.0    
-[61] DBI_1.1.2        R6_2.5.1         lubridate_1.8.0  knitr_1.37      
-[65] bit_4.0.4        fastmap_1.1.0    utf8_1.2.2       rprojroot_2.0.2 
-[69] stringi_1.7.6    parallel_4.1.2   Rcpp_1.0.7       vctrs_0.3.8     
-[73] dbplyr_2.1.1     tidyselect_1.1.1 xfun_0.29       </code></pre>
-</div>
+ [1] httr_1.4.2       sass_0.4.1       bit64_4.0.5      vroom_1.5.7     
+ [5] jsonlite_1.8.0   splines_4.1.2    modelr_0.1.8     bslib_0.3.1     
+ [9] assertthat_0.2.1 highr_0.9        cellranger_1.1.0 yaml_2.3.5      
+[13] pillar_1.7.0     backports_1.4.1  digest_0.6.29    promises_1.2.0.1
+[17] rvest_1.0.2      colorspace_2.0-3 htmltools_0.5.2  httpuv_1.6.5    
+[21] Matrix_1.4-0     pkgconfig_2.0.3  broom_0.7.12     haven_2.4.3     
+[25] scales_1.1.1     whisker_0.4      later_1.3.0      tzdb_0.2.0      
+[29] git2r_0.30.1     mgcv_1.8-38      farver_2.1.0     generics_0.1.2  
+[33] ellipsis_0.3.2   withr_2.5.0      cli_3.2.0        magrittr_2.0.2  
+[37] crayon_1.5.0     readxl_1.3.1     evaluate_0.15    fs_1.5.2        
+[41] fansi_1.0.3      nlme_3.1-157     MASS_7.3-56      xml2_1.3.3      
+[45] tools_4.1.2      hms_1.1.1        lifecycle_1.0.1  munsell_0.5.0   
+[49] reprex_2.0.1     cluster_2.1.2    compiler_4.1.2   jquerylib_0.1.4 
+[53] rlang_1.0.2      grid_4.1.2       rstudioapi_0.13  labeling_0.4.2  
+[57] rmarkdown_2.13   gtable_0.3.0     DBI_1.1.2        R6_2.5.1        
+[61] lubridate_1.8.0  knitr_1.38       bit_4.0.4        fastmap_1.1.0   
+[65] utf8_1.2.2       workflowr_1.7.0  rprojroot_2.0.2  stringi_1.7.6   
+[69] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
+[73] tidyselect_1.1.2 xfun_0.30       </code></pre>
 </div>
 </div>
 </div>

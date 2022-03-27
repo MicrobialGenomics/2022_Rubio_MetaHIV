@@ -1,0 +1,131 @@
+---
+title: "Rarefaction"
+author: "Elisa Rubio"
+date: "2022-03-26"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(glue)
+library(vegan)
+library(patchwork)
+```
+
+## Load summarized data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+```
+
+## Ariba rarefaction plot
+
+```{r}
+S <- specnumber(t(ariba_counts[ ,-1])) # observed number of AMR genes
+raremax <- min(rowSums(t(ariba_counts[ ,-1])))
+Srare <- rarefy(t(ariba_counts[ ,-1]), raremax)
+plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {raremax} counts (Ariba data)"))
+abline(0, 1)
+rarecurve(t(ariba_counts[ ,-1]), step = 1000, sample = raremax, col = "blue", cex = 0.6, ylab = "AMR genes", main=glue("Rarefaction plot at {raremax} counts (Ariba data)"))
+```
+
+All samples arrive to the plateau at `r raremax` AMR genes. 
+We analyze the number of reads per sample distribution: 
+
+```{r}
+nCounts_ariba<-apply(ariba_counts[ ,-1], 2, sum)%>%as.data.frame()%>%rename(counts=1)
+ggplot(nCounts_ariba, aes(counts)) +
+  coord_cartesian(xlim = c(0,NA))+
+  geom_freqpoly()+
+  labs(title = "Counts of AMR genes per sample distribution (Ariba data)")+
+  scale_x_continuous(breaks=seq(0,150000,10000))+
+  theme_bw()+
+  theme(axis.title = element_blank())
+```
+
+We obtain the rarefied data and save it:
+
+```{r}
+set.seed(200889)
+ariba_rar<-rrarefy(t(ariba_counts[ ,-1]), sample = raremax)
+ariba_rar<-as_tibble(t(ariba_rar))%>%mutate(ref_name=ariba_counts$ref_name)%>%
+  select(ref_name, everything())
+
+save(ariba_rar, file="output/rarefied_ariba.RDA")
+
+```
+
+## Groot rarefaction plot
+
+Rarefaction at the minimum counts per sample:
+
+```{r}
+S <- specnumber(t(groot_counts[ ,-1])) # observed number of AMR genes
+raremax <- min(rowSums(t(groot_counts[ ,-1])))
+Srare <- rarefy(t(groot_counts[ ,-1]), raremax) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {raremax} counts (Groot data)"))
+abline(0, 1)
+```
+
+We loose a lot of AMR genes if we rarefy at `r raremax`counts. 
+
+```{r}
+rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = raremax, col = "blue", cex = 0.6, ylab = "AMR genes", label = FALSE, xlim=c(0,10000), main=glue("Rarefaction plot at {raremax} counts (Groot data)"))
+```
+
+
+Samples have not arrived to the plateau at this rarefaction level. 
+
+We analyze the rarefaction curves at different counts as well as the total counts of AMR genes per sample distribution and the number of samples that we would loose if we rarefied at these counts:
+
+```{r}
+nrar=2500
+Srare <- rarefy(t(groot_counts[ ,-1]), nrar) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {nrar} counts (Groot data)"))
+abline(0, 1)
+rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = nrar, col = "blue", cex = 0.6, ylab = "AMR genes", label = FALSE, xlim=c(0,10000), main=glue("Rarefaction plot at {nrar} counts (Groot data)"))
+```
+
+```{r}
+nCounts_groot<-groot_counts%>%pivot_longer(-ref_name, names_to = "sample", values_to = "count")%>%
+  group_by(sample)%>%
+  summarise(ncount=sum(count))
+  
+ggplot(nCounts_groot, aes(ncount))+
+  geom_freqpoly(binwidth=1000)+
+  geom_vline(xintercept = nrar, color="red")+
+  scale_x_continuous(breaks = c(seq(from=0, to=10000, by=5000), 20000, 40000, 60000))+
+    geom_label(
+    label=glue("{sum(nCounts_groot$ncount<nrar)} ({round(sum(nCounts_groot$ncount<nrar)*100/nrow(nCounts_groot),1)}%) samples have less than {nrar} counts"), 
+    x=40000,y=10)+
+  theme_bw()+
+  labs(title = "Counts of AMR genes per sample distribution (Groot data)")
+```
+
+We rarefy groot samples at 2500 counts (we exlcude those samples with less than 2500 counts and AMR genes not present in any sample after the filtering)
+
+```{r}
+groot_counts_filt<-groot_counts%>%pivot_longer(-ref_name, names_to = "sample", values_to = "count")%>%
+  group_by(sample)%>%
+  filter(sum(count)>2500)%>%ungroup()%>%
+  pivot_wider(names_from = "sample", values_from = "count")%>%
+  rowwise()%>%
+  filter(sum(c_across(-ref_name))>0)%>%ungroup()
+
+set.seed(200889)
+groot_rar<-rrarefy(t(groot_counts_filt[ ,-1]), sample = nrar)
+groot_rar<-as_tibble(t(groot_rar))%>%mutate(ref_name=groot_counts_filt$ref_name)%>%
+  select(ref_name, everything())
+
+save(groot_rar, file=glue("output/rarefied{nrar}_groot.RDA"))
+```
+
