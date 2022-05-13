@@ -24,6 +24,8 @@ library(ggtext)
 ```{r}
 load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/rarefied2500_groot.RDA")
 metadata<-read_csv("data/Metadata/metadata.csv")
 metadata_ariba<-metadata%>%filter(SampleID %in% colnames(ariba_counts[-1]))
 ```
@@ -57,7 +59,7 @@ x<-ariba_counts%>%
     ungroup()%>%
   select(sample, `Resistance Mechanism`, glomcount, rel_abund, everything())
 
-ggplot(data=x, aes(x=HIV_Status, y=glomcount, fill=`Resistance Mechanism`))+
+ggplot(data=x, aes(x=HIV_Status, y=rel_abund, fill=`Resistance Mechanism`))+
     geom_bar(aes(), stat="identity", position="stack") +
     scale_fill_manual("Resistance Mechanism", values =colors ) + 
     labs(y="Relative abundabce")+

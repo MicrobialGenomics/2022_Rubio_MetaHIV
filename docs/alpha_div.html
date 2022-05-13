@@ -396,7 +396,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-27
+<strong>Last updated:</strong> 2022-05-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -487,16 +487,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreec56bd0ee5a808e4b9e214b5b4b9791c68968381dtargetblankc56bd0ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/c56bd0ee5a808e4b9e214b5b4b9791c68968381d" target="_blank">c56bd0e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreec56bd0ee5a808e4b9e214b5b4b9791c68968381dtargetblankc56bd0ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/c56bd0ee5a808e4b9e214b5b4b9791c68968381d" target="_blank">c56bd0e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,15 +508,9 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Untracked files:
-    Untracked:  analysis/barplot.Rmd
-    Untracked:  analysis/rarefaction.Rmd
-
 Unstaged changes:
-    Modified:   analysis/_site.yml
     Modified:   analysis/alpha_div.Rmd
-    Modified:   analysis/beta_div.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/barplot.Rmd
 
 </code></pre>
 <p>
@@ -555,6 +549,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/analysis/alpha_div.Rmd" target="_blank">c56bd0e</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-27
+</td>
+<td>
+rarefaction analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/docs/alpha_div.html" target="_blank">c56bd0e</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-03-27
+</td>
+<td>
+rarefaction analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -653,174 +681,53 @@ data%&gt;%
 <div id="ariba" class="section level2">
 <h2>ARIBA</h2>
 <pre class="r"><code>ariba_alpha&lt;-alpha_div(ariba_rpkm, ariba_counts)
-ariba_alpha_rar&lt;-alpha_div(ariba_rar, ariba_rar)
-
-alpha_div_plot_all(ariba_alpha, HIV_Status)</code></pre>
-<p><img src="figure/alpha_div.Rmd/ariba_alphadiv-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ariba_alphadiv-1">
-Past versions of ariba_alphadiv-1.png
-</button>
-</p>
-<div id="fig-ariba_alphadiv-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/alpha_div.Rmd/ariba_alphadiv-1.png" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+ariba_alpha_rar&lt;-alpha_div(ariba_rar, ariba_rar)</code></pre>
+<div id="hiv-status" class="section level3">
+<h3>HIV status</h3>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha, HIV_Status)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/ariba_alphadiv-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ariba_alphadiv-2">
-Past versions of ariba_alphadiv-2.png
-</button>
-</p>
-<div id="fig-ariba_alphadiv-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/alpha_div.Rmd/ariba_alphadiv-2.png" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
+<div id="profile" class="section level3">
+<h3>Profile</h3>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha, Profile)</code></pre>
-<p><img src="figure/alpha_div.Rmd/ariba_alphadiv-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="risk-group-2" class="section level3">
+<h3>Risk Group 2</h3>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha, RiskGroup2)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="groot" class="section level2">
 <h2>Groot</h2>
 <pre class="r"><code>groot_alpha&lt;-alpha_div(groot_rpkm, groot_counts)
-groot_alpha_rar&lt;-alpha_div(groot_rar, groot_rar)
-
-alpha_div_plot_all(groot_alpha, HIV_Status)</code></pre>
-<p><img src="figure/alpha_div.Rmd/groot_alphadiv-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-groot_alphadiv-1">
-Past versions of groot_alphadiv-1.png
-</button>
-</p>
-<div id="fig-groot_alphadiv-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/alpha_div.Rmd/groot_alphadiv-1.png" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-</tr>
-</tbody>
-</table>
+groot_alpha_rar&lt;-alpha_div(groot_rar, groot_rar)</code></pre>
+<div id="hiv-status-1" class="section level3">
+<h3>HIV status</h3>
+<pre class="r"><code>alpha_div_plot_all(groot_alpha, HIV_Status)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = &quot;groot Rarefied counts&quot;)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = &quot;Groot Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/groot_alphadiv-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-groot_alphadiv-2">
-Past versions of groot_alphadiv-2.png
-</button>
-</p>
-<div id="fig-groot_alphadiv-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/figure/alpha_div.Rmd/groot_alphadiv-2.png" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="profile-1" class="section level3">
+<h3>Profile</h3>
 <pre class="r"><code>alpha_div_plot_all(groot_alpha, Profile)</code></pre>
-<p><img src="figure/alpha_div.Rmd/groot_alphadiv-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = &quot;Groot Rarefied counts&quot;)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="risk-group-2-1" class="section level3">
+<h3>Risk Group 2</h3>
+<pre class="r"><code>alpha_div_plot_all(groot_alpha, RiskGroup2)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = &quot;Groot Rarefied counts&quot;)</code></pre>
+<p><img src="figure/alpha_div.Rmd/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -877,6 +784,7 @@ loaded via a namespace (and not attached):
 [77] httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
 [81] xfun_0.30         broom_0.7.12      rstatix_0.7.0     later_1.3.0      
 [85] viridisLite_0.4.0 cluster_2.1.2     ellipsis_0.3.2   </code></pre>
+</div>
 </div>
 </div>
 

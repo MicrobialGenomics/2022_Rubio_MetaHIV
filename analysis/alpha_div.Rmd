@@ -83,20 +83,59 @@ data%>%
 ```{r ariba_alphadiv}
 ariba_alpha<-alpha_div(ariba_rpkm, ariba_counts)
 ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
+```
 
+
+### HIV status
+
+```{r}
 alpha_div_plot_all(ariba_alpha, HIV_Status)
 alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = "Ariba Rarefied counts")
-alpha_div_plot_all(ariba_alpha, Profile)
 ```
+
+### Profile
+
+```{r}
+alpha_div_plot_all(ariba_alpha, Profile)
+alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+
+### Risk Group 2
+
+```{r}
+alpha_div_plot_all(ariba_alpha, RiskGroup2)
+alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = "Ariba Rarefied counts")
+```
+
 
 ## Groot
 
 ```{r groot_alphadiv}
 groot_alpha<-alpha_div(groot_rpkm, groot_counts)
 groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
+```
 
+
+### HIV status
+
+```{r}
 alpha_div_plot_all(groot_alpha, HIV_Status)
-alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = "Groot Rarefied counts")
+alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = "groot Rarefied counts")
+```
+
+### Profile
+
+```{r}
 alpha_div_plot_all(groot_alpha, Profile)
+alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = "Groot Rarefied counts")
+```
+
+
+### Risk Group 2
+
+```{r}
+alpha_div_plot_all(groot_alpha, RiskGroup2)
+alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = "Groot Rarefied counts")
 ```
 
