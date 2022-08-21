@@ -11,9 +11,9 @@
 
 <meta name="author" content="Elisa Rubio" />
 
-<meta name="date" content="2022-03-03" />
+<meta name="date" content="2022-03-26" />
 
-<title>Alpha diversity analysis</title>
+<title>Rarefaction</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -369,9 +369,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Alpha diversity analysis</h1>
+<h1 class="title toc-ignore">Rarefaction</h1>
 <h4 class="author">Elisa Rubio</h4>
-<h4 class="date">2022-03-03</h4>
+<h4 class="date">2022-03-26</h4>
 
 </div>
 
@@ -396,7 +396,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-13
+<strong>Last updated:</strong> 2022-08-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -420,7 +420,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -487,16 +487,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreec56bd0ee5a808e4b9e214b5b4b9791c68968381dtargetblankc56bd0ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/c56bd0ee5a808e4b9e214b5b4b9791c68968381d" target="_blank">c56bd0e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreec56bd0ee5a808e4b9e214b5b4b9791c68968381dtargetblankc56bd0ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/c56bd0ee5a808e4b9e214b5b4b9791c68968381d" target="_blank">c56bd0e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -508,9 +508,21 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
+Untracked files:
+    Untracked:  analysis/01_import_data.Rmd
+    Untracked:  analysis/02_summarize_data.Rmd
+    Untracked:  analysis/03_rarefaction.Rmd
+    Untracked:  analysis/04_alpha_div.Rmd
+    Untracked:  analysis/05_beta_div.Rmd
+    Untracked:  data/cardData/.~lock.aro_index_v314.tsv#
+
 Unstaged changes:
-    Modified:   analysis/alpha_div.Rmd
-    Modified:   analysis/barplot.Rmd
+    Deleted:    analysis/alpha_div.Rmd
+    Deleted:    analysis/beta_div.Rmd
+    Deleted:    analysis/import_data.Rmd
+    Modified:   analysis/index.Rmd
+    Deleted:    analysis/rarefaction.Rmd
+    Deleted:    analysis/summarize_data.Rmd
 
 </code></pre>
 <p>
@@ -523,211 +535,99 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/alpha_div.Rmd</code>) and HTML (<code>docs/alpha_div.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/analysis/alpha_div.Rmd" target="_blank">c56bd0e</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-27
-</td>
-<td>
-rarefaction analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/docs/alpha_div.html" target="_blank">c56bd0e</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-27
-</td>
-<td>
-rarefaction analysis
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/analysis/alpha_div.Rmd" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-<td>
-Alpha and beta diversity analyses
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/alpha_div.html" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-<td>
-Alpha and beta diversity analyses
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
 <pre class="r"><code>library(tidyverse)
-library(kableExtra)
+library(glue)
 library(vegan)
-library(ggpubr)</code></pre>
-<div id="load-summarized-and-rarefied-data" class="section level2">
-<h2>Load summarized and rarefied data</h2>
+library(patchwork)</code></pre>
+<div id="load-summarized-data" class="section level2">
+<h2>Load summarized data</h2>
 <pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
-load(&quot;output/summarized_groot.RDA&quot;)
-load(&quot;output/rarefied_ariba.RDA&quot;)
-load(&quot;output/rarefied2500_groot.RDA&quot;)</code></pre>
+load(&quot;output/summarized_groot.RDA&quot;)</code></pre>
 </div>
-<div id="create-functions" class="section level2">
-<h2>Create functions:</h2>
-<div id="calculate-apha-diversity-indexes" class="section level3">
-<h3>Calculate apha diversity indexes:</h3>
-<pre class="r"><code>alpha_div&lt;-function(d_rpkm, d_counts){
-shannon&lt;-diversity(d_rpkm[ ,-1], MARGIN = 2, index=&quot;shannon&quot;)
-simpson&lt;-diversity(d_rpkm[, -1], MARGIN = 2, index=&quot;simpson&quot;)
-invsimpson&lt;-diversity(d_rpkm[, -1], MARGIN = 2, index=&quot;invsimpson&quot;)
-nARG&lt;-specnumber(d_rpkm[, -1], MARGIN = 2)
-fisher&lt;-fisher.alpha(d_counts[ ,-1], MARGIN = 2)
-metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)%&gt;%
-  filter(SampleID %in% names(d_rpkm))%&gt;%
-  mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}</code></pre>
-</div>
-<div id="plot-a-diversity-index-for-a-clinical-variable" class="section level3">
-<h3>Plot a diversity index for a clinical variable</h3>
-<pre class="r"><code>alpha_div_plot&lt;-function(data, clin_var, alpha_var){
-  clin_var&lt;-enquo(clin_var)
-  alpha_var&lt;-enquo(alpha_var)
-ggplot(data, aes(x=!!clin_var, y=!!alpha_var))+
-  geom_boxplot(aes(colour=!!clin_var))+
-  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  stat_compare_means()+
-  theme_classic()+
-  theme(legend.position = &quot;none&quot;)}</code></pre>
-</div>
-<div id="plot-all-diversity-indexes-for-a-clinical-variable" class="section level3">
-<h3>Plot all diversity indexes for a clinical variable</h3>
-<pre class="r"><code>alpha_div_plot_all&lt;-function(data, clin_var){
-clin_var&lt;-enquo(clin_var)
-data%&gt;%
-  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = &quot;Alpha_Index&quot;, values_to = &quot;Alpha_value&quot;)%&gt;%
-  ggplot(aes(x=!!clin_var, y=Alpha_value))+
-  geom_boxplot(aes(colour=!!clin_var))+
-  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  facet_wrap(vars(Alpha_Index), ncol = 3, scales = &quot;free_y&quot;)+
-  stat_compare_means(label=&quot;p.format&quot;, label.x = 1, label.y.npc = 0.9)+
+<div id="ariba-rarefaction-plot" class="section level2">
+<h2>Ariba rarefaction plot</h2>
+<pre class="r"><code>S &lt;- specnumber(t(ariba_counts[ ,-1])) # observed number of AMR genes
+raremax &lt;- min(rowSums(t(ariba_counts[ ,-1])))
+Srare &lt;- rarefy(t(ariba_counts[ ,-1]), raremax)
+plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {raremax} counts (Ariba data)&quot;))
+abline(0, 1)</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rarecurve(t(ariba_counts[ ,-1]), step = 1000, sample = raremax, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, main=glue(&quot;Rarefaction plot at {raremax} counts (Ariba data)&quot;))</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>All samples arrive to the plateau at 1.5176^{4} AMR genes. We analyze the number of reads per sample distribution:</p>
+<pre class="r"><code>nCounts_ariba&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
+ggplot(nCounts_ariba, aes(counts)) +
+  coord_cartesian(xlim = c(0,NA))+
+  geom_freqpoly()+
+  labs(title = &quot;Counts of AMR genes per sample distribution (Ariba data)&quot;)+
+  scale_x_continuous(breaks=seq(0,150000,10000))+
   theme_bw()+
-  labs(y=&quot;Alpha diversity&quot;, caption = &quot;P values calculated by Wilcoxon test&quot;, title = clin_var)+
-  theme(legend.position = &quot;none&quot;, axis.title.x=element_blank(),
-        axis.text.x = element_text(angle=45, hjust = 1))}</code></pre>
+  theme(axis.title = element_blank())</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We obtain the rarefied data and save it:</p>
+<pre class="r"><code>set.seed(200889)
+ariba_rar&lt;-rrarefy(t(ariba_counts[ ,-1]), sample = raremax)
+ariba_rar&lt;-as_tibble(t(ariba_rar))%&gt;%mutate(ref_name=ariba_counts$ref_name)%&gt;%
+  select(ref_name, everything())
+
+save(ariba_rar, file=&quot;output/rarefied_ariba.RDA&quot;)</code></pre>
 </div>
-</div>
-<div id="ariba" class="section level2">
-<h2>ARIBA</h2>
-<pre class="r"><code>ariba_alpha&lt;-alpha_div(ariba_rpkm, ariba_counts)
-ariba_alpha_rar&lt;-alpha_div(ariba_rar, ariba_rar)</code></pre>
-<div id="hiv-status" class="section level3">
-<h3>HIV status</h3>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha, HIV_Status)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="profile" class="section level3">
-<h3>Profile</h3>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha, Profile)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-7-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="risk-group-2" class="section level3">
-<h3>Risk Group 2</h3>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha, RiskGroup2)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="groot" class="section level2">
-<h2>Groot</h2>
-<pre class="r"><code>groot_alpha&lt;-alpha_div(groot_rpkm, groot_counts)
-groot_alpha_rar&lt;-alpha_div(groot_rar, groot_rar)</code></pre>
-<div id="hiv-status-1" class="section level3">
-<h3>HIV status</h3>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha, HIV_Status)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = &quot;groot Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="profile-1" class="section level3">
-<h3>Profile</h3>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha, Profile)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = &quot;Groot Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-10-2.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="risk-group-2-1" class="section level3">
-<h3>Risk Group 2</h3>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha, RiskGroup2)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = &quot;Groot Rarefied counts&quot;)</code></pre>
-<p><img src="figure/alpha_div.Rmd/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="groot-rarefaction-plot" class="section level2">
+<h2>Groot rarefaction plot</h2>
+<p>Rarefaction at the minimum counts per sample:</p>
+<pre class="r"><code>S &lt;- specnumber(t(groot_counts[ ,-1])) # observed number of AMR genes
+raremax &lt;- min(rowSums(t(groot_counts[ ,-1])))
+Srare &lt;- rarefy(t(groot_counts[ ,-1]), raremax) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {raremax} counts (Groot data)&quot;))
+abline(0, 1)</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We loose a lot of AMR genes if we rarefy at 470counts.</p>
+<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = raremax, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {raremax} counts (Groot data)&quot;))</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Samples have not arrived to the plateau at this rarefaction level.</p>
+<p>We analyze the rarefaction curves at different counts as well as the total counts of AMR genes per sample distribution and the number of samples that we would loose if we rarefied at these counts:</p>
+<pre class="r"><code>nrar=2500
+Srare &lt;- rarefy(t(groot_counts[ ,-1]), nrar) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {nrar} counts (Groot data)&quot;))
+abline(0, 1)</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = nrar, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {nrar} counts (Groot data)&quot;))</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>nCounts_groot&lt;-groot_counts%&gt;%pivot_longer(-ref_name, names_to = &quot;sample&quot;, values_to = &quot;count&quot;)%&gt;%
+  group_by(sample)%&gt;%
+  summarise(ncount=sum(count))
+  
+ggplot(nCounts_groot, aes(ncount))+
+  geom_freqpoly(binwidth=1000)+
+  geom_vline(xintercept = nrar, color=&quot;red&quot;)+
+  scale_x_continuous(breaks = c(seq(from=0, to=10000, by=5000), 20000, 40000, 60000))+
+    geom_label(
+    label=glue(&quot;{sum(nCounts_groot$ncount&lt;nrar)} ({round(sum(nCounts_groot$ncount&lt;nrar)*100/nrow(nCounts_groot),1)}%) samples have less than {nrar} counts&quot;), 
+    x=40000,y=10)+
+  theme_bw()+
+  labs(title = &quot;Counts of AMR genes per sample distribution (Groot data)&quot;)</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We rarefy groot samples at 2500 counts (we exlcude those samples with less than 2500 counts and AMR genes not present in any sample after the filtering)</p>
+<pre class="r"><code>groot_counts_filt&lt;-groot_counts%&gt;%pivot_longer(-ref_name, names_to = &quot;sample&quot;, values_to = &quot;count&quot;)%&gt;%
+  group_by(sample)%&gt;%
+  filter(sum(count)&gt;2500)%&gt;%ungroup()%&gt;%
+  pivot_wider(names_from = &quot;sample&quot;, values_from = &quot;count&quot;)%&gt;%
+  rowwise()%&gt;%
+  filter(sum(c_across(-ref_name))&gt;0)%&gt;%ungroup()
+
+set.seed(200889)
+groot_rar&lt;-rrarefy(t(groot_counts_filt[ ,-1]), sample = nrar)
+groot_rar&lt;-as_tibble(t(groot_rar))%&gt;%mutate(ref_name=groot_counts_filt$ref_name)%&gt;%
+  select(ref_name, everything())
+
+save(groot_rar, file=glue(&quot;output/rarefied{nrar}_groot.RDA&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -756,35 +656,30 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggpubr_0.4.0     vegan_2.5-7      lattice_0.20-45  permute_0.9-7   
- [5] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
- [9] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
-[13] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+ [1] patchwork_1.1.1 vegan_2.5-7     lattice_0.20-45 permute_0.9-7  
+ [5] glue_1.6.2      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
+ [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
+[13] ggplot2_3.3.5   tidyverse_1.3.1
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-157      fs_1.5.2          bit64_4.0.5       lubridate_1.8.0  
- [5] webshot_0.5.2     httr_1.4.2        rprojroot_2.0.2   tools_4.1.2      
- [9] backports_1.4.1   bslib_0.3.1       utf8_1.2.2        R6_2.5.1         
-[13] DBI_1.1.2         mgcv_1.8-38       colorspace_2.0-3  withr_2.5.0      
-[17] tidyselect_1.1.2  processx_3.5.3    bit_4.0.4         compiler_4.1.2   
-[21] git2r_0.30.1      cli_3.2.0         rvest_1.0.2       xml2_1.3.3       
-[25] labeling_0.4.2    sass_0.4.1        scales_1.1.1      callr_3.7.0      
-[29] systemfonts_1.0.4 digest_0.6.29     rmarkdown_2.13    svglite_2.1.0    
-[33] pkgconfig_2.0.3   htmltools_0.5.2   highr_0.9         dbplyr_2.1.1     
-[37] fastmap_1.1.0     rlang_1.0.2       readxl_1.3.1      rstudioapi_0.13  
-[41] farver_2.1.0      jquerylib_0.1.4   generics_0.1.2    jsonlite_1.8.0   
-[45] vroom_1.5.7       car_3.0-12        magrittr_2.0.2    Matrix_1.4-0     
-[49] Rcpp_1.0.8.3      munsell_0.5.0     fansi_1.0.3       abind_1.4-5      
-[53] lifecycle_1.0.1   stringi_1.7.6     whisker_0.4       yaml_2.3.5       
-[57] carData_3.0-5     MASS_7.3-56       grid_4.1.2        parallel_4.1.2   
-[61] promises_1.2.0.1  crayon_1.5.0      haven_2.4.3       splines_4.1.2    
-[65] hms_1.1.1         knitr_1.38        ps_1.6.0          pillar_1.7.0     
-[69] ggsignif_0.6.3    reprex_2.0.1      glue_1.6.2        evaluate_0.15    
-[73] getPass_0.2-2     modelr_0.1.8      vctrs_0.3.8       tzdb_0.2.0       
-[77] httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
-[81] xfun_0.30         broom_0.7.12      rstatix_0.7.0     later_1.3.0      
-[85] viridisLite_0.4.0 cluster_2.1.2     ellipsis_0.3.2   </code></pre>
-</div>
+ [1] httr_1.4.2       sass_0.4.1       jsonlite_1.8.0   splines_4.1.2   
+ [5] modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1 highr_0.9       
+ [9] cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0     backports_1.4.1 
+[13] digest_0.6.29    promises_1.2.0.1 rvest_1.0.2      colorspace_2.0-3
+[17] htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0     pkgconfig_2.0.3 
+[21] broom_0.7.12     haven_2.4.3      scales_1.1.1     later_1.3.0     
+[25] tzdb_0.2.0       git2r_0.30.1     mgcv_1.8-38      generics_0.1.2  
+[29] farver_2.1.0     ellipsis_0.3.2   withr_2.5.0      cli_3.2.0       
+[33] magrittr_2.0.2   crayon_1.5.0     readxl_1.3.1     evaluate_0.15   
+[37] fs_1.5.2         fansi_1.0.3      nlme_3.1-157     MASS_7.3-56     
+[41] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
+[45] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    compiler_4.1.2  
+[49] jquerylib_0.1.4  rlang_1.0.2      grid_4.1.2       rstudioapi_0.13 
+[53] labeling_0.4.2   rmarkdown_2.13   gtable_0.3.0     DBI_1.1.2       
+[57] R6_2.5.1         lubridate_1.8.0  knitr_1.38       fastmap_1.1.0   
+[61] utf8_1.2.2       workflowr_1.7.0  rprojroot_2.0.2  stringi_1.7.6   
+[65] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
+[69] tidyselect_1.1.2 xfun_0.30       </code></pre>
 </div>
 </div>
 

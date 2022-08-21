@@ -14,7 +14,7 @@
 
 <title>Data summary</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -76,6 +76,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -96,6 +97,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -321,7 +325,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -337,7 +341,16 @@ div.tocify {
   <a href="import_data.html">Import data</a>
 </li>
 <li>
-  <a href="summarize_data.html">summarize</a>
+  <a href="summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="rarefaction.html">Rarefy data</a>
+</li>
+<li>
+  <a href="alpha_div.html">Alpha diversity analysis</a>
+</li>
+<li>
+  <a href="beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -383,7 +396,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-06
+<strong>Last updated:</strong> 2022-08-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -407,7 +420,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -474,16 +487,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree31e0d7135883398c2b6da1db92af025c72be8e65targetblank31e0d71a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/31e0d7135883398c2b6da1db92af025c72be8e65" target="_blank">31e0d71</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,14 +508,21 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Unstaged changes:
-    Modified:   analysis/alpha_div.Rmd
-    Modified:   analysis/corplot.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/summarize_data.Rmd
+Untracked files:
+    Untracked:  analysis/01_import_data.Rmd
+    Untracked:  analysis/02_summarize_data.Rmd
+    Untracked:  analysis/03_rarefaction.Rmd
+    Untracked:  analysis/04_alpha_div.Rmd
+    Untracked:  analysis/05_beta_div.Rmd
+    Untracked:  data/cardData/.~lock.aro_index_v314.tsv#
 
-Staged changes:
-    New:        analysis/alpha_div.Rmd
+Unstaged changes:
+    Deleted:    analysis/alpha_div.Rmd
+    Deleted:    analysis/beta_div.Rmd
+    Deleted:    analysis/import_data.Rmd
+    Modified:   analysis/index.Rmd
+    Deleted:    analysis/rarefaction.Rmd
+    Deleted:    analysis/summarize_data.Rmd
 
 </code></pre>
 <p>
@@ -515,103 +535,9 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/summarize_data.Rmd</code>) and HTML (<code>docs/summarize_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/282b5edc1c13ee17713b7b36c653ac4114fc00a9/analysis/summarize_data.Rmd" target="_blank">282b5ed</a>
-</td>
-<td>
-Marc Noguera-Julian
-</td>
-<td>
-2022-03-03
-</td>
-<td>
-Update summarize_data.Rmd
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/4603a748f9e12dc655207ce3eba121d15fb73e7d/analysis/summarize_data.Rmd" target="_blank">4603a74</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-03
-</td>
-<td>
-summary path
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b92c39766add66b425fb4328046f6f0c573c71fd/analysis/summarize_data.Rmd" target="_blank">b92c397</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-02
-</td>
-<td>
-Summarize data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/b92c39766add66b425fb4328046f6f0c573c71fd/docs/summarize_data.html" target="_blank">b92c397</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-02
-</td>
-<td>
-Summarize data
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
@@ -640,18 +566,19 @@ all.equal(ariba_samples, groot_samples)</code></pre>
 <pre class="r"><code>aro_index&lt;-read_tsv(&quot;data/cardData/aro_index_v314.tsv&quot;)%&gt;%
   mutate(`ARO Accession`=str_extract(`ARO Accession`, &quot;[:digit:]+&quot;),
          `ARO Accession`=as.numeric(`ARO Accession`))%&gt;%                                                                   
-  select(-starts_with(&quot;Model&quot;))
+  select(-starts_with(&quot;Model&quot;))%&gt;%
+  unique()
 
 str(aro_index)</code></pre>
-<pre><code>tibble [4,924 × 8] (S3: tbl_df/tbl/data.frame)
- $ ARO Accession       : num [1:4924] 3005099 3000317 3002523 3002524 3002525 ...
- $ CVTERM ID           : num [1:4924] 43314 36456 38923 38924 38925 ...
- $ ARO Name            : chr [1:4924] &quot;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A)&quot; &quot;AAC(1)-I&quot; &quot;AAC(2&#39;)-Ia&quot; &quot;AAC(2&#39;)-Ib&quot; ...
- $ Protein Accession   : chr [1:4924] &quot;AAB60941.1&quot; &quot;ADH03009.1&quot; &quot;AAA03550.1&quot; &quot;AAC44793.1&quot; ...
- $ DNA Accession       : chr [1:4924] &quot;AF002716.1&quot; &quot;HM036080&quot; &quot;L06156&quot; &quot;U41471&quot; ...
- $ AMR Gene Family     : chr [1:4924] &quot;Erm 23S ribosomal RNA methyltransferase&quot; &quot;AAC(1)&quot; &quot;AAC(2&#39;)&quot; &quot;AAC(2&#39;)&quot; ...
- $ Drug Class          : chr [1:4924] &quot;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic&quot; &quot;aminoglycoside antibiotic&quot; &quot;aminoglycoside antibiotic&quot; &quot;aminoglycoside antibiotic&quot; ...
- $ Resistance Mechanism: chr [1:4924] &quot;antibiotic target alteration&quot; &quot;antibiotic inactivation&quot; &quot;antibiotic inactivation&quot; &quot;antibiotic inactivation&quot; ...</code></pre>
+<pre><code>tibble [4,921 × 8] (S3: tbl_df/tbl/data.frame)
+ $ ARO Accession       : num [1:4921] 3005099 3000317 3002523 3002524 3002525 ...
+ $ CVTERM ID           : num [1:4921] 43314 36456 38923 38924 38925 ...
+ $ ARO Name            : chr [1:4921] &quot;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A)&quot; &quot;AAC(1)-I&quot; &quot;AAC(2&#39;)-Ia&quot; &quot;AAC(2&#39;)-Ib&quot; ...
+ $ Protein Accession   : chr [1:4921] &quot;AAB60941.1&quot; &quot;ADH03009.1&quot; &quot;AAA03550.1&quot; &quot;AAC44793.1&quot; ...
+ $ DNA Accession       : chr [1:4921] &quot;AF002716.1&quot; &quot;HM036080&quot; &quot;L06156&quot; &quot;U41471&quot; ...
+ $ AMR Gene Family     : chr [1:4921] &quot;Erm 23S ribosomal RNA methyltransferase&quot; &quot;AAC(1)&quot; &quot;AAC(2&#39;)&quot; &quot;AAC(2&#39;)&quot; ...
+ $ Drug Class          : chr [1:4921] &quot;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic&quot; &quot;aminoglycoside antibiotic&quot; &quot;aminoglycoside antibiotic&quot; &quot;aminoglycoside antibiotic&quot; ...
+ $ Resistance Mechanism: chr [1:4921] &quot;antibiotic target alteration&quot; &quot;antibiotic inactivation&quot; &quot;antibiotic inactivation&quot; &quot;antibiotic inactivation&quot; ...</code></pre>
 </div>
 <div id="ariba" class="section level2">
 <h2>ARIBA</h2>
@@ -664,7 +591,7 @@ names(ariba_data)&lt;-ariba_samples</code></pre>
 <div id="remove-contig-and-variant-data-from-ariba" class="section level3">
 <h3>Remove contig and variant data from ARIBA:</h3>
 <pre class="r"><code>vars&lt;-c(&quot;#ariba_ref_name&quot;, &quot;ref_name&quot; , &quot;gene&quot;,  &quot;var_only&quot;, &quot;flag&quot;, &quot;reads&quot;, &quot;cluster&quot;, &quot;ref_len&quot;, &quot;free_text&quot; )
-aribasubs&lt;-function(x){x%&gt;%select(vars)%&gt;%unique()}
+aribasubs&lt;-function(x){x%&gt;%select(all_of(vars))%&gt;%unique()}
 ##aribasubs2&lt;-function(x){x%&gt;% filter(gene==1)%&gt;%select(c(1:8,31))%&gt;%unique()} ##Only coding sequences
 ariba_data&lt;-lapply(ariba_data, aribasubs)</code></pre>
 </div>
@@ -683,7 +610,8 @@ refname&lt;-refname%&gt;%
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, &quot;_&quot;), v1, `Model Sequence ID`),
          `ARO Accession` = as.numeric(`ARO Accession`))%&gt;%
   select(-v1, -`Model Sequence ID`)
-refname_all_ariba&lt;-left_join(refname, aro_index, by=&quot;ARO Accession&quot;)%&gt;%unique()
+
+refname_all_ariba&lt;-left_join(refname, aro_index, by=&quot;ARO Accession&quot;)
 
 head(refname_all_ariba, 8)%&gt;%kable(caption=&quot;**Ariba detected ARG with CARD information** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
@@ -1047,7 +975,7 @@ antibiotic target alteration
          init_final=ifelse(str_detect(init_final, &quot;_&quot;), init_final, `Model Sequence ID`),
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, &quot;_&quot;), v1, `Model Sequence ID`),
         `ARO Accession` = as.numeric(`ARO Accession`))%&gt;%
-  select(-v1, -`Model Sequence ID`)%&gt;%inner_join(aro_index, by=&quot;ARO Accession&quot;)%&gt;%unique()
+  select(-v1, -`Model Sequence ID`)%&gt;%inner_join(aro_index, by=&quot;ARO Accession&quot;)
   return(x)}
 
 ariba_data&lt;-lapply(ariba_data, function (x) aribanotation (x, aro_index ))</code></pre>
@@ -16162,11 +16090,11 @@ refname_groot&lt;-refname_groot%&gt;%
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, &quot;-&quot;), v1, `Model Sequence ID`),
          `ARO Accession` = as.numeric(`ARO Accession`))%&gt;%
   select(-v1)
-refname_all_groot&lt;-left_join(refname_groot, aro_index, by=&quot;ARO Accession&quot;)%&gt;%unique()
+refname_all_groot&lt;-left_join(refname_groot, aro_index, by=&quot;ARO Accession&quot;)
 
 which(is.na(refname_all_groot$`AMR Gene Family`))</code></pre>
 <pre><code>[1] 569</code></pre>
-<pre class="r"><code>refname_all_groot%&gt;%slice(n=569) ##one missig arg gene, not in card databasse</code></pre>
+<pre class="r"><code>refname_all_groot%&gt;%slice(n=569) ##one missig arg gene, not in card database.</code></pre>
 <pre><code>                                                               ref_name
 1 Shigella_flexneri_chloramphenicol.3004459.KF030445.1.23979-24639.5542
                            ARO Term ARO Accession         NCBI  init_final
@@ -16175,7 +16103,9 @@ which(is.na(refname_all_groot$`AMR Gene Family`))</code></pre>
 1              5542        NA     &lt;NA&gt;              &lt;NA&gt;          &lt;NA&gt;
   AMR Gene Family Drug Class Resistance Mechanism
 1            &lt;NA&gt;       &lt;NA&gt;                 &lt;NA&gt;</code></pre>
-<pre class="r"><code>head(refname_all_groot, 8)%&gt;%kable(caption=&quot;**Groot detected ARG with CARD information** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
+<pre class="r"><code>##Searched for the ARO accession and the NCBI accession and there was nothing as a resistance gene to chloramphenicol. 
+
+head(refname_all_groot, 8)%&gt;%kable(caption=&quot;**Groot detected ARG with CARD information** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
@@ -31774,29 +31704,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7     
- [5] purrr_0.3.4      readr_2.1.1      tidyr_1.1.4      tibble_3.1.6    
- [9] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+ [1] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
+ [5] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
+ [9] ggplot2_3.3.5    tidyverse_1.3.1 
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.7        svglite_2.0.0     lubridate_1.8.0   getPass_0.2-2    
- [5] ps_1.6.0          assertthat_0.2.1  rprojroot_2.0.2   digest_0.6.29    
- [9] utf8_1.2.2        R6_2.5.1          cellranger_1.1.0  backports_1.4.1  
-[13] reprex_2.0.1      evaluate_0.14     highr_0.9         httr_1.4.2       
-[17] pillar_1.6.4      rlang_0.4.12      readxl_1.3.1      rstudioapi_0.13  
-[21] whisker_0.4       callr_3.7.0       jquerylib_0.1.4   rmarkdown_2.11   
-[25] webshot_0.5.2     bit_4.0.4         munsell_0.5.0     broom_0.7.11     
-[29] compiler_4.1.2    httpuv_1.6.5      modelr_0.1.8      xfun_0.29        
-[33] systemfonts_1.0.3 pkgconfig_2.0.3   htmltools_0.5.2   tidyselect_1.1.1 
-[37] viridisLite_0.4.0 fansi_0.5.0       crayon_1.4.2      tzdb_0.2.0       
-[41] dbplyr_2.1.1      withr_2.4.3       later_1.3.0       grid_4.1.2       
-[45] jsonlite_1.7.2    gtable_0.3.0      lifecycle_1.0.1   DBI_1.1.2        
-[49] git2r_0.29.0      magrittr_2.0.1    scales_1.1.1      vroom_1.5.7      
-[53] cli_3.1.0         stringi_1.7.6     fs_1.5.2          promises_1.2.0.1 
-[57] xml2_1.3.3        ellipsis_0.3.2    generics_0.1.1    vctrs_0.3.8      
-[61] tools_4.1.2       bit64_4.0.5       glue_1.6.0        hms_1.1.1        
-[65] parallel_4.1.2    processx_3.5.2    fastmap_1.1.0     yaml_2.2.1       
-[69] colorspace_2.0-2  rvest_1.0.2       knitr_1.37        haven_2.4.3      </code></pre>
+ [1] Rcpp_1.0.8.3      svglite_2.1.0     lubridate_1.8.0   assertthat_0.2.1 
+ [5] rprojroot_2.0.2   digest_0.6.29     utf8_1.2.2        R6_2.5.1         
+ [9] cellranger_1.1.0  backports_1.4.1   reprex_2.0.1      evaluate_0.15    
+[13] highr_0.9         httr_1.4.2        pillar_1.7.0      rlang_1.0.2      
+[17] readxl_1.3.1      rstudioapi_0.13   jquerylib_0.1.4   rmarkdown_2.13   
+[21] webshot_0.5.2     bit_4.0.4         munsell_0.5.0     broom_0.7.12     
+[25] compiler_4.1.2    httpuv_1.6.5      modelr_0.1.8      xfun_0.30        
+[29] systemfonts_1.0.4 pkgconfig_2.0.3   htmltools_0.5.2   tidyselect_1.1.2 
+[33] workflowr_1.7.0   viridisLite_0.4.0 fansi_1.0.3       crayon_1.5.0     
+[37] tzdb_0.2.0        dbplyr_2.1.1      withr_2.5.0       later_1.3.0      
+[41] grid_4.1.2        jsonlite_1.8.0    gtable_0.3.0      lifecycle_1.0.1  
+[45] DBI_1.1.2         git2r_0.30.1      magrittr_2.0.2    scales_1.1.1     
+[49] vroom_1.5.7       cli_3.2.0         stringi_1.7.6     fs_1.5.2         
+[53] promises_1.2.0.1  xml2_1.3.3        bslib_0.3.1       ellipsis_0.3.2   
+[57] generics_0.1.2    vctrs_0.3.8       tools_4.1.2       bit64_4.0.5      
+[61] glue_1.6.2        hms_1.1.1         parallel_4.1.2    fastmap_1.1.0    
+[65] yaml_2.3.5        colorspace_2.0-3  rvest_1.0.2       knitr_1.38       
+[69] haven_2.4.3       sass_0.4.1       </code></pre>
 </div>
 </div>
 

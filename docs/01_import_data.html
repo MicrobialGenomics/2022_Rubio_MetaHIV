@@ -11,9 +11,8 @@
 
 <meta name="author" content="Elisa Rubio" />
 
-<meta name="date" content="2022-03-26" />
 
-<title>Rarefaction</title>
+<title>Import data</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -369,9 +368,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Rarefaction</h1>
+<h1 class="title toc-ignore">Import data</h1>
 <h4 class="author">Elisa Rubio</h4>
-<h4 class="date">2022-03-26</h4>
 
 </div>
 
@@ -396,7 +394,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-27
+<strong>Last updated:</strong> 2022-08-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -487,16 +485,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee88cb569ac9bf63f0b8064ed3336443c5758ac91targetblanke88cb56a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreece3a28b23964f88f50244a1ce69aeca9e67d8d56targetblankce3a28ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e88cb569ac9bf63f0b8064ed3336443c5758ac91" target="_blank">e88cb56</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ce3a28b23964f88f50244a1ce69aeca9e67d8d56" target="_blank">ce3a28b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -509,13 +507,20 @@ Ignored files:
     Ignored:    output/grootData/
 
 Untracked files:
-    Untracked:  analysis/barplot.Rmd
-    Untracked:  analysis/rarefaction.Rmd
+    Untracked:  analysis/01_import_data.Rmd
+    Untracked:  analysis/02_summarize_data.Rmd
+    Untracked:  analysis/03_rarefaction.Rmd
+    Untracked:  analysis/04_alpha_div.Rmd
+    Untracked:  analysis/05_beta_div.Rmd
+    Untracked:  data/cardData/.~lock.aro_index_v314.tsv#
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/alpha_div.Rmd
+    Deleted:    analysis/alpha_div.Rmd
+    Deleted:    analysis/beta_div.Rmd
+    Deleted:    analysis/import_data.Rmd
     Modified:   analysis/index.Rmd
+    Deleted:    analysis/rarefaction.Rmd
+    Deleted:    analysis/summarize_data.Rmd
 
 </code></pre>
 <p>
@@ -535,92 +540,40 @@ There are no past versions. Publish this analysis with <code>wflow_publish()</co
 </div>
 </div>
 </div>
-<pre class="r"><code>library(tidyverse)
-library(glue)
-library(vegan)
-library(patchwork)</code></pre>
-<div id="load-summarized-data" class="section level2">
-<h2>Load summarized data</h2>
-<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
-load(&quot;output/summarized_groot.RDA&quot;)</code></pre>
+<div id="untar-files" class="section level2">
+<h2>Untar Files</h2>
+<pre class="r"><code>if (!dir.exists(&quot;output/aribaData&quot;)){
+aribaData&lt;-list.files(&quot;data/aribaData&quot;, full.names = TRUE)
+dir.create(&quot;output/aribaData&quot;)
+lapply(aribaData, untar,  exdir = &quot;output/aribaData/&quot;)}
+
+if (!dir.exists(&quot;output/grootData&quot;)){
+grootData&lt;-list.files(&quot;data/grootData&quot;, full.names = TRUE)
+dir.create(&quot;output/grootData&quot;)
+lapply(grootData, untar,  exdir = &quot;output/grootData/&quot;)}</code></pre>
 </div>
-<div id="ariba-rarefaction-plot" class="section level2">
-<h2>Ariba rarefaction plot</h2>
-<pre class="r"><code>S &lt;- specnumber(t(ariba_counts[ ,-1])) # observed number of AMR genes
-raremax &lt;- min(rowSums(t(ariba_counts[ ,-1])))
-Srare &lt;- rarefy(t(ariba_counts[ ,-1]), raremax)
-plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {raremax} counts (Ariba data)&quot;))
-abline(0, 1)</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>rarecurve(t(ariba_counts[ ,-1]), step = 1000, sample = raremax, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, main=glue(&quot;Rarefaction plot at {raremax} counts (Ariba data)&quot;))</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-3-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>All samples arrive to the plateau at 1.5176^{4} AMR genes. We analyze the number of reads per sample distribution:</p>
-<pre class="r"><code>nCounts_ariba&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
-ggplot(nCounts_ariba, aes(counts)) +
-  coord_cartesian(xlim = c(0,NA))+
-  geom_freqpoly()+
-  labs(title = &quot;Counts of AMR genes per sample distribution (Ariba data)&quot;)+
-  scale_x_continuous(breaks=seq(0,150000,10000))+
-  theme_bw()+
-  theme(axis.title = element_blank())</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We obtain the rarefied data and save it:</p>
-<pre class="r"><code>set.seed(200889)
-ariba_rar&lt;-rrarefy(t(ariba_counts[ ,-1]), sample = raremax)
-ariba_rar&lt;-as_tibble(t(ariba_rar))%&gt;%mutate(ref_name=ariba_counts$ref_name)%&gt;%
-  select(ref_name, everything())
-
-save(ariba_rar, file=&quot;output/rarefied_ariba.RDA&quot;)</code></pre>
+<div id="reorganize-files" class="section level2">
+<h2>Reorganize files</h2>
+<div id="ariba-files" class="section level3">
+<h3>Ariba files</h3>
+<pre class="bash"><code>if [[ -e output/aribaData/tmp ]]; then
+  cp  -r output/aribaData/tmp/*/ABR/Ariba/*  output/aribaData
+  rm -r output/aribaData/tmp
+  prename &#39;s/_out//&#39; output/aribaData/*out/; fi  ##Change folder names (Substitute out for nothing)
+</code></pre>
+<pre class="bash"><code>##Change report names to include sample name and move them from the directories
+for subdir in output/aribaData/*; do
+  if [[ -e $subdir/report.tsv ]]; then
+  subdir1=${subdir##*/}
+  mv $subdir/report.tsv output/aribaData/${subdir1}_ariba_report.tsv; fi; done
+</code></pre>
 </div>
-<div id="groot-rarefaction-plot" class="section level2">
-<h2>Groot rarefaction plot</h2>
-<p>Rarefaction at the minimum counts per sample:</p>
-<pre class="r"><code>S &lt;- specnumber(t(groot_counts[ ,-1])) # observed number of AMR genes
-raremax &lt;- min(rowSums(t(groot_counts[ ,-1])))
-Srare &lt;- rarefy(t(groot_counts[ ,-1]), raremax) # observed number of rarefied AMR genes
-plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {raremax} counts (Groot data)&quot;))
-abline(0, 1)</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We loose a lot of AMR genes if we rarefy at 470counts.</p>
-<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = raremax, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {raremax} counts (Groot data)&quot;))</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Samples have not arrived to the plateau at this rarefaction level.</p>
-<p>We analyze the rarefaction curves at different counts as well as the total counts of AMR genes per sample distribution and the number of samples that we would loose if we rarefied at these counts:</p>
-<pre class="r"><code>nrar=2500
-Srare &lt;- rarefy(t(groot_counts[ ,-1]), nrar) # observed number of rarefied AMR genes
-plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {nrar} counts (Groot data)&quot;))
-abline(0, 1)</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = nrar, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {nrar} counts (Groot data)&quot;))</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>nCounts_groot&lt;-groot_counts%&gt;%pivot_longer(-ref_name, names_to = &quot;sample&quot;, values_to = &quot;count&quot;)%&gt;%
-  group_by(sample)%&gt;%
-  summarise(ncount=sum(count))
-  
-ggplot(nCounts_groot, aes(ncount))+
-  geom_freqpoly(binwidth=1000)+
-  geom_vline(xintercept = nrar, color=&quot;red&quot;)+
-  scale_x_continuous(breaks = c(seq(from=0, to=10000, by=5000), 20000, 40000, 60000))+
-    geom_label(
-    label=glue(&quot;{sum(nCounts_groot$ncount&lt;nrar)} ({round(sum(nCounts_groot$ncount&lt;nrar)*100/nrow(nCounts_groot),1)}%) samples have less than {nrar} counts&quot;), 
-    x=40000,y=10)+
-  theme_bw()+
-  labs(title = &quot;Counts of AMR genes per sample distribution (Groot data)&quot;)</code></pre>
-<p><img src="figure/rarefaction.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>We rarefy groot samples at 2500 counts (we exlcude those samples with less than 2500 counts and AMR genes not present in any sample after the filtering)</p>
-<pre class="r"><code>groot_counts_filt&lt;-groot_counts%&gt;%pivot_longer(-ref_name, names_to = &quot;sample&quot;, values_to = &quot;count&quot;)%&gt;%
-  group_by(sample)%&gt;%
-  filter(sum(count)&gt;2500)%&gt;%ungroup()%&gt;%
-  pivot_wider(names_from = &quot;sample&quot;, values_from = &quot;count&quot;)%&gt;%
-  rowwise()%&gt;%
-  filter(sum(c_across(-ref_name))&gt;0)%&gt;%ungroup()
-
-set.seed(200889)
-groot_rar&lt;-rrarefy(t(groot_counts_filt[ ,-1]), sample = nrar)
-groot_rar&lt;-as_tibble(t(groot_rar))%&gt;%mutate(ref_name=groot_counts_filt$ref_name)%&gt;%
-  select(ref_name, everything())
-
-save(groot_rar, file=glue(&quot;output/rarefied{nrar}_groot.RDA&quot;))</code></pre>
+<div id="groot-files" class="section level3">
+<h3>Groot files</h3>
+<pre class="bash"><code>if [[ -e output/grootData/tmp ]]; then
+cp  -r output/grootData/tmp/*/ABR/Groot/*/*  output/grootData
+rm -r output/grootData/tmp; fi
+</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -648,31 +601,18 @@ locale:
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] patchwork_1.1.1 vegan_2.5-7     lattice_0.20-45 permute_0.9-7  
- [5] glue_1.6.2      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
- [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
-[13] ggplot2_3.3.5   tidyverse_1.3.1
-
 loaded via a namespace (and not attached):
- [1] httr_1.4.2       sass_0.4.1       jsonlite_1.8.0   splines_4.1.2   
- [5] modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1 highr_0.9       
- [9] cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0     backports_1.4.1 
-[13] digest_0.6.29    promises_1.2.0.1 rvest_1.0.2      colorspace_2.0-3
-[17] htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0     pkgconfig_2.0.3 
-[21] broom_0.7.12     haven_2.4.3      scales_1.1.1     later_1.3.0     
-[25] tzdb_0.2.0       git2r_0.30.1     mgcv_1.8-38      generics_0.1.2  
-[29] farver_2.1.0     ellipsis_0.3.2   withr_2.5.0      cli_3.2.0       
-[33] magrittr_2.0.2   crayon_1.5.0     readxl_1.3.1     evaluate_0.15   
-[37] fs_1.5.2         fansi_1.0.3      nlme_3.1-157     MASS_7.3-56     
-[41] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
-[45] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    compiler_4.1.2  
-[49] jquerylib_0.1.4  rlang_1.0.2      grid_4.1.2       rstudioapi_0.13 
-[53] labeling_0.4.2   rmarkdown_2.13   gtable_0.3.0     DBI_1.1.2       
-[57] R6_2.5.1         lubridate_1.8.0  knitr_1.38       fastmap_1.1.0   
-[61] utf8_1.2.2       workflowr_1.7.0  rprojroot_2.0.2  stringi_1.7.6   
-[65] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
-[69] tidyselect_1.1.2 xfun_0.30       </code></pre>
+ [1] Rcpp_1.0.8.3     rstudioapi_0.13  knitr_1.38       magrittr_2.0.2  
+ [5] workflowr_1.7.0  R6_2.5.1         rlang_1.0.2      fastmap_1.1.0   
+ [9] fansi_1.0.3      stringr_1.4.0    tools_4.1.2      xfun_0.30       
+[13] utf8_1.2.2       cli_3.2.0        git2r_0.30.1     jquerylib_0.1.4 
+[17] htmltools_0.5.2  ellipsis_0.3.2   rprojroot_2.0.2  yaml_2.3.5      
+[21] digest_0.6.29    tibble_3.1.6     lifecycle_1.0.1  crayon_1.5.0    
+[25] later_1.3.0      sass_0.4.1       vctrs_0.3.8      promises_1.2.0.1
+[29] fs_1.5.2         glue_1.6.2       evaluate_0.15    rmarkdown_2.13  
+[33] stringi_1.7.6    bslib_0.3.1      compiler_4.1.2   pillar_1.7.0    
+[37] jsonlite_1.8.0   httpuv_1.6.5     pkgconfig_2.0.3 </code></pre>
+</div>
 </div>
 </div>
 

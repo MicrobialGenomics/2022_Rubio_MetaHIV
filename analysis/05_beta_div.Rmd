@@ -209,9 +209,6 @@ beta_pcoa2<-function(dist, metadata, clin_var){
 ```
 
 
-
-
-
 ## Ariba
 
 ```{r}
@@ -245,6 +242,56 @@ beta_nmds(ariba_dist$dist_rar, ariba_dist$meta_rar, RiskGroup2)+labs(title="Arib
 beta_nmds(ariba_dist$dist_avgd, ariba_dist$meta_avgd, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
+#### Pairwise comparisons for RiskGroup2
+
+```{r}
+ariba_dist$meta_rar%>%count(RiskGroup2)
+
+pairwise_riskgroup2<-function(dist, metadata){
+
+dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+meta_dist<-inner_join(metadata, dist_df, by="SampleID")
+
+pairwise_p<-numeric()
+
+## hts versus msm
+hts_msm<-meta_dist%>%filter(RiskGroup2=="hts" | RiskGroup2=="msm")
+hts_msm_dist<-hts_msm%>%
+  select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+
+hts_msm_test<-adonis(hts_msm_dist~hts_msm$RiskGroup2, permutations = 999)
+pairwise_p["hts_msm"]<-hts_msm_test$aov.tab$`Pr(>F)`[1]
+
+## hts versus pwid
+hts_pwid<-meta_dist%>%filter(RiskGroup2=="hts" | RiskGroup2=="pwid")
+hts_pwid_dist<-hts_pwid%>%
+  select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+
+hts_pwid_test<-adonis(hts_pwid_dist~hts_pwid$RiskGroup2, permutations = 999)
+pairwise_p["hts_pwid"]<-hts_pwid_test$aov.tab$`Pr(>F)`[1]
+
+
+## msm versus pwid
+msm_pwid<-meta_dist%>%filter(RiskGroup2=="msm" | RiskGroup2=="pwid")
+msm_pwid_dist<-msm_pwid%>%
+  select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+
+msm_pwid_test<-adonis(msm_pwid_dist~msm_pwid$RiskGroup2, permutations = 999)
+pairwise_p["msm_pwid"]<-msm_pwid_test$aov.tab$`Pr(>F)`[1]
+
+p.adjust(pairwise_p, method = "BH")
+return(pairwise_p)}
+```
+
+```{r}
+pairwise_riskgroup2(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm)
+pairwise_riskgroup2(ariba_dist$dist_rar, ariba_dist$meta_rar)
+```
+
+
 ## Groot
 
 ```{r}
@@ -276,6 +323,13 @@ beta_nmds(groot_dist$dist_avgd, groot_dist$meta_avgd, RiskGroup2)+labs(title="Gr
 ```
 
 
+```{r}
+pairwise_riskgroup2(groot_dist$dist_rpkm, groot_dist$meta_rpkm)
+pairwise_riskgroup2(groot_dist$dist_rar, groot_dist$meta_rar)
+```
+
+
+
 #### Pretty plot
 
 ```{r eval=FALSE, include=TRUE}
@@ -283,7 +337,7 @@ beta_nmds(groot_dist$dist_avgd, groot_dist$meta_avgd, RiskGroup2)+labs(title="Gr
   set.seed(200889)
   nmds <- metaMDS(ariba_dist$dist_rar)
   
-  test<-adonis(ariba_dist$dist_rar~metadata_ariba$HIV_Status, permutations = 999)
+  test<-adonis(ariba_dist$dist_rar~ariba_dist$meta_rar$HIV_Status, permutations = 999)
   ptest<-test$aov.tab$`Pr(>F)`[1]
   
   scores(nmds) %>%

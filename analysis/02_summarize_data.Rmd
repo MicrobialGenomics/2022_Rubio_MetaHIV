@@ -38,7 +38,8 @@ Get CARD database:
 aro_index<-read_tsv("data/cardData/aro_index_v314.tsv")%>%
   mutate(`ARO Accession`=str_extract(`ARO Accession`, "[:digit:]+"),
          `ARO Accession`=as.numeric(`ARO Accession`))%>%                                                                   
-  select(-starts_with("Model"))
+  select(-starts_with("Model"))%>%
+  unique()
 
 str(aro_index)
 ```
@@ -58,7 +59,7 @@ names(ariba_data)<-ariba_samples
 
 ```{r}
 vars<-c("#ariba_ref_name", "ref_name" , "gene",  "var_only", "flag", "reads", "cluster", "ref_len", "free_text" )
-aribasubs<-function(x){x%>%select(vars)%>%unique()}
+aribasubs<-function(x){x%>%select(all_of(vars))%>%unique()}
 ##aribasubs2<-function(x){x%>% filter(gene==1)%>%select(c(1:8,31))%>%unique()} ##Only coding sequences
 ariba_data<-lapply(ariba_data, aribasubs)
 ```
@@ -79,7 +80,8 @@ refname<-refname%>%
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "_"), v1, `Model Sequence ID`),
          `ARO Accession` = as.numeric(`ARO Accession`))%>%
   select(-v1, -`Model Sequence ID`)
-refname_all_ariba<-left_join(refname, aro_index, by="ARO Accession")%>%unique()
+
+refname_all_ariba<-left_join(refname, aro_index, by="ARO Accession")
 
 head(refname_all_ariba, 8)%>%kable(caption="**Ariba detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```
@@ -94,7 +96,7 @@ aribanotation<-function(x, aro_index){
          init_final=ifelse(str_detect(init_final, "_"), init_final, `Model Sequence ID`),
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "_"), v1, `Model Sequence ID`),
         `ARO Accession` = as.numeric(`ARO Accession`))%>%
-  select(-v1, -`Model Sequence ID`)%>%inner_join(aro_index, by="ARO Accession")%>%unique()
+  select(-v1, -`Model Sequence ID`)%>%inner_join(aro_index, by="ARO Accession")
   return(x)}
 
 ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
@@ -164,11 +166,12 @@ refname_groot<-refname_groot%>%
          `Model Sequence ID`=ifelse(str_detect(`Model Sequence ID`, "-"), v1, `Model Sequence ID`),
          `ARO Accession` = as.numeric(`ARO Accession`))%>%
   select(-v1)
-refname_all_groot<-left_join(refname_groot, aro_index, by="ARO Accession")%>%unique()
+refname_all_groot<-left_join(refname_groot, aro_index, by="ARO Accession")
 
 which(is.na(refname_all_groot$`AMR Gene Family`))
-refname_all_groot%>%slice(n=569) ##one missig arg gene, not in card databasse
+refname_all_groot%>%slice(n=569) ##one missig arg gene, not in card database.
 
+##Searched for the ARO accession and the NCBI accession and there was nothing as a resistance gene to chloramphenicol. 
 
 head(refname_all_groot, 8)%>%kable(caption="**Groot detected ARG with CARD information** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
 ```

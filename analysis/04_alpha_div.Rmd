@@ -27,6 +27,7 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
 ```
 
 ## Create functions:
@@ -39,7 +40,7 @@ shannon<-diversity(d_rpkm[ ,-1], MARGIN = 2, index="shannon")
 simpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="simpson")
 invsimpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="invsimpson")
 nARG<-specnumber(d_rpkm[, -1], MARGIN = 2)
-fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2)
+fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from counts (not possible to calculate for rpkm values)
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   filter(SampleID %in% names(d_rpkm))%>%
   mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
@@ -78,10 +79,29 @@ data%>%
 
 ```
 
+### Plot correlation between diversity indexes and quantitative clinical variables
+
+```{r}
+alpha_div_cor_all<-function(data, clin_var){
+clin_var<-enquo(clin_var)
+data%>%
+  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+  ggplot(aes(x=!!clin_var, y=Alpha_value))+
+  geom_point(color='#2980B9', size = 2) + 
+  geom_smooth(method=lm, color="black")+
+  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+  stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.9)+
+  theme_bw()+
+  labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
+  theme(legend.position = "none", axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}
+```
+
+
 ## ARIBA
 
-```{r ariba_alphadiv}
-ariba_alpha<-alpha_div(ariba_rpkm, ariba_counts)
+```{r ariba_alpha_rpkmdiv}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts)
 ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
 ```
 
@@ -89,14 +109,14 @@ ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
 ### HIV status
 
 ```{r}
-alpha_div_plot_all(ariba_alpha, HIV_Status)
+alpha_div_plot_all(ariba_alpha_rpkm, HIV_Status)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
 ### Profile
 
 ```{r}
-alpha_div_plot_all(ariba_alpha, Profile)
+alpha_div_plot_all(ariba_alpha_rpkm, Profile)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
@@ -104,15 +124,38 @@ alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = "Ariba Rarefied cou
 ### Risk Group 2
 
 ```{r}
-alpha_div_plot_all(ariba_alpha, RiskGroup2)
+alpha_div_plot_all(ariba_alpha_rpkm, RiskGroup2)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+
+### CD4 (absolute)
+
+```{r}
+alpha_div_cor_all(ariba_alpha_rpkm, CD4)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(ariba_alpha_rar, CD4)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+
+### CD4 (relative)
+
+```{r}
+alpha_div_cor_all(ariba_alpha_rpkm, CD4_relative)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(ariba_alpha_rar, CD4_relative)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+### Nadir CD4
+
+```{r}
+alpha_div_cor_all(ariba_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(ariba_alpha_rar, Nadir_CD4)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
 
 ## Groot
 
-```{r groot_alphadiv}
-groot_alpha<-alpha_div(groot_rpkm, groot_counts)
+```{r groot_alpha_rpkmdiv}
+groot_alpha_rpkm<-alpha_div(groot_rpkm, groot_counts)
 groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
 ```
 
@@ -120,14 +163,14 @@ groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
 ### HIV status
 
 ```{r}
-alpha_div_plot_all(groot_alpha, HIV_Status)
+alpha_div_plot_all(groot_alpha_rpkm, HIV_Status)+labs(subtitle = "groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, HIV_Status)+labs(subtitle = "groot Rarefied counts")
 ```
 
 ### Profile
 
 ```{r}
-alpha_div_plot_all(groot_alpha, Profile)
+alpha_div_plot_all(groot_alpha_rpkm, Profile)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = "Groot Rarefied counts")
 ```
 
@@ -135,7 +178,30 @@ alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = "Groot Rarefied cou
 ### Risk Group 2
 
 ```{r}
-alpha_div_plot_all(groot_alpha, RiskGroup2)
+alpha_div_plot_all(groot_alpha_rpkm, RiskGroup2)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = "Groot Rarefied counts")
+```
+
+
+### CD4 (absolute)
+
+```{r}
+alpha_div_cor_all(groot_alpha_rpkm, CD4)+labs(subtitle = "Groot RPKM")
+alpha_div_cor_all(groot_alpha_rar, CD4)+labs(subtitle = "Groot Rarefied counts")
+```
+
+
+### CD4 (relative)
+
+```{r}
+alpha_div_cor_all(groot_alpha_rpkm, CD4_relative)+labs(subtitle = "Groot RPKM")
+alpha_div_cor_all(groot_alpha_rar, CD4_relative)+labs(subtitle = "Groot Rarefied counts")
+```
+
+### Nadir CD4
+
+```{r}
+alpha_div_cor_all(groot_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Groot RPKM")
+alpha_div_cor_all(groot_alpha_rar, Nadir_CD4)+labs(subtitle = "Groot Rarefied counts")
 ```
 

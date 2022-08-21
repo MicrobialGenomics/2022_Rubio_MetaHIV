@@ -10,15 +10,17 @@ editor_options:
 
 Welcome to my research website.
 
-## [Import data](import_data.html)
+## [Import data](01_import_data.html)
 
-## [Summarize data](summarize_data.html)
+## [Summarize data](02_summarize_data.html)
 
-## [Rarefy data](rarefaction.html)
+## [Rarefy data](03_rarefaction.html)
 
-## [Alpha diversity analysis](alpha_div.html)
+## [Alpha diversity analysis](04_alpha_div.html)
 
-## [Beta diversity analysis](beta_div.html)
+## [Beta diversity analysis](05_beta_div.html)
+
+##biplot
 
 
 
