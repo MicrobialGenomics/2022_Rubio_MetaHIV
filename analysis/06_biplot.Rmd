@@ -1,0 +1,116 @@
+---
+title: "06_biplot"
+author: "Elisa Rubio"
+date: "2022-08-21"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(vegan)
+library(broom)
+library(ggrepel)
+```
+
+
+```{r}
+load("output/ariba_dist.RDA")
+load("output/groot_dist.RDA")
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/rarefied2500_groot.RDA")
+```
+
+```{r}
+set.seed(200889)
+nmds <- metaMDS(ariba_dist$dist_rar)
+nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+
+ariba_rart<-ariba_rar%>%t()%>%as.data.frame()%>%slice(-1); colnames(ariba_rart)<-ariba_rar$ref_name; ariba_rart$SampleID<-rownames(ariba_rart)
+ariba_rart<-ariba_rart%>%as_tibble()%>%select(SampleID, everything())%>%
+  pivot_longer(-SampleID)
+
+nmds_shared <- inner_join(ariba_rart, nmds_positions)%>%mutate(value=as.numeric(value))
+
+
+cor_x <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_x) %>%
+  select(name, estimate, p.value)
+  
+cor_y <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_y) %>%
+  select(name, estimate, p.value)
+
+correlations <- inner_join(cor_x, cor_y, by="name")
+
+correlations %>%
+  filter(p.value.x < 0.001 | p.value.y < 0.001)
+high_corr <- correlations %>%
+  filter(abs(estimate.x) > 0.5 | abs(estimate.y) > 0.5) 
+
+
+```
+
+```{r}
+
+# plot segments from (0, 0) to (Rx, Ry)
+high_corr %>%
+  ggplot(aes(x=0, xend=estimate.x, y=0, yend=estimate.y)) + 
+  geom_segment()
+
+nmds_positions %>%
+  mutate(days = as.numeric(str_replace(Group, ".*D", "")),
+         early = days < 10) %>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=early)) +
+  geom_point() +
+  geom_segment(data=high_corr,
+               aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
+               inherit.aes=FALSE)
+
+
+# plot text at (Rx, Ry)
+
+nmds_positions %>%
+  mutate(days = as.numeric(str_replace(Group, ".*D", "")),
+         early = days < 10) %>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=early)) +
+  geom_point() +
+  # geom_segment(data=high_corr,
+  #              aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
+  #              inherit.aes=FALSE) +
+  geom_text_repel(data=high_corr,
+            aes(x=estimate.x, y=estimate.y, label=name), 
+            min.segment.length = 0.01, xlim=c(-1.2, 0.6),
+            inherit.aes=FALSE) +
+  geom_point(data=high_corr,
+             color="black",
+             aes(x=estimate.x, y=estimate.y), 
+             inherit.aes = FALSE) +
+  scale_color_manual(name=NULL,
+                     breaks=c(FALSE, TRUE),
+                     values=c("red", "blue"),
+                     labels=c("Late", "Early")) +
+  coord_cartesian(xlim=c(-1.1, 0.6)) +
+  theme_classic()
+```
+

@@ -328,6 +328,13 @@ pairwise_riskgroup2(groot_dist$dist_rpkm, groot_dist$meta_rpkm)
 pairwise_riskgroup2(groot_dist$dist_rar, groot_dist$meta_rar)
 ```
 
+### Save distances
+
+```{r}
+save(ariba_dist, file="output/ariba_dist.RDA")
+save(groot_dist, file="output/groot_dist.RDA")
+```
+
 
 
 #### Pretty plot
