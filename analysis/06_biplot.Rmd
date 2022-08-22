@@ -19,8 +19,8 @@ library(tidyverse)
 library(vegan)
 library(broom)
 library(ggrepel)
+library(glue)
 ```
-
 
 ```{r}
 load("output/ariba_dist.RDA")
@@ -31,17 +31,24 @@ load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
 ```
 
+Correlations of AMR genes with NMDs axes: 
+
 ```{r}
+
+data<-ariba_rar
+cor_level<-0.5 
+
+dist<-vegdist(t(data[ ,-1]), method = "bray")
 set.seed(200889)
-nmds <- metaMDS(ariba_dist$dist_rar)
+nmds <- metaMDS(dist)
 nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
-ariba_rart<-ariba_rar%>%t()%>%as.data.frame()%>%slice(-1); colnames(ariba_rart)<-ariba_rar$ref_name; ariba_rart$SampleID<-rownames(ariba_rart)
-ariba_rart<-ariba_rart%>%as_tibble()%>%select(SampleID, everything())%>%
-  pivot_longer(-SampleID)
+ref_name<-pull(data, ref_name)
+data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1) 
+colnames(data)<-c("SampleID", ref_name)
+data<-data%>%pivot_longer(-SampleID)
 
-nmds_shared <- inner_join(ariba_rart, nmds_positions)%>%mutate(value=as.numeric(value))
-
+nmds_shared <- inner_join(data, nmds_positions)%>%mutate(value=as.numeric(value))
 
 cor_x <- nmds_shared %>%
   nest(data = -name) %>%
@@ -63,54 +70,82 @@ cor_y <- nmds_shared %>%
 
 correlations <- inner_join(cor_x, cor_y, by="name")
 
-correlations %>%
-  filter(p.value.x < 0.001 | p.value.y < 0.001)
 high_corr <- correlations %>%
-  filter(abs(estimate.x) > 0.5 | abs(estimate.y) > 0.5) 
+  filter(estimate.x<=0.01 | estimate.y<=0.01)%>%
+  filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level) 
 
+nmds_positions%>%
+  ##inner_join(., metadata, by="Sample") %>%
+  ggplot(aes(x=NMDS1, y=NMDS2)) +
+  geom_point(alpha=0.5, size=2)+
+  geom_segment(data=high_corr,
+               aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
+               arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
+               inherit.aes=FALSE)+
+  geom_text_repel(data=high_corr,
+                  aes(x=estimate.x, y=estimate.y, label=name),
+                  min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
+                  inherit.aes=FALSE) +
+  theme_bw()+
+  scale_color_manual(values = c("chartreuse4", "red", "gray"))+
+  labs(caption = glue("Gene level, {cor_level} spearman correlation"))
 
 ```
+
+
+Correlations of numerical metadata varaibles with NMDS axes
 
 ```{r}
 
-# plot segments from (0, 0) to (Rx, Ry)
-high_corr %>%
-  ggplot(aes(x=0, xend=estimate.x, y=0, yend=estimate.y)) + 
-  geom_segment()
+dist<-ariba_dist$dist_rar
+metadata<-ariba_dist$meta_rar
+cor_level=0.2
 
-nmds_positions %>%
-  mutate(days = as.numeric(str_replace(Group, ".*D", "")),
-         early = days < 10) %>%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=early)) +
-  geom_point() +
+set.seed(200889)
+nmds <- metaMDS(dist)
+nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+
+meta<-metadata%>%select(SampleID, where(is.numeric))%>%pivot_longer(-SampleID)
+nmds_shared <- inner_join(meta, nmds_positions)%>%mutate(value=as.numeric(value))
+
+cor_x <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_x) %>%
+  select(name, estimate, p.value)
+  
+cor_y <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_y) %>%
+  select(name, estimate, p.value)
+
+correlations <- inner_join(cor_x, cor_y, by="name")
+
+high_corr <- correlations %>%
+  filter(estimate.x<=0.01 | estimate.y<=0.01)%>%
+  filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level) 
+
+nmds_positions%>%
+  ##inner_join(., metadata, by="Sample") %>%
+  ggplot(aes(x=NMDS1, y=NMDS2)) +
+  geom_point(alpha=0.5, size=2, color='#2980B9')+
   geom_segment(data=high_corr,
                aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
-               inherit.aes=FALSE)
-
-
-# plot text at (Rx, Ry)
-
-nmds_positions %>%
-  mutate(days = as.numeric(str_replace(Group, ".*D", "")),
-         early = days < 10) %>%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=early)) +
-  geom_point() +
-  # geom_segment(data=high_corr,
-  #              aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
-  #              inherit.aes=FALSE) +
+               arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
+               inherit.aes=FALSE)+
   geom_text_repel(data=high_corr,
-            aes(x=estimate.x, y=estimate.y, label=name), 
-            min.segment.length = 0.01, xlim=c(-1.2, 0.6),
-            inherit.aes=FALSE) +
-  geom_point(data=high_corr,
-             color="black",
-             aes(x=estimate.x, y=estimate.y), 
-             inherit.aes = FALSE) +
-  scale_color_manual(name=NULL,
-                     breaks=c(FALSE, TRUE),
-                     values=c("red", "blue"),
-                     labels=c("Late", "Early")) +
-  coord_cartesian(xlim=c(-1.1, 0.6)) +
-  theme_classic()
-```
+                  aes(x=estimate.x, y=estimate.y, label=name),
+                  min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
+                  inherit.aes=FALSE) +
+  theme_bw()+
+  scale_color_manual(values = c("chartreuse4", "red", "gray"))+
+  labs(caption = glue("Gene level, {cor_level} spearman correlation"))
 
+```
