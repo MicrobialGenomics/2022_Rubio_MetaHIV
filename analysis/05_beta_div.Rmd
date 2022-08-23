@@ -59,13 +59,9 @@ dist_func<-function(d_rpkm, d_rar, d_counts, metadata){
   minCounts<-min(nCounts$counts)
   set.seed(200889)
   dist_avgd<- avgdist(t(d_counts[ ,-1]), dmethod="bray", sample=minCounts)
-  
-  meta_rpkm<-metadata%>%filter(SampleID %in% colnames(d_rpkm[-1]))
-  meta_rar<-metadata%>%filter(SampleID %in% colnames(d_rar[-1]))
-  meta_avgd<-metadata%>%filter(SampleID %in% colnames(d_counts[-1]))
-  
-  d<-list(dist_rpkm, dist_rar, dist_avgd, meta_rpkm, meta_rar, meta_avgd)
-  names(d)<-c("dist_rpkm", "dist_rar", "dist_avgd", "meta_rpkm", "meta_rar", "meta_avgd")
+
+  d<-list(dist_rpkm, dist_rar, dist_avgd)
+  names(d)<-c("dist_rpkm", "dist_rar", "dist_avgd")
   return(d)
 }
 ```
@@ -74,10 +70,20 @@ dist_func<-function(d_rpkm, d_rar, d_counts, metadata){
 ### NMDS
 #### NMDS function (for variables with max 3 levels)
 ```{r}
+
 beta_nmds<-function(dist, metadata, clin_var){
   
   clin_var<-enquo(clin_var)
-  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(!!clin_var))
+  
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+  
+  clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
   
   test<-adonis(dist~clin_var2, permutations = 999)
   ptest<-test$aov.tab$`Pr(>F)`[1]
@@ -85,9 +91,12 @@ beta_nmds<-function(dist, metadata, clin_var){
   set.seed(200889)
   nmds <- metaMDS(dist)
   
-  scores(nmds) %>%
+  ##scores(nmds) %>%
+ nmds$points %>%
     as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
     inner_join(., metadata, by="SampleID") %>%
+    filter(!is.na(!!clin_var))%>%
     ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var, fill=!!clin_var)) + 
     stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
     geom_point()+
@@ -107,7 +116,16 @@ beta_nmds<-function(dist, metadata, clin_var){
 beta_nmds2<-function(dist, metadata, clin_var){
   
   clin_var<-enquo(clin_var)
-  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(!!clin_var))
+  
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+  
+  clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
   
   test<-adonis(dist~clin_var2, permutations = 999)
   ptest<-test$aov.tab$`Pr(>F)`[1]
@@ -115,8 +133,10 @@ beta_nmds2<-function(dist, metadata, clin_var){
   set.seed(200889)
   nmds <- metaMDS(dist)
   
-  scores(nmds) %>%
+  ##scores(nmds) %>%
+  nmds$points %>%
     as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
     inner_join(., metadata, by="SampleID") %>%
     ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) + 
     stat_ellipse(show.legend = FALSE)+
@@ -218,18 +238,18 @@ ariba_dist<-dist_func(ariba_rpkm, ariba_rar, ariba_counts, metadata)
 ### HIV Status
 
 ```{r ariba nmds HIV, message=FALSE, warning=FALSE}
-beta_nmds(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(ariba_dist$dist_rar, ariba_dist$meta_rar, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(ariba_dist$dist_avgd, ariba_dist$meta_avgd, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds(ariba_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(ariba_dist$dist_rar, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds(ariba_dist$dist_avgd, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 
 ### Profile
 
 ```{r ariba nmds profile}
-beta_nmds2(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds2(ariba_dist$dist_rar, ariba_dist$meta_rar, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds2(ariba_dist$dist_avgd, ariba_dist$meta_avgd, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds2(ariba_dist$dist_rar, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds2(ariba_dist$dist_avgd, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 
@@ -237,15 +257,14 @@ beta_nmds2(ariba_dist$dist_avgd, ariba_dist$meta_avgd, Profile)+labs(title="Arib
 
 
 ```{r ariba nmds riskgroup2}
-beta_nmds(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(ariba_dist$dist_rar, ariba_dist$meta_rar, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(ariba_dist$dist_avgd, ariba_dist$meta_avgd, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds(ariba_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(ariba_dist$dist_rar, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds(ariba_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 #### Pairwise comparisons for RiskGroup2
 
 ```{r}
-ariba_dist$meta_rar%>%count(RiskGroup2)
 
 pairwise_riskgroup2<-function(dist, metadata){
 
@@ -287,9 +306,18 @@ return(pairwise_p)}
 ```
 
 ```{r}
-pairwise_riskgroup2(ariba_dist$dist_rpkm, ariba_dist$meta_rpkm)
-pairwise_riskgroup2(ariba_dist$dist_rar, ariba_dist$meta_rar)
+pairwise_riskgroup2(ariba_dist$dist_rpkm, metadata)
+pairwise_riskgroup2(ariba_dist$dist_rar, metadata)
 ```
+
+### Cluster
+
+
+```{r}
+beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
 
 
 ## Groot
@@ -301,34 +329,43 @@ groot_dist<-dist_func(groot_rpkm, groot_rar, groot_counts, metadata)
 ### HIV Status
 
 ```{r groot nmds HIV}
-beta_nmds(groot_dist$dist_rpkm, groot_dist$meta_rpkm, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(groot_dist$dist_rar, groot_dist$meta_rar, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(groot_dist$dist_avgd, groot_dist$meta_avgd, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds(groot_dist$dist_avgd, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 ### Profile
 
 ```{r groot nmds profile}
-beta_nmds2(groot_dist$dist_rpkm, groot_dist$meta_rpkm, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds2(groot_dist$dist_rar, groot_dist$meta_rar, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds2(groot_dist$dist_avgd, groot_dist$meta_avgd, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds2(groot_dist$dist_rpkm, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds2(groot_dist$dist_rar, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds2(groot_dist$dist_avgd, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 ### Risk Group 2
 
 ```{r groot nmds riskgroup2}
-beta_nmds(groot_dist$dist_rpkm, groot_dist$meta_rpkm, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(groot_dist$dist_rar, groot_dist$meta_rar, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(groot_dist$dist_avgd, groot_dist$meta_avgd, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+beta_nmds(groot_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+beta_nmds(groot_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
 
 ```{r}
-pairwise_riskgroup2(groot_dist$dist_rpkm, groot_dist$meta_rpkm)
-pairwise_riskgroup2(groot_dist$dist_rar, groot_dist$meta_rar)
+pairwise_riskgroup2(groot_dist$dist_rpkm, metadata)
+pairwise_riskgroup2(groot_dist$dist_rar, metadata)
 ```
 
-### Save distances
+
+### Cluster
+
+
+```{r}
+beta_nmds(groot_dist$dist_rpkm, metadata, Cluster)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
+beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```
+
+## Save distances
 
 ```{r}
 save(ariba_dist, file="output/ariba_dist.RDA")
@@ -336,8 +373,6 @@ save(groot_dist, file="output/groot_dist.RDA")
 ```
 
 
-
-#### Pretty plot
 
 ```{r eval=FALSE, include=TRUE}
 

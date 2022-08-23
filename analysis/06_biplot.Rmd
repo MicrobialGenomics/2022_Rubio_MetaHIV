@@ -20,6 +20,7 @@ library(vegan)
 library(broom)
 library(ggrepel)
 library(glue)
+library(usedist)
 ```
 
 ```{r}
@@ -29,19 +30,23 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
 ```
 
 Correlations of AMR genes with NMDs axes: 
 
 ```{r}
+biplot_amr<-function(data, metadata, clin_var, cor_level){
 
-data<-ariba_rar
-cor_level<-0.5 
-
-dist<-vegdist(t(data[ ,-1]), method = "bray")
+clin_var<-enquo(clin_var)  
+dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
 nmds <- metaMDS(dist)
-nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+
+nmds_positions<- nmds$points %>%
+  as_tibble(rownames="SampleID")%>%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
 
 ref_name<-pull(data, ref_name)
 data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1) 
@@ -71,12 +76,12 @@ cor_y <- nmds_shared %>%
 correlations <- inner_join(cor_x, cor_y, by="name")
 
 high_corr <- correlations %>%
-  filter(estimate.x<=0.01 | estimate.y<=0.01)%>%
+  filter(estimate.x<=0.05 | estimate.y<=0.05)%>%
   filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level) 
 
 nmds_positions%>%
-  ##inner_join(., metadata, by="Sample") %>%
-  ggplot(aes(x=NMDS1, y=NMDS2)) +
+  left_join(., metadata, by="SampleID") %>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
   geom_point(alpha=0.5, size=2)+
   geom_segment(data=high_corr,
                aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
@@ -88,25 +93,35 @@ nmds_positions%>%
                   inherit.aes=FALSE) +
   theme_bw()+
   scale_color_manual(values = c("chartreuse4", "red", "gray"))+
-  labs(caption = glue("Gene level, {cor_level} spearman correlation"))
+  labs(caption = glue("Gene level, {cor_level} spearman correlation"))}
+
+
 
 ```
 
 
-Correlations of numerical metadata varaibles with NMDS axes
+Correlations of numerical metadata variables with NMDS axes
 
 ```{r}
 
-dist<-ariba_dist$dist_rar
-metadata<-ariba_dist$meta_rar
-cor_level=0.2
+biplot_meta<-function(data, metadata, clin_var, cor_level){
 
+clin_var<-enquo(clin_var)  
+
+dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
 nmds <- metaMDS(dist)
-nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
-meta<-metadata%>%select(SampleID, where(is.numeric))%>%pivot_longer(-SampleID)
-nmds_shared <- inner_join(meta, nmds_positions)%>%mutate(value=as.numeric(value))
+nmds_positions<- nmds$points %>%
+  as_tibble(rownames="SampleID")%>%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
+
+
+meta<-metadata%>%select(SampleID, where(is.numeric))%>%
+  pivot_longer(-SampleID, values_drop_na = TRUE)
+
+nmds_shared <- inner_join(nmds_positions, meta)%>%mutate(value=as.numeric(value))
 
 cor_x <- nmds_shared %>%
   nest(data = -name) %>%
@@ -132,10 +147,12 @@ high_corr <- correlations %>%
   filter(estimate.x<=0.01 | estimate.y<=0.01)%>%
   filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level) 
 
+if (nrow(high_corr)==0){stop("No significant correlations")
+  } else {
 nmds_positions%>%
-  ##inner_join(., metadata, by="Sample") %>%
-  ggplot(aes(x=NMDS1, y=NMDS2)) +
-  geom_point(alpha=0.5, size=2, color='#2980B9')+
+  left_join(., metadata, by="SampleID") %>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
+  geom_point(alpha=0.5, size=2)+
   geom_segment(data=high_corr,
                aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
                arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
@@ -146,6 +163,31 @@ nmds_positions%>%
                   inherit.aes=FALSE) +
   theme_bw()+
   scale_color_manual(values = c("chartreuse4", "red", "gray"))+
-  labs(caption = glue("Gene level, {cor_level} spearman correlation"))
+  labs(caption = glue("{cor_level} spearman correlation"))}
+}
 
+```
+
+## ARIBA
+
+```{r}
+biplot_amr(ariba_rar, metadata, RiskGroup2, 0.5)+labs(title = "Ariba Rarefied counts")
+biplot_meta(ariba_rar, metadata, RiskGroup2, 0.2)+labs(title = "Ariba Rarefied counts")
+```
+
+```{r}
+biplot_amr(ariba_rpkm, metadata, RiskGroup2, 0.5)+labs(title = "Ariba RPKM")
+biplot_meta(ariba_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "Ariba RPKM")
+```
+
+## Groot
+
+```{r}
+biplot_amr(groot_rar, metadata, RiskGroup2, 0.5)+labs(title = "Groot Rarefied counts")
+##biplot_meta(groot_rar, metadata, RiskGroup2, 0.2)+labs(title = "Groot Rarefied counts")
+```
+
+```{r message=FALSE, warning=FALSE}
+biplot_amr(groot_rpkm, metadata, RiskGroup2, 0.5)+labs(title = "Groot RPKM")
+biplot_meta(groot_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "Groot RPKM")
 ```

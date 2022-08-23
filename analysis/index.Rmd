@@ -20,7 +20,7 @@ Welcome to my research website.
 
 ## [Beta diversity analysis](05_beta_div.html)
 
-##biplot
+## [Biplots](06_biplot.html)
 
 
 

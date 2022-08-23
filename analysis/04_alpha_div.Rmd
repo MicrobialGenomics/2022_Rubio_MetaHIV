@@ -18,6 +18,7 @@ library(tidyverse)
 library(kableExtra)
 library(vegan)
 library(ggpubr)
+library(glue)
 ```
 
 ## Load summarized and rarefied data
@@ -132,7 +133,7 @@ pairwise_test<-function(alpha, clin_var){
   pos_sigpvalue<-which(p_values<=0.05, arr.ind = TRUE)
   group1<-rownames(p_values)[pos_sigpvalue[1]]
   group2<-colnames(p_values)[pos_sigpvalue[2]]
-  sigp_value<-p_values[which(y<=0.05)]
+  sigp_value<-p_values[which(p_values<=0.05)]
   glue("{group1} is signifficantly different from {group2} (p value {round(sigp_value, 4)})")}
 ```
 
