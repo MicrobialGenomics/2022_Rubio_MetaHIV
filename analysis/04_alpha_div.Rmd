@@ -52,7 +52,10 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
 alpha_div_plot<-function(data, clin_var, alpha_var){
   clin_var<-enquo(clin_var)
   alpha_var<-enquo(alpha_var)
-ggplot(data, aes(x=!!clin_var, y=!!alpha_var))+
+  
+  data%>%
+  filter(!is.na(!!clin_var))%>%
+  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
   geom_boxplot(aes(colour=!!clin_var))+
   geom_jitter(width = 0.2, aes(colour=!!clin_var))+
   stat_compare_means()+
@@ -66,6 +69,7 @@ ggplot(data, aes(x=!!clin_var, y=!!alpha_var))+
 alpha_div_plot_all<-function(data, clin_var){
 clin_var<-enquo(clin_var)
 data%>%
+  filter(!is.na(!!clin_var))%>%
   pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
   ggplot(aes(x=!!clin_var, y=Alpha_value))+
   geom_boxplot(aes(colour=!!clin_var))+
@@ -120,6 +124,26 @@ alpha_div_plot_all(ariba_alpha_rpkm, Profile)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
+Pairwise comparisons of InvSimpson and Simpson according to Profile:
+
+```{r}
+pairwise_test<-function(alpha, clin_var){
+  p_values<-pairwise.wilcox.test(alpha, clin_var, p.adjust.method = "BH")$p.value
+  pos_sigpvalue<-which(p_values<=0.05, arr.ind = TRUE)
+  group1<-rownames(p_values)[pos_sigpvalue[1]]
+  group2<-colnames(p_values)[pos_sigpvalue[2]]
+  sigp_value<-p_values[which(y<=0.05)]
+  glue("{group1} is signifficantly different from {group2} (p value {round(sigp_value, 4)})")}
+```
+
+```{r}
+pairwise_test(ariba_alpha_rpkm$Simpson, ariba_alpha_rpkm$Profile)
+pairwise_test(ariba_alpha_rpkm$InvSimpson, ariba_alpha_rpkm$Profile)
+
+pairwise_test(ariba_alpha_rar$Simpson, ariba_alpha_rar$Profile)
+pairwise_test(ariba_alpha_rar$InvSimpson, ariba_alpha_rar$Profile)
+```
+
 
 ### Risk Group 2
 
@@ -128,6 +152,12 @@ alpha_div_plot_all(ariba_alpha_rpkm, RiskGroup2)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
+### Microbiome cluster
+
+```{r}
+alpha_div_plot_all(ariba_alpha_rpkm, Cluster)+labs(subtitle = "Ariba RPKM")
+alpha_div_plot_all(ariba_alpha_rar, Cluster)+labs(subtitle = "Ariba Rarefied counts")
+```
 
 ### CD4 (absolute)
 
@@ -182,6 +212,12 @@ alpha_div_plot_all(groot_alpha_rpkm, RiskGroup2)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = "Groot Rarefied counts")
 ```
 
+### Microbiome cluster
+
+```{r}
+alpha_div_plot_all(groot_alpha_rpkm, Cluster)+labs(subtitle = "Groot RPKM")
+alpha_div_plot_all(groot_alpha_rar, Cluster)+labs(subtitle = "Groot Rarefied counts")
+```
 
 ### CD4 (absolute)
 
