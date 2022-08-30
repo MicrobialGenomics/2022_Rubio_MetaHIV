@@ -1,0 +1,49 @@
+---
+title: "07_heatmap"
+author: "Elisa Rubio"
+date: "2022-08-30"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(devtools)
+library(tidyverse)
+library(vegan)
+library(broom)
+library(ggrepel)
+library(glue)
+library(usedist)
+library(patchwork)
+library(kableExtra)
+library(ComplexHeatmap)
+library(corrplot)
+library(Hmisc)
+```
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+
+```{r}
+data<-ariba_rar
+ref_name<-pull(data, ref_name)
+data<-as.data.frame(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%select(-SampleID) 
+colnames(data)<-ref_name
+res <- rcorr(as.matrix(data), type='spearman')
+```
+
+
+```{r}
+Heatmap(res$r)
+```
+

@@ -52,16 +52,23 @@ ggplot(nCounts_ariba, aes(counts)) +
   theme(axis.title = element_blank())
 ```
 
-We obtain the rarefied data and save it:
+We obtain the rarefied data, remove AMR genes with 0 values and save it:
 
 ```{r}
 set.seed(200889)
 ariba_rar<-rrarefy(t(ariba_counts[ ,-1]), sample = raremax)
 ariba_rar<-as_tibble(t(ariba_rar))%>%mutate(ref_name=ariba_counts$ref_name)%>%
-  select(ref_name, everything())
+  select(ref_name, everything())%>%
+  rowwise()%>%
+  filter(sum(c_across(-ref_name))>0)%>%ungroup()
 
 save(ariba_rar, file="output/rarefied_ariba.RDA")
 
+```
+
+```{r}
+ariba_counts%>%rowwise()%>%
+  filter(sum(c_across(-ref_name))>0)%>%ungroup()
 ```
 
 ## Groot rarefaction plot
