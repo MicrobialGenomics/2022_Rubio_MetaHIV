@@ -30,7 +30,6 @@ load("output/rarefied2500_groot.RDA")
 metadata<-read_csv("data/Metadata/metadata.csv")
 ```
 
-
 ## Create functions
 
 ### Bray Curtis Distance from RPKM values or rarefied values (vegdist function)
@@ -47,7 +46,6 @@ minCounts<-min(nCounts_ariba$counts)
 set.seed(200889)
 ##dist_rar<- avgdist(t(ariba_counts[ ,-1]), dmethod="bray", sample=minCounts)
 ```
-
 
 ### Function to calculate all distances
 
@@ -66,9 +64,10 @@ dist_func<-function(d_rpkm, d_rar, d_counts, metadata){
 }
 ```
 
-
 ### NMDS
+
 #### NMDS function (for variables with max 3 levels)
+
 ```{r}
 
 beta_nmds<-function(dist, metadata, clin_var){
@@ -110,8 +109,8 @@ beta_nmds<-function(dist, metadata, clin_var){
 
 ```
 
-
 #### NMDS function (for variables with 4-8 levels)
+
 ```{r}
 beta_nmds2<-function(dist, metadata, clin_var){
   
@@ -149,7 +148,6 @@ beta_nmds2<-function(dist, metadata, clin_var){
     theme(legend.text = element_text(size=10))}
 
 ```
-
 
 ### PCoA
 
@@ -192,8 +190,8 @@ beta_pcoa<-function(dist, metadata, clin_var){
   
 ```
 
-
 #### PCoA function (for variables with 4-8 levels)
+
 ```{r}
 beta_pcoa2<-function(dist, metadata, clin_var){
   
@@ -228,7 +226,6 @@ beta_pcoa2<-function(dist, metadata, clin_var){
     theme(legend.text = element_text(size=10))}
 ```
 
-
 ## Ariba
 
 ```{r}
@@ -237,29 +234,56 @@ ariba_dist<-dist_func(ariba_rpkm, ariba_rar, ariba_counts, metadata)
 
 ### HIV Status
 
-```{r ariba nmds HIV, message=FALSE, warning=FALSE}
-beta_nmds(ariba_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(ariba_dist$dist_rar, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(ariba_dist$dist_avgd, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r ariba nmds HIV, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, HIV_Status)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, HIV_Status)+labs(title="Rarefied")
+##beta_nmds(ariba_dist$dist_avgd, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
+```{r ariba nmds HIV2, eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, HIV_Status)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, HIV_Status)+labs(title="Rarefied")
+##beta_nmds(ariba_dist$dist_avgd, metadata, HIV_Status)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
 
 ### Profile
 
-```{r ariba nmds profile}
-beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds2(ariba_dist$dist_rar, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds2(ariba_dist$dist_avgd, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r ariba nmds profile,  message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds2(ariba_dist$dist_rar, metadata, Profile)+labs(title="Rarefied")
+##beta_nmds2(ariba_dist$dist_avgd, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
+```{r ariba nmds profile2,  eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+p1<-beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds2(ariba_dist$dist_rar, metadata, Profile)+labs(title="Rarefied")
+##beta_nmds2(ariba_dist$dist_avgd, metadata, Profile)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
 
 ### Risk Group2
 
+```{r ariba nmds riskgroup2, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, RiskGroup2)+labs(title="Rarefied")
+##beta_nmds(ariba_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
 
-```{r ariba nmds riskgroup2}
-beta_nmds(ariba_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(ariba_dist$dist_rar, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(ariba_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r ariba nmds riskgroup2.2, message=FALSE, warning=FALSE, include=TRUE, eval=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, RiskGroup2)+labs(title="Rarefied")
+##beta_nmds(ariba_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
 ```
 
 #### Pairwise comparisons for RiskGroup2
@@ -312,13 +336,19 @@ pairwise_riskgroup2(ariba_dist$dist_rar, metadata)
 
 ### Cluster
 
-
-```{r}
-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Ariba", subtitle = "Bray Curtis distance matrix from rarefied counts")
+```{r ariba cluster, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
 ```
 
+```{r ariba cluster2, message=FALSE, warning=FALSE, include=TRUE, eval=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
+```
 
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
 
 ## Groot
 
@@ -328,42 +358,94 @@ groot_dist<-dist_func(groot_rpkm, groot_rar, groot_counts, metadata)
 
 ### HIV Status
 
-```{r groot nmds HIV}
-beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(groot_dist$dist_avgd, metadata, HIV_Status)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r groot nmds HIV, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Rarefied")
+##beta_nmds(groot_dist$dist_avgd, metadata, HIV_Status)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r groot nmds HIV2, eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, HIV_Status)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title="Rarefied")
+##beta_nmds(groot_dist$dist_avgd, metadata, HIV_Status)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Groot")
 ```
 
 ### Profile
 
-```{r groot nmds profile}
-beta_nmds2(groot_dist$dist_rpkm, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds2(groot_dist$dist_rar, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds2(groot_dist$dist_avgd, metadata, Profile)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r groot nmds profile,  message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds2(groot_dist$dist_rpkm, metadata, Profile)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds2(groot_dist$dist_rar, metadata, Profile)+labs(title="Rarefied")
+##beta_nmds2(groot_dist$dist_avgd, metadata, Profile)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
-### Risk Group 2
-
-```{r groot nmds riskgroup2}
-beta_nmds(groot_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
-beta_nmds(groot_dist$dist_avgd, metadata, RiskGroup2)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```{r groot nmds profile2,  eval=FALSE, message=FALSE, warning=FALSE, include=TRUE}
+p1<-beta_nmds2(groot_dist$dist_rpkm, metadata, Profile)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds2(groot_dist$dist_rar, metadata, Profile)+labs(title="Rarefied")
+##beta_nmds2(groot_dist$dist_avgd, metadata, Profile)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
 ```
 
+```{r}
+p1+p2+plot_annotation(title="Groot")
+```
+
+### Risk Group2
+
+```{r groot nmds riskgroup2, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title="Rarefied")
+##beta_nmds(groot_dist$dist_avgd, metadata, RiskGroup2)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r groot nmds riskgroup2.2, message=FALSE, warning=FALSE, include=TRUE, eval=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, RiskGroup2)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title="Rarefied")
+##beta_nmds(groot_dist$dist_avgd, metadata, RiskGroup2)+labs(title="groot", subtitle = "Bray Curtis distance matrix from rarefied counts (avgdist)")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Groot")
+```
+
+#### Pairwise comparisons for RiskGroup2
 
 ```{r}
 pairwise_riskgroup2(groot_dist$dist_rpkm, metadata)
 pairwise_riskgroup2(groot_dist$dist_rar, metadata)
 ```
 
-
 ### Cluster
 
+```{r groot cluster, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, Cluster)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
+```
+
+```{r groot cluster2, message=FALSE, warning=FALSE, include=TRUE, eval=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, Cluster)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
+```
 
 ```{r}
-beta_nmds(groot_dist$dist_rpkm, metadata, Cluster)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from RPKM")
-beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title="Groot", subtitle = "Bray Curtis distance matrix from rarefied counts")
+p1+p2+plot_annotation(title="Groot")
 ```
+
+## Conclusions
+
+-   Similar results between Groot and Ariba
+
+-   Similar results between Rarefied counts and RPKM values for each *pipeline*
+
+-   **HIV status:** no differences in beta diversity
+
+-   **Profile:** differences in beta-diversity according to profile (too many groups, not a clear clustering althought ADONIS test is significant)
+
+-   **RiskGroup2:** Differences in beta-diversity between msm-hts and msm-pwid
+
+-   **Microbiome Cluster:** Differences in beta-diversity between clusters.
 
 ## Save distances
 
@@ -372,9 +454,7 @@ save(ariba_dist, file="output/ariba_dist.RDA")
 save(groot_dist, file="output/groot_dist.RDA")
 ```
 
-
-
-```{r eval=FALSE, include=TRUE}
+```{r eval=FALSE, include=FALSE}
 
   set.seed(200889)
   nmds <- metaMDS(ariba_dist$dist_rar)

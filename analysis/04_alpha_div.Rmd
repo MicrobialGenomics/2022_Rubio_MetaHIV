@@ -5,6 +5,8 @@ date: "2022-03-03"
 output: workflowr::wflow_html
 editor_options:
   chunk_output_type: console
+  markdown: 
+    wrap: 72
 ---
 
 ```{r global_options, include=FALSE}
@@ -19,6 +21,7 @@ library(kableExtra)
 library(vegan)
 library(ggpubr)
 library(glue)
+library(patchwork)
 ```
 
 ## Load summarized and rarefied data
@@ -31,9 +34,9 @@ load("output/rarefied2500_groot.RDA")
 metadata<-read_csv("data/Metadata/metadata.csv")
 ```
 
-## Create functions:
+## Create functions
 
-### Calculate apha diversity indexes:
+#### Calculate alpha diversity indexes:
 
 ```{r}
 alpha_div<-function(d_rpkm, d_counts){
@@ -47,7 +50,7 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
 ```
 
-### Plot a diversity index for a clinical variable
+#### Plot a diversity index for a clinical variable
 
 ```{r}
 alpha_div_plot<-function(data, clin_var, alpha_var){
@@ -61,10 +64,10 @@ alpha_div_plot<-function(data, clin_var, alpha_var){
   geom_jitter(width = 0.2, aes(colour=!!clin_var))+
   stat_compare_means()+
   theme_classic()+
-  theme(legend.position = "none")}
+  theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))}
 ```
 
-### Plot all diversity indexes for a clinical variable
+#### Plot all diversity indexes for a clinical variable
 
 ```{r}
 alpha_div_plot_all<-function(data, clin_var){
@@ -84,7 +87,7 @@ data%>%
 
 ```
 
-### Plot correlation between diversity indexes and quantitative clinical variables
+#### Plot correlation between diversity indexes and quantitative clinical variables
 
 ```{r}
 alpha_div_cor_all<-function(data, clin_var){
@@ -102,14 +105,12 @@ data%>%
         axis.text.x = element_text(angle=45, hjust = 1))}
 ```
 
-
 ## ARIBA
 
 ```{r ariba_alpha_rpkmdiv}
 ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts)
 ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
 ```
-
 
 ### HIV status
 
@@ -145,12 +146,84 @@ pairwise_test(ariba_alpha_rar$Simpson, ariba_alpha_rar$Profile)
 pairwise_test(ariba_alpha_rar$InvSimpson, ariba_alpha_rar$Profile)
 ```
 
+```{r}
+p1<-ariba_alpha_rar%>%
+  filter(Profile=="naive" | Profile == "elite_controllers")%>%
+  ggplot(aes(x=Profile, y=InvSimpson))+
+  geom_boxplot(aes(colour=Profile))+
+  geom_jitter(width = 0.2, aes(colour=Profile))+
+  ##stat_compare_means()+
+  theme_classic()+
+  theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))+
+  labs(title = "Ariba rarefied counts")
+
+p2<-ariba_alpha_rpkm%>%
+  filter(Profile=="naive" | Profile == "elite_controllers")%>%
+  ggplot(aes(x=Profile, y=InvSimpson))+
+  geom_boxplot(aes(colour=Profile))+
+  geom_jitter(width = 0.2, aes(colour=Profile))+
+  ##stat_compare_means()+
+  theme_classic()+
+  theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))+
+  labs(title = "Ariba RPKM")
+
+p1+p2
+
+```
 
 ### Risk Group 2
 
 ```{r}
 alpha_div_plot_all(ariba_alpha_rpkm, RiskGroup2)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, RiskGroup2)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+Pairwise comparisons
+
+```{r}
+my_comparisons <- list( c("hts", "msm"), c("hts", "pwid"), c("msm", "pwid") )
+p_invsimp_rar<-ariba_alpha_rar%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=InvSimpson))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 45)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_shannon_rar<-ariba_alpha_rar%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=Shannon))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 5)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_invsimp_rpkm<-ariba_alpha_rpkm%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=InvSimpson))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 65)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_shannon_rpkm<-ariba_alpha_rpkm%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=Shannon))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 5.5)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Ariba rarefied counts")
+p_invsimp_rpkm + p_shannon_rpkm +plot_annotation(title = "Ariba RPKM")
 ```
 
 ### Microbiome cluster
@@ -167,7 +240,6 @@ alpha_div_cor_all(ariba_alpha_rpkm, CD4)+labs(subtitle = "Ariba RPKM")
 alpha_div_cor_all(ariba_alpha_rar, CD4)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
-
 ### CD4 (relative)
 
 ```{r}
@@ -182,14 +254,12 @@ alpha_div_cor_all(ariba_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Ariba RPKM")
 alpha_div_cor_all(ariba_alpha_rar, Nadir_CD4)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
-
 ## Groot
 
 ```{r groot_alpha_rpkmdiv}
 groot_alpha_rpkm<-alpha_div(groot_rpkm, groot_counts)
 groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
 ```
-
 
 ### HIV status
 
@@ -205,12 +275,60 @@ alpha_div_plot_all(groot_alpha_rpkm, Profile)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, Profile)+labs(subtitle = "Groot Rarefied counts")
 ```
 
-
 ### Risk Group 2
 
 ```{r}
 alpha_div_plot_all(groot_alpha_rpkm, RiskGroup2)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, RiskGroup2)+labs(subtitle = "Groot Rarefied counts")
+```
+
+Pairwise comparisons
+
+```{r}
+my_comparisons <- list( c("hts", "msm"), c("hts", "pwid"), c("msm", "pwid") )
+
+p_invsimp_rar<-groot_alpha_rar%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=InvSimpson))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 90)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_shannon_rar<-groot_alpha_rar%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=Shannon))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 6)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_invsimp_rpkm<-groot_alpha_rpkm%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=InvSimpson))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 110)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_shannon_rpkm<-groot_alpha_rpkm%>%
+  filter(!is.na(RiskGroup2))%>%
+  ggplot(aes(x=RiskGroup2, y=Shannon))+
+  geom_boxplot(aes(colour=RiskGroup2))+
+  geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  stat_compare_means(label.y = 6)+
+  theme_classic()+
+  theme(legend.position = "none")
+
+p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Groot rarefied counts")
+p_invsimp_rpkm + p_shannon_rpkm +plot_annotation(title = "Groot RPKM")
 ```
 
 ### Microbiome cluster
@@ -227,7 +345,6 @@ alpha_div_cor_all(groot_alpha_rpkm, CD4)+labs(subtitle = "Groot RPKM")
 alpha_div_cor_all(groot_alpha_rar, CD4)+labs(subtitle = "Groot Rarefied counts")
 ```
 
-
 ### CD4 (relative)
 
 ```{r}
@@ -242,3 +359,24 @@ alpha_div_cor_all(groot_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Groot RPKM")
 alpha_div_cor_all(groot_alpha_rar, Nadir_CD4)+labs(subtitle = "Groot Rarefied counts")
 ```
 
+## Conclusions
+
+-   Similar results between Groot and Ariba
+
+-   Similar results between Rarefied counts and RPKM values for each
+    *pipeline*
+
+-   **HIV status:** no differences in alpha diversity
+
+-   **Profile:** Higher Simpson/InvSimpson diverstiy index in naive
+    compared to elite controllers only for Ariba analyisis, no
+    differences in Groot analysis
+
+-   **Risk Group2:** Lower alpha diversity (Simpson/InvSimpson and
+    Shannon) in hts group compared to msm
+
+-   **Microbiome Cluster:** Lower alpha diversity (Simpson/InvSimpson
+    and Shannon) in *Bacteroides* cluster
+
+-   **CD4, Nadir CD4:** No significant correlation between CD4 levels
+    and Nadir CD4 and alpha diversity.

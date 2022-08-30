@@ -21,6 +21,8 @@ library(broom)
 library(ggrepel)
 library(glue)
 library(usedist)
+library(patchwork)
+library(kableExtra)
 ```
 
 ```{r}
@@ -36,7 +38,7 @@ metadata<-read_csv("data/Metadata/metadata.csv")
 Correlations of AMR genes with NMDs axes: 
 
 ```{r}
-biplot_amr<-function(data, metadata, clin_var, cor_level){
+biplot_amr<-function(data, metadata, refdata, clin_var, cor_level){
 
 clin_var<-enquo(clin_var)  
 dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
@@ -75,28 +77,75 @@ cor_y <- nmds_shared %>%
 
 correlations <- inner_join(cor_x, cor_y, by="name")
 
+refdata<-refdata%>%select(name=ref_name, `ARO Name`)
+
 high_corr <- correlations %>%
   filter(estimate.x<=0.05 | estimate.y<=0.05)%>%
-  filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level) 
+  filter(abs(estimate.x) > cor_level | abs(estimate.y) > cor_level)%>%
+  left_join(., refdata, by="name")
 
 nmds_positions%>%
-  left_join(., metadata, by="SampleID") %>%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
+  left_join(., metadata, by="SampleID")%>%
+  ggplot( aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
   geom_point(alpha=0.5, size=2)+
   geom_segment(data=high_corr,
                aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
                arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
                inherit.aes=FALSE)+
   geom_text_repel(data=high_corr,
-                  aes(x=estimate.x, y=estimate.y, label=name),
+                  aes(x=estimate.x, y=estimate.y, label=`ARO Name`),
                   min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
                   inherit.aes=FALSE) +
   theme_bw()+
   scale_color_manual(values = c("chartreuse4", "red", "gray"))+
   labs(caption = glue("Gene level, {cor_level} spearman correlation"))}
 
+corr_amr<-function(data, top_n, refdata){
+dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
+set.seed(200889)
+nmds <- metaMDS(dist)
+##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+
+nmds_positions<- nmds$points %>%
+  as_tibble(rownames="SampleID")%>%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
+
+ref_name<-pull(data, ref_name)
+data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1) 
+colnames(data)<-c("SampleID", ref_name)
+data<-data%>%pivot_longer(-SampleID)
+
+nmds_shared <- inner_join(data, nmds_positions)%>%mutate(value=as.numeric(value))
+
+cor_x <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_x) %>%
+  select(name, estimate, p.value)
+  
+cor_y <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_y) %>%
+  select(name, estimate, p.value)
+
+refdata<-refdata%>%select(ref_name, `ARO Name`, `AMR Gene Family`, `Drug Class`,`Resistance Mechanism`)
 
 
+correlations <- inner_join(cor_x, cor_y, by="name")%>%
+  mutate(top=abs(estimate.x)+abs(estimate.y))%>%
+  slice_max(top, n=top_n)%>%
+  select(-top)%>%
+  rename(ref_name=name, Cor_NMDS1=estimate.x, Cor_NMDS2=estimate.y, p.value_NMDS1=p.value.x,  p.value_NMDS2=p.value.y)%>%
+  left_join(., refdata, by="ref_name")%>%
+  select(`ARO Name`, everything())
+  return(correlations)}
 ```
 
 
@@ -166,28 +215,105 @@ nmds_positions%>%
   labs(caption = glue("{cor_level} spearman correlation"))}
 }
 
+corr_meta<-function(data, metadata, top_n){
+
+dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
+set.seed(200889)
+nmds <- metaMDS(dist)
+##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
+
+nmds_positions<- nmds$points %>%
+  as_tibble(rownames="SampleID")%>%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
+
+meta<-metadata%>%select(SampleID, where(is.numeric))%>%
+  pivot_longer(-SampleID, values_drop_na = TRUE)
+
+nmds_shared <- inner_join(nmds_positions, meta)%>%mutate(value=as.numeric(value))
+
+cor_x <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_x) %>%
+  select(name, estimate, p.value)
+  
+cor_y <- nmds_shared %>%
+  nest(data = -name) %>%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method="spearman",
+                               exact=FALSE) %>% tidy())) %>%
+  unnest(cor_y) %>%
+  select(name, estimate, p.value)
+
+correlations <- inner_join(cor_x, cor_y, by="name")%>%
+  mutate(top=abs(estimate.x)+abs(estimate.y))%>%
+  slice_max(top, n=top_n)%>%
+  select(-top)%>%
+  rename(Cor_NMDS1=estimate.x, Cor_NMDS2=estimate.y, p.value_NMDS1=p.value.x, p.value_NMDS2=p.value.y)
+  return(correlations)}
+
 ```
 
 ## ARIBA
 
-```{r}
-biplot_amr(ariba_rar, metadata, RiskGroup2, 0.5)+labs(title = "Ariba Rarefied counts")
-biplot_meta(ariba_rar, metadata, RiskGroup2, 0.2)+labs(title = "Ariba Rarefied counts")
+```{r include=FALSE}
+p1<-biplot_amr(data = ariba_rar, metadata = metadata, refdata = refname_all_ariba, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "Rarefied counts")+theme(legend.position = "none")
+p2<-biplot_amr(data = ariba_rpkm, metadata = metadata, refdata = refname_all_ariba, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "RPKM")
+c1<-corr_amr(ariba_rar, top_n = 20, refdata = refname_all_ariba)
 ```
 
 ```{r}
-biplot_amr(ariba_rpkm, metadata, RiskGroup2, 0.5)+labs(title = "Ariba RPKM")
-biplot_meta(ariba_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "Ariba RPKM")
+c1%>%kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Ariba rarefied) ")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+p1+p2
+```
+
+
+```{r include=FALSE}
+p1<-biplot_meta(ariba_rar, metadata, RiskGroup2, 0.2)+labs(title = "Rarefied counts")+theme(legend.position = "none")
+p2<-biplot_meta(ariba_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "RPKM")
+c1<-corr_meta(ariba_rar, metadata, top_n = 10)
+```
+
+```{r}
+c1%>%kable(caption="**Top 10 correlated numeric variables with NMDS axes** (Ariba rarefied) ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+```{r}
+p1+p2
 ```
 
 ## Groot
 
-```{r}
-biplot_amr(groot_rar, metadata, RiskGroup2, 0.5)+labs(title = "Groot Rarefied counts")
-##biplot_meta(groot_rar, metadata, RiskGroup2, 0.2)+labs(title = "Groot Rarefied counts")
+```{r include=FALSE}
+p1<-biplot_amr(data = groot_rar, metadata = metadata, refdata = refname_all_groot, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "Rarefied counts")+theme(legend.position = "none")
+p2<-biplot_amr(data = groot_rpkm, metadata = metadata, refdata = refname_all_groot, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "RPKM")
+c1<-corr_amr(groot_rar, top_n = 20, refdata = refname_all_groot)
 ```
 
-```{r message=FALSE, warning=FALSE}
-biplot_amr(groot_rpkm, metadata, RiskGroup2, 0.5)+labs(title = "Groot RPKM")
-biplot_meta(groot_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "Groot RPKM")
+
+```{r}
+c1%>%kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Groot rarefied) ")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
+
+```{r}
+p1+p2
+```
+
+
+```{r include=FALSE}
+##p1<-biplot_meta(groot_rar, metadata, RiskGroup2, 0.2)+labs(title = "Rarefied counts")+theme(legend.position = "none")
+##p2<-biplot_meta(groot_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "RPKM")
+c1<-corr_meta(groot_rar, metadata, top_n = 10)
+```
+
+```{r}
+c1%>%kable(caption="**Top 10 correlated numeric variables with NMDS axes** (Groot rarefied) ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+

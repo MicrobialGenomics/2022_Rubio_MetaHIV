@@ -15,7 +15,7 @@
 
 <title>06_biplot</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -35,8 +35,11 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -234,6 +237,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -352,6 +358,9 @@ div.tocify {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
+  <a href="06_biplot.html">Biplot analysis</a>
+</li>
+<li>
   <a href="about.html">About</a>
 </li>
 <li>
@@ -367,6 +376,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">06_biplot</h1>
@@ -378,9 +395,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -389,9 +404,7 @@ aria-hidden="true"></span>
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -400,27 +413,17 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-23
+<strong>Last updated:</strong> 2022-08-30
 </p>
 <p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -429,158 +432,108 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
-class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20220202)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220202code"
-class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220202)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree67563617bad643376f87ef8b2286f5a2ae7d9c15targetblank6756361a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/67563617bad643376f87ef8b2286f5a2ae7d9c15" target="_blank">6756361</a>
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreed24c180034e0c7d2c2d036c5398ecc00cd9366a5targetblankd24c180a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/d24c180034e0c7d2c2d036c5398ecc00cd9366a5" target="_blank">d24c180</a> </a>
 </p>
 </div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree67563617bad643376f87ef8b2286f5a2ae7d9c15targetblank6756361a"
-class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreed24c180034e0c7d2c2d036c5398ecc00cd9366a5targetblankd24c180a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/67563617bad643376f87ef8b2286f5a2ae7d9c15" target="_blank">6756361</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/d24c180034e0c7d2c2d036c5398ecc00cd9366a5" target="_blank">d24c180</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
 Unstaged changes:
+    Modified:   analysis/04_alpha_div.Rmd
+    Modified:   analysis/05_beta_div.Rmd
     Modified:   analysis/06_biplot.Rmd
+    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </p>
 </div>
 </div>
@@ -591,12 +544,7 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/06_biplot.Rmd</code>) and HTML
-(<code>docs/06_biplot.html</code>) files. If you’ve configured a remote
-Git repository (see <code>?wflow_git_remote</code>), click on the
-hyperlinks in the table below to view the files as they were in that
-past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/06_biplot.Rmd</code>) and HTML (<code>docs/06_biplot.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -620,6 +568,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/analysis/06_biplot.Rmd" target="_blank">d24c180</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-08-23
+</td>
+<td>
+biplot finish, beta div and alpha diversity microbiome cluster analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/06_biplot.html" target="_blank">d24c180</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-08-23
+</td>
+<td>
+biplot finish, beta div and alpha diversity microbiome cluster analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -666,7 +648,9 @@ library(vegan)
 library(broom)
 library(ggrepel)
 library(glue)
-library(usedist)</code></pre>
+library(usedist)
+library(patchwork)
+library(kableExtra)</code></pre>
 <pre class="r"><code>load(&quot;output/ariba_dist.RDA&quot;)
 load(&quot;output/groot_dist.RDA&quot;)
 load(&quot;output/summarized_ariba.RDA&quot;)
@@ -675,7 +659,7 @@ load(&quot;output/rarefied_ariba.RDA&quot;)
 load(&quot;output/rarefied2500_groot.RDA&quot;)
 metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)</code></pre>
 <p>Correlations of AMR genes with NMDs axes:</p>
-<pre class="r"><code>biplot_amr&lt;-function(data, metadata, clin_var, cor_level){
+<pre class="r"><code>biplot_amr&lt;-function(data, metadata, refdata, clin_var, cor_level){
 
 clin_var&lt;-enquo(clin_var)  
 dist&lt;-vegdist(t(data[ ,-1]), method = &quot;bray&quot;); dist&lt;- dist_setNames(dist, colnames(data)[-1])
@@ -714,25 +698,75 @@ cor_y &lt;- nmds_shared %&gt;%
 
 correlations &lt;- inner_join(cor_x, cor_y, by=&quot;name&quot;)
 
+refdata&lt;-refdata%&gt;%select(name=ref_name, `ARO Name`)
+
 high_corr &lt;- correlations %&gt;%
   filter(estimate.x&lt;=0.05 | estimate.y&lt;=0.05)%&gt;%
-  filter(abs(estimate.x) &gt; cor_level | abs(estimate.y) &gt; cor_level) 
+  filter(abs(estimate.x) &gt; cor_level | abs(estimate.y) &gt; cor_level)%&gt;%
+  left_join(., refdata, by=&quot;name&quot;)
 
 nmds_positions%&gt;%
-  left_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
+  left_join(., metadata, by=&quot;SampleID&quot;)%&gt;%
+  ggplot( aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
   geom_point(alpha=0.5, size=2)+
   geom_segment(data=high_corr,
                aes(x=0, xend=estimate.x, y=0, yend=estimate.y), 
                arrow = arrow(length = unit(0.2, &quot;cm&quot;)), alpha=1,colour=&quot;gray&quot;,
                inherit.aes=FALSE)+
   geom_text_repel(data=high_corr,
-                  aes(x=estimate.x, y=estimate.y, label=name),
+                  aes(x=estimate.x, y=estimate.y, label=`ARO Name`),
                   min.segment.length = 0.15, segment.alpha=1, segment.color=&quot;gray&quot;,
                   inherit.aes=FALSE) +
   theme_bw()+
   scale_color_manual(values = c(&quot;chartreuse4&quot;, &quot;red&quot;, &quot;gray&quot;))+
-  labs(caption = glue(&quot;Gene level, {cor_level} spearman correlation&quot;))}</code></pre>
+  labs(caption = glue(&quot;Gene level, {cor_level} spearman correlation&quot;))}
+
+corr_amr&lt;-function(data, top_n, refdata){
+dist&lt;-vegdist(t(data[ ,-1]), method = &quot;bray&quot;); dist&lt;- dist_setNames(dist, colnames(data)[-1])
+set.seed(200889)
+nmds &lt;- metaMDS(dist)
+##nmds_positions&lt;-scores(nmds)%&gt;%as_tibble(rownames=&quot;SampleID&quot;)
+
+nmds_positions&lt;- nmds$points %&gt;%
+  as_tibble(rownames=&quot;SampleID&quot;)%&gt;%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
+
+ref_name&lt;-pull(data, ref_name)
+data&lt;-as_tibble(cbind(SampleID = names(data), t(data)))%&gt;%slice(-1) 
+colnames(data)&lt;-c(&quot;SampleID&quot;, ref_name)
+data&lt;-data%&gt;%pivot_longer(-SampleID)
+
+nmds_shared &lt;- inner_join(data, nmds_positions)%&gt;%mutate(value=as.numeric(value))
+
+cor_x &lt;- nmds_shared %&gt;%
+  nest(data = -name) %&gt;%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method=&quot;spearman&quot;,
+                               exact=FALSE) %&gt;% tidy())) %&gt;%
+  unnest(cor_x) %&gt;%
+  select(name, estimate, p.value)
+  
+cor_y &lt;- nmds_shared %&gt;%
+  nest(data = -name) %&gt;%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method=&quot;spearman&quot;,
+                               exact=FALSE) %&gt;% tidy())) %&gt;%
+  unnest(cor_y) %&gt;%
+  select(name, estimate, p.value)
+
+refdata&lt;-refdata%&gt;%select(ref_name, `ARO Name`, `AMR Gene Family`, `Drug Class`,`Resistance Mechanism`)
+
+
+correlations &lt;- inner_join(cor_x, cor_y, by=&quot;name&quot;)%&gt;%
+  mutate(top=abs(estimate.x)+abs(estimate.y))%&gt;%
+  slice_max(top, n=top_n)%&gt;%
+  select(-top)%&gt;%
+  rename(ref_name=name, Cor_NMDS1=estimate.x, Cor_NMDS2=estimate.y, p.value_NMDS1=p.value.x,  p.value_NMDS2=p.value.y)%&gt;%
+  left_join(., refdata, by=&quot;ref_name&quot;)%&gt;%
+  select(`ARO Name`, everything())
+  return(correlations)}</code></pre>
 <p>Correlations of numerical metadata variables with NMDS axes</p>
 <pre class="r"><code>biplot_meta&lt;-function(data, metadata, clin_var, cor_level){
 
@@ -794,261 +828,1751 @@ nmds_positions%&gt;%
   theme_bw()+
   scale_color_manual(values = c(&quot;chartreuse4&quot;, &quot;red&quot;, &quot;gray&quot;))+
   labs(caption = glue(&quot;{cor_level} spearman correlation&quot;))}
-}</code></pre>
+}
+
+corr_meta&lt;-function(data, metadata, top_n){
+
+dist&lt;-vegdist(t(data[ ,-1]), method = &quot;bray&quot;); dist&lt;- dist_setNames(dist, colnames(data)[-1])
+set.seed(200889)
+nmds &lt;- metaMDS(dist)
+##nmds_positions&lt;-scores(nmds)%&gt;%as_tibble(rownames=&quot;SampleID&quot;)
+
+nmds_positions&lt;- nmds$points %&gt;%
+  as_tibble(rownames=&quot;SampleID&quot;)%&gt;%
+  rename(NMDS1=MDS1, NMDS2=MDS2)
+
+meta&lt;-metadata%&gt;%select(SampleID, where(is.numeric))%&gt;%
+  pivot_longer(-SampleID, values_drop_na = TRUE)
+
+nmds_shared &lt;- inner_join(nmds_positions, meta)%&gt;%mutate(value=as.numeric(value))
+
+cor_x &lt;- nmds_shared %&gt;%
+  nest(data = -name) %&gt;%
+  mutate(cor_x = map(data,
+                     ~cor.test(.x$value, .x$NMDS1,
+                               method=&quot;spearman&quot;,
+                               exact=FALSE) %&gt;% tidy())) %&gt;%
+  unnest(cor_x) %&gt;%
+  select(name, estimate, p.value)
+  
+cor_y &lt;- nmds_shared %&gt;%
+  nest(data = -name) %&gt;%
+  mutate(cor_y = map(data,
+                     ~cor.test(.x$value, .x$NMDS2,
+                               method=&quot;spearman&quot;,
+                               exact=FALSE) %&gt;% tidy())) %&gt;%
+  unnest(cor_y) %&gt;%
+  select(name, estimate, p.value)
+
+correlations &lt;- inner_join(cor_x, cor_y, by=&quot;name&quot;)%&gt;%
+  mutate(top=abs(estimate.x)+abs(estimate.y))%&gt;%
+  slice_max(top, n=top_n)%&gt;%
+  select(-top)%&gt;%
+  rename(Cor_NMDS1=estimate.x, Cor_NMDS2=estimate.y, p.value_NMDS1=p.value.x, p.value_NMDS2=p.value.y)
+  return(correlations)}</code></pre>
 <div id="ariba" class="section level2">
 <h2>ARIBA</h2>
-<pre class="r"><code>biplot_amr(ariba_rar, metadata, RiskGroup2, 0.5)+labs(title = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2619139 
-Run 1 stress 0.2630689 
-Run 2 stress 0.2623743 
-... Procrustes: rmse 0.01727915  max resid 0.109121 
-Run 3 stress 0.2617397 
-... New best solution
-... Procrustes: rmse 0.02405941  max resid 0.2271366 
-Run 4 stress 0.2658973 
-Run 5 stress 0.2660067 
-Run 6 stress 0.2619111 
-... Procrustes: rmse 0.0172414  max resid 0.2050288 
-Run 7 stress 0.2666935 
-Run 8 stress 0.2637621 
-Run 9 stress 0.2715775 
-Run 10 stress 0.2637698 
-Run 11 stress 0.2670776 
-Run 12 stress 0.2640943 
-Run 13 stress 0.2634628 
-Run 14 stress 0.2665091 
-Run 15 stress 0.2660558 
-Run 16 stress 0.2630005 
-Run 17 stress 0.2655312 
-Run 18 stress 0.2642922 
-Run 19 stress 0.2641465 
-Run 20 stress 0.2687306 
-*** No convergence -- monoMDS stopping criteria:
-     4: no. of iterations &gt;= maxit
-    16: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>biplot_meta(ariba_rar, metadata, RiskGroup2, 0.2)+labs(title = &quot;Ariba Rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2619139 
-Run 1 stress 0.2630689 
-Run 2 stress 0.2623743 
-... Procrustes: rmse 0.01727915  max resid 0.109121 
-Run 3 stress 0.2617397 
-... New best solution
-... Procrustes: rmse 0.02405941  max resid 0.2271366 
-Run 4 stress 0.2658973 
-Run 5 stress 0.2660067 
-Run 6 stress 0.2619111 
-... Procrustes: rmse 0.0172414  max resid 0.2050288 
-Run 7 stress 0.2666935 
-Run 8 stress 0.2637621 
-Run 9 stress 0.2715775 
-Run 10 stress 0.2637698 
-Run 11 stress 0.2670776 
-Run 12 stress 0.2640943 
-Run 13 stress 0.2634628 
-Run 14 stress 0.2665091 
-Run 15 stress 0.2660558 
-Run 16 stress 0.2630005 
-Run 17 stress 0.2655312 
-Run 18 stress 0.2642922 
-Run 19 stress 0.2641465 
-Run 20 stress 0.2687306 
-*** No convergence -- monoMDS stopping criteria:
-     4: no. of iterations &gt;= maxit
-    16: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>biplot_amr(ariba_rpkm, metadata, RiskGroup2, 0.5)+labs(title = &quot;Ariba RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2486242 
-Run 1 stress 0.2486689 
-... Procrustes: rmse 0.002925312  max resid 0.03230969 
-Run 2 stress 0.2496518 
-Run 3 stress 0.2486503 
-... Procrustes: rmse 0.002718464  max resid 0.03223658 
-Run 4 stress 0.2488234 
-... Procrustes: rmse 0.007291962  max resid 0.07156253 
-Run 5 stress 0.2487869 
-... Procrustes: rmse 0.006795064  max resid 0.07183843 
-Run 6 stress 0.2524771 
-Run 7 stress 0.2488573 
-... Procrustes: rmse 0.006485758  max resid 0.07181188 
-Run 8 stress 0.249641 
-Run 9 stress 0.2498946 
-Run 10 stress 0.2488563 
-... Procrustes: rmse 0.007030834  max resid 0.07164504 
-Run 11 stress 0.2496531 
-Run 12 stress 0.2486444 
-... Procrustes: rmse 0.00108442  max resid 0.01049109 
-Run 13 stress 0.2486166 
-... New best solution
-... Procrustes: rmse 0.001826592  max resid 0.01580941 
-Run 14 stress 0.2516208 
-Run 15 stress 0.2486463 
-... Procrustes: rmse 0.002707593  max resid 0.03221828 
-Run 16 stress 0.2495862 
-Run 17 stress 0.2496288 
-Run 18 stress 0.2496519 
-Run 19 stress 0.2496403 
-Run 20 stress 0.2496276 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>biplot_meta(ariba_rpkm, metadata, RiskGroup2, 0.2)+labs(title = &quot;Ariba RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.2486242 
-Run 1 stress 0.2486689 
-... Procrustes: rmse 0.002925312  max resid 0.03230969 
-Run 2 stress 0.2496518 
-Run 3 stress 0.2486503 
-... Procrustes: rmse 0.002718464  max resid 0.03223658 
-Run 4 stress 0.2488234 
-... Procrustes: rmse 0.007291962  max resid 0.07156253 
-Run 5 stress 0.2487869 
-... Procrustes: rmse 0.006795064  max resid 0.07183843 
-Run 6 stress 0.2524771 
-Run 7 stress 0.2488573 
-... Procrustes: rmse 0.006485758  max resid 0.07181188 
-Run 8 stress 0.249641 
-Run 9 stress 0.2498946 
-Run 10 stress 0.2488563 
-... Procrustes: rmse 0.007030834  max resid 0.07164504 
-Run 11 stress 0.2496531 
-Run 12 stress 0.2486444 
-... Procrustes: rmse 0.00108442  max resid 0.01049109 
-Run 13 stress 0.2486166 
-... New best solution
-... Procrustes: rmse 0.001826592  max resid 0.01580941 
-Run 14 stress 0.2516208 
-Run 15 stress 0.2486463 
-... Procrustes: rmse 0.002707593  max resid 0.03221828 
-Run 16 stress 0.2495862 
-Run 17 stress 0.2496288 
-Run 18 stress 0.2496519 
-Run 19 stress 0.2496403 
-Run 20 stress 0.2496276 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>c1%&gt;%kable(caption=&quot;**Top 20 correlated AMR genes with NMDS axes** (Ariba rarefied) &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Top 20 correlated AMR genes with NMDS axes</strong> (Ariba rarefied)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ARO Name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ref_name
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Cor_NMDS1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.value_NMDS1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Cor_NMDS2
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.value_NMDS2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+AMR Gene Family
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Drug Class
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Resistance Mechanism
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+tetQ
+</td>
+<td style="text-align:left;">
+tetQ.3000191.Z21523.0_1974.476
+</td>
+<td style="text-align:right;">
+-0.8488106
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0458464
+</td>
+<td style="text-align:right;">
+0.5710804
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CblA-1
+</td>
+<td style="text-align:left;">
+CblA_1.3002999.GQ343019.132_1023.1188
+</td>
+<td style="text-align:right;">
+-0.5152174
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.3340802
+</td>
+<td style="text-align:right;">
+0.0000215
+</td>
+<td style="text-align:left;">
+CblA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephalosporin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA6
+</td>
+<td style="text-align:left;">
+CfxA6.3003097.GQ342996.797_1793.1744
+</td>
+<td style="text-align:right;">
+0.2756406
+</td>
+<td style="text-align:right;">
+0.0005177
+</td>
+<td style="text-align:right;">
+0.5656313
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mef(En2)
+</td>
+<td style="text-align:left;">
+Mef_En2_.3004659.AF251288.1.794_2000.5539
+</td>
+<td style="text-align:right;">
+-0.4762362
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.3498125
+</td>
+<td style="text-align:right;">
+0.0000081
+</td>
+<td style="text-align:left;">
+major facilitator superfamily (MFS) antibiotic efflux pump
+</td>
+<td style="text-align:left;">
+macrolide antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic efflux
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ErmF
+</td>
+<td style="text-align:left;">
+ErmF.3000498.M17124.1181_1982.593
+</td>
+<td style="text-align:right;">
+-0.3375877
+</td>
+<td style="text-align:right;">
+0.0000174
+</td>
+<td style="text-align:right;">
+0.4411785
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+Erm 23S ribosomal RNA methyltransferase
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetW
+</td>
+<td style="text-align:left;">
+tetW.3000194.AJ222769.3.3686_5606.5145
+</td>
+<td style="text-align:right;">
+0.4876863
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.2272707
+</td>
+<td style="text-align:right;">
+0.0044564
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mel
+</td>
+<td style="text-align:left;">
+mel.3000616.AF227521.1.3269_4487.5180
+</td>
+<td style="text-align:right;">
+-0.4635553
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.2496288
+</td>
+<td style="text-align:right;">
+0.0017336
+</td>
+<td style="text-align:left;">
+ABC-F ATP-binding cassette ribosomal protection protein
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Staphylococcus aureus 23S rRNA with mutation conferring resistance to linezolid
+</td>
+<td style="text-align:left;">
+Staphylococcus_aureus_23S.3004058.NZ_CP009828.1.497113_500039.4128
+</td>
+<td style="text-align:right;">
+-0.1126107
+</td>
+<td style="text-align:right;">
+0.1629903
+</td>
+<td style="text-align:right;">
+-0.5801296
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to linezolid antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin
+</td>
+<td style="text-align:left;">
+Clostridioides_difficile_23S.3004654.NR_076234.1.0_2900.5518
+</td>
+<td style="text-align:right;">
+0.4110336
+</td>
+<td style="text-align:right;">
+0.0000001
+</td>
+<td style="text-align:right;">
+-0.2618850
+</td>
+<td style="text-align:right;">
+0.0009959
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetX
+</td>
+<td style="text-align:left;">
+tetX.3000205.M37699.585_1752.79
+</td>
+<td style="text-align:right;">
+-0.2611944
+</td>
+<td style="text-align:right;">
+0.0010282
+</td>
+<td style="text-align:right;">
+0.3672455
+</td>
+<td style="text-align:right;">
+0.0000026
+</td>
+<td style="text-align:left;">
+tetracycline inactivation enzyme
+</td>
+<td style="text-align:left;">
+glycylcycline;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ACI-1
+</td>
+<td style="text-align:left;">
+ACI_1.3004359.AJ007350.1.239_1094.4259
+</td>
+<td style="text-align:right;">
+0.4192827
+</td>
+<td style="text-align:right;">
+0.0000001
+</td>
+<td style="text-align:right;">
+0.1897309
+</td>
+<td style="text-align:right;">
+0.0180530
+</td>
+<td style="text-align:left;">
+ACI beta-lactamase
+</td>
+<td style="text-align:left;">
+cephalosporin;penam;penem
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chlamydomonas reinhardtii 16S rRNA (rrnS) mutation conferring resistance to streptomycin
+</td>
+<td style="text-align:left;">
+rrnS.3003978.NC_005353.1.38549_40023.4108
+</td>
+<td style="text-align:right;">
+0.4230586
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.1590912
+</td>
+<td style="text-align:right;">
+0.0480136
+</td>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sul2
+</td>
+<td style="text-align:left;">
+sul2.3000412.AY055428.1.20268_21084.4745
+</td>
+<td style="text-align:right;">
+-0.3428473
+</td>
+<td style="text-align:right;">
+0.0000126
+</td>
+<td style="text-align:right;">
+-0.2162971
+</td>
+<td style="text-align:right;">
+0.0068684
+</td>
+<td style="text-align:left;">
+sulfonamide resistant sul
+</td>
+<td style="text-align:left;">
+sulfonamide antibiotic;sulfone antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target replacement
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Mycoplasma hominis 23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:left;">
+Mycoplasma_hominis_23S.3004176.CP011538.1.333282_336166.4166
+</td>
+<td style="text-align:right;">
+0.4255678
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.1268753
+</td>
+<td style="text-align:right;">
+0.1156811
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin
+</td>
+<td style="text-align:left;">
+Brachyspira_hyodysenteriae_23S.3004133.NZ_CP015910.2.2512812_2515808.4183
+</td>
+<td style="text-align:right;">
+0.4625667
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.0573043
+</td>
+<td style="text-align:right;">
+0.4787960
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA3
+</td>
+<td style="text-align:left;">
+CfxA3.3003003.AF472622.52_1018.1514
+</td>
+<td style="text-align:right;">
+0.0295030
+</td>
+<td style="text-align:right;">
+0.7155478
+</td>
+<td style="text-align:right;">
+0.4371964
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetO
+</td>
+<td style="text-align:left;">
+tetO.3000190.M18896.2.206_2126.4234
+</td>
+<td style="text-align:right;">
+0.3791586
+</td>
+<td style="text-align:right;">
+0.0000011
+</td>
+<td style="text-align:right;">
+-0.0845087
+</td>
+<td style="text-align:right;">
+0.2958015
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin
+</td>
+<td style="text-align:left;">
+Neisseria_gonorrhoeae_23S.3004836.NR_103957.0_2910.5918
+</td>
+<td style="text-align:right;">
+0.1825647
+</td>
+<td style="text-align:right;">
+0.0229866
+</td>
+<td style="text-align:right;">
+0.2810053
+</td>
+<td style="text-align:right;">
+0.0003974
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Campylobacter coli chloramphenicol acetyltransferase
+</td>
+<td style="text-align:left;">
+Campylobacter_coli_chloramphenicol.3004454.M35190.1.308_932.4426
+</td>
+<td style="text-align:right;">
+0.2838980
+</td>
+<td style="text-align:right;">
+0.0003438
+</td>
+<td style="text-align:right;">
+-0.1785344
+</td>
+<td style="text-align:right;">
+0.0262406
+</td>
+<td style="text-align:left;">
+chloramphenicol acetyltransferase (CAT)
+</td>
+<td style="text-align:left;">
+phenicol antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA2
+</td>
+<td style="text-align:left;">
+CfxA2.3003002.AF118110.1.71_1037.4470
+</td>
+<td style="text-align:right;">
+-0.1285936
+</td>
+<td style="text-align:right;">
+0.1107914
+</td>
+<td style="text-align:right;">
+-0.3329093
+</td>
+<td style="text-align:right;">
+0.0000231
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p1+p2</code></pre>
+<p><img src="figure/06_biplot.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/figure/06_biplot.Rmd/unnamed-chunk-7-1.png" target="_blank">d24c180</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-08-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>c1%&gt;%kable(caption=&quot;**Top 10 correlated numeric variables with NMDS axes** (Ariba rarefied) &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Top 10 correlated numeric variables with NMDS axes</strong> (Ariba rarefied)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+Cor_NMDS1
+</th>
+<th style="text-align:right;">
+p.value_NMDS1
+</th>
+<th style="text-align:right;">
+Cor_NMDS2
+</th>
+<th style="text-align:right;">
+p.value_NMDS2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:right;">
+-0.3436661
+</td>
+<td style="text-align:right;">
+0.0000120
+</td>
+<td style="text-align:right;">
+-0.1537898
+</td>
+<td style="text-align:right;">
+0.0560624
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Creatinin
+</td>
+<td style="text-align:right;">
+0.2735700
+</td>
+<td style="text-align:right;">
+0.0007057
+</td>
+<td style="text-align:right;">
+0.2168206
+</td>
+<td style="text-align:right;">
+0.0076973
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Nadir_CD4
+</td>
+<td style="text-align:right;">
+0.3844410
+</td>
+<td style="text-align:right;">
+0.0000081
+</td>
+<td style="text-align:right;">
+-0.0940941
+</td>
+<td style="text-align:right;">
+0.2926900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CD4_absolute
+</td>
+<td style="text-align:right;">
+0.1797200
+</td>
+<td style="text-align:right;">
+0.0415516
+</td>
+<td style="text-align:right;">
+-0.1942942
+</td>
+<td style="text-align:right;">
+0.0273596
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hemat
+</td>
+<td style="text-align:right;">
+0.2164204
+</td>
+<td style="text-align:right;">
+0.0068359
+</td>
+<td style="text-align:right;">
+0.1534401
+</td>
+<td style="text-align:right;">
+0.0566302
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CD4
+</td>
+<td style="text-align:right;">
+0.1486869
+</td>
+<td style="text-align:right;">
+0.0939298
+</td>
+<td style="text-align:right;">
+-0.2063150
+</td>
+<td style="text-align:right;">
+0.0194659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Postal_code
+</td>
+<td style="text-align:right;">
+-0.1595638
+</td>
+<td style="text-align:right;">
+0.0560899
+</td>
+<td style="text-align:right;">
+-0.1712296
+</td>
+<td style="text-align:right;">
+0.0401670
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fibrinogen
+</td>
+<td style="text-align:right;">
+-0.2757969
+</td>
+<td style="text-align:right;">
+0.0008933
+</td>
+<td style="text-align:right;">
+-0.0479137
+</td>
+<td style="text-align:right;">
+0.5712327
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Total_protein
+</td>
+<td style="text-align:right;">
+0.1159131
+</td>
+<td style="text-align:right;">
+0.1908329
+</td>
+<td style="text-align:right;">
+0.1878552
+</td>
+<td style="text-align:right;">
+0.0330170
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Water
+</td>
+<td style="text-align:right;">
+0.1622205
+</td>
+<td style="text-align:right;">
+0.0662509
+</td>
+<td style="text-align:right;">
+0.1346881
+</td>
+<td style="text-align:right;">
+0.1280553
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p1+p2</code></pre>
+<p><img src="figure/06_biplot.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="groot" class="section level2">
 <h2>Groot</h2>
-<pre class="r"><code>biplot_amr(groot_rar, metadata, RiskGroup2, 0.5)+labs(title = &quot;Groot Rarefied counts&quot;)</code></pre>
-<pre><code>Run 0 stress 0.1803599 
-Run 1 stress 0.1788383 
-... New best solution
-... Procrustes: rmse 0.03873502  max resid 0.2398207 
-Run 2 stress 0.179452 
-Run 3 stress 0.1824486 
-Run 4 stress 0.188978 
-Run 5 stress 0.18197 
-Run 6 stress 0.1901835 
-Run 7 stress 0.1833 
-Run 8 stress 0.1776509 
-... New best solution
-... Procrustes: rmse 0.03414292  max resid 0.2442929 
-Run 9 stress 0.1740271 
-... New best solution
-... Procrustes: rmse 0.02613701  max resid 0.1594867 
-Run 10 stress 0.1837995 
-Run 11 stress 0.1816011 
-Run 12 stress 0.1746082 
-Run 13 stress 0.1784326 
-Run 14 stress 0.1745717 
-Run 15 stress 0.1806955 
-Run 16 stress 0.1771005 
-Run 17 stress 0.1841789 
-Run 18 stress 0.1793796 
-Run 19 stress 0.1800953 
-Run 20 stress 0.1875857 
-*** No convergence -- monoMDS stopping criteria:
-     2: no. of iterations &gt;= maxit
-    18: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>##biplot_meta(groot_rar, metadata, RiskGroup2, 0.2)+labs(title = &quot;Groot Rarefied counts&quot;)</code></pre>
-<pre class="r"><code>biplot_amr(groot_rpkm, metadata, RiskGroup2, 0.5)+labs(title = &quot;Groot RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.1588664 
-Run 1 stress 0.1642337 
-Run 2 stress 0.1636576 
-Run 3 stress 0.1682236 
-Run 4 stress 0.156548 
-... New best solution
-... Procrustes: rmse 0.04547659  max resid 0.2324753 
-Run 5 stress 0.1657083 
-Run 6 stress 0.162819 
-Run 7 stress 0.1574414 
-Run 8 stress 0.1603271 
-Run 9 stress 0.151538 
-... New best solution
-... Procrustes: rmse 0.03955989  max resid 0.2202202 
-Run 10 stress 0.1557259 
-Run 11 stress 0.1629994 
-Run 12 stress 0.1582707 
-Run 13 stress 0.1536591 
-Run 14 stress 0.1497357 
-... New best solution
-... Procrustes: rmse 0.04236057  max resid 0.2398044 
-Run 15 stress 0.1589346 
-Run 16 stress 0.1555004 
-Run 17 stress 0.1551458 
-Run 18 stress 0.161488 
-Run 19 stress 0.1491921 
-... New best solution
-... Procrustes: rmse 0.02279961  max resid 0.2281182 
-Run 20 stress 0.1605846 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>biplot_meta(groot_rpkm, metadata, RiskGroup2, 0.2)+labs(title = &quot;Groot RPKM&quot;)</code></pre>
-<pre><code>Run 0 stress 0.1588664 
-Run 1 stress 0.1642337 
-Run 2 stress 0.1636576 
-Run 3 stress 0.1682236 
-Run 4 stress 0.156548 
-... New best solution
-... Procrustes: rmse 0.04547659  max resid 0.2324753 
-Run 5 stress 0.1657083 
-Run 6 stress 0.162819 
-Run 7 stress 0.1574414 
-Run 8 stress 0.1603271 
-Run 9 stress 0.151538 
-... New best solution
-... Procrustes: rmse 0.03955989  max resid 0.2202202 
-Run 10 stress 0.1557259 
-Run 11 stress 0.1629994 
-Run 12 stress 0.1582707 
-Run 13 stress 0.1536591 
-Run 14 stress 0.1497357 
-... New best solution
-... Procrustes: rmse 0.04236057  max resid 0.2398044 
-Run 15 stress 0.1589346 
-Run 16 stress 0.1555004 
-Run 17 stress 0.1551458 
-Run 18 stress 0.161488 
-Run 19 stress 0.1491921 
-... New best solution
-... Procrustes: rmse 0.02279961  max resid 0.2281182 
-Run 20 stress 0.1605846 
-*** No convergence -- monoMDS stopping criteria:
-     1: no. of iterations &gt;= maxit
-    19: stress ratio &gt; sratmax</code></pre>
-<p><img src="figure/06_biplot.Rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>c1%&gt;%kable(caption=&quot;**Top 20 correlated AMR genes with NMDS axes** (Groot rarefied) &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Top 20 correlated AMR genes with NMDS axes</strong> (Groot rarefied)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ARO Name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ref_name
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Cor_NMDS1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.value_NMDS1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Cor_NMDS2
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.value_NMDS2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+AMR Gene Family
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Drug Class
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Resistance Mechanism
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CfxA4
+</td>
+<td style="text-align:left;">
+CfxA4.3003005.AY769933.0-966.1592
+</td>
+<td style="text-align:right;">
+-0.6682127
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.6581044
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA5
+</td>
+<td style="text-align:left;">
+CfxA5.3003096.AY769934.27-993.1669
+</td>
+<td style="text-align:right;">
+-0.6597899
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.6620406
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA2
+</td>
+<td style="text-align:left;">
+CfxA2.3003002.AF118110.1.71-1037.4470
+</td>
+<td style="text-align:right;">
+-0.6531659
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.6574261
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA
+</td>
+<td style="text-align:left;">
+CfxA.3003001.U38243.149-1115.1354
+</td>
+<td style="text-align:right;">
+-0.6584870
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.6484129
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA3
+</td>
+<td style="text-align:left;">
+CfxA3.3003003.AF472622.52-1018.1514
+</td>
+<td style="text-align:right;">
+-0.6314369
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.6434381
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetW
+</td>
+<td style="text-align:left;">
+tetW.3000194.AJ222769.3.3686-5606.5145
+</td>
+<td style="text-align:right;">
+0.5717708
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.5569947
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tet(W/N/W)
+</td>
+<td style="text-align:left;">
+tet(W/N/W).3004442.KU736867.1.19653-21573.4270
+</td>
+<td style="text-align:right;">
+0.5615591
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.5345840
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ErmF
+</td>
+<td style="text-align:left;">
+ErmF.3000498.M17124.1181-1982.593
+</td>
+<td style="text-align:right;">
+-0.3021009
+</td>
+<td style="text-align:right;">
+0.0002333
+</td>
+<td style="text-align:right;">
+0.4814953
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+Erm 23S ribosomal RNA methyltransferase
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tet(X3)
+</td>
+<td style="text-align:left;">
+Tet(X3).3004719.MK134375.1.6173-7340.5596
+</td>
+<td style="text-align:right;">
+-0.2557559
+</td>
+<td style="text-align:right;">
+0.0019751
+</td>
+<td style="text-align:right;">
+0.5152785
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline inactivation enzyme
+</td>
+<td style="text-align:left;">
+glycylcycline;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetX
+</td>
+<td style="text-align:left;">
+tetX.3000205.M37699.585-1752.79
+</td>
+<td style="text-align:right;">
+-0.2470811
+</td>
+<td style="text-align:right;">
+0.0028305
+</td>
+<td style="text-align:right;">
+0.5125616
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline inactivation enzyme
+</td>
+<td style="text-align:left;">
+glycylcycline;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tetO
+</td>
+<td style="text-align:left;">
+tetO.3000190.M18896.2.206-2126.4234
+</td>
+<td style="text-align:right;">
+0.2829573
+</td>
+<td style="text-align:right;">
+0.0005895
+</td>
+<td style="text-align:right;">
+0.4428785
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tet(X4)
+</td>
+<td style="text-align:left;">
+Tet(X4).3004720.MK134376.1.324-1482.5597
+</td>
+<td style="text-align:right;">
+-0.2384431
+</td>
+<td style="text-align:right;">
+0.0040019
+</td>
+<td style="text-align:right;">
+0.4872262
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+tetracycline inactivation enzyme
+</td>
+<td style="text-align:left;">
+glycylcycline;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ErmB
+</td>
+<td style="text-align:left;">
+ErmB.3000375.AF242872.1.2131-2878.5430
+</td>
+<td style="text-align:right;">
+0.1703754
+</td>
+<td style="text-align:right;">
+0.0411874
+</td>
+<td style="text-align:right;">
+0.5337967
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:left;">
+Erm 23S ribosomal RNA methyltransferase
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mdtC
+</td>
+<td style="text-align:left;">
+mdtC.3000794.U00096.2158385-2161463.257
+</td>
+<td style="text-align:right;">
+0.3851705
+</td>
+<td style="text-align:right;">
+0.0000019
+</td>
+<td style="text-align:right;">
+-0.3053495
+</td>
+<td style="text-align:right;">
+0.0001980
+</td>
+<td style="text-align:left;">
+resistance-nodulation-cell division (RND) antibiotic efflux pump
+</td>
+<td style="text-align:left;">
+aminocoumarin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic efflux
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Escherichia coli gyrA with mutation conferring resistance to triclosan
+</td>
+<td style="text-align:left;">
+gyrA.3004335.U00096.3.2336792-2339420.4469
+</td>
+<td style="text-align:right;">
+0.3518392
+</td>
+<td style="text-align:right;">
+0.0000153
+</td>
+<td style="text-align:right;">
+-0.3318968
+</td>
+<td style="text-align:right;">
+0.0000483
+</td>
+<td style="text-align:left;">
+triclosan resistant gyrA
+</td>
+<td style="text-align:left;">
+triclosan
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ACI-1
+</td>
+<td style="text-align:left;">
+ACI-1.3004359.AJ007350.1.239-1094.4259
+</td>
+<td style="text-align:right;">
+0.2553278
+</td>
+<td style="text-align:right;">
+0.0020111
+</td>
+<td style="text-align:right;">
+0.3848470
+</td>
+<td style="text-align:right;">
+0.0000019
+</td>
+<td style="text-align:left;">
+ACI beta-lactamase
+</td>
+<td style="text-align:left;">
+cephalosporin;penam;penem
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Escherichia coli EF-Tu mutants conferring resistance to Pulvomycin
+</td>
+<td style="text-align:left;">
+Escherichia_coli_EF-Tu.3003369.AE014075.1.3901532-3902762.4655
+</td>
+<td style="text-align:right;">
+0.4719266
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+-0.1668803
+</td>
+<td style="text-align:right;">
+0.0455919
+</td>
+<td style="text-align:left;">
+elfamycin resistant EF-Tu
+</td>
+<td style="text-align:left;">
+elfamycin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Escherichia coli 23S rRNA with mutation conferring resistance to oxazolidinone antibiotics
+</td>
+<td style="text-align:left;">
+Escherichia_coli_23S.3004173.AE014075.1.237159-240063.4164
+</td>
+<td style="text-align:right;">
+0.3784800
+</td>
+<td style="text-align:right;">
+0.0000029
+</td>
+<td style="text-align:right;">
+-0.2602912
+</td>
+<td style="text-align:right;">
+0.0016284
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to oxazolidinone antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Escherichia coli 23S rRNA with mutation conferring resistance to clindamycin
+</td>
+<td style="text-align:left;">
+Escherichia_coli_23S.3004149.AE014075.1.237159-240063.4153
+</td>
+<td style="text-align:right;">
+0.3371498
+</td>
+<td style="text-align:right;">
+0.0000359
+</td>
+<td style="text-align:right;">
+-0.2971861
+</td>
+<td style="text-align:right;">
+0.0002978
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to lincosamide antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Escherichia coli 23S rRNA with mutation conferring resistance to chloramphenicol
+</td>
+<td style="text-align:left;">
+Escherichia_coli_23S.3004150.AE014075.237159-240063.4193
+</td>
+<td style="text-align:right;">
+0.3166619
+</td>
+<td style="text-align:right;">
+0.0001103
+</td>
+<td style="text-align:right;">
+-0.3123049
+</td>
+<td style="text-align:right;">
+0.0001385
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to phenicol antibiotics
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p1+p2</code></pre>
+<p><img src="figure/06_biplot.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>c1%&gt;%kable(caption=&quot;**Top 10 correlated numeric variables with NMDS axes** (Groot rarefied) &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Top 10 correlated numeric variables with NMDS axes</strong> (Groot rarefied)
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+name
+</th>
+<th style="text-align:right;">
+Cor_NMDS1
+</th>
+<th style="text-align:right;">
+p.value_NMDS1
+</th>
+<th style="text-align:right;">
+Cor_NMDS2
+</th>
+<th style="text-align:right;">
+p.value_NMDS2
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+N_Digestable_polysaccharides
+</td>
+<td style="text-align:right;">
+0.1759048
+</td>
+<td style="text-align:right;">
+0.0567333
+</td>
+<td style="text-align:right;">
+0.1953520
+</td>
+<td style="text-align:right;">
+0.0340106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Fibrinogen
+</td>
+<td style="text-align:right;">
+-0.1813307
+</td>
+<td style="text-align:right;">
+0.0381956
+</td>
+<td style="text-align:right;">
+-0.1716948
+</td>
+<td style="text-align:right;">
+0.0498919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Total_protein
+</td>
+<td style="text-align:right;">
+0.0947927
+</td>
+<td style="text-align:right;">
+0.3072297
+</td>
+<td style="text-align:right;">
+0.2455751
+</td>
+<td style="text-align:right;">
+0.0073533
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Plant_protein
+</td>
+<td style="text-align:right;">
+0.1501219
+</td>
+<td style="text-align:right;">
+0.1046769
+</td>
+<td style="text-align:right;">
+0.1846303
+</td>
+<td style="text-align:right;">
+0.0453396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Iron
+</td>
+<td style="text-align:right;">
+0.1878441
+</td>
+<td style="text-align:right;">
+0.0416543
+</td>
+<td style="text-align:right;">
+0.1431501
+</td>
+<td style="text-align:right;">
+0.1220006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Total_carbohydrates
+</td>
+<td style="text-align:right;">
+0.1180161
+</td>
+<td style="text-align:right;">
+0.2030928
+</td>
+<td style="text-align:right;">
+0.1949174
+</td>
+<td style="text-align:right;">
+0.0344182
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N_Phosphorus
+</td>
+<td style="text-align:right;">
+0.0964615
+</td>
+<td style="text-align:right;">
+0.2987529
+</td>
+<td style="text-align:right;">
+0.2071624
+</td>
+<td style="text-align:right;">
+0.0243931
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Postal_code
+</td>
+<td style="text-align:right;">
+-0.1180490
+</td>
+<td style="text-align:right;">
+0.1743152
+</td>
+<td style="text-align:right;">
+-0.1706404
+</td>
+<td style="text-align:right;">
+0.0486916
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Hemat
+</td>
+<td style="text-align:right;">
+0.1146300
+</td>
+<td style="text-align:right;">
+0.1712853
+</td>
+<td style="text-align:right;">
+0.1569772
+</td>
+<td style="text-align:right;">
+0.0602479
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Viral_load
+</td>
+<td style="text-align:right;">
+0.1573564
+</td>
+<td style="text-align:right;">
+0.0901953
+</td>
+<td style="text-align:right;">
+0.1108060
+</td>
+<td style="text-align:right;">
+0.2343026
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 22.04 LTS
+Running under: Ubuntu 20.04.3 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
 
 locale:
  [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
@@ -1062,38 +2586,33 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] usedist_0.4.0   glue_1.6.2      ggrepel_0.9.1   broom_1.0.0    
- [5] vegan_2.6-2     lattice_0.20-45 permute_0.9-7   forcats_0.5.1  
- [9] stringr_1.4.0   dplyr_1.0.9     purrr_0.3.4     readr_2.1.2    
-[13] tidyr_1.2.0     tibble_3.1.8    ggplot2_3.3.6   tidyverse_1.3.2
+ [1] kableExtra_1.3.4 patchwork_1.1.1  usedist_0.4.0    glue_1.6.2      
+ [5] ggrepel_0.9.1    broom_0.7.12     vegan_2.5-7      lattice_0.20-45 
+ [9] permute_0.9-7    forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
+[13] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
+[17] ggplot2_3.3.5    tidyverse_1.3.1 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-155        fs_1.5.2            lubridate_1.8.0    
- [4] bit64_4.0.5         httr_1.4.3          rprojroot_2.0.3    
- [7] tools_4.1.2         backports_1.4.1     bslib_0.4.0        
-[10] utf8_1.2.2          R6_2.5.1            DBI_1.1.3          
-[13] mgcv_1.8-39         colorspace_2.0-3    withr_2.5.0        
-[16] tidyselect_1.1.2    bit_4.0.4           compiler_4.1.2     
-[19] git2r_0.30.1        cli_3.3.0           rvest_1.0.2        
-[22] xml2_1.3.3          labeling_0.4.2      sass_0.4.2         
-[25] scales_1.2.0        digest_0.6.29       rmarkdown_2.14     
-[28] pkgconfig_2.0.3     htmltools_0.5.3     highr_0.9          
-[31] dbplyr_2.2.1        fastmap_1.1.0       rlang_1.0.4        
-[34] readxl_1.4.0        rstudioapi_0.13     farver_2.1.1       
-[37] jquerylib_0.1.4     generics_0.1.3      jsonlite_1.8.0     
-[40] vroom_1.5.7         googlesheets4_1.0.0 magrittr_2.0.3     
-[43] Matrix_1.4-0        Rcpp_1.0.9          munsell_0.5.0      
-[46] fansi_1.0.3         lifecycle_1.0.1     stringi_1.7.8      
-[49] whisker_0.4         yaml_2.3.5          MASS_7.3-55        
-[52] grid_4.1.2          parallel_4.1.2      promises_1.2.0.1   
-[55] crayon_1.5.1        haven_2.5.0         splines_4.1.2      
-[58] hms_1.1.1           knitr_1.39          pillar_1.8.0       
-[61] reprex_2.0.1        evaluate_0.15       modelr_0.1.8       
-[64] vctrs_0.4.1         tzdb_0.3.0          httpuv_1.6.5       
-[67] cellranger_1.1.0    gtable_0.3.0        assertthat_0.2.1   
-[70] cachem_1.0.6        xfun_0.31           later_1.3.0        
-[73] googledrive_2.0.0   gargle_1.2.0        workflowr_1.7.0    
-[76] cluster_2.1.2       ellipsis_0.3.2     </code></pre>
+ [1] nlme_3.1-157      fs_1.5.2          bit64_4.0.5       lubridate_1.8.0  
+ [5] webshot_0.5.2     httr_1.4.2        rprojroot_2.0.2   tools_4.1.2      
+ [9] backports_1.4.1   bslib_0.3.1       utf8_1.2.2        R6_2.5.1         
+[13] DBI_1.1.2         mgcv_1.8-38       colorspace_2.0-3  withr_2.5.0      
+[17] tidyselect_1.1.2  bit_4.0.4         compiler_4.1.2    git2r_0.30.1     
+[21] cli_3.2.0         rvest_1.0.2       xml2_1.3.3        labeling_0.4.2   
+[25] sass_0.4.1        scales_1.1.1      systemfonts_1.0.4 digest_0.6.29    
+[29] rmarkdown_2.13    svglite_2.1.0     pkgconfig_2.0.3   htmltools_0.5.2  
+[33] highr_0.9         dbplyr_2.1.1      fastmap_1.1.0     rlang_1.0.2      
+[37] readxl_1.3.1      rstudioapi_0.13   farver_2.1.0      jquerylib_0.1.4  
+[41] generics_0.1.2    jsonlite_1.8.0    vroom_1.5.7       magrittr_2.0.2   
+[45] Matrix_1.4-0      Rcpp_1.0.8.3      munsell_0.5.0     fansi_1.0.3      
+[49] lifecycle_1.0.1   stringi_1.7.6     whisker_0.4       yaml_2.3.5       
+[53] MASS_7.3-56       grid_4.1.2        parallel_4.1.2    promises_1.2.0.1 
+[57] crayon_1.5.0      haven_2.4.3       splines_4.1.2     hms_1.1.1        
+[61] knitr_1.38        pillar_1.7.0      reprex_2.0.1      evaluate_0.15    
+[65] modelr_0.1.8      vctrs_0.3.8       tzdb_0.2.0        httpuv_1.6.5     
+[69] cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1  xfun_0.30        
+[73] later_1.3.0       viridisLite_0.4.0 workflowr_1.7.0   cluster_2.1.2    
+[77] ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 
@@ -1146,6 +2665,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

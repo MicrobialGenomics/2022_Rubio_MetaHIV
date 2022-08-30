@@ -25,5 +25,7 @@ output:
   workflowr::wflow_html:
     toc: yes
     toc_float: yes
+    toc_depth: 3
     theme: cosmo
     highlight: textmate
+    code_folding: hide
