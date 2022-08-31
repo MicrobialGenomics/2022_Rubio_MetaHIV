@@ -11,6 +11,8 @@ navbar:
     href: 02_summarize_data.html
   - text: Rarefy data
     href: 03_rarefaction.html
+  - text: Procruster test (Rare versus RPKM)
+    href: 03_1_procruster.html
   - text: Alpha diversity analysis
     href: 04_alpha_div.html
   - text: Beta diversity analysis

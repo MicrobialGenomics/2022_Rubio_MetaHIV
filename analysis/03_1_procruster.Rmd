@@ -1,0 +1,68 @@
+---
+title: "03_1_procruster"
+author: "Elisa Rubio"
+date: "2022-08-31"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(vegan)
+library(glue)
+library(patchwork)
+```
+
+## Load distances
+
+```{r}
+load("output/ariba_dist.RDA")
+dist_rpkm<-ariba_dist$dist_rpkm
+dist_rar<-ariba_dist$dist_rar
+```
+
+## Perform NMDs 
+
+```{r}
+set.seed(200889)
+nmds_rpkm <- metaMDS(dist_rpkm)
+nmds_rar <- metaMDS(dist_rar)
+```
+
+## Perform procrusters test 
+
+```{r}
+proc<-procrustes(nmds_rar, nmds_rpkm)
+##plot(pro.test)
+test<-protest(nmds_rar, nmds_rpkm)
+```
+
+**Null hipotesis**: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.
+
+Te procruster test is significant (Significance: `r test$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
+
+
+```{r}
+pdata <- data.frame(
+  NMDS1=c(proc$Yrot[,1],proc$X[,1]),
+  NMDS2=c(proc$Yrot[,2],proc$X[,2]),
+  Method=c(rep("RPKM", 155), rep ("Rarefaction", 155)),
+  SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
+  
+pdata%>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
+  geom_point(size=2)+
+  geom_line(aes(group=SampleID), colour="gray", linetype = 2, size=0.7)+
+  theme_bw()+
+  labs(caption = glue("Procruster test significance: {test$signif}"), title="Ariba")
+```
+
+

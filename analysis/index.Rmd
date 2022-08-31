@@ -16,6 +16,8 @@ Welcome to my research website.
 
 ## [Rarefy data](03_rarefaction.html)
 
+## [Procruster test: RPKM *versus* Rarefied](03_1_procruster.html)
+
 ## [Alpha diversity analysis](04_alpha_div.html)
 
 ## [Beta diversity analysis](05_beta_div.html)

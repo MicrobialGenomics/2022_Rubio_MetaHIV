@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Elisa Rubio" />
 
+<meta name="date" content="2022-08-31" />
 
-<title>Home</title>
+<title>03_1_procruster</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,6 +31,9 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
@@ -236,6 +241,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -243,6 +311,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -270,9 +348,6 @@ $(document).ready(function () {
 </li>
 <li>
   <a href="03_rarefaction.html">Rarefy data</a>
-</li>
-<li>
-  <a href="03_1_procruster.html">Procruster test (Rare versus RPKM)</a>
 </li>
 <li>
   <a href="04_alpha_div.html">Alpha diversity analysis</a>
@@ -309,7 +384,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">03_1_procruster</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-08-31</h4>
 
 </div>
 
@@ -337,7 +414,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2022-08-31
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -358,7 +435,67 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -389,10 +526,6 @@ Ignored files:
 Untracked files:
     Untracked:  analysis/03_1_procruster.Rmd
 
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
-
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -404,264 +537,163 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/analysis/index.Rmd" target="_blank">d24c180</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-08-23
-</td>
-<td>
-biplot finish, beta div and alpha diversity microbiome cluster analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/index.html" target="_blank">d24c180</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-08-23
-</td>
-<td>
-biplot finish, beta div and alpha diversity microbiome cluster analysis
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95466a886ccf8e889ac2c6ab2504dabb31eb99b4/analysis/index.Rmd" target="_blank">95466a8</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-08-21
-</td>
-<td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/95466a886ccf8e889ac2c6ab2504dabb31eb99b4/docs/index.html" target="_blank">95466a8</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-08-21
-</td>
-<td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/analysis/index.Rmd" target="_blank">c56bd0e</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-27
-</td>
-<td>
-rarefaction analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/c56bd0ee5a808e4b9e214b5b4b9791c68968381d/docs/index.html" target="_blank">c56bd0e</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-27
-</td>
-<td>
-rarefaction analysis
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/e88cb569ac9bf63f0b8064ed3336443c5758ac91/analysis/index.Rmd" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-<td>
-Alpha and beta diversity analyses
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/e88cb569ac9bf63f0b8064ed3336443c5758ac91/docs/index.html" target="_blank">e88cb56</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-13
-</td>
-<td>
-Alpha and beta diversity analyses
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b92c39766add66b425fb4328046f6f0c573c71fd/analysis/index.Rmd" target="_blank">b92c397</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-02
-</td>
-<td>
-Summarize data
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/b92c39766add66b425fb4328046f6f0c573c71fd/docs/index.html" target="_blank">b92c397</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-03-02
-</td>
-<td>
-Summarize data
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/2a70c3bd0ed5d6676fcd41d44a3f69c213578bd0/analysis/index.Rmd" target="_blank">2a70c3b</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-02-28
-</td>
-<td>
-Execute files (git ignore output)
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/fca5d2d666a0895466d2caa6c7b10ad502a215ba/analysis/index.Rmd" target="_blank">fca5d2d</a>
-</td>
-<td>
-Marc Noguera-Julian
-</td>
-<td>
-2022-02-02
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
-<div id="import-data" class="section level2">
-<h2><a href="01_import_data.html">Import data</a></h2>
+<pre class="r"><code>library(tidyverse)
+library(vegan)
+library(glue)
+library(patchwork)</code></pre>
+<div id="load-distances" class="section level2">
+<h2>Load distances</h2>
+<pre class="r"><code>load(&quot;output/ariba_dist.RDA&quot;)
+dist_rpkm&lt;-ariba_dist$dist_rpkm
+dist_rar&lt;-ariba_dist$dist_rar</code></pre>
 </div>
-<div id="summarize-data" class="section level2">
-<h2><a href="02_summarize_data.html">Summarize data</a></h2>
+<div id="perform-nmds" class="section level2">
+<h2>Perform NMDs</h2>
+<pre class="r"><code>set.seed(200889)
+nmds_rpkm &lt;- metaMDS(dist_rpkm)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<pre class="r"><code>nmds_rar &lt;- metaMDS(dist_rar)</code></pre>
+<pre><code>Run 0 stress 0.2619113 
+Run 1 stress 0.2627846 
+Run 2 stress 0.2674841 
+Run 3 stress 0.2649853 
+Run 4 stress 0.2628038 
+Run 5 stress 0.2618002 
+... New best solution
+... Procrustes: rmse 0.0234585  max resid 0.2195942 
+Run 6 stress 0.2689738 
+Run 7 stress 0.2635218 
+Run 8 stress 0.2655937 
+Run 9 stress 0.2635886 
+Run 10 stress 0.2693605 
+Run 11 stress 0.2731923 
+Run 12 stress 0.2716007 
+Run 13 stress 0.2630359 
+Run 14 stress 0.2626426 
+Run 15 stress 0.2689773 
+Run 16 stress 0.262151 
+... Procrustes: rmse 0.0296359  max resid 0.2180618 
+Run 17 stress 0.2657687 
+Run 18 stress 0.2636282 
+Run 19 stress 0.2651176 
+Run 20 stress 0.2652266 
+*** No convergence -- monoMDS stopping criteria:
+     5: no. of iterations &gt;= maxit
+    15: stress ratio &gt; sratmax</code></pre>
 </div>
-<div id="rarefy-data" class="section level2">
-<h2><a href="03_rarefaction.html">Rarefy data</a></h2>
+<div id="perform-procrusters-test" class="section level2">
+<h2>Perform procrusters test</h2>
+<pre class="r"><code>proc&lt;-procrustes(nmds_rar, nmds_rpkm)
+##plot(pro.test)
+test&lt;-protest(nmds_rar, nmds_rpkm)</code></pre>
+<p><strong>Null hipotesis</strong>: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.</p>
+<p>Te procruster test is significant (Significance: 0.001), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)</p>
+<pre class="r"><code>pdata &lt;- data.frame(
+  NMDS1=c(proc$Yrot[,1],proc$X[,1]),
+  NMDS2=c(proc$Yrot[,2],proc$X[,2]),
+  Method=c(rep(&quot;RPKM&quot;, 155), rep (&quot;Rarefaction&quot;, 155)),
+  SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
+  
+pdata%&gt;%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
+  geom_point(size=2)+
+  geom_line(aes(group=SampleID), colour=&quot;gray&quot;, linetype = 2, size=0.7)+
+  theme_bw()+
+  labs(caption = glue(&quot;Procruster test significance: {test$signif}&quot;), title=&quot;Ariba&quot;)</code></pre>
+<p><img src="figure/03_1_procruster.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.1.1 glue_1.6.2      vegan_2.5-7     lattice_0.20-45
+ [5] permute_0.9-7   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
+ [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
+[13] ggplot2_3.3.5   tidyverse_1.3.1
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2       sass_0.4.1       jsonlite_1.8.0   splines_4.1.2   
+ [5] modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1 highr_0.9       
+ [9] cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0     backports_1.4.1 
+[13] digest_0.6.29    promises_1.2.0.1 rvest_1.0.2      colorspace_2.0-3
+[17] htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0     pkgconfig_2.0.3 
+[21] broom_0.7.12     haven_2.4.3      scales_1.1.1     later_1.3.0     
+[25] tzdb_0.2.0       git2r_0.30.1     mgcv_1.8-38      generics_0.1.2  
+[29] farver_2.1.0     ellipsis_0.3.2   withr_2.5.0      cli_3.2.0       
+[33] magrittr_2.0.2   crayon_1.5.1     readxl_1.3.1     evaluate_0.15   
+[37] fs_1.5.2         fansi_1.0.3      nlme_3.1-157     MASS_7.3-56     
+[41] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
+[45] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    compiler_4.1.2  
+[49] jquerylib_0.1.4  rlang_1.0.2      grid_4.1.2       rstudioapi_0.13 
+[53] labeling_0.4.2   rmarkdown_2.13   gtable_0.3.0     DBI_1.1.2       
+[57] R6_2.5.1         lubridate_1.8.0  knitr_1.38       fastmap_1.1.0   
+[61] utf8_1.2.2       workflowr_1.7.0  rprojroot_2.0.2  stringi_1.7.6   
+[65] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
+[69] tidyselect_1.1.2 xfun_0.30       </code></pre>
 </div>
-<div id="procruster-test-rpkm-versus-rarefied" class="section level2">
-<h2><a href="03_1_procruster.html">Procruster test: RPKM <em>versus</em> Rarefied</a></h2>
-</div>
-<div id="alpha-diversity-analysis" class="section level2">
-<h2><a href="04_alpha_div.html">Alpha diversity analysis</a></h2>
-</div>
-<div id="beta-diversity-analysis" class="section level2">
-<h2><a href="05_beta_div.html">Beta diversity analysis</a></h2>
-</div>
-<div id="biplots" class="section level2">
-<h2><a href="06_biplot.html">Biplots</a></h2>
 </div>
 
 
@@ -680,6 +712,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -717,6 +751,35 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
