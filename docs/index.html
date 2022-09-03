@@ -281,7 +281,10 @@ $(document).ready(function () {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
-  <a href="06_biplot.html">Biplot analysis</a>
+  <a href="06_biplot.html">Biplot (Separman)</a>
+</li>
+<li>
+  <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -334,7 +337,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-31
+<strong>Last updated:</strong> 2022-09-03
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -365,16 +368,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee68f214b3c14a6872cc1ff29d6e3e82281ea1f15targetblanke68f214a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e68f214b3c14a6872cc1ff29d6e3e82281ea1f15" target="_blank">e68f214</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeef31c926e301e12aac832aa4030b294c79954876targetblankef31c92a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ef31c926e301e12aac832aa4030b294c79954876" target="_blank">ef31c92</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreee68f214b3c14a6872cc1ff29d6e3e82281ea1f15targetblanke68f214a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeef31c926e301e12aac832aa4030b294c79954876targetblankef31c92a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/e68f214b3c14a6872cc1ff29d6e3e82281ea1f15" target="_blank">e68f214</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ef31c926e301e12aac832aa4030b294c79954876" target="_blank">ef31c92</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -387,9 +390,11 @@ Ignored files:
     Ignored:    output/grootData/
 
 Untracked files:
-    Untracked:  analysis/03_1_procruster.Rmd
+    Untracked:  analysis/06_2_biplot_envfit.Rmd
 
 Unstaged changes:
+    Modified:   analysis/03_1_procruster.Rmd
+    Modified:   analysis/06_biplot.Rmd
     Modified:   analysis/_site.yml
     Modified:   analysis/index.Rmd
 
@@ -430,6 +435,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ef31c926e301e12aac832aa4030b294c79954876/analysis/index.Rmd" target="_blank">ef31c92</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-31
+</td>
+<td>
+procruster analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/ef31c926e301e12aac832aa4030b294c79954876/docs/index.html" target="_blank">ef31c92</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-31
+</td>
+<td>
+procruster analysis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -660,8 +699,12 @@ Start workflowr project.
 <div id="beta-diversity-analysis" class="section level2">
 <h2><a href="05_beta_div.html">Beta diversity analysis</a></h2>
 </div>
-<div id="biplots" class="section level2">
-<h2><a href="06_biplot.html">Biplots</a></h2>
+<div id="biplot" class="section level2">
+<h2>Biplot:</h2>
+<ul>
+<li><p><a href="06_biplot.html">Biplot (Spearman)</a></p></li>
+<li><p><a href="06_2_biplot_envfit.html">Biplot (Envfit)</a></p></li>
+</ul>
 </div>
 
 

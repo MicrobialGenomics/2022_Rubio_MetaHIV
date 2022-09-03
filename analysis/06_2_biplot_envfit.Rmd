@@ -1,0 +1,259 @@
+---
+title: "06_2_biplot_envfit"
+author: "Elisa Rubio"
+date: "2022-09-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(vegan)
+library(broom)
+library(ggrepel)
+library(glue)
+library(usedist)
+library(patchwork)
+library(kableExtra)
+```
+
+```{r}
+load("output/ariba_dist.RDA")
+load("output/groot_dist.RDA")
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/rarefied2500_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+## Create functions
+
+Function to obtain metadata variables correlations with NMDs axes:
+
+```{r}
+corr_meta_envfit<-function(metadata, nmds){
+  nmds_positions<-nmds$points%>%
+    as_tibble(rownames="SampleID")%>%
+    rename(NMDS1=MDS1, NMDS2=MDS2)
+
+  metadata<-metadata%>%
+    filter(SampleID %in% nmds_positions$SampleID)%>%
+    arrange(SampleID)
+  
+  meta<-metadata%>%select(where(is.numeric))
+  fit <-envfit(nmds, meta, perm = 999, na.rm=TRUE)
+
+  ##Generate NMDS positions for the plot
+  ##Transform values adjusted by pvalue with fx scores  and multiply by arrowmult   value
+  cor<-scores(fit, "vectors")%>%
+    as_tibble(rownames="Variable")%>%
+    mutate(NMDS1=NMDS1*ordiArrowMul(fit), NMDS2=NMDS2*ordiArrowMul(fit), r2=fit$vectors$r, p.value=fit$vectors$pvals)%>%
+    return(cor)
+}
+```
+
+Function to obtain AMR correlations with NMDs axes:
+
+```{r}
+corr_amr_enfit<-function(data, refdata, nmds){
+  ##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+  ##Perform envfit
+  fit <-envfit(nmds, data[ ,-1], perm = 999)
+
+  ##Generate NMDS positions for the plot: Transform values adjusted by pvalue with fx scores  and multiply by arrowmult value
+  cor<-scores(fit, "vectors")%>%
+    as_tibble(rownames="ref_name")%>%
+    mutate(NMDS1=NMDS1*ordiArrowMul(fit), NMDS2=NMDS2*ordiArrowMul(fit), r2=fit$vectors$r, p.value=fit$vectors$pvals)%>%
+    left_join(., refdata, by="ref_name")
+  return(cor)}
+```
+
+Function to obtain biplot showing selected correlations (AMR or clinical variables):
+
+```{r}
+biplot_amr_enfit<-function(high_cor, nmds, metadata, clin_var, label_var){
+  clin_var<-enquo(clin_var) 
+  label_var<-enquo(label_var)
+  nmds_positions<-nmds$points%>%
+    as_tibble(rownames="SampleID")%>%
+    rename(NMDS1=MDS1, NMDS2=MDS2)
+
+  nmds_positions%>%
+    left_join(., metadata, by="SampleID")%>%
+    ##ggplot(aes(x=NMDS1, y=NMDS2)) +
+    ggplot( aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
+    geom_point(alpha=0.5, size=2)+
+    geom_segment(data=high_cor,
+               aes(x=0, xend=NMDS1, y=0, yend=NMDS2), 
+               arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
+               inherit.aes=FALSE)+
+    geom_text_repel(data=high_cor,
+                  aes(x=NMDS1, y=NMDS2, label=!!label_var),
+                  min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
+                  inherit.aes=FALSE) +
+    theme_bw()+
+    scale_color_manual(values = c("chartreuse4", "red", "gray"))
+  }
+```
+
+# Ariba
+
+## Perform NMDs
+
+```{r}
+set.seed(200889)
+nmds_rpkm<-metaMDS(ariba_dist$dist_rpkm, trace = 0, trymax = 200)
+nmds_rar<-metaMDS(ariba_dist$dist_rar, trace = 0, trymax = 200)
+```
+
+## AMR genes correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm<-corr_amr_enfit(ariba_rpkm, refname_all_ariba, nmds_rpkm)
+cor_rar<-corr_amr_enfit(ariba_rar, refname_all_ariba, nmds_rar)
+cor_rpkm%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+cor_rar%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Ariba Rarefied)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+cor_level<-0.2
+high_cor_rpkm<-cor_rpkm%>%filter(p.value<=0.05 & r2 > cor_level)
+high_cor_rar<-cor_rar%>%filter(p.value<=0.05 & r2 > cor_level)
+```
+
+```{r}
+p1<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, Cluster, `ARO Name`)+
+  labs(title = "RPKM counts")+theme(legend.position = "none")
+p2<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata, Cluster, `ARO Name`)+
+  labs(title = "Rarefied counts")
+p3<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, RiskGroup2, `ARO Name`)+
+  theme(legend.position = "none")
+p4<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata,  RiskGroup2, `ARO Name`)
+
+p1+p2+p3+p4+ plot_layout(nrow = 2, byrow = TRUE)+plot_annotation(caption=glue("Correlation level cut-off: {cor_level}"))
+```
+
+## Numerical clinical variables correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm<-corr_meta_envfit(metadata, nmds_rpkm)
+cor_rar<-corr_meta_envfit(metadata, nmds_rar)
+
+cor_rpkm%>%slice_max(r2, n=10)%>%
+  select(-NMDS1, -NMDS2)%>%
+  kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+cor_rar%>%slice_max(r2, n=10)%>%
+  select(-NMDS1, -NMDS2)%>%
+  kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (Ariba Rarefied)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+```
+
+```{r}
+top_n=10
+high_cor_rpkm<-cor_rpkm%>%slice_max(r2, n=top_n)
+high_cor_rar<-cor_rar%>%slice_max(r2, n=top_n)
+```
+
+```{r}
+p1<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, Cluster, Variable)+
+  labs(title = "RPKM counts")+theme(legend.position = "none")
+p2<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata, Cluster, Variable)+
+  labs(title = "Rarefied counts")
+
+p1+p2+plot_annotation(caption=glue("Top {top_n} correlated clinical variables"))
+
+```
+
+
+# Groot
+
+```{r include=FALSE}
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+## Perform NMDs
+
+```{r}
+set.seed(200889)
+nmds_rpkm<-metaMDS(groot_dist$dist_rpkm, trace = 0, trymax = 200)
+nmds_rar<-metaMDS(groot_dist$dist_rar, trace = 0, trymax = 200)
+```
+
+## AMR genes correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm<-corr_amr_enfit(groot_rpkm, refname_all_groot, nmds_rpkm)
+cor_rar<-corr_amr_enfit(groot_rar, refname_all_groot, nmds_rar)
+cor_rpkm%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Groot RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+cor_rar%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Groot Rarefied)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+cor_level<-0.5
+high_cor_rpkm<-cor_rpkm%>%filter(p.value<=0.05 & r2 > cor_level)
+high_cor_rar<-cor_rar%>%filter(p.value<=0.05 & r2 > cor_level)
+
+p1<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, Cluster, `ARO Term`)+
+  labs(title = "RPKM counts")+theme(legend.position = "none")
+p2<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata, Cluster, `ARO Term`)+
+  labs(title = "Rarefied counts")
+p3<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, RiskGroup2, `ARO Term`)+
+  theme(legend.position = "none")
+p4<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata,  RiskGroup2, `ARO Term`)
+
+p1+p2+p3+p4+ plot_layout(nrow = 2, byrow = TRUE)+plot_annotation(caption=glue("Correlation level cut-off: {cor_level}"))
+```
+
+## Numerical clinical variables correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm<-corr_meta_envfit(metadata, nmds_rpkm)
+cor_rar<-corr_meta_envfit(metadata, nmds_rar)
+
+cor_rpkm%>%slice_max(r2, n=10)%>%
+  select(-NMDS1, -NMDS2)%>%
+  kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (groot RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+cor_rar%>%slice_max(r2, n=10)%>%
+  select(-NMDS1, -NMDS2)%>%
+  kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (groot Rarefied)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+```
+
+```{r}
+high_cor_rpkm<-cor_rpkm%>%filter(p.value<=0.05)
+high_cor_rar<-cor_rar%>%filter(p.value<=0.05)
+```
+
+```{r}
+p1<-biplot_amr_enfit(high_cor_rpkm, nmds_rpkm, metadata, Cluster, Variable)+
+  labs(title = "RPKM counts")+theme(legend.position = "none")
+p2<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata, Cluster, Variable)+
+  labs(title = "Rarefied counts")
+
+p1+p2+plot_annotation(caption="Significantly correlated clinical variables")
+```

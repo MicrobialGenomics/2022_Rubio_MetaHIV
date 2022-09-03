@@ -43,7 +43,7 @@ biplot_amr<-function(data, metadata, refdata, clin_var, cor_level){
 clin_var<-enquo(clin_var)  
 dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
-nmds <- metaMDS(dist)
+nmds <- metaMDS(dist, trace = 0)
 ##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
 nmds_positions<- nmds$points %>%
@@ -103,7 +103,7 @@ nmds_positions%>%
 corr_amr<-function(data, top_n, refdata){
 dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
-nmds <- metaMDS(dist)
+nmds <- metaMDS(dist, trace = 0)
 ##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
 nmds_positions<- nmds$points %>%
@@ -159,7 +159,7 @@ clin_var<-enquo(clin_var)
 
 dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
-nmds <- metaMDS(dist)
+nmds <- metaMDS(dist, trace = 0)
 ##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
 nmds_positions<- nmds$points %>%
@@ -219,7 +219,7 @@ corr_meta<-function(data, metadata, top_n){
 
 dist<-vegdist(t(data[ ,-1]), method = "bray"); dist<- dist_setNames(dist, colnames(data)[-1])
 set.seed(200889)
-nmds <- metaMDS(dist)
+nmds <- metaMDS(dist, trace = 0)
 ##nmds_positions<-scores(nmds)%>%as_tibble(rownames="SampleID")
 
 nmds_positions<- nmds$points %>%
@@ -260,7 +260,7 @@ correlations <- inner_join(cor_x, cor_y, by="name")%>%
 
 ## ARIBA
 
-```{r include=FALSE}
+```{r}
 p1<-biplot_amr(data = ariba_rar, metadata = metadata, refdata = refname_all_ariba, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "Rarefied counts")+theme(legend.position = "none")
 p2<-biplot_amr(data = ariba_rpkm, metadata = metadata, refdata = refname_all_ariba, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "RPKM")
 c1<-corr_amr(ariba_rar, top_n = 20, refdata = refname_all_ariba)
@@ -275,7 +275,7 @@ p1+p2
 ```
 
 
-```{r include=FALSE}
+```{r}
 p1<-biplot_meta(ariba_rar, metadata, RiskGroup2, 0.2)+labs(title = "Rarefied counts")+theme(legend.position = "none")
 p2<-biplot_meta(ariba_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "RPKM")
 c1<-corr_meta(ariba_rar, metadata, top_n = 10)
@@ -291,7 +291,7 @@ p1+p2
 
 ## Groot
 
-```{r include=FALSE}
+```{r}
 p1<-biplot_amr(data = groot_rar, metadata = metadata, refdata = refname_all_groot, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "Rarefied counts")+theme(legend.position = "none")
 p2<-biplot_amr(data = groot_rpkm, metadata = metadata, refdata = refname_all_groot, clin_var = RiskGroup2, cor_level = 0.5)+labs(title = "RPKM")
 c1<-corr_amr(groot_rar, top_n = 20, refdata = refname_all_groot)
@@ -307,7 +307,7 @@ p1+p2
 ```
 
 
-```{r include=FALSE}
+```{r}
 ##p1<-biplot_meta(groot_rar, metadata, RiskGroup2, 0.2)+labs(title = "Rarefied counts")+theme(legend.position = "none")
 ##p2<-biplot_meta(groot_rpkm, metadata, RiskGroup2, 0.2)+labs(title = "RPKM")
 c1<-corr_meta(groot_rar, metadata, top_n = 10)

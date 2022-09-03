@@ -17,8 +17,10 @@ navbar:
     href: 04_alpha_div.html
   - text: Beta diversity analysis
     href: 05_beta_div.html
-  - text: Biplot analysis
+  - text: Biplot (Separman)
     href: 06_biplot.html
+  - text: Biplot (Envfit)
+    href: 06_2_biplot_envfit.html
   - text: About
     href: about.html
   - text: License

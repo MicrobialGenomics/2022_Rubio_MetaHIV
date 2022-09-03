@@ -22,7 +22,8 @@ Welcome to my research website.
 
 ## [Beta diversity analysis](05_beta_div.html)
 
-## [Biplots](06_biplot.html)
+## Biplot:
 
+-   [Biplot (Spearman)](06_biplot.html)
 
-
+-   [Biplot (Envfit)](06_2_biplot_envfit.html)

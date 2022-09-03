@@ -33,8 +33,8 @@ dist_rar<-ariba_dist$dist_rar
 
 ```{r}
 set.seed(200889)
-nmds_rpkm <- metaMDS(dist_rpkm)
-nmds_rar <- metaMDS(dist_rar)
+nmds_rpkm <- metaMDS(dist_rpkm, trymax = 200)
+nmds_rar <- metaMDS(dist_rar,trymax = 300)
 ```
 
 ## Perform procrusters test 
