@@ -21,6 +21,8 @@ navbar:
     href: 06_biplot.html
   - text: Biplot (Envfit)
     href: 06_2_biplot_envfit.html
+  - text: Contingency table
+    href: contingency_tabe.html
   - text: About
     href: about.html
   - text: License

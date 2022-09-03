@@ -27,3 +27,5 @@ Welcome to my research website.
 -   [Biplot (Spearman)](06_biplot.html)
 
 -   [Biplot (Envfit)](06_2_biplot_envfit.html)
+
+## [Contingency tables](contingency_table.html)

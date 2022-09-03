@@ -1,0 +1,73 @@
+---
+title: "Contingency_table"
+author: "Elisa Rubio"
+date: "2022-09-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r}
+library(tidyverse)
+library(gtsummary)
+library(kableExtra)
+```
+
+```{r}
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+## Contingecy table: RiskGroup and Microbiome cluster according to HIV status
+
+```{r}
+t1<-metadata%>%select(HIV_Status, Cluster, RiskGroup2)%>%
+  tbl_summary(by=HIV_Status)%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**HIV profile**")
+
+as_kable_extra(t1)%>%kable_paper("striped")
+```
+
+```{r}
+wide_clust<-metadata%>%count(SampleID, Cluster)%>%
+  pivot_wider(names_from = "Cluster", values_from = "n", values_fill = 0)
+
+wide_risk<-metadata%>%count(SampleID, RiskGroup2)%>%
+  pivot_wider(names_from = "RiskGroup2", values_from = "n", values_fill = 0)
+
+t2<-metadata%>%
+  select(SampleID, HIV_Status)%>%
+  inner_join(., wide_clust, by="SampleID")%>%
+  inner_join(., wide_risk, by="SampleID")%>%
+  select(-SampleID)%>%
+  tbl_summary(by=HIV_Status)%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**HIV profile**")
+
+as_kable_extra(t2)%>%kable_paper("striped")
+```
+
+Most HIV negative (85%) have _Prevotella_ micrbiome cluster but ampong HIV positives 
+
+## Contingecy table: RiskGroup and Microbiome cluster
+
+```{r}
+t3<-metadata%>%select(Cluster, RiskGroup2)%>%
+  tbl_summary(by=RiskGroup2)%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_spanning_header(c("stat_1", "stat_2", "stat_3") ~ "**HIV Risk Group**")
+as_kable_extra(t3)%>%kable_paper("striped")
+```
+
+Most msm (88%) have cluster _Prevotella_, and most hts (93%) and pwid (87%) have cluster _Bacteroides_
+
