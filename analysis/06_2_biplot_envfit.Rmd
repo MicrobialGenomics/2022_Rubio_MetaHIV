@@ -204,6 +204,7 @@ nmds_rar<-metaMDS(groot_dist$dist_rar, trace = 0, trymax = 200)
 set.seed(200889)
 cor_rpkm<-corr_amr_enfit(groot_rpkm, refname_all_groot, nmds_rpkm)
 cor_rar<-corr_amr_enfit(groot_rar, refname_all_groot, nmds_rar)
+
 cor_rpkm%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
 kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Groot RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 
@@ -234,6 +235,7 @@ set.seed(200889)
 cor_rpkm<-corr_meta_envfit(metadata, nmds_rpkm)
 cor_rar<-corr_meta_envfit(metadata, nmds_rar)
 
+
 cor_rpkm%>%slice_max(r2, n=10)%>%
   select(-NMDS1, -NMDS2)%>%
   kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (groot RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
@@ -257,3 +259,4 @@ p2<-biplot_amr_enfit(high_cor_rar, nmds_rar, metadata, Cluster, Variable)+
 
 p1+p2+plot_annotation(caption="Significantly correlated clinical variables")
 ```
+

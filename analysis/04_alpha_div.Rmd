@@ -31,7 +31,8 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
-metadata<-read_csv("data/Metadata/metadata.csv")
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute)
 ```
 
 ## Create functions
@@ -39,13 +40,13 @@ metadata<-read_csv("data/Metadata/metadata.csv")
 #### Calculate alpha diversity indexes:
 
 ```{r}
-alpha_div<-function(d_rpkm, d_counts){
+alpha_div<-function(d_rpkm, d_counts, metadata){
 shannon<-diversity(d_rpkm[ ,-1], MARGIN = 2, index="shannon")
 simpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="simpson")
 invsimpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="invsimpson")
 nARG<-specnumber(d_rpkm[, -1], MARGIN = 2)
 fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from counts (not possible to calculate for rpkm values)
-metadata<-read_csv("data/Metadata/metadata.csv")%>%
+metadata%>%
   filter(SampleID %in% names(d_rpkm))%>%
   mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
 ```
@@ -108,8 +109,8 @@ data%>%
 ## ARIBA
 
 ```{r ariba_alpha_rpkmdiv}
-ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts)
-ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar)
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
+ariba_alpha_rar<-alpha_div(ariba_rar, ariba_rar, metadata)
 ```
 
 ### HIV status
@@ -254,11 +255,21 @@ alpha_div_cor_all(ariba_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Ariba RPKM")
 alpha_div_cor_all(ariba_alpha_rar, Nadir_CD4)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
+### CD4/CD8 ratio
+
+There is one CD8_absolute value of: 1.63, probably a mistake in the metadata.
+This sample is removed from the analysis
+
+```{r}
+alpha_div_cor_all(slice(ariba_alpha_rpkm, -70), ratio_CD4_CD8)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(slice(ariba_alpha_rar, -70), ratio_CD4_CD8)+labs(subtitle = "Ariba Rarefied counts")
+```
+
 ## Groot
 
 ```{r groot_alpha_rpkmdiv}
-groot_alpha_rpkm<-alpha_div(groot_rpkm, groot_counts)
-groot_alpha_rar<-alpha_div(groot_rar, groot_rar)
+groot_alpha_rpkm<-alpha_div(groot_rpkm, groot_counts, metadata)
+groot_alpha_rar<-alpha_div(groot_rar, groot_rar, metadata)
 ```
 
 ### HIV status
@@ -359,6 +370,19 @@ alpha_div_cor_all(groot_alpha_rpkm, Nadir_CD4)+labs(subtitle = "Groot RPKM")
 alpha_div_cor_all(groot_alpha_rar, Nadir_CD4)+labs(subtitle = "Groot Rarefied counts")
 ```
 
+### CD4/CD8 ratio
+
+There is one CD8_absolute value of: 1.63, probably a mistake in the metadata.
+This sample is removed from the analysis
+
+```{r}
+high_ratio<-which(groot_alpha_rpkm$ratio_CD4_CD8>300)
+alpha_div_cor_all(slice(groot_alpha_rpkm, -high_ratio), ratio_CD4_CD8)+labs(subtitle = "Groot RPKM")
+
+high_ratio<-which(groot_alpha_rar$ratio_CD4_CD8>300)
+alpha_div_cor_all(slice(groot_alpha_rar, -high_ratio), ratio_CD4_CD8)+labs(subtitle = "Groot Rarefied counts")
+```
+
 ## Conclusions
 
 -   Similar results between Groot and Ariba
@@ -378,5 +402,5 @@ alpha_div_cor_all(groot_alpha_rar, Nadir_CD4)+labs(subtitle = "Groot Rarefied co
 -   **Microbiome Cluster:** Lower alpha diversity (Simpson/InvSimpson
     and Shannon) in *Bacteroides* cluster
 
--   **CD4, Nadir CD4:** No significant correlation between CD4 levels
+-   **CD4, Nadir CD4, CD4/CD8 ratio:** No significant correlation between CD4 levels
     and Nadir CD4 and alpha diversity.
