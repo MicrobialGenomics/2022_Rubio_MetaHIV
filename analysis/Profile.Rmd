@@ -1,0 +1,177 @@
+---
+title: "Profile"
+author: "Elisa_Linux"
+date: "2022-09-10"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+#### Load data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/ariba_dist.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+### Load created functions
+
+```{r}
+source("code/functions.R")
+```
+
+
+## Joining elite controler + viremic 
+
+```{r}
+metadata<-metadata%>%
+  mutate(Profile2=ifelse(Profile=="elite_controllers" | Profile=="viremic_controllers", "elite_viremic_controler", Profile ))
+```
+
+
+### Alpha diversity analysis
+
+
+```{r ariba_alpha_rpkmdiv}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
+alpha_div_plot_all(ariba_alpha_rpkm, Profile2)
+```
+
+No differences in alpha diversity according to Profile. 
+
+### Beta diversity analysis
+
+```{r}
+ariba_dist_rpkm<-ariba_dist$dist_rpkm
+beta_nmds2(ariba_dist_rpkm, metadata, Profile2)
+```
+
+Adonis test significant but not clear cluster (pairwise test?)
+
+
+## Divide according to CD4 values:
+
+```{r}
+gghistostats(
+  data = metadata,
+  x = CD4, 
+  xlab = "CD4 levels",
+  title = "Distribution of CD4",
+  binwidth = 50,
+  bin.args = list(color = "black", fill = "green4", alpha = 0.7))+
+  geom_vline(xintercept = 400, colour="red", linetype="dashed")
+```
+
+
+```{r}
+CD4_cutoff=400
+
+metadata<-metadata%>%
+  mutate(CD4_hl=ifelse(CD4>=CD4_cutoff, "high", "low"),
+         CD4_hl=ifelse(HIV_Status=="negative", "high", CD4_hl),
+         CD4_hl=factor(CD4_hl, levels = c("low", "high")))
+```
+
+### Diversity analysis
+
+
+```{r ariba_alpha_rpkmdiv}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
+p1<-alpha_div_plot_all(ariba_alpha_rpkm, CD4_hl)
+p2<-beta_nmds(ariba_dist_rpkm, metadata, CD4_hl)
+p1/p2
+```
+
+No differences in alpha and beta diversity according to CD4 levels.
+
+## Analyze only msm group
+
+```{r}
+metadata_msm<-metadata%>%
+  filter(RiskGroup2=="msm")
+```
+
+```{r}
+gghistostats(
+  data = metadata_msm,
+  x = CD4, 
+  xlab = "CD4 levels",
+  title = "Distribution of CD4",
+  binwidth = 50,
+  bin.args = list(color = "black", fill = "green4", alpha = 0.7))+
+  geom_vline(xintercept = 400, colour="red", linetype="dashed")
+```
+
+```{r}
+metadata_msm<-metadata_msm%>%
+  mutate(CD4_hl=ifelse(CD4>=CD4_cutoff, "high", "low"),
+         CD4_hl=ifelse(HIV_Status=="negative", "high", CD4_hl),
+         CD4_hl=factor(CD4_hl, levels = c("low", "high")))
+```
+
+### Diversity analysis
+
+```{r}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata_msm)
+p1<-alpha_div_plot_all(ariba_alpha_rpkm, CD4_hl)
+p2<-beta_nmds(ariba_dist_rpkm, metadata_msm, CD4_hl)
+(p1/p2)+plot_annotation(title = "MSM subsample")
+```
+
+No differences in alpha and beta diversity according to CD4 levels in msm patients
+
+## Test each AMR gene separatedly for a dictomic clinical variable:
+
+```{r}
+data<-ariba_rpkm
+metadata
+refdata<-refname_all_ariba
+
+sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
+clin_var<-enquo(clin_var) 
+
+##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+##merge data with metadata and reference data    
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "ref_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")%>%
+    inner_join(., refdata, by="ref_name")
+  
+  sig_amr<-data_all%>%
+    nest(data=-ref_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~!!clin_var, data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)
+  return(sig_amr)}
+  
+```
+
+```{r}
+sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, CD4_hl)
+```
+
