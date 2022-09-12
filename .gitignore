@@ -10,5 +10,5 @@ analysis/*html
 analysis/*_cache
 analysis/site_libs
 docs/site_libs
-output/
-!output/*rda
+output/aribaData/
+output/grootData/
