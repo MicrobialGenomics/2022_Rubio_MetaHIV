@@ -139,15 +139,15 @@ p2<-beta_nmds(ariba_dist_rpkm, metadata_msm, CD4_hl)
 
 No differences in alpha and beta diversity according to CD4 levels in msm patients
 
-## Test each AMR gene separatedly for a dictomic clinical variable:
+## Test each AMR gene separatedly for a dictomic clinical variable (CD4_hl)
 
 ```{r}
 data<-ariba_rpkm
-metadata
+metadata<-metadata
 refdata<-refname_all_ariba
 
-sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
-clin_var<-enquo(clin_var) 
+# sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
+# clin_var<-enquo(clin_var) 
 
 ##transpose data
   ref_name<-pull(data, ref_name)
@@ -163,15 +163,96 @@ clin_var<-enquo(clin_var)
   
   sig_amr<-data_all%>%
     nest(data=-ref_name)%>%
-    mutate(test=map(.x=data, ~wilcox.test(value~!!clin_var, data=.x)%>%tidy))%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~CD4_hl, data=.x)%>%tidy))%>%
     unnest(test)%>%
     mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
     filter(p.adjust<0.05)
-  return(sig_amr)}
+  ##return(sig_amr)
+  # }
   
 ```
 
+There are `r nrow(sig_amr)` AMR genes with significantly different RPKM values according to CD4 levels (low/high)
+
 ```{r}
-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, CD4_hl)
+data<-ariba_rar
+metadata<-metadata
+refdata<-refname_all_ariba
+
+##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+##merge data with metadata and reference data    
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "ref_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")%>%
+    inner_join(., refdata, by="ref_name")
+  
+  sig_amr<-data_all%>%
+    nest(data=-ref_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~CD4_hl, data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)
 ```
+
+There are `r nrow(sig_amr)` AMR genes with significantly different rarefied counts according to CD4 levels (low/high)
+
+## Test each AMR gene separatedly for a clinical variable (Profile)
+
+```{r}
+data<-ariba_rpkm
+metadata<-metadata
+refdata<-refname_all_ariba
+
+##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+##merge data with metadata and reference data    
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "ref_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")%>%
+    inner_join(., refdata, by="ref_name")
+  
+  sig_amr<-data_all%>%
+    nest(data=-ref_name)%>%
+    mutate(test=map(.x=data, ~kruskal.test(value~Profile2, data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(ref_name, p.adjust)
+```
+
+```{r}
+data_all%>%
+  inner_join(sig_amr, by="ref_name")%>%
+  ##mutate(value=100*(value+1/20000))%>%
+  ggplot(aes(x=Profile2, y=value, color=Profile2)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  
+  ##scale_y_log10() +
+  facet_wrap(~`ARO Term`, scales = "free_y")+
+  # scale_color_manual(NULL,
+  #                    breaks = c(F, T),
+  #                    values = c("gray", "dodgerblue"),
+  #                    labels = c("Healthy", "SRN")) +
+  # scale_fill_manual(NULL,
+  #                    breaks = c(F, T),
+  #                    values = c("gray", "dodgerblue"),
+  #                    labels = c("Healthy", "SRN")) +
+  labs(x= "RPKM values", y=NULL) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+
+```
+
+
 
