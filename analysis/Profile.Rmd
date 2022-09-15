@@ -51,7 +51,7 @@ metadata<-metadata%>%
 ### Alpha diversity analysis
 
 
-```{r ariba_alpha_rpkmdiv}
+```{r}
 ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
 alpha_div_plot_all(ariba_alpha_rpkm, Profile2)
 ```
@@ -131,7 +131,13 @@ metadata_msm<-metadata_msm%>%
 ### Diversity analysis
 
 ```{r}
-ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata_msm)
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)%>%
+  filter(RiskGroup2=="msm")%>%
+  mutate(CD4_hl=ifelse(CD4>=CD4_cutoff, "high", "low"),
+         CD4_hl=ifelse(HIV_Status=="negative", "high", CD4_hl),
+         CD4_hl=factor(CD4_hl, levels = c("low", "high")))
+
+
 p1<-alpha_div_plot_all(ariba_alpha_rpkm, CD4_hl)
 p2<-beta_nmds(ariba_dist_rpkm, metadata_msm, CD4_hl)
 (p1/p2)+plot_annotation(title = "MSM subsample")
