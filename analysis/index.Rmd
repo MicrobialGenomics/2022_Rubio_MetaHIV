@@ -14,6 +14,8 @@ Welcome to my research website.
 
 ## [Summarize data](02_summarize_data.html)
 
+## [Import virulome](01_1_import_virulome.html)
+
 ## [Rarefy data](03_rarefaction.html)
 
 ## [Procruster test: RPKM *versus* Rarefied](03_1_procruster.html)
@@ -29,3 +31,5 @@ Welcome to my research website.
 -   [Biplot (Envfit)](06_2_biplot_envfit.html)
 
 ## [Contingency tables](contingency_table.html)
+
+## [AMR significance](08_amr_significance.html)

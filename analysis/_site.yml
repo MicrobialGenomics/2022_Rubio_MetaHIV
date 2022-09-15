@@ -9,6 +9,8 @@ navbar:
     href: 01_import_data.html
   - text: Summarize data
     href: 02_summarize_data.html
+  - text: Import virulome
+    href: 01_1_import_virulome.html
   - text: Rarefy data
     href: 03_rarefaction.html
   - text: Procruster test (Rare versus RPKM)
@@ -23,6 +25,8 @@ navbar:
     href: 06_2_biplot_envfit.html
   - text: Contingency table
     href: contingency_tabe.html
+  - text: AMR significance
+    href: 08_amr_significance.html
   - text: About
     href: about.html
   - text: License

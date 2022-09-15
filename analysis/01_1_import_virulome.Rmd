@@ -1,0 +1,92 @@
+---
+title: "01_1_import_virulome"
+author: "Elisa_Linux"
+date: "2022-09-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(kableExtra)
+```
+
+## Import virulome metadata
+```{r}
+VFs <- read_excel("data/vfdbData/VFs.xls", 
+    skip = 1)
+
+dataTable <- readRDS("data/Metadata/dataTable.rds")%>%select(SampleID, InitialReads)%>%
+  unique()
+```
+
+### Get all report files (list of dataframes) and assign names:
+
+```{r message=FALSE, warning=FALSE}
+virulome_samples<-list.files("data/vfdbData", pattern ="geneCounts.txt")%>%str_extract(pattern = "Sample_\\d+")
+virulome_files<-list.files("data/vfdbData", full.names = TRUE, pattern ="geneCounts.txt")
+
+virulome_data <- lapply(virulome_files, function(x) read_table(x,col_names = c("Count", "VF")))
+names(virulome_data)<-virulome_samples
+```
+
+```{r}
+# v1<-virulome_data[["Sample_001"]]
+# v1<-v1%>%separate(VF, into = c("VFG"), remove=FALSE)%>%
+#   mutate(VFG_num=str_extract(VFG, "\\d+"),
+#          VFG_num=as.numeric(VFG_num))
+```
+
+```{r}
+vfg<-function(x){x%>%separate(VF, into = c("VFG"), remove=FALSE)%>%
+  mutate(VFG_num=str_extract(VFG, "\\d+"),
+         VFG_num=as.numeric(VFG_num))}
+
+virulome_data<-lapply(virulome_data, vfg)
+```
+
+
+### Calculate RPKM
+
+```{r eval=FALSE, include=TRUE}
+all.equal(dataTable$SampleID, virulome_samples)
+
+## ref_len is missing, not possible to calculate RPKM
+for (i in 1:length(virulome_data)){
+ virulome_data[[i]]$RPKM<-virulome_data[[i]]$`Count`/(virulome_data[[i]]$`ref_len`/1000 * dataTable$InitialReads[i]/1000000)}
+```
+
+
+### Transform data to obtain matrix 
+
+```{r}
+transform_data<-function(list_df, sample_names, df_variable){
+  df_variable<-enquo(df_variable)
+df_filt<-lapply(list_df, function(x) select(x, VFG, !!df_variable)) ##select variables
+
+for (i in 1:length(df_filt)){
+ names(df_filt[[i]])[2]<-sample_names[i]} ##change reads column name to sample name
+
+df_transform<-df_filt %>% reduce(full_join, by='VFG')
+df_transform[is.na(df_transform)] <- 0
+return(df_transform)}
+```
+
+```{r}
+virulome_count<-transform_data(virulome_data, virulome_samples, Count)
+head(virulome_count, 15)%>%kable(caption="**Table. Virulome Counts** ")%>%kable_paper("striped")%>%scroll_box(width = "100%")
+```
+
+```{r}
+save(virulome_count, file="output/virulome.RDA")
+```
+
