@@ -98,7 +98,8 @@ metadata<-metadata%>%
 ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
 p1<-alpha_div_plot_all(ariba_alpha_rpkm, CD4_hl)
 p2<-beta_nmds(ariba_dist_rpkm, metadata, CD4_hl)
-p1/p2
+p1
+p2
 ```
 
 No differences in alpha and beta diversity according to CD4 levels.
@@ -140,7 +141,8 @@ ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)%>%
 
 p1<-alpha_div_plot_all(ariba_alpha_rpkm, CD4_hl)
 p2<-beta_nmds(ariba_dist_rpkm, metadata_msm, CD4_hl)
-(p1/p2)+plot_annotation(title = "MSM subsample")
+p1+labs(title="MSM subsample")
+p2+labs(title="MSM subsample")
 ```
 
 No differences in alpha and beta diversity according to CD4 levels in msm patients

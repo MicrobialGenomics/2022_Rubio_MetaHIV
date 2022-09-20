@@ -33,3 +33,6 @@ Welcome to my research website.
 ## [Contingency tables](contingency_table.html)
 
 ## [AMR significance](08_amr_significance.html)
+
+## [Profile](Profile.html)
+

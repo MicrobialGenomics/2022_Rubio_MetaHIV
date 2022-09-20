@@ -27,6 +27,8 @@ navbar:
     href: contingency_tabe.html
   - text: AMR significance
     href: 08_amr_significance.html
+  - text: Profile
+    href: Profile.html
   - text: About
     href: about.html
   - text: License
