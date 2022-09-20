@@ -63,6 +63,10 @@ sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
   
   data_all<-data_all%>%
   inner_join(sig_amr, by="ref_name")
+  
+  sig_amr<-sig_amr%>%
+    inner_join(refdata, by="ref_name")
+  
   res<-list(data_all, sig_amr)
   names(res)<-c("data_plot", "sig_amr")
   return(res)
@@ -96,6 +100,10 @@ sig_AMR_clin_factor<-function(data, metadata, refdata, clin_var){
   
   data_all<-data_all%>%
   inner_join(sig_amr, by="ref_name")
+  
+  sig_amr<-sig_amr%>%
+    inner_join(refdata, by="ref_name")
+  
   res<-list(data_all, sig_amr)
   names(res)<-c("data_plot", "sig_amr")
   return(res)
@@ -110,7 +118,7 @@ amr_sig_cluster$sig_amr %>% kable(caption="**Significant AMR genes, microbiome c
 ```
 
 
-```{r}
+```{r, out.width="100%"}
 amr_sig_cluster$data_plot%>%
   ggplot(aes(x=Cluster, y=value, color=Cluster)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
@@ -141,7 +149,7 @@ amr_sig_riskgroup<-sig_AMR_clin_factor(ariba_rpkm, metadata, refname_all_ariba, 
 amr_sig_riskgroup$sig_amr %>% kable(caption="**Significant AMR genes, riskgroup2 (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
 
-```{r}
+```{r, out.width="100%"}
 amr_sig_riskgroup$data_plot%>%
   ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
