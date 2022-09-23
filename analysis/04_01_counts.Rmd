@@ -1,0 +1,142 @@
+---
+title: "04_01_counts"
+author: "Elisa_Linux"
+date: "2022-09-20"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(ggstatsplot)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+```
+
+## Load data
+
+```{r}
+CD4_cutoff=400
+
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+  Profile2=ifelse(Profile=="elite_controllers" | Profile=="viremic_controllers", "elite_viremic_controler", Profile ),
+  CD4_hl=ifelse(CD4>=CD4_cutoff, "high", "low"),
+         CD4_hl=ifelse(HIV_Status=="negative", "high", CD4_hl),
+         CD4_hl=factor(CD4_hl, levels = c("low", "high")))
+  
+```
+
+
+
+## Calculate total AMR gene RPKM sum per sample
+
+```{r}
+total_rpkm<-ariba_rpkm %>%
+  select(-ref_name)%>%
+   summarise(across(everything(), ~ sum (.)))%>%
+  t()%>%
+  as_tibble(rownames = "SampleID")%>%
+  rename(rpkm_t=2)%>%
+  inner_join(metadata, by="SampleID")
+
+```
+
+```{r}
+total_rpkm%>%
+  select(SampleID, rpkm_t, HIV_Status, Profile,Profile2, RiskGroup2, Cluster, CD4_hl)%>%
+  pivot_longer(c(-SampleID, -rpkm_t), names_to="Clin_var", values_to = "value")
+
+```
+
+## HIV_status
+
+```{r}
+ggbetweenstats(
+  data = total_rpkm,
+  x=HIV_Status,
+  y=rpkm_t
+)
+```
+
+## RiskGroup2
+
+```{r}
+ggbetweenstats(
+  data = total_rpkm,
+  x=RiskGroup2,
+  y=rpkm_t
+)
+```
+
+## Profile
+
+```{r}
+ggbetweenstats(
+  data = total_rpkm,
+  x=Profile,
+  y=rpkm_t
+)
+```
+
+## Cluster
+
+```{r}
+ggbetweenstats(
+  data = total_rpkm,
+  x=Cluster,
+  y=rpkm_t
+)
+```
+
+## CD4
+```{r}
+ggbetweenstats(
+  data = total_rpkm,
+  x=CD4_hl,
+  y=rpkm_t
+)
+```
+
+## Nadir_CD4
+```{r}
+ggscatterstats(
+  data  = total_rpkm,
+  x     = Nadir_CD4,
+  y=rpkm_t)
+```
+
+## CD4
+```{r}
+ggscatterstats(
+  data  = total_rpkm,
+  x     = CD4,
+  y=rpkm_t)
+```
+
+### CD4/CD8 ratio
+
+There is one CD8_absolute value of: 1.63, probably a mistake in the metadata.
+This sample is removed from the analysis
+```{r}
+high_ratio<-which(total_rpkm$ratio_CD4_CD8>300)
+total_rpkm2<-slice(total_rpkm, -high_ratio)
+
+ggscatterstats(
+  data  = total_rpkm2,
+  x     = ratio_CD4_CD8,
+  y=rpkm_t)
+```
+
