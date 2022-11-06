@@ -1,0 +1,40 @@
+---
+title: "refname_comparison"
+author: "Elisa Rubio"
+date: "2022-11-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(glue)
+library(vegan)
+library(patchwork)
+```
+
+## Load summarized data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/summarized_groot.RDA")
+```
+
+```{r}
+all<-rbind(select(refname_all_ariba, `ARO Accession`), select(refname_all_groot, `ARO Accession`))%>%unique()
+all<-all%>%mutate(Ariba=ifelse(`ARO Accession` %in% refname_all_ariba$`ARO Accession`, 1, 0),
+                  Groot=ifelse(`ARO Accession` %in% refname_all_groot$`ARO Accession`, 1, 0),
+                  test=ifelse(Ariba==1 & Groot==1, "Groot+Ariba", ifelse(Ariba==1, "Ariba", "Groot")))
+
+
+prop.table(table(all$test))*100
+
+```
+

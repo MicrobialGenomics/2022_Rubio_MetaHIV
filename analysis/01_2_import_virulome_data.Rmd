@@ -1,0 +1,79 @@
+---
+title: "01_2_import_virulome_data"
+author: "Elisa Rubio"
+date: "2022-09-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+```
+
+```{r}
+VFs <- read_excel("data/vfdbData/VFs.xls", 
+    skip = 1)
+```
+
+
+## Get vorulome files (list of dataframes) and get names
+
+```{r}
+virulome_samples<-list.files("data/vfdbData", pattern = "geneCounts.txt")%>%str_extract(pattern = "Sample_\\d+")
+virulome_files<-list.files("data/vfdbData", full.names = TRUE, pattern = "geneCounts.txt") 
+virulome_data <- lapply(virulome_files, read_tsv)
+names(virulome_data)<-virulome_samples
+```
+```
+
+```{r}
+read_tsv("data/vfdbData/Sample_001_geneCounts.txt", col_names=FALSE)
+```
+
+
+```{r warning=FALSE, include=TRUE}
+if (!dir.exists("output/virulomeData")){
+virulomeData<-list.files("data/aribaData", full.names = TRUE)
+dir.create("output/aribaData")
+lapply(aribaData, untar,  exdir = "output/aribaData/")}
+
+if (!dir.exists("output/grootData")){
+grootData<-list.files("data/grootData", full.names = TRUE)
+dir.create("output/grootData")
+lapply(grootData, untar,  exdir = "output/grootData/")}
+```
+
+## Reorganize files
+
+### Ariba files
+
+```{bash}
+if [[ -e output/aribaData/tmp ]]; then
+  cp  -r output/aribaData/tmp/*/ABR/Ariba/*  output/aribaData
+  rm -r output/aribaData/tmp
+  prename 's/_out//' output/aribaData/*out/; fi  ##Change folder names (Substitute out for nothing)
+
+```
+
+```{bash}
+##Change report names to include sample name and move them from the directories
+for subdir in output/aribaData/*; do
+  if [[ -e $subdir/report.tsv ]]; then
+  subdir1=${subdir##*/}
+  mv $subdir/report.tsv output/aribaData/${subdir1}_ariba_report.tsv; fi; done
+
+```
+
+### Groot files
+
+```{bash}
+if [[ -e output/grootData/tmp ]]; then
+cp  -r output/grootData/tmp/*/ABR/Groot/*/*  output/grootData
+rm -r output/grootData/tmp; fi
+
+```
+
+
+
