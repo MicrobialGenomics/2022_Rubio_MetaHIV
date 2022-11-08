@@ -43,12 +43,13 @@ nmds_rar <- metaMDS(dist_rar,trymax = 300, trace = 0)
 ```{r}
 proc<-procrustes(nmds_rar, nmds_rpkm)
 ##plot(pro.test)
-test<-protest(nmds_rar, nmds_rpkm)
+test_ariba<-protest(nmds_rar, nmds_rpkm)
+test_ariba
 ```
 
 **Null hipotesis**: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.
 
-Te procruster test is significant (Significance: `r test$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
+Te procruster test is significant (Significance: `r test_ariba$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
 
 
 ```{r}
@@ -58,12 +59,14 @@ pdata <- data.frame(
   Method=c(rep("RPKM", 155), rep ("Rarefaction", 155)),
   SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
   
-pdata%>%
+p_ariba<-pdata%>%
   ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
   geom_point(size=2)+
   geom_line(aes(group=SampleID), colour="gray", linetype = 2, size=0.7)+
   theme_bw()+
-  labs(caption = glue("Procruster test significance: {test$signif}"), title="ARIBA")
+  labs(subtitle = glue("Procruster test significance: {test_ariba$signif}"), title="ARIBA")
+
+p_ariba
 ```
 
 # GROOT
@@ -73,17 +76,31 @@ pdata%>%
 load("output/groot_dist.RDA")
 dist_rpkm<-groot_dist$dist_rpkm
 dist_rar<-groot_dist$dist_rar
+```
 
-str(dist_rpkm)
-str(dist_rar)
+## Filter rpkm distance to retain the same samples as rarefied distance (12 samples were excluded after rarefaction)
+
+```{r}
+dist_matrix<-as.matrix(dist_rpkm)
+dist_tbl <- as_tibble(dist_matrix, rownames="samples")
+
+samples_rar <- labels(dist_rar)
+
+dist_rpkm_filt <- dist_tbl %>%
+  pivot_longer(cols=-samples, names_to="b", values_to="distances") %>%
+  filter(samples %in% samples_rar ) %>%
+  filter(b %in% samples_rar)%>%
+  pivot_wider(names_from="b", values_from="distances")%>%
+  select(-samples) %>%
+  as.dist()
 ```
 
 ## Perform NMDs 
 
 ```{r}
 set.seed(200889)
-nmds_rpkm <- metaMDS(dist_rpkm, trymax = 200, trace = 0)
-nmds_rar <- metaMDS(dist_rar,trymax = 300, trace = 0)
+nmds_rpkm <- metaMDS(dist_rpkm_filt, trymax = 200, trace = 0)
+nmds_rar <- metaMDS(dist_rar,trymax = 200, trace = 0)
 ```
 
 ## Perform procrusters test 
@@ -91,33 +108,40 @@ nmds_rar <- metaMDS(dist_rar,trymax = 300, trace = 0)
 ```{r}
 proc<-procrustes(nmds_rar, nmds_rpkm)
 ##plot(pro.test)
-test<-protest(nmds_rar, nmds_rpkm)
+test_groot<-protest(nmds_rar, nmds_rpkm)
+test_groot
 ```
 
 **Null hipotesis**: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.
 
-Te procruster test is significant (Significance: `r test$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
+Te procruster test is significant (Significance: `r test_groot$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
 
 
 ```{r}
 pdata <- data.frame(
   NMDS1=c(proc$Yrot[,1],proc$X[,1]),
   NMDS2=c(proc$Yrot[,2],proc$X[,2]),
-  Method=c(rep("RPKM", 155), rep ("Rarefaction", 155)),
+  Method=c(rep("RPKM", length(samples_rar)), rep ("Rarefaction", length(samples_rar))),
   SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
   
-pdata%>%
+p_groot<-pdata%>%
   ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
   geom_point(size=2)+
   geom_line(aes(group=SampleID), colour="gray", linetype = 2, size=0.7)+
   theme_bw()+
-  labs(caption = glue("Procruster test significance: {test$signif}"), title="GROOT")
+  labs(subtitle = glue("Procruster test significance: {test_groot$signif}"), title="GROOT")
+
+p_groot
 ```
+
 
 ```{r}
-pdata$SampleID%>%unique()%>%length()
-
-
+patch<-p_ariba+ theme(legend.position = "none") | p_groot
+patch+ plot_annotation(tag_levels = 'A')
 ```
+
+
+
+
 
 
