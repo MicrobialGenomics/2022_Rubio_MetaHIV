@@ -21,6 +21,7 @@ library(glue)
 library(patchwork)
 ```
 
+# ARIBA
 ## Load distances
 
 ```{r}
@@ -33,8 +34,8 @@ dist_rar<-ariba_dist$dist_rar
 
 ```{r}
 set.seed(200889)
-nmds_rpkm <- metaMDS(dist_rpkm, trymax = 200)
-nmds_rar <- metaMDS(dist_rar,trymax = 300)
+nmds_rpkm <- metaMDS(dist_rpkm, trymax = 200, trace = 0)
+nmds_rar <- metaMDS(dist_rar,trymax = 300, trace = 0)
 ```
 
 ## Perform procrusters test 
@@ -62,7 +63,61 @@ pdata%>%
   geom_point(size=2)+
   geom_line(aes(group=SampleID), colour="gray", linetype = 2, size=0.7)+
   theme_bw()+
-  labs(caption = glue("Procruster test significance: {test$signif}"), title="Ariba")
+  labs(caption = glue("Procruster test significance: {test$signif}"), title="ARIBA")
+```
+
+# GROOT
+## Load distances
+
+```{r}
+load("output/groot_dist.RDA")
+dist_rpkm<-groot_dist$dist_rpkm
+dist_rar<-groot_dist$dist_rar
+
+str(dist_rpkm)
+str(dist_rar)
+```
+
+## Perform NMDs 
+
+```{r}
+set.seed(200889)
+nmds_rpkm <- metaMDS(dist_rpkm, trymax = 200, trace = 0)
+nmds_rar <- metaMDS(dist_rar,trymax = 300, trace = 0)
+```
+
+## Perform procrusters test 
+
+```{r}
+proc<-procrustes(nmds_rar, nmds_rpkm)
+##plot(pro.test)
+test<-protest(nmds_rar, nmds_rpkm)
+```
+
+**Null hipotesis**: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.
+
+Te procruster test is significant (Significance: `r test$signif`), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)
+
+
+```{r}
+pdata <- data.frame(
+  NMDS1=c(proc$Yrot[,1],proc$X[,1]),
+  NMDS2=c(proc$Yrot[,2],proc$X[,2]),
+  Method=c(rep("RPKM", 155), rep ("Rarefaction", 155)),
+  SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
+  
+pdata%>%
+  ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
+  geom_point(size=2)+
+  geom_line(aes(group=SampleID), colour="gray", linetype = 2, size=0.7)+
+  theme_bw()+
+  labs(caption = glue("Procruster test significance: {test$signif}"), title="GROOT")
+```
+
+```{r}
+pdata$SampleID%>%unique()%>%length()
+
+
 ```
 
 
