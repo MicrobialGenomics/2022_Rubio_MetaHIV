@@ -86,7 +86,7 @@ abline(0, 1)
 We loose a lot of AMR genes if we rarefy at `r raremax`counts. 
 
 ```{r}
-rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = raremax, col = "blue", cex = 0.6, ylab = "AMR genes", label = FALSE, xlim=c(0,10000), main=glue("Rarefaction plot at {raremax} counts (Groot data)"))
+rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = c(raremax, 2500), col = "blue", cex = 0.6, ylab = "AMR genes", label = FALSE, xlim=c(0,10000), main=glue("Rarefaction plot at {raremax} counts (Groot data)"))
 ```
 
 
@@ -135,4 +135,23 @@ groot_rar<-as_tibble(t(groot_rar))%>%mutate(ref_name=groot_counts_filt$ref_name)
 
 save(groot_rar, file=glue("output/rarefied{nrar}_groot.RDA"))
 ```
+
+Document figures:
+
+```{r}
+rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = c(raremax, nrar), col = "blue", cex = 0.6, ylab = "AMR genes", label = FALSE, xlim=c(0,10000), main=glue("Rarefaction plot at {raremax}  and {nrar} counts (Groot data)"))
+```
+
+```{r}
+par(mfrow=c(1,2))
+
+Srare <- rarefy(t(groot_counts[ ,-1]), raremax) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {raremax} counts"))
+abline(0, 1)
+
+Srare <- rarefy(t(groot_counts[ ,-1]), nrar) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {nrar} counts"))
+abline(0, 1)
+```
+
 

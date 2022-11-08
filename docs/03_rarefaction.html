@@ -347,6 +347,9 @@ div.tocify {
   <a href="02_summarize_data.html">Summarize data</a>
 </li>
 <li>
+  <a href="01_1_import_virulome.html">Import virulome</a>
+</li>
+<li>
   <a href="03_rarefaction.html">Rarefy data</a>
 </li>
 <li>
@@ -359,10 +362,19 @@ div.tocify {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
-  <a href="06_biplot.html">Biplot (Separman)</a>
+  <a href="06_biplot.html">Biplot (Spearman)</a>
 </li>
 <li>
   <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
+</li>
+<li>
+  <a href="contingency_tabe.html">Contingency table</a>
+</li>
+<li>
+  <a href="08_amr_significance.html">AMR significance</a>
+</li>
+<li>
+  <a href="Profile.html">Profile</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -399,7 +411,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -408,7 +420,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -417,10 +429,10 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-03
+<strong>Last updated:</strong> 2022-11-07
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -436,12 +448,12 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -508,16 +520,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeef31c926e301e12aac832aa4030b294c79954876targetblankef31c92a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ef31c926e301e12aac832aa4030b294c79954876" target="_blank">ef31c92</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeca28164abc87450428f3e436eb1a22082e078b62targetblankca28164a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ca28164abc87450428f3e436eb1a22082e078b62" target="_blank">ca28164</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeef31c926e301e12aac832aa4030b294c79954876targetblankef31c92a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreeca28164abc87450428f3e436eb1a22082e078b62targetblankca28164a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ef31c926e301e12aac832aa4030b294c79954876" target="_blank">ef31c92</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ca28164abc87450428f3e436eb1a22082e078b62" target="_blank">ca28164</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -529,14 +541,10 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Untracked files:
-    Untracked:  analysis/06_2_biplot_envfit.Rmd
-
 Unstaged changes:
-    Modified:   analysis/03_1_procruster.Rmd
-    Modified:   analysis/06_biplot.Rmd
-    Modified:   analysis/_site.yml
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/01_1_import_virulome.Rmd
+    Modified:   analysis/01_2_import_virulome_data.Rmd
+    Modified:   analysis/03_rarefaction.Rmd
 
 </code></pre>
 <p>
@@ -575,6 +583,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/6646c668f56fb1de45bf0dd1d69b77817863e398/docs/03_rarefaction.html" target="_blank">6646c66</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-09-03
+</td>
+<td>
+Procruster with 200 iterations and biplots using envfit
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -880,7 +905,7 @@ Elisa
 </div>
 </div>
 <p>We loose a lot of AMR genes if we rarefy at 470counts.</p>
-<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = raremax, col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {raremax} counts (Groot data)&quot;))</code></pre>
+<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = c(raremax, 2500), col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {raremax} counts (Groot data)&quot;))</code></pre>
 <p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
@@ -1089,6 +1114,19 @@ groot_rar&lt;-as_tibble(t(groot_rar))%&gt;%mutate(ref_name=groot_counts_filt$ref
   select(ref_name, everything())
 
 save(groot_rar, file=glue(&quot;output/rarefied{nrar}_groot.RDA&quot;))</code></pre>
+<p>Document figures:</p>
+<pre class="r"><code>rarecurve(t(groot_counts[ ,-1]), step = 1000, sample = c(raremax, nrar), col = &quot;blue&quot;, cex = 0.6, ylab = &quot;AMR genes&quot;, label = FALSE, xlim=c(0,10000), main=glue(&quot;Rarefaction plot at {raremax}  and {nrar} counts (Groot data)&quot;))</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow=c(1,2))
+
+Srare &lt;- rarefy(t(groot_counts[ ,-1]), raremax) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {raremax} counts&quot;))
+abline(0, 1)
+
+Srare &lt;- rarefy(t(groot_counts[ ,-1]), nrar) # observed number of rarefied AMR genes
+plot(S, Srare, xlab = &quot;Observed No. of AMR genes&quot;, ylab = &quot;Rarefied No. of AMR genes&quot;, main=glue(&quot;Rarefaction at {nrar} counts&quot;))
+abline(0, 1)</code></pre>
+<p><img src="figure/03_rarefaction.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1128,10 +1166,10 @@ loaded via a namespace (and not attached):
  [9] highr_0.9        cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0    
 [13] backports_1.4.1  digest_0.6.29    promises_1.2.0.1 rvest_1.0.2     
 [17] colorspace_2.0-3 htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0    
-[21] pkgconfig_2.0.3  broom_0.7.12     haven_2.4.3      scales_1.1.1    
+[21] pkgconfig_2.0.3  broom_1.0.1      haven_2.4.3      scales_1.2.1    
 [25] processx_3.5.3   whisker_0.4      later_1.3.0      tzdb_0.2.0      
 [29] git2r_0.30.1     mgcv_1.8-38      farver_2.1.0     generics_0.1.2  
-[33] ellipsis_0.3.2   withr_2.5.0      cli_3.2.0        magrittr_2.0.2  
+[33] ellipsis_0.3.2   withr_2.5.0      cli_3.3.0        magrittr_2.0.2  
 [37] crayon_1.5.1     readxl_1.3.1     evaluate_0.15    ps_1.6.0        
 [41] fs_1.5.2         fansi_1.0.3      nlme_3.1-157     MASS_7.3-56     
 [45] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 

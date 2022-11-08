@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Elisa_Linux" />
+<meta name="author" content="Elisa Rubio" />
 
 <meta name="date" content="2022-09-15" />
 
-<title>01_1_import_virulome</title>
+<title>01_2_import_virulome_data</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -402,8 +402,8 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">01_1_import_virulome</h1>
-<h4 class="author">Elisa_Linux</h4>
+<h1 class="title toc-ignore">01_2_import_virulome_data</h1>
+<h4 class="author">Elisa Rubio</h4>
 <h4 class="date">2022-09-15</h4>
 
 </div>
@@ -543,6 +543,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/01_1_import_virulome.Rmd
+    Modified:   analysis/01_2_import_virulome_data.Rmd
     Modified:   analysis/03_rarefaction.Rmd
 
 </code></pre>
@@ -558,7 +559,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/01_1_import_virulome.Rmd</code>) and HTML (<code>docs/01_1_import_virulome.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/01_2_import_virulome_data.Rmd</code>) and HTML (<code>docs/01_2_import_virulome_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -587,33 +588,16 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/956d07214e8f8dd192bc5feb1594f94c72ff10a6/analysis/01_1_import_virulome.Rmd" target="_blank">956d072</a>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ca28164abc87450428f3e436eb1a22082e078b62/analysis/01_2_import_virulome_data.Rmd" target="_blank">ca28164</a>
 </td>
 <td>
-Elisa_Linux
+Elisa
 </td>
 <td>
-2022-09-15
+2022-11-06
 </td>
 <td>
-import virulome
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/956d07214e8f8dd192bc5feb1594f94c72ff10a6/docs/01_1_import_virulome.html" target="_blank">956d072</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-09-15
-</td>
-<td>
-import virulome
+refname_comparison
 </td>
 </tr>
 </tbody>
@@ -624,55 +608,51 @@ import virulome
 </div>
 </div>
 <pre class="r"><code>library(tidyverse)
-library(readxl)
-library(kableExtra)</code></pre>
-<div id="import-virulome-metadata" class="section level2">
-<h2>Import virulome metadata</h2>
+library(readxl)</code></pre>
 <pre class="r"><code>VFs &lt;- read_excel(&quot;data/vfdbData/VFs.xls&quot;, 
-    skip = 1)
-
-dataTable &lt;- readRDS(&quot;data/Metadata/dataTable.rds&quot;)%&gt;%select(SampleID, InitialReads)%&gt;%
-  unique()</code></pre>
-<div id="get-all-report-files-list-of-dataframes-and-assign-names" class="section level3">
-<h3>Get all report files (list of dataframes) and assign names:</h3>
-<pre class="r"><code>virulome_samples&lt;-list.files(&quot;data/vfdbData&quot;, pattern =&quot;geneCounts.txt&quot;)%&gt;%str_extract(pattern = &quot;Sample_\\d+&quot;)
-virulome_files&lt;-list.files(&quot;data/vfdbData&quot;, full.names = TRUE, pattern =&quot;geneCounts.txt&quot;)
-
-virulome_data &lt;- lapply(virulome_files, function(x) read_table(x,col_names = c(&quot;Count&quot;, &quot;VF&quot;)))
+    skip = 1)</code></pre>
+<div id="get-vorulome-files-list-of-dataframes-and-get-names" class="section level2">
+<h2>Get vorulome files (list of dataframes) and get names</h2>
+<pre class="r"><code>virulome_samples&lt;-list.files(&quot;data/vfdbData&quot;, pattern = &quot;geneCounts.txt&quot;)%&gt;%str_extract(pattern = &quot;Sample_\\d+&quot;)
+virulome_files&lt;-list.files(&quot;data/vfdbData&quot;, full.names = TRUE, pattern = &quot;geneCounts.txt&quot;) 
+virulome_data &lt;- lapply(virulome_files, read_tsv)
 names(virulome_data)&lt;-virulome_samples</code></pre>
-<pre class="r"><code># v1&lt;-virulome_data[[&quot;Sample_001&quot;]]
-# v1&lt;-v1%&gt;%separate(VF, into = c(&quot;VFG&quot;), remove=FALSE)%&gt;%
-#   mutate(VFG_num=str_extract(VFG, &quot;\\d+&quot;),
-#          VFG_num=as.numeric(VFG_num))</code></pre>
-<pre class="r"><code>vfg&lt;-function(x){x%&gt;%separate(VF, into = c(&quot;VFG&quot;), remove=FALSE)%&gt;%
-  mutate(VFG_num=str_extract(VFG, &quot;\\d+&quot;),
-         VFG_num=as.numeric(VFG_num))}
+<pre><code>
 
-virulome_data&lt;-lapply(virulome_data, vfg)</code></pre>
+```r
+read_tsv(&quot;data/vfdbData/Sample_001_geneCounts.txt&quot;, col_names=FALSE)</code></pre>
+<pre class="r"><code>if (!dir.exists(&quot;output/virulomeData&quot;)){
+virulomeData&lt;-list.files(&quot;data/aribaData&quot;, full.names = TRUE)
+dir.create(&quot;output/aribaData&quot;)
+lapply(aribaData, untar,  exdir = &quot;output/aribaData/&quot;)}
+
+if (!dir.exists(&quot;output/grootData&quot;)){
+grootData&lt;-list.files(&quot;data/grootData&quot;, full.names = TRUE)
+dir.create(&quot;output/grootData&quot;)
+lapply(grootData, untar,  exdir = &quot;output/grootData/&quot;)}</code></pre>
 </div>
-<div id="calculate-rpkm" class="section level3">
-<h3>Calculate RPKM</h3>
-<pre class="r"><code>all.equal(dataTable$SampleID, virulome_samples)
-
-## ref_len is missing, not possible to calculate RPKM
-for (i in 1:length(virulome_data)){
- virulome_data[[i]]$RPKM&lt;-virulome_data[[i]]$`Count`/(virulome_data[[i]]$`ref_len`/1000 * dataTable$InitialReads[i]/1000000)}</code></pre>
+<div id="reorganize-files" class="section level2">
+<h2>Reorganize files</h2>
+<div id="ariba-files" class="section level3">
+<h3>Ariba files</h3>
+<pre class="bash"><code>if [[ -e output/aribaData/tmp ]]; then
+  cp  -r output/aribaData/tmp/*/ABR/Ariba/*  output/aribaData
+  rm -r output/aribaData/tmp
+  prename &#39;s/_out//&#39; output/aribaData/*out/; fi  ##Change folder names (Substitute out for nothing)
+</code></pre>
+<pre class="bash"><code>##Change report names to include sample name and move them from the directories
+for subdir in output/aribaData/*; do
+  if [[ -e $subdir/report.tsv ]]; then
+  subdir1=${subdir##*/}
+  mv $subdir/report.tsv output/aribaData/${subdir1}_ariba_report.tsv; fi; done
+</code></pre>
 </div>
-<div id="transform-data-to-obtain-matrix" class="section level3">
-<h3>Transform data to obtain matrix</h3>
-<pre class="r"><code>transform_data&lt;-function(list_df, sample_names, df_variable){
-  df_variable&lt;-enquo(df_variable)
-df_filt&lt;-lapply(list_df, function(x) select(x, VFG, !!df_variable)) ##select variables
-
-for (i in 1:length(df_filt)){
- names(df_filt[[i]])[2]&lt;-sample_names[i]} ##change reads column name to sample name
-
-df_transform&lt;-df_filt %&gt;% reduce(full_join, by=&#39;VFG&#39;)
-df_transform[is.na(df_transform)] &lt;- 0
-return(df_transform)}</code></pre>
-<pre class="r"><code>virulome_count&lt;-transform_data(virulome_data, virulome_samples, Count)
-head(virulome_count, 15)%&gt;%kable(caption=&quot;**Table. Virulome Counts** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<pre class="r"><code>save(virulome_count, file=&quot;output/virulome.RDA&quot;)</code></pre>
+<div id="groot-files" class="section level3">
+<h3>Groot files</h3>
+<pre class="bash"><code>if [[ -e output/grootData/tmp ]]; then
+cp  -r output/grootData/tmp/*/ABR/Groot/*/*  output/grootData
+rm -r output/grootData/tmp; fi
+</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
