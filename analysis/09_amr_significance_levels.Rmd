@@ -1,0 +1,47 @@
+---
+title: "09_amr_significance_levels"
+author: "Elisa Rubio"
+date: "2022-11-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+
+#### Load data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/ariba_dist.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+Generate matrix counts grouped by a level:
+
+```{r}
+ariba_rpkm_genefamily<-ariba_rpkm%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`AMR Gene Family`, starts_with("Sample"))%>%
+  group_by(`AMR Gene Family`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+```
+
+
