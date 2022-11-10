@@ -1,0 +1,136 @@
+---
+title: "09_group matrixes"
+author: "Elisa Rubio"
+date: "2022-11-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+
+#### Load data
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+
+## Generate matrix counts grouped by a level Gene family
+
+```{r}
+ariba_rpkm_genefamily<-ariba_rpkm%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`AMR Gene Family`, starts_with("Sample"))%>%
+  group_by(`AMR Gene Family`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+
+ariba_rar_genefamily<-ariba_rar%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`AMR Gene Family`, starts_with("Sample"))%>%
+  group_by(`AMR Gene Family`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+
+```
+
+## Generate matrix counts grouped by antibiotic and resistance mechanism
+
+Problem: one AMR may confer resistance to more than one antibiotic
+
+Option1. We count each ATB separately (Reads will be counted more than once if they confer resistance to more than one antibiotic)
+We group all beta-lactamic antibiotics in one group
+
+```{r}
+ariba_rpkm_drugclass<-ariba_rpkm%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Drug Class`, starts_with("Sample"))%>%
+  separate_rows(`Drug Class`, sep=";", convert = TRUE)%>%
+  group_by(`Drug Class`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+
+beta_lactam<-c("cephalosporin", "cephamycin", "penam" , "penem", "carbapenem" ,"monobactam")
+
+ariba_rpkm_beta_lactams<-ariba_rpkm%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Drug Class`, starts_with("Sample"))%>%
+  separate_rows(`Drug Class`, sep=";", convert = TRUE)%>%
+  filter(`Drug Class` %in% beta_lactam)%>%
+  mutate(`Drug Class` ="beta_lactam")%>%
+  unique()%>%
+  summarise(across(where(is.numeric), sum))%>%
+  mutate(`Drug Class`="beta_lactam")%>%
+  select(`Drug Class`, everything())
+
+##all.equal(colnames(ariba_rpkm_drugclass), colnames(ariba_rpkm_beta_lactams))
+ariba_rpkm_drugclass<-rbind(ariba_rpkm_drugclass, ariba_rpkm_beta_lactams)
+```
+
+
+```{r}
+ariba_rar_drugclass<-ariba_rar%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Drug Class`, starts_with("Sample"))%>%
+  separate_rows(`Drug Class`, sep=";", convert = TRUE)%>%
+  group_by(`Drug Class`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+
+
+ariba_rar_beta_lactams<-ariba_rar%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Drug Class`, starts_with("Sample"))%>%
+  separate_rows(`Drug Class`, sep=";", convert = TRUE)%>%
+  filter(`Drug Class` %in% beta_lactam)%>%
+  mutate(`Drug Class` ="beta_lactam")%>%
+  unique()%>%
+  summarise(across(where(is.numeric), sum))%>%
+  mutate(`Drug Class`="beta_lactam")%>%
+  select(`Drug Class`, everything())
+
+##all.equal(colnames(ariba_rar_drugclass), colnames(ariba_rar_beta_lactams))
+ariba_rar_drugclass<-rbind(ariba_rar_drugclass, ariba_rar_beta_lactams)
+```
+
+## Generate matrix counts grouped by resistance mechanism
+The same problem as antibiotic
+
+```{r}
+ariba_rpkm_resmec<-ariba_rpkm%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Resistance Mechanism`, starts_with("Sample"))%>%
+  separate_rows(`Resistance Mechanism`, sep=";", convert = TRUE)%>%
+  group_by(`Resistance Mechanism`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+
+ariba_rar_resmec<-ariba_rar%>%left_join(refname_all_ariba, "ref_name")%>%
+  select(`Resistance Mechanism`, starts_with("Sample"))%>%
+  separate_rows(`Resistance Mechanism`, sep=";", convert = TRUE)%>%
+  group_by(`Resistance Mechanism`)%>%
+  summarise(across(everything(), sum),
+            .groups = 'drop')
+```
+
+
+### Save grouped matrixes
+
+```{r}
+save(ariba_rpkm_drugclass, ariba_rpkm_genefamily, ariba_rpkm_resmec, file="output/grouped_rpkm_ariba.RDA")
+save(ariba_rar_drugclass, ariba_rar_genefamily, ariba_rar_resmec, file="output/grouped_rar_ariba.RDA")
+```
+
+

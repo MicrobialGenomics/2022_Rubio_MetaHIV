@@ -79,7 +79,7 @@ sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
 sig_AMR_clin_factor<-function(data, metadata, refdata, clin_var){
 
 ##transpose data
-  ref_name<-pull(data, ref_name)
+  ref_name<-pull(data, 1)
   data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
     mutate_at(vars(-("SampleID")),as.numeric)
   colnames(data)<-c("SampleID", ref_name)

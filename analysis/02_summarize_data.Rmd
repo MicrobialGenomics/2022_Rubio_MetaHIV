@@ -221,3 +221,10 @@ save(groot_rpkm, groot_counts, refname_all_groot, file="output/summarized_groot.
 save(ariba_rpkm, ariba_counts, refname_all_ariba, file="output/summarized_ariba.RDA")
 ```
 
+## Save AMR genes information in csv file:
+
+```{r}
+write_excel_csv(refname_all_ariba, "output/refname_all_ariba.csv")
+write_excel_csv(refname_all_groot, "output/refname_all_groot.csv")
+```
+

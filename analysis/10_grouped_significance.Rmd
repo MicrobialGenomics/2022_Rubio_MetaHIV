@@ -1,0 +1,163 @@
+---
+title: "10_grouped_significance"
+author: "Elisa_Linux"
+date: "2022-11-10"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+#### Load data
+
+```{r}
+load("output/summarized_ariba.RDA")
+##load("output/rarefied_ariba.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+load("output/grouped_rar_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+```
+
+## Test each AMR gene separatedly for clinical variable (function)
+
+### Dicotomic variable and factor (>2 levels) function
+
+```{r}
+sig_group_clin_dic<-function(data, metadata, clin_var){
+##transpose data
+  group_name<-pull(data, 1)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", group_name)
+
+##merge data with metadata
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "group_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")
+
+##get significant groups, adjusted p value
+  sig_amr<-data_all%>%
+    nest(data=-group_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(group_name, p.adjust)
+
+##obtain data only from significant groups (for the plot)
+  data_all<-data_all%>%
+  inner_join(sig_amr, by="group_name")
+  
+## get mean counts per significant group and clinical variable
+  sig_data<-data_all%>%
+  group_by(group_name, !!enquo(clin_var))%>%
+  summarise(mean_counts=mean(value), .groups = 'drop')%>%
+  pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+  inner_join(sig_amr, by="group_name")
+
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
+  return(res)
+  }
+
+
+sig_group_clin_factor<-function(data, metadata, clin_var){
+##transpose data
+  group_name<-pull(data, 1)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", group_name)
+
+##merge data with metadata
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "group_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")
+
+##get significant groups, adjusted p value
+  sig_amr<-data_all%>%
+    nest(data=-group_name)%>%
+    mutate(test=map(.x=data, ~kruskal.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(group_name, p.adjust)
+
+##obtain data only from significant groups (for the plot)
+  data_all<-data_all%>%
+  inner_join(sig_amr, by="group_name")
+  
+## get mean counts per significant group and clinical variable
+  sig_data<-data_all%>%
+  group_by(group_name, !!enquo(clin_var))%>%
+  summarise(mean_counts=mean(value), .groups = 'drop')%>%
+  pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+  inner_join(sig_amr, by="group_name")
+
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
+  return(res)
+  }
+```
+
+## Microbiome Cluster
+
+```{r}
+drugclass_sig_rpkm_cluster<-sig_group_clin_dic(ariba_rpkm_drugclass, filter(metadata, !is.na(Cluster)), Cluster)
+drugclass_sig_rpkm_cluster$sig_data%>% kable(caption="**Significant Drug Classes, microbiome cluster (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+drugclass_sig_rpkm_cluster$data_plot%>%
+  ggplot(aes(x=Cluster, y=value, color=Cluster)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+
+```{r}
+# drugclass_sig_rar_cluster<-sig_group_clin_dic(ariba_rar_drugclass, filter(metadata, !is.na(Cluster)), Cluster)
+# drugclass_sig_rar_cluster$sig_data
+```
+ 
+## Risk Group
+
+```{r}
+drugclass_sig_rpkm_riskgroup<-sig_group_clin_factor(ariba_rpkm_drugclass, metadata, RiskGroup2)
+drugclass_sig_rpkm_riskgroup$sig_data %>% kable(caption="**Significant Drug Classes, riskgroup2 (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+drugclass_sig_rpkm_riskgroup$data_plot%>%
+  ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+
