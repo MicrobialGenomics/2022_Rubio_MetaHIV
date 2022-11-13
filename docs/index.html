@@ -13,7 +13,7 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -296,7 +296,22 @@ $(document).ready(function () {
   <a href="08_amr_significance.html">AMR significance</a>
 </li>
 <li>
+  <a href="09_group_matrixes.html">Group matrixes</a>
+</li>
+<li>
+  <a href="10_grouped_significance.html">Grouped significance</a>
+</li>
+<li>
   <a href="Profile.html">Profile</a>
+</li>
+<li>
+  <a href="ART.html">ART</a>
+</li>
+<li>
+  <a href="11_gene_richness.html">Gene Richness</a>
+</li>
+<li>
+  <a href="Riskgroup2_grouped.html">Riskgroup2</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -331,9 +346,7 @@ $(document).ready(function () {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -342,9 +355,7 @@ aria-hidden="true"></span>
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -353,27 +364,17 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-09-20
+<strong>Last updated:</strong> 2022-11-13
 </p>
 <p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -382,57 +383,31 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
-class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree956d07214e8f8dd192bc5feb1594f94c72ff10a6targetblank956d072a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/956d07214e8f8dd192bc5feb1594f94c72ff10a6" target="_blank">956d072</a>
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree268283feefde6c79b5e9d2d1eaf5dd623668da58targetblank268283fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/268283feefde6c79b5e9d2d1eaf5dd623668da58" target="_blank">268283f</a> </a>
 </p>
 </div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree956d07214e8f8dd192bc5feb1594f94c72ff10a6targetblank956d072a"
-class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree268283feefde6c79b5e9d2d1eaf5dd623668da58targetblank268283fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/956d07214e8f8dd192bc5feb1594f94c72ff10a6" target="_blank">956d072</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/268283feefde6c79b5e9d2d1eaf5dd623668da58" target="_blank">268283f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -441,16 +416,21 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
+Untracked files:
+    Untracked:  analysis/11_gene_richness.Rmd
+    Untracked:  analysis/ART.Rmd
+    Untracked:  analysis/Riskgroup2_grouped.Rmd
+    Untracked:  data/Metadata/generichness_data.txt
+
 Unstaged changes:
-    Modified:   analysis/Profile.Rmd
+    Modified:   analysis/10_grouped_significance.Rmd
     Modified:   analysis/_site.yml
     Modified:   analysis/index.Rmd
+    Modified:   code/functions.R
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </p>
 </div>
 </div>
@@ -461,11 +441,7 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML
-(<code>docs/index.html</code>) files. If you’ve configured a remote Git
-repository (see <code>?wflow_git_remote</code>), click on the hyperlinks
-in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -489,6 +465,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/995bf04fefe5d08b0e66b70889bc6179a59e0c80/analysis/index.Rmd" target="_blank">995bf04</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-09-20
+</td>
+<td>
+200922
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/995bf04fefe5d08b0e66b70889bc6179a59e0c80/docs/index.html" target="_blank">995bf04</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-09-20
+</td>
+<td>
+200922
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -673,8 +683,7 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for
-betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
 </td>
 </tr>
 <tr>
@@ -691,8 +700,7 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for
-betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
 </td>
 </tr>
 <tr>
@@ -852,8 +860,7 @@ Start workflowr project.
 <h2><a href="03_rarefaction.html">Rarefy data</a></h2>
 </div>
 <div id="procruster-test-rpkm-versus-rarefied" class="section level2">
-<h2><a href="03_1_procruster.html">Procruster test: RPKM <em>versus</em>
-Rarefied</a></h2>
+<h2><a href="03_1_procruster.html">Procruster test: RPKM <em>versus</em> Rarefied</a></h2>
 </div>
 <div id="alpha-diversity-analysis" class="section level2">
 <h2><a href="04_alpha_div.html">Alpha diversity analysis</a></h2>
@@ -874,8 +881,23 @@ Rarefied</a></h2>
 <div id="amr-significance" class="section level2">
 <h2><a href="08_amr_significance.html">AMR significance</a></h2>
 </div>
+<div id="group-matrixes" class="section level2">
+<h2><a href="09_group_matrixes.html">Group matrixes</a></h2>
+</div>
+<div id="grouped-significance" class="section level2">
+<h2><a href="10_grouped_significance.html">Grouped significance</a></h2>
+</div>
 <div id="profile" class="section level2">
 <h2><a href="Profile.html">Profile</a></h2>
+</div>
+<div id="art" class="section level2">
+<h2><a href="ART.html">ART</a></h2>
+</div>
+<div id="gene-richness" class="section level2">
+<h2><a href="11_gene_richness.html">Gene Richness</a></h2>
+</div>
+<div id="riskgroup2" class="section level2">
+<h2><a href="Riskgroup2_grouped.html">Riskgroup2</a></h2>
 </div>
 
 

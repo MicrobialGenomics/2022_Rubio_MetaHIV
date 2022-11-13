@@ -11,9 +11,9 @@
 
 <meta name="author" content="Elisa Rubio" />
 
-<meta name="date" content="2022-09-12" />
+<meta name="date" content="2022-11-13" />
 
-<title>08_amr_significance</title>
+<title>11_gene_richness</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -419,16 +419,16 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">08_amr_significance</h1>
+<h1 class="title toc-ignore">11_gene_richness</h1>
 <h4 class="author">Elisa Rubio</h4>
-<h4 class="date">2022-09-12</h4>
+<h4 class="date">2022-11-13</h4>
 
 </div>
 
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -437,7 +437,7 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -449,7 +449,7 @@ div.tocify {
 <strong>Last updated:</strong> 2022-11-13
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -465,12 +465,12 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -581,137 +581,9 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/08_amr_significance.Rmd</code>) and HTML (<code>docs/08_amr_significance.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/268283feefde6c79b5e9d2d1eaf5dd623668da58/analysis/08_amr_significance.Rmd" target="_blank">268283f</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-11-10
-</td>
-<td>
-grouped significane
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/aebec68729e55ed76c5559744ac55da337f4e46a/analysis/08_amr_significance.Rmd" target="_blank">aebec68</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-09-20
-</td>
-<td>
-amr sig last changes
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/aebec68729e55ed76c5559744ac55da337f4e46a/docs/08_amr_significance.html" target="_blank">aebec68</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-09-20
-</td>
-<td>
-amr sig last changes
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/75bb4b6e20a1caf1fed94e205a90ae65330289d6/docs/08_amr_significance.html" target="_blank">75bb4b6</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-15
-</td>
-<td>
-150922
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/36b07ee215034d5bc7e3228206a4f8325702320f/analysis/08_amr_significance.Rmd" target="_blank">36b07ee</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-12
-</td>
-<td>
-amr_significance
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/3d839a819365fa3454e12bd939ce38cc250f216c/analysis/08_amr_significance.Rmd" target="_blank">3d839a8</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-12
-</td>
-<td>
-profile update
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
@@ -724,94 +596,49 @@ library(glue)
 library(patchwork)
 library(ggstatsplot)
 library(broom)</code></pre>
-<div id="load-data" class="section level4">
-<h4>Load data</h4>
+<div id="load-data-and-functions" class="section level4">
+<h4>Load data and functions</h4>
 <pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
 load(&quot;output/rarefied_ariba.RDA&quot;)
 load(&quot;output/ariba_dist.RDA&quot;)
-metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)</code></pre>
+load(&quot;output/grouped_rpkm_ariba.RDA&quot;)
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)
+source(&quot;code/functions.R&quot;)</code></pre>
 </div>
-<div id="test-each-amr-gene-separatedly-for-clinical-variable-function" class="section level2">
-<h2>Test each AMR gene separatedly for clinical variable (function)</h2>
-<div id="dicotomic-variable" class="section level3">
-<h3>Dicotomic variable</h3>
-<pre class="r"><code>sig_AMR_clin_dic&lt;-function(data, metadata, refdata, clin_var){
+<div id="join-with-gene-richness-data" class="section level2">
+<h2>Join with Gene Richness data</h2>
+<pre class="r"><code>gene_richness&lt;-read.delim2(&quot;data/Metadata/generichness_data.txt&quot;)%&gt;%
+  select(SampleID, GCount)
+metadata&lt;-metadata%&gt;%
+  inner_join(gene_richness, by=&quot;SampleID&quot;)
 
-##transpose data
-  ref_name&lt;-pull(data, ref_name)
-  data&lt;-as_tibble(cbind(SampleID = names(data), t(data)))%&gt;%slice(-1)%&gt;%
-    mutate_at(vars(-(&quot;SampleID&quot;)),as.numeric)
-  colnames(data)&lt;-c(&quot;SampleID&quot;, ref_name)
-
-##merge data with metadata and reference data    
-  data_all&lt;-data%&gt;%
-    pivot_longer(-SampleID, names_to = &quot;ref_name&quot;, values_to = &quot;value&quot;)%&gt;%
-    inner_join(., metadata, by=&quot;SampleID&quot;)%&gt;%
-    inner_join(., refdata, by=&quot;ref_name&quot;)
-  
-  sig_amr&lt;-data_all%&gt;%
-    nest(data=-ref_name)%&gt;%
-    mutate(test=map(.x=data, ~wilcox.test(value~!!ensym(clin_var), data=.x)%&gt;%tidy))%&gt;%
-    unnest(test)%&gt;%
-    mutate(p.adjust=p.adjust(p.value, method = &quot;BH&quot;))%&gt;%
-    filter(p.adjust&lt;0.05)%&gt;%
-    select(ref_name, p.adjust)
-  
-  data_all&lt;-data_all%&gt;%
-  inner_join(sig_amr, by=&quot;ref_name&quot;)
-  
-  sig_amr&lt;-sig_amr%&gt;%
-    inner_join(refdata, by=&quot;ref_name&quot;)
-  
-  res&lt;-list(data_all, sig_amr)
-  names(res)&lt;-c(&quot;data_plot&quot;, &quot;sig_amr&quot;)
-  return(res)
-  }</code></pre>
+table(metadata$GCount)</code></pre>
+<pre><code>
+HGC LGC 
+ 53 103 </code></pre>
+<div id="alpha-diversity-analysis" class="section level3">
+<h3>Alpha diversity analysis</h3>
+<pre class="r"><code>ariba_alpha_rpkm&lt;-alpha_div(ariba_rpkm, ariba_counts, metadata)
+alpha_div_plot_all(ariba_alpha_rpkm, GCount)</code></pre>
+<p><img src="figure/11_gene_richness.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Diversity is lower in LGC group</p>
 </div>
-<div id="factor-2-levels" class="section level3">
-<h3>Factor (&gt;2 levels)</h3>
-<pre class="r"><code>sig_AMR_clin_factor&lt;-function(data, metadata, refdata, clin_var){
-
-##transpose data
-  ref_name&lt;-pull(data, 1)
-  data&lt;-as_tibble(cbind(SampleID = names(data), t(data)))%&gt;%slice(-1)%&gt;%
-    mutate_at(vars(-(&quot;SampleID&quot;)),as.numeric)
-  colnames(data)&lt;-c(&quot;SampleID&quot;, ref_name)
-
-##merge data with metadata and reference data    
-  data_all&lt;-data%&gt;%
-    pivot_longer(-SampleID, names_to = &quot;ref_name&quot;, values_to = &quot;value&quot;)%&gt;%
-    inner_join(., metadata, by=&quot;SampleID&quot;)%&gt;%
-    inner_join(., refdata, by=&quot;ref_name&quot;)
-  
-  sig_amr&lt;-data_all%&gt;%
-    nest(data=-ref_name)%&gt;%
-    mutate(test=map(.x=data, ~kruskal.test(value~!!ensym(clin_var), data=.x)%&gt;%tidy))%&gt;%
-    unnest(test)%&gt;%
-    mutate(p.adjust=p.adjust(p.value, method = &quot;BH&quot;))%&gt;%
-    filter(p.adjust&lt;0.05)%&gt;%
-    select(ref_name, p.adjust)
-  
-  data_all&lt;-data_all%&gt;%
-  inner_join(sig_amr, by=&quot;ref_name&quot;)
-  
-  sig_amr&lt;-sig_amr%&gt;%
-    inner_join(refdata, by=&quot;ref_name&quot;)
-  
-  res&lt;-list(data_all, sig_amr)
-  names(res)&lt;-c(&quot;data_plot&quot;, &quot;sig_amr&quot;)
-  return(res)
-  }</code></pre>
+<div id="beta-diversity-analysis" class="section level3">
+<h3>Beta diversity analysis</h3>
+<pre class="r"><code>ariba_dist_rpkm&lt;-ariba_dist$dist_rpkm
+beta_nmds(ariba_dist_rpkm, metadata, GCount)</code></pre>
+<p><img src="figure/11_gene_richness.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Resistome composition is different according to Gene Richness</p>
 </div>
 </div>
-<div id="microbiome-cluster" class="section level2">
-<h2>Microbiome cluster</h2>
-<pre class="r"><code>amr_sig_cluster&lt;-sig_AMR_clin_dic(ariba_rpkm, filter(metadata, !is.na(Cluster)), refname_all_ariba, Cluster)
-amr_sig_cluster$sig_amr %&gt;% kable(caption=&quot;**Significant AMR genes, microbiome cluster (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div id="check-differentially-abundance-amr" class="section level2">
+<h2>Check differentially abundance AMR</h2>
+<pre class="r"><code>amr_sig_rpkm_gcount&lt;-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, GCount)
+amr_sig_rpkm_gcount$sig_amr%&gt;% kable(caption=&quot;**Significant AMR accordig to Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
-<strong>Significant AMR genes, microbiome cluster (Ariba RPKM</strong>
+<strong>Significant AMR accordig to Gene Richness (Ariba RPKM</strong>
 </caption>
 <thead>
 <tr>
@@ -859,10 +686,51 @@ Resistance Mechanism
 <tbody>
 <tr>
 <td style="text-align:left;">
+APH_3___IIIa.3002647.CP004067.52914_53709.233
+</td>
+<td style="text-align:right;">
+0.0172338
+</td>
+<td style="text-align:left;">
+APH_3___IIIa
+</td>
+<td style="text-align:right;">
+3002647
+</td>
+<td style="text-align:left;">
+CP004067
+</td>
+<td style="text-align:left;">
+52914_53709
+</td>
+<td style="text-align:right;">
+39047
+</td>
+<td style="text-align:left;">
+APH(3’)-IIIa
+</td>
+<td style="text-align:left;">
+AGV10830.1
+</td>
+<td style="text-align:left;">
+CP004067
+</td>
+<td style="text-align:left;">
+APH(3’)
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 CblA_1.3002999.GQ343019.132_1023.1188
 </td>
 <td style="text-align:right;">
-0.0000000
+0.0001081
 </td>
 <td style="text-align:left;">
 CblA_1
@@ -900,43 +768,43 @@ antibiotic inactivation
 </tr>
 <tr>
 <td style="text-align:left;">
-CfxA6.3003097.GQ342996.797_1793.1744
+Clostridioides_difficile_23S.3004654.NR_076234.1.0_2900.5518
 </td>
 <td style="text-align:right;">
-0.0000000
+0.0005006
 </td>
 <td style="text-align:left;">
-CfxA6
+Clostridioides_difficile_23S
 </td>
 <td style="text-align:right;">
-3003097
+3004654
 </td>
 <td style="text-align:left;">
-GQ342996
+NR_076234 . 1
 </td>
 <td style="text-align:left;">
-797_1793
+0_2900
 </td>
 <td style="text-align:right;">
-39650
+42686
 </td>
 <td style="text-align:left;">
-CfxA6
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin
 </td>
 <td style="text-align:left;">
-ACT97371.1
+NA
 </td>
 <td style="text-align:left;">
-GQ342996
+NR_076234.1
 </td>
 <td style="text-align:left;">
-CfxA beta-lactamase
+23S rRNA with mutation conferring resistance to macrolide antibiotics
 </td>
 <td style="text-align:left;">
-cephamycin
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
 </td>
 <td style="text-align:left;">
-antibiotic inactivation
+antibiotic target alteration
 </td>
 </tr>
 <tr>
@@ -944,7 +812,7 @@ antibiotic inactivation
 ErmB.3000375.AF242872.1.2131_2878.5828
 </td>
 <td style="text-align:right;">
-0.0000296
+0.0190928
 </td>
 <td style="text-align:left;">
 ErmB
@@ -982,51 +850,10 @@ antibiotic target alteration
 </tr>
 <tr>
 <td style="text-align:left;">
-ErmG.3000522.L42817.201_936.590
-</td>
-<td style="text-align:right;">
-0.0004373
-</td>
-<td style="text-align:left;">
-ErmG
-</td>
-<td style="text-align:right;">
-3000522
-</td>
-<td style="text-align:left;">
-L42817
-</td>
-<td style="text-align:left;">
-201_936
-</td>
-<td style="text-align:right;">
-36661
-</td>
-<td style="text-align:left;">
-ErmG
-</td>
-<td style="text-align:left;">
-AAC37034.1
-</td>
-<td style="text-align:left;">
-L42817
-</td>
-<td style="text-align:left;">
-Erm 23S ribosomal RNA methyltransferase
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Mef_En2_.3004659.AF251288.1.794_2000.5539
 </td>
 <td style="text-align:right;">
-0.0000000
+0.0007969
 </td>
 <td style="text-align:left;">
 Mef_En2_
@@ -1064,133 +891,10 @@ antibiotic efflux
 </tr>
 <tr>
 <td style="text-align:left;">
-Neisseria_gonorrhoeae_23S.3004836.NR_103957.0_2910.5918
-</td>
-<td style="text-align:right;">
-0.0000001
-</td>
-<td style="text-align:left;">
-Neisseria_gonorrhoeae_23S
-</td>
-<td style="text-align:right;">
-3004836
-</td>
-<td style="text-align:left;">
-NR_103957
-</td>
-<td style="text-align:left;">
-0_2910
-</td>
-<td style="text-align:right;">
-42966
-</td>
-<td style="text-align:left;">
-Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NR_103957
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Thermus_thermophilus_23s.3005083.AE017221.1.1534489_1537382.6116
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-Thermus_thermophilus_23s
-</td>
-<td style="text-align:right;">
-3005083
-</td>
-<td style="text-align:left;">
-AE017221 . 1
-</td>
-<td style="text-align:left;">
-1534489_1537382
-</td>
-<td style="text-align:right;">
-43292
-</td>
-<td style="text-align:left;">
-Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-AE017221.1
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to pleuromutilin antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ileS.3003730.CP001840.1.1610636_1613960.5227
-</td>
-<td style="text-align:right;">
-0.0046570
-</td>
-<td style="text-align:left;">
-ileS
-</td>
-<td style="text-align:right;">
-3003730
-</td>
-<td style="text-align:left;">
-CP001840 . 1
-</td>
-<td style="text-align:left;">
-1610636_1613960
-</td>
-<td style="text-align:right;">
-40419
-</td>
-<td style="text-align:left;">
-Bifidobacterium bifidum ileS conferring resistance to mupirocin
-</td>
-<td style="text-align:left;">
-ADP36409.1
-</td>
-<td style="text-align:left;">
-CP001840.1
-</td>
-<td style="text-align:left;">
-antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
-</td>
-<td style="text-align:left;">
-mupirocin
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 mel.3000616.AF227521.1.3269_4487.5180
 </td>
 <td style="text-align:right;">
-0.0000001
+0.0047579
 </td>
 <td style="text-align:left;">
 mel
@@ -1231,7 +935,7 @@ antibiotic target protection
 rrnS.3003978.NC_005353.1.38549_40023.4108
 </td>
 <td style="text-align:right;">
-0.0000148
+0.0007969
 </td>
 <td style="text-align:left;">
 rrnS
@@ -1269,10 +973,51 @@ antibiotic target alteration
 </tr>
 <tr>
 <td style="text-align:left;">
+rrsH.3003372.U00096.223771_225312.3228
+</td>
+<td style="text-align:right;">
+0.0096481
+</td>
+<td style="text-align:left;">
+rrsH
+</td>
+<td style="text-align:right;">
+3003372
+</td>
+<td style="text-align:left;">
+U00096
+</td>
+<td style="text-align:left;">
+223771_225312
+</td>
+<td style="text-align:right;">
+39956
+</td>
+<td style="text-align:left;">
+Escherichia coli 16S rRNA (rrsH) mutation conferring resistance to spectinomycin
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:left;">
+U00096
+</td>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target alteration
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 tet32.3000196.EU722333.1.1932_3852.5146
 </td>
 <td style="text-align:right;">
-0.0267512
+0.0000211
 </td>
 <td style="text-align:left;">
 tet32
@@ -1313,7 +1058,7 @@ antibiotic target protection
 tetO.3000190.M18896.2.206_2126.4234
 </td>
 <td style="text-align:right;">
-0.0408060
+0.0047579
 </td>
 <td style="text-align:left;">
 tetO
@@ -1354,7 +1099,7 @@ antibiotic target protection
 tetQ.3000191.Z21523.0_1974.476
 </td>
 <td style="text-align:right;">
-0.0004576
+0.0000007
 </td>
 <td style="text-align:left;">
 tetQ
@@ -1395,7 +1140,7 @@ antibiotic target protection
 tetW.3000194.AJ222769.3.3686_5606.5145
 </td>
 <td style="text-align:right;">
-0.0046570
+0.0000005
 </td>
 <td style="text-align:left;">
 tetW
@@ -1433,34 +1178,75 @@ antibiotic target protection
 </tr>
 <tr>
 <td style="text-align:left;">
-Campylobacter_jejuni_23S.3004546.NR_076226.1.0_2912.5105
+tet_40_.3000567.AM419751.14210_15431.5150
 </td>
 <td style="text-align:right;">
-0.0028766
+0.0050736
 </td>
 <td style="text-align:left;">
-Campylobacter_jejuni_23S
+tet_40_
 </td>
 <td style="text-align:right;">
-3004546
+3000567
 </td>
 <td style="text-align:left;">
-NR_076226 . 1
+AM419751
 </td>
 <td style="text-align:left;">
-0_2912
+14210_15431
 </td>
 <td style="text-align:right;">
-42445
+36706
 </td>
 <td style="text-align:left;">
-Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin
+tet(40)
+</td>
+<td style="text-align:left;">
+CAM12479.1
+</td>
+<td style="text-align:left;">
+AM419751
+</td>
+<td style="text-align:left;">
+major facilitator superfamily (MFS) antibiotic efflux pump
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic efflux
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Chlamydia_trachomatis_23S.3004174.NR_076160.1.0_2940.4165
+</td>
+<td style="text-align:right;">
+0.0423122
+</td>
+<td style="text-align:left;">
+Chlamydia_trachomatis_23S
+</td>
+<td style="text-align:right;">
+3004174
+</td>
+<td style="text-align:left;">
+NR_076160 . 1
+</td>
+<td style="text-align:left;">
+0_2940
+</td>
+<td style="text-align:right;">
+41325
+</td>
+<td style="text-align:left;">
+Chlamydia trachomatis 23S rRNA with mutation conferring resistance to macrolide antibiotics
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-NR_076226.1
+NR_076160.1
 </td>
 <td style="text-align:left;">
 23S rRNA with mutation conferring resistance to macrolide antibiotics
@@ -1474,34 +1260,116 @@ antibiotic target alteration
 </tr>
 <tr>
 <td style="text-align:left;">
-aadS.3004683.M72415.1.1120_1984.5568
+Campylobacter_coli_chloramphenicol.3004454.M35190.1.308_932.4426
 </td>
 <td style="text-align:right;">
-0.0037717
+0.0001015
 </td>
 <td style="text-align:left;">
-aadS
+Campylobacter_coli_chloramphenicol
 </td>
 <td style="text-align:right;">
-3004683
+3004454
 </td>
 <td style="text-align:left;">
-M72415 . 1
+M35190 . 1
 </td>
 <td style="text-align:left;">
-1120_1984
+308_932
 </td>
 <td style="text-align:right;">
-42732
+41665
 </td>
 <td style="text-align:left;">
-aadS
+Campylobacter coli chloramphenicol acetyltransferase
 </td>
 <td style="text-align:left;">
-AAA27459.1
+AAA23018.1
 </td>
 <td style="text-align:left;">
-M72415.1
+M35190.1
+</td>
+<td style="text-align:left;">
+chloramphenicol acetyltransferase (CAT)
+</td>
+<td style="text-align:left;">
+phenicol antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic inactivation
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tet_44_.3000556.FN594949.25244_27167.410
+</td>
+<td style="text-align:right;">
+0.0000005
+</td>
+<td style="text-align:left;">
+tet_44_
+</td>
+<td style="text-align:right;">
+3000556
+</td>
+<td style="text-align:left;">
+FN594949
+</td>
+<td style="text-align:left;">
+25244_27167
+</td>
+<td style="text-align:right;">
+36695
+</td>
+<td style="text-align:left;">
+tet(44)
+</td>
+<td style="text-align:left;">
+CBH51823.1
+</td>
+<td style="text-align:left;">
+FN594949
+</td>
+<td style="text-align:left;">
+tetracycline-resistant ribosomal protection protein
+</td>
+<td style="text-align:left;">
+tetracycline antibiotic
+</td>
+<td style="text-align:left;">
+antibiotic target protection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ANT_6__Ib.3002629.FN594949.27481_28339.60
+</td>
+<td style="text-align:right;">
+0.0011499
+</td>
+<td style="text-align:left;">
+ANT_6__Ib
+</td>
+<td style="text-align:right;">
+3002629
+</td>
+<td style="text-align:left;">
+FN594949
+</td>
+<td style="text-align:left;">
+27481_28339
+</td>
+<td style="text-align:right;">
+39029
+</td>
+<td style="text-align:left;">
+ANT(6)-Ib
+</td>
+<td style="text-align:left;">
+CBH51824.1
+</td>
+<td style="text-align:left;">
+FN594949
 </td>
 <td style="text-align:left;">
 ANT(6)
@@ -1515,133 +1383,10 @@ antibiotic inactivation
 </tr>
 <tr>
 <td style="text-align:left;">
-sul2.3000412.AY055428.1.20268_21084.4745
-</td>
-<td style="text-align:right;">
-0.0000172
-</td>
-<td style="text-align:left;">
-sul2
-</td>
-<td style="text-align:right;">
-3000412
-</td>
-<td style="text-align:left;">
-AY055428 . 1
-</td>
-<td style="text-align:left;">
-20268_21084
-</td>
-<td style="text-align:right;">
-36551
-</td>
-<td style="text-align:left;">
-sul2
-</td>
-<td style="text-align:left;">
-AAL59753.1
-</td>
-<td style="text-align:left;">
-AY055428.1
-</td>
-<td style="text-align:left;">
-sulfonamide resistant sul
-</td>
-<td style="text-align:left;">
-sulfonamide antibiotic;sulfone antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target replacement
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ACI_1.3004359.AJ007350.1.239_1094.4259
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-ACI_1
-</td>
-<td style="text-align:right;">
-3004359
-</td>
-<td style="text-align:left;">
-AJ007350 . 1
-</td>
-<td style="text-align:left;">
-239_1094
-</td>
-<td style="text-align:right;">
-41531
-</td>
-<td style="text-align:left;">
-ACI-1
-</td>
-<td style="text-align:left;">
-CAB51471.1
-</td>
-<td style="text-align:left;">
-AJ007350.1
-</td>
-<td style="text-align:left;">
-ACI beta-lactamase
-</td>
-<td style="text-align:left;">
-cephalosporin;penam;penem
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Helicobacter_pylori_16S.3003510.CP003904.1.1511156_1512657.4114
-</td>
-<td style="text-align:right;">
-0.0317364
-</td>
-<td style="text-align:left;">
-Helicobacter_pylori_16S
-</td>
-<td style="text-align:right;">
-3003510
-</td>
-<td style="text-align:left;">
-CP003904 . 1
-</td>
-<td style="text-align:left;">
-1511156_1512657
-</td>
-<td style="text-align:right;">
-40112
-</td>
-<td style="text-align:left;">
-Helicobacter pylori 16S rRNA mutation conferring resistance to tetracycline
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-CP003904.1
-</td>
-<td style="text-align:left;">
-16S rRNA with mutation conferring resistance to tetracycline derivatives
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 Brachyspira_hyodysenteriae_23S.3004133.NZ_CP015910.2.2512812_2515808.4183
 </td>
 <td style="text-align:right;">
-0.0004373
+0.0001281
 </td>
 <td style="text-align:left;">
 Brachyspira_hyodysenteriae_23S
@@ -1679,34 +1424,34 @@ antibiotic target alteration
 </tr>
 <tr>
 <td style="text-align:left;">
-Helicobacter_pylori_23S.3004134.AB162858.1.0_2975.4113
+Mycoplasma_genitalium_23S.3004616.L43967.2.171727_174461.5599
 </td>
 <td style="text-align:right;">
-0.0267512
+0.0126195
 </td>
 <td style="text-align:left;">
-Helicobacter_pylori_23S
+Mycoplasma_genitalium_23S
 </td>
 <td style="text-align:right;">
-3004134
+3004616
 </td>
 <td style="text-align:left;">
-AB162858 . 1
+L43967 . 2
 </td>
 <td style="text-align:left;">
-0_2975
+171727_174461
 </td>
 <td style="text-align:right;">
-41261
+42584
 </td>
 <td style="text-align:left;">
-Helicobacter pylori 23S rRNA with mutation conferring resistance to clarithromycin
+Mycoplasma genitalium 23S rRNA mutations confers resistance to fluoroquinolone and macrolide antibiotics
 </td>
 <td style="text-align:left;">
 NA
 </td>
 <td style="text-align:left;">
-AB162858.1
+L43967.2
 </td>
 <td style="text-align:left;">
 23S rRNA with mutation conferring resistance to macrolide antibiotics
@@ -1720,163 +1465,122 @@ antibiotic target alteration
 </tr>
 <tr>
 <td style="text-align:left;">
-APH_3____Ib.3002639.AF313472.15593_16397.545
+vanG.3002909.DQ212986.5984_7034.300
 </td>
 <td style="text-align:right;">
-0.0005236
+0.0032005
 </td>
 <td style="text-align:left;">
-APH_3____Ib
+vanG
 </td>
 <td style="text-align:right;">
-3002639
+3002909
 </td>
 <td style="text-align:left;">
-AF313472
+DQ212986
 </td>
 <td style="text-align:left;">
-15593_16397
+5984_7034
 </td>
 <td style="text-align:right;">
-39039
+39343
 </td>
 <td style="text-align:left;">
-APH(3’’)-Ib
+vanG
 </td>
 <td style="text-align:left;">
-ABK33456.1
+ABA71731.1
 </td>
 <td style="text-align:left;">
-AF313472
+DQ212986
 </td>
 <td style="text-align:left;">
-APH(3’’)
+glycopeptide resistance gene cluster;van ligase
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic
+glycopeptide antibiotic
 </td>
 <td style="text-align:left;">
-antibiotic inactivation
+antibiotic target alteration
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-APH_6__Id.3002660.AF024602.3155_3992.467
+vanTG.3002972.DQ212986.7787_9926.217
 </td>
 <td style="text-align:right;">
-0.0002456
+0.0017817
 </td>
 <td style="text-align:left;">
-APH_6__Id
+vanTG
 </td>
 <td style="text-align:right;">
-3002660
+3002972
 </td>
 <td style="text-align:left;">
-AF024602
+DQ212986
 </td>
 <td style="text-align:left;">
-3155_3992
+7787_9926
 </td>
 <td style="text-align:right;">
-39060
+39406
 </td>
 <td style="text-align:left;">
-APH(6)-Id
+vanTG
 </td>
 <td style="text-align:left;">
-AAC23556.1
+ABA71733.1
 </td>
 <td style="text-align:left;">
-AF024602
+DQ212986
 </td>
 <td style="text-align:left;">
-APH(6)
+glycopeptide resistance gene cluster;vanT
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic
+glycopeptide antibiotic
 </td>
 <td style="text-align:left;">
-antibiotic inactivation
+antibiotic target alteration
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-OXA_347.3001777.JN086160.1582_2407.4583
+vanXYG.3003069.DQ212986.7030_7795.123
 </td>
 <td style="text-align:right;">
-0.0055153
+0.0011499
 </td>
 <td style="text-align:left;">
-OXA_347
+vanXYG
 </td>
 <td style="text-align:right;">
-3001777
+3003069
 </td>
 <td style="text-align:left;">
-JN086160
+DQ212986
 </td>
 <td style="text-align:left;">
-1582_2407
+7030_7795
 </td>
 <td style="text-align:right;">
-38177
+39549
 </td>
 <td style="text-align:left;">
-OXA-347
+vanXYG
 </td>
 <td style="text-align:left;">
-AET35493.1
+ABA71732.1
 </td>
 <td style="text-align:left;">
-JN086160
+DQ212986
 </td>
 <td style="text-align:left;">
-OXA beta-lactamase
+glycopeptide resistance gene cluster;vanXY
 </td>
 <td style="text-align:left;">
-carbapenem;cephalosporin;penam
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Erm_49_.3004626.MWVR01000009.1.34384_35299.5349
-</td>
-<td style="text-align:right;">
-0.0008829
-</td>
-<td style="text-align:left;">
-Erm_49_
-</td>
-<td style="text-align:right;">
-3004626
-</td>
-<td style="text-align:left;">
-MWVR01000009 . 1
-</td>
-<td style="text-align:left;">
-34384_35299
-</td>
-<td style="text-align:right;">
-42608
-</td>
-<td style="text-align:left;">
-Erm(49)
-</td>
-<td style="text-align:left;">
-OPG86592.1
-</td>
-<td style="text-align:left;">
-MWVR01000009.1
-</td>
-<td style="text-align:left;">
-Erm 23S ribosomal RNA methyltransferase
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
+glycopeptide antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -1885,1161 +1589,324 @@ antibiotic target alteration
 </tbody>
 </table>
 </div>
-<pre class="r"><code>amr_sig_cluster$data_plot%&gt;%
-  ggplot(aes(x=Cluster, y=value, color=Cluster)) +
-  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
-  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
-                                              jitter.width = 0.5))+
-  
-  ##scale_y_log10() +
-  facet_wrap(~`ARO Term`, scales = &quot;free_y&quot;)+
-  # scale_color_manual(NULL,
-  #                    breaks = c(F, T),
-  #                    values = c(&quot;gray&quot;, &quot;dodgerblue&quot;),
-  #                    labels = c(&quot;Healthy&quot;, &quot;SRN&quot;)) +
-  # scale_fill_manual(NULL,
-  #                    breaks = c(F, T),
-  #                    values = c(&quot;gray&quot;, &quot;dodgerblue&quot;),
-  #                    labels = c(&quot;Healthy&quot;, &quot;SRN&quot;)) +
-  labs(x= &quot;RPKM values&quot;, y=NULL) +
-  theme_bw()+
-  theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
-<p><img src="figure/08_amr_significance.Rmd/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/75bb4b6e20a1caf1fed94e205a90ae65330289d6/docs/figure/08_amr_significance.Rmd/unnamed-chunk-6-1.png" target="_blank">75bb4b6</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-15
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="riskgroup2" class="section level2">
-<h2>Riskgroup2</h2>
-<pre class="r"><code>amr_sig_riskgroup&lt;-sig_AMR_clin_factor(ariba_rpkm, metadata, refname_all_ariba, RiskGroup2)
-amr_sig_riskgroup$sig_amr %&gt;% kable(caption=&quot;**Significant AMR genes, riskgroup2 (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div id="check-differentially-abundance-grouped-by-drug-class" class="section level2">
+<h2>Check differentially abundance (grouped by Drug Class)</h2>
+<pre class="r"><code>drugclass_sig_rpkm_gcount&lt;-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, GCount)
+drugclass_sig_rpkm_gcount$sig_data%&gt;% kable(caption=&quot;**Significant Drug Classes, Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
-<strong>Significant AMR genes, riskgroup2 (Ariba RPKM</strong>
+<strong>Significant Drug Classes, Gene Richness (Ariba RPKM</strong>
 </caption>
 <thead>
 <tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ref_name
+group_name
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+HGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+LGC
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 p.adjust
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ARO Term
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-ARO Accession
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-NCBI
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-init_final
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-CVTERM ID
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ARO Name
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Protein Accession
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-DNA Accession
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-AMR Gene Family
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Drug Class
-</th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-Resistance Mechanism
-</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-CblA_1.3002999.GQ343019.132_1023.1188
+beta_lactam
 </td>
 <td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-CblA_1
+136.31936
 </td>
 <td style="text-align:right;">
-3002999
-</td>
-<td style="text-align:left;">
-GQ343019
-</td>
-<td style="text-align:left;">
-132_1023
+195.63615
 </td>
 <td style="text-align:right;">
-39433
+0.0144675
 </td>
-<td style="text-align:left;">
-CblA-1
-</td>
-<td style="text-align:left;">
-ACT97415.1
-</td>
-<td style="text-align:left;">
-GQ343019
-</td>
-<td style="text-align:left;">
-CblA beta-lactamase
-</td>
+</tr>
+<tr>
 <td style="text-align:left;">
 cephalosporin
 </td>
-<td style="text-align:left;">
-antibiotic inactivation
+<td style="text-align:right;">
+14.59582
+</td>
+<td style="text-align:right;">
+25.78253
+</td>
+<td style="text-align:right;">
+0.0144675
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-CfxA2.3003002.AF118110.1.71_1037.4470
-</td>
-<td style="text-align:right;">
-0.0292835
-</td>
-<td style="text-align:left;">
-CfxA2
-</td>
-<td style="text-align:right;">
-3003002
-</td>
-<td style="text-align:left;">
-AF118110 . 1
-</td>
-<td style="text-align:left;">
-71_1037
-</td>
-<td style="text-align:right;">
-39436
-</td>
-<td style="text-align:left;">
-CfxA2
-</td>
-<td style="text-align:left;">
-AAD23513.1
-</td>
-<td style="text-align:left;">
-AF118110.1
-</td>
-<td style="text-align:left;">
-CfxA beta-lactamase
-</td>
 <td style="text-align:left;">
 cephamycin
 </td>
-<td style="text-align:left;">
-antibiotic inactivation
+<td style="text-align:right;">
+122.46539
+</td>
+<td style="text-align:right;">
+170.72691
+</td>
+<td style="text-align:right;">
+0.0312697
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-CfxA6.3003097.GQ342996.797_1793.1744
+glycopeptide antibiotic
 </td>
 <td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-CfxA6
+425.54430
 </td>
 <td style="text-align:right;">
-3003097
-</td>
-<td style="text-align:left;">
-GQ342996
-</td>
-<td style="text-align:left;">
-797_1793
+368.05848
 </td>
 <td style="text-align:right;">
-39650
-</td>
-<td style="text-align:left;">
-CfxA6
-</td>
-<td style="text-align:left;">
-ACT97371.1
-</td>
-<td style="text-align:left;">
-GQ342996
-</td>
-<td style="text-align:left;">
-CfxA beta-lactamase
-</td>
-<td style="text-align:left;">
-cephamycin
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
+0.0144675
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-ErmB.3000375.AF242872.1.2131_2878.5828
+nucleoside antibiotic
 </td>
 <td style="text-align:right;">
-0.0027040
-</td>
-<td style="text-align:left;">
-ErmB
+161.52101
 </td>
 <td style="text-align:right;">
-3000375
-</td>
-<td style="text-align:left;">
-AF242872 . 1
-</td>
-<td style="text-align:left;">
-2131_2878
+134.56143
 </td>
 <td style="text-align:right;">
-36514
-</td>
-<td style="text-align:left;">
-ErmB
-</td>
-<td style="text-align:left;">
-AAF86219.1
-</td>
-<td style="text-align:left;">
-AF242872.1
-</td>
-<td style="text-align:left;">
-Erm 23S ribosomal RNA methyltransferase
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
+0.0144675
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Mef_En2_.3004659.AF251288.1.794_2000.5539
+peptide antibiotic
 </td>
 <td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-Mef_En2_
+158.21976
 </td>
 <td style="text-align:right;">
-3004659
-</td>
-<td style="text-align:left;">
-AF251288 . 1
-</td>
-<td style="text-align:left;">
-794_2000
+133.82231
 </td>
 <td style="text-align:right;">
-42698
-</td>
-<td style="text-align:left;">
-Mef(En2)
-</td>
-<td style="text-align:left;">
-AAF74725.1
-</td>
-<td style="text-align:left;">
-AF251288.1
-</td>
-<td style="text-align:left;">
-major facilitator superfamily (MFS) antibiotic efflux pump
-</td>
-<td style="text-align:left;">
-macrolide antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic efflux
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Neisseria_gonorrhoeae_23S.3004836.NR_103957.0_2910.5918
-</td>
-<td style="text-align:right;">
-0.0000010
-</td>
-<td style="text-align:left;">
-Neisseria_gonorrhoeae_23S
-</td>
-<td style="text-align:right;">
-3004836
-</td>
-<td style="text-align:left;">
-NR_103957
-</td>
-<td style="text-align:left;">
-0_2910
-</td>
-<td style="text-align:right;">
-42966
-</td>
-<td style="text-align:left;">
-Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NR_103957
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Thermus_thermophilus_23s.3005083.AE017221.1.1534489_1537382.6116
-</td>
-<td style="text-align:right;">
-0.0000010
-</td>
-<td style="text-align:left;">
-Thermus_thermophilus_23s
-</td>
-<td style="text-align:right;">
-3005083
-</td>
-<td style="text-align:left;">
-AE017221 . 1
-</td>
-<td style="text-align:left;">
-1534489_1537382
-</td>
-<td style="text-align:right;">
-43292
-</td>
-<td style="text-align:left;">
-Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-AE017221.1
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to pleuromutilin antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ileS.3003730.CP001840.1.1610636_1613960.5227
-</td>
-<td style="text-align:right;">
-0.0013652
-</td>
-<td style="text-align:left;">
-ileS
-</td>
-<td style="text-align:right;">
-3003730
-</td>
-<td style="text-align:left;">
-CP001840 . 1
-</td>
-<td style="text-align:left;">
-1610636_1613960
-</td>
-<td style="text-align:right;">
-40419
-</td>
-<td style="text-align:left;">
-Bifidobacterium bifidum ileS conferring resistance to mupirocin
-</td>
-<td style="text-align:left;">
-ADP36409.1
-</td>
-<td style="text-align:left;">
-CP001840.1
-</td>
-<td style="text-align:left;">
-antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
-</td>
-<td style="text-align:left;">
-mupirocin
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-lnuC.3002837.AY928180.0_495.110
-</td>
-<td style="text-align:right;">
-0.0298179
-</td>
-<td style="text-align:left;">
-lnuC
-</td>
-<td style="text-align:right;">
-3002837
-</td>
-<td style="text-align:left;">
-AY928180
-</td>
-<td style="text-align:left;">
-0_495
-</td>
-<td style="text-align:right;">
-39271
-</td>
-<td style="text-align:left;">
-lnuC
-</td>
-<td style="text-align:left;">
-AAY32951.1
-</td>
-<td style="text-align:left;">
-AY928180
-</td>
-<td style="text-align:left;">
-lincosamide nucleotidyltransferase (LNU)
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-mel.3000616.AF227521.1.3269_4487.5180
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-mel
-</td>
-<td style="text-align:right;">
-3000616
-</td>
-<td style="text-align:left;">
-AF227521 . 1
-</td>
-<td style="text-align:left;">
-3269_4487
-</td>
-<td style="text-align:right;">
-36910
-</td>
-<td style="text-align:left;">
-mel
-</td>
-<td style="text-align:left;">
-AAL73129.1
-</td>
-<td style="text-align:left;">
-AF227521.1
-</td>
-<td style="text-align:left;">
-ABC-F ATP-binding cassette ribosomal protection protein
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target protection
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-rrnS.3003978.NC_005353.1.38549_40023.4108
-</td>
-<td style="text-align:right;">
-0.0000166
-</td>
-<td style="text-align:left;">
-rrnS
-</td>
-<td style="text-align:right;">
-3003978
-</td>
-<td style="text-align:left;">
-NC_005353 . 1
-</td>
-<td style="text-align:left;">
-38549_40023
-</td>
-<td style="text-align:right;">
-40814
-</td>
-<td style="text-align:left;">
-Chlamydomonas reinhardtii 16S rRNA (rrnS) mutation conferring resistance to streptomycin
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NC_005353.1
-</td>
-<td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tetQ.3000191.Z21523.0_1974.476
-</td>
-<td style="text-align:right;">
-0.0000202
-</td>
-<td style="text-align:left;">
-tetQ
-</td>
-<td style="text-align:right;">
-3000191
-</td>
-<td style="text-align:left;">
-Z21523
-</td>
-<td style="text-align:left;">
-0_1974
-</td>
-<td style="text-align:right;">
-36330
-</td>
-<td style="text-align:left;">
-tetQ
-</td>
-<td style="text-align:left;">
-CAA79727.1
-</td>
-<td style="text-align:left;">
-Z21523
-</td>
-<td style="text-align:left;">
-tetracycline-resistant ribosomal protection protein
-</td>
-<td style="text-align:left;">
-tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target protection
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tetW.3000194.AJ222769.3.3686_5606.5145
-</td>
-<td style="text-align:right;">
-0.0065400
-</td>
-<td style="text-align:left;">
-tetW
-</td>
-<td style="text-align:right;">
-3000194
-</td>
-<td style="text-align:left;">
-AJ222769 . 3
-</td>
-<td style="text-align:left;">
-3686_5606
-</td>
-<td style="text-align:right;">
-36333
-</td>
-<td style="text-align:left;">
-tetW
-</td>
-<td style="text-align:left;">
-CAA10975.1
-</td>
-<td style="text-align:left;">
-AJ222769.3
-</td>
-<td style="text-align:left;">
-tetracycline-resistant ribosomal protection protein
-</td>
-<td style="text-align:left;">
-tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target protection
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Campylobacter_jejuni_23S.3004546.NR_076226.1.0_2912.5105
-</td>
-<td style="text-align:right;">
-0.0081019
-</td>
-<td style="text-align:left;">
-Campylobacter_jejuni_23S
-</td>
-<td style="text-align:right;">
-3004546
-</td>
-<td style="text-align:left;">
-NR_076226 . 1
-</td>
-<td style="text-align:left;">
-0_2912
-</td>
-<td style="text-align:right;">
-42445
-</td>
-<td style="text-align:left;">
-Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NR_076226.1
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-aadS.3004683.M72415.1.1120_1984.5568
-</td>
-<td style="text-align:right;">
-0.0186672
-</td>
-<td style="text-align:left;">
-aadS
-</td>
-<td style="text-align:right;">
-3004683
-</td>
-<td style="text-align:left;">
-M72415 . 1
-</td>
-<td style="text-align:left;">
-1120_1984
-</td>
-<td style="text-align:right;">
-42732
-</td>
-<td style="text-align:left;">
-aadS
-</td>
-<td style="text-align:left;">
-AAA27459.1
-</td>
-<td style="text-align:left;">
-M72415.1
-</td>
-<td style="text-align:left;">
-ANT(6)
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sul2.3000412.AY055428.1.20268_21084.4745
-</td>
-<td style="text-align:right;">
-0.0000202
-</td>
-<td style="text-align:left;">
-sul2
-</td>
-<td style="text-align:right;">
-3000412
-</td>
-<td style="text-align:left;">
-AY055428 . 1
-</td>
-<td style="text-align:left;">
-20268_21084
-</td>
-<td style="text-align:right;">
-36551
-</td>
-<td style="text-align:left;">
-sul2
-</td>
-<td style="text-align:left;">
-AAL59753.1
-</td>
-<td style="text-align:left;">
-AY055428.1
-</td>
-<td style="text-align:left;">
-sulfonamide resistant sul
-</td>
-<td style="text-align:left;">
-sulfonamide antibiotic;sulfone antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target replacement
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ACI_1.3004359.AJ007350.1.239_1094.4259
-</td>
-<td style="text-align:right;">
-0.0000000
-</td>
-<td style="text-align:left;">
-ACI_1
-</td>
-<td style="text-align:right;">
-3004359
-</td>
-<td style="text-align:left;">
-AJ007350 . 1
-</td>
-<td style="text-align:left;">
-239_1094
-</td>
-<td style="text-align:right;">
-41531
-</td>
-<td style="text-align:left;">
-ACI-1
-</td>
-<td style="text-align:left;">
-CAB51471.1
-</td>
-<td style="text-align:left;">
-AJ007350.1
-</td>
-<td style="text-align:left;">
-ACI beta-lactamase
-</td>
-<td style="text-align:left;">
-cephalosporin;penam;penem
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Brachyspira_hyodysenteriae_23S.3004133.NZ_CP015910.2.2512812_2515808.4183
-</td>
-<td style="text-align:right;">
-0.0050814
-</td>
-<td style="text-align:left;">
-Brachyspira_hyodysenteriae_23S
-</td>
-<td style="text-align:right;">
-3004133
-</td>
-<td style="text-align:left;">
-NZ_CP015910 . 2
-</td>
-<td style="text-align:left;">
-2512812_2515808
-</td>
-<td style="text-align:right;">
-41260
-</td>
-<td style="text-align:left;">
-Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin
-</td>
-<td style="text-align:left;">
-NA
-</td>
-<td style="text-align:left;">
-NZ_CP015910.2
-</td>
-<td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics
-</td>
-<td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-APH_3____Ib.3002639.AF313472.15593_16397.545
-</td>
-<td style="text-align:right;">
-0.0027730
-</td>
-<td style="text-align:left;">
-APH_3____Ib
-</td>
-<td style="text-align:right;">
-3002639
-</td>
-<td style="text-align:left;">
-AF313472
-</td>
-<td style="text-align:left;">
-15593_16397
-</td>
-<td style="text-align:right;">
-39039
-</td>
-<td style="text-align:left;">
-APH(3’’)-Ib
-</td>
-<td style="text-align:left;">
-ABK33456.1
-</td>
-<td style="text-align:left;">
-AF313472
-</td>
-<td style="text-align:left;">
-APH(3’’)
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-APH_6__Id.3002660.AF024602.3155_3992.467
-</td>
-<td style="text-align:right;">
-0.0041254
-</td>
-<td style="text-align:left;">
-APH_6__Id
-</td>
-<td style="text-align:right;">
-3002660
-</td>
-<td style="text-align:left;">
-AF024602
-</td>
-<td style="text-align:left;">
-3155_3992
-</td>
-<td style="text-align:right;">
-39060
-</td>
-<td style="text-align:left;">
-APH(6)-Id
-</td>
-<td style="text-align:left;">
-AAC23556.1
-</td>
-<td style="text-align:left;">
-AF024602
-</td>
-<td style="text-align:left;">
-APH(6)
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-OXA_347.3001777.JN086160.1582_2407.4583
-</td>
-<td style="text-align:right;">
-0.0042522
-</td>
-<td style="text-align:left;">
-OXA_347
-</td>
-<td style="text-align:right;">
-3001777
-</td>
-<td style="text-align:left;">
-JN086160
-</td>
-<td style="text-align:left;">
-1582_2407
-</td>
-<td style="text-align:right;">
-38177
-</td>
-<td style="text-align:left;">
-OXA-347
-</td>
-<td style="text-align:left;">
-AET35493.1
-</td>
-<td style="text-align:left;">
-JN086160
-</td>
-<td style="text-align:left;">
-OXA beta-lactamase
-</td>
-<td style="text-align:left;">
-carbapenem;cephalosporin;penam
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Erm_49_.3004626.MWVR01000009.1.34384_35299.5349
-</td>
-<td style="text-align:right;">
-0.0436637
-</td>
-<td style="text-align:left;">
-Erm_49_
-</td>
-<td style="text-align:right;">
-3004626
-</td>
-<td style="text-align:left;">
-MWVR01000009 . 1
-</td>
-<td style="text-align:left;">
-34384_35299
-</td>
-<td style="text-align:right;">
-42608
-</td>
-<td style="text-align:left;">
-Erm(49)
-</td>
-<td style="text-align:left;">
-OPG86592.1
-</td>
-<td style="text-align:left;">
-MWVR01000009.1
-</td>
-<td style="text-align:left;">
-Erm 23S ribosomal RNA methyltransferase
-</td>
-<td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic target alteration
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tet_C_.3000167.AY043299.1.3984_5175.5826
-</td>
-<td style="text-align:right;">
-0.0019718
-</td>
-<td style="text-align:left;">
-tet_C_
-</td>
-<td style="text-align:right;">
-3000167
-</td>
-<td style="text-align:left;">
-AY043299 . 1
-</td>
-<td style="text-align:left;">
-3984_5175
-</td>
-<td style="text-align:right;">
-36306
-</td>
-<td style="text-align:left;">
-tet(C)
-</td>
-<td style="text-align:left;">
-AAK97755.1
-</td>
-<td style="text-align:left;">
-AY043299.1
-</td>
-<td style="text-align:left;">
-major facilitator superfamily (MFS) antibiotic efflux pump
-</td>
-<td style="text-align:left;">
-tetracycline antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic efflux
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-APH_2____Ig.3002669.CP004067.1.43007_43928.4749
-</td>
-<td style="text-align:right;">
-0.0000202
-</td>
-<td style="text-align:left;">
-APH_2____Ig
-</td>
-<td style="text-align:right;">
-3002669
-</td>
-<td style="text-align:left;">
-CP004067 . 1
-</td>
-<td style="text-align:left;">
-43007_43928
-</td>
-<td style="text-align:right;">
-39069
-</td>
-<td style="text-align:left;">
-APH(2’’)-Ig
-</td>
-<td style="text-align:left;">
-AGV10818.1
-</td>
-<td style="text-align:left;">
-CP004067.1
-</td>
-<td style="text-align:left;">
-APH(2’’)
-</td>
-<td style="text-align:left;">
-aminoglycoside antibiotic
-</td>
-<td style="text-align:left;">
-antibiotic inactivation
+0.0232056
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<pre class="r"><code>amr_sig_riskgroup$data_plot%&gt;%
-  ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
+<pre class="r"><code>drugclass_sig_rpkm_gcount$data_plot%&gt;%
+  ggplot(aes(x=GCount, y=value, color=GCount)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
   geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
                                               jitter.width = 0.5))+
-  
-  ##scale_y_log10() +
-  facet_wrap(~`ARO Term`, scales = &quot;free_y&quot;)+
-  # scale_color_manual(NULL,
-  #                    breaks = c(F, T),
-  #                    values = c(&quot;gray&quot;, &quot;dodgerblue&quot;),
-  #                    labels = c(&quot;Healthy&quot;, &quot;SRN&quot;)) +
-  # scale_fill_manual(NULL,
-  #                    breaks = c(F, T),
-  #                    values = c(&quot;gray&quot;, &quot;dodgerblue&quot;),
-  #                    labels = c(&quot;Healthy&quot;, &quot;SRN&quot;)) +
-  labs(x= &quot;RPKM values&quot;, y=NULL) +
+  facet_wrap(~group_name, scales = &quot;free_y&quot;)+
+  labs(x= &quot;RPKM values&quot;, y=NULL, title=&quot;ARIBA RPKM&quot;) +
   theme_bw()+
   theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
-<p><img src="figure/08_amr_significance.Rmd/unnamed-chunk-8-1.png" width="100%" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
-Past versions of unnamed-chunk-8-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
+<p><img src="figure/11_gene_richness.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-differentially-abundance-grouped-by-gene-family" class="section level2">
+<h2>Check differentially abundance (grouped by Gene Family)</h2>
+<pre class="r"><code>genefamily_sig_rpkm_gcount&lt;-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, GCount)
+genefamily_sig_rpkm_gcount$sig_data%&gt;% kable(caption=&quot;**Significant Gene Families, Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Significant Gene Families, Gene Richness (Ariba RPKM</strong>
+</caption>
 <thead>
 <tr>
-<th>
-Version
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+group_name
 </th>
-<th>
-Author
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+HGC
 </th>
-<th>
-Date
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+LGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.adjust
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/75bb4b6e20a1caf1fed94e205a90ae65330289d6/docs/figure/08_amr_significance.Rmd/unnamed-chunk-8-1.png" target="_blank">75bb4b6</a>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
 </td>
-<td>
-Elisa
+<td style="text-align:right;">
+136.1271801
 </td>
-<td>
-2022-09-15
+<td style="text-align:right;">
+115.7982608
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16S rRNA with mutation conferring resistance to tetracycline derivatives
+</td>
+<td style="text-align:right;">
+15.7693459
+</td>
+<td style="text-align:right;">
+7.0635738
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:right;">
+154.1751390
+</td>
+<td style="text-align:right;">
+125.9886338
+</td>
+<td style="text-align:right;">
+0.0003658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ABC-F ATP-binding cassette ribosomal protection protein
+</td>
+<td style="text-align:right;">
+4.9995487
+</td>
+<td style="text-align:right;">
+14.7749375
+</td>
+<td style="text-align:right;">
+0.0031798
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+APH(3’)
+</td>
+<td style="text-align:right;">
+13.2586608
+</td>
+<td style="text-align:right;">
+13.1019289
+</td>
+<td style="text-align:right;">
+0.0167903
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CblA beta-lactamase
+</td>
+<td style="text-align:right;">
+2.0007096
+</td>
+<td style="text-align:right;">
+11.0276602
+</td>
+<td style="text-align:right;">
+0.0001022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:right;">
+118.6925065
+</td>
+<td style="text-align:right;">
+166.2359788
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chloramphenicol acetyltransferase (CAT)
+</td>
+<td style="text-align:right;">
+7.8959631
+</td>
+<td style="text-align:right;">
+3.3709119
+</td>
+<td style="text-align:right;">
+0.0001022
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;van ligase
+</td>
+<td style="text-align:right;">
+0.1926865
+</td>
+<td style="text-align:right;">
+0.0092522
+</td>
+<td style="text-align:right;">
+0.0023519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;vanT
+</td>
+<td style="text-align:right;">
+0.5344952
+</td>
+<td style="text-align:right;">
+0.1558931
+</td>
+<td style="text-align:right;">
+0.0014589
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;vanXY
+</td>
+<td style="text-align:right;">
+0.3145302
+</td>
+<td style="text-align:right;">
+0.0152466
+</td>
+<td style="text-align:right;">
+0.0010399
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
+<pre class="r"><code>genefamily_sig_rpkm_gcount$data_plot%&gt;%
+  ggplot(aes(x=GCount, y=value, color=GCount)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = &quot;free_y&quot;)+
+  labs(x= &quot;RPKM values&quot;, y=NULL, title=&quot;ARIBA RPKM&quot;) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
+<p><img src="figure/11_gene_richness.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -3092,8 +1959,8 @@ loaded via a namespace (and not attached):
 [43] getPass_0.2-2          MASS_7.3-56            scales_1.2.1          
 [46] vroom_1.5.7            hms_1.1.1              promises_1.2.0.1      
 [49] parallel_4.1.2         rematch2_2.1.2         yaml_2.3.5            
-[52] sass_0.4.1             stringi_1.7.6          paletteer_1.4.1       
-[55] highr_0.9              bayestestR_0.12.1      rlang_1.0.2           
+[52] sass_0.4.1             stringi_1.7.6          highr_0.9             
+[55] paletteer_1.4.1        bayestestR_0.12.1      rlang_1.0.2           
 [58] pkgconfig_2.0.3        systemfonts_1.0.4      evaluate_0.15         
 [61] labeling_0.4.2         bit_4.0.4              processx_3.5.3        
 [64] tidyselect_1.1.2       magrittr_2.0.2         R6_2.5.1              

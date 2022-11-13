@@ -140,6 +140,42 @@ drugclass_sig_rpkm_cluster$data_plot%>%
 # drugclass_sig_rar_cluster<-sig_group_clin_dic(ariba_rar_drugclass, filter(metadata, !is.na(Cluster)), Cluster)
 # drugclass_sig_rar_cluster$sig_data
 ```
+
+```{r}
+genefamily_sig_rpkm_cluster<-sig_group_clin_dic(ariba_rpkm_genefamily, filter(metadata, !is.na(Cluster)), Cluster)
+genefamily_sig_rpkm_cluster$sig_data%>% kable(caption="**Significant Gene Families, microbiome cluster (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+genefamily_sig_rpkm_cluster$data_plot%>%
+  ggplot(aes(x=Cluster, y=value, color=Cluster)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+ 
+```{r}
+resmec_sig_rpkm_cluster<-sig_group_clin_dic(ariba_rpkm_resmec, filter(metadata, !is.na(Cluster)), Cluster)
+resmec_sig_rpkm_cluster$sig_data%>% kable(caption="**Significant Resistance Mechanisms, microbiome cluster (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+resmec_sig_rpkm_cluster$data_plot%>%
+  ggplot(aes(x=Cluster, y=value, color=Cluster)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+``` 
  
 ## Risk Group
 
@@ -149,11 +185,52 @@ drugclass_sig_rpkm_riskgroup$sig_data %>% kable(caption="**Significant Drug Clas
 ```
 
 ```{r}
+my_comparisons <- list( c("hts", "msm"), c("hts", "pwid"), c("msm", "pwid"))
+
 drugclass_sig_rpkm_riskgroup$data_plot%>%
   ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
   geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
                                               jitter.width = 0.5))+
+  stat_compare_means(comparisons = my_comparisons)+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+
+```{r}
+genefamily_sig_rpkm_riskgroup<-sig_group_clin_factor(ariba_rpkm_genefamily, metadata, RiskGroup2)
+genefamily_sig_rpkm_riskgroup$sig_data %>% kable(caption="**Significant Gene Families, riskgroup2 (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+genefamily_sig_rpkm_riskgroup$data_plot%>%
+  ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+
+```{r}
+resmec_sig_rpkm_riskgroup<-sig_group_clin_factor(ariba_rpkm_resmec, metadata, RiskGroup2)
+resmec_sig_rpkm_riskgroup$sig_data %>% kable(caption="**Significant Resistance mechanism, riskgroup2 (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+resmec_sig_rpkm_riskgroup$data_plot%>%
+  ggplot(aes(x=RiskGroup2, y=value, color=RiskGroup2)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  stat_compare_means(comparisons = my_comparisons)+ 
+  ##stat_compare_means(label.y.npc = 0.9)+
   facet_wrap(~group_name, scales = "free_y")+
   labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
   theme_bw()+

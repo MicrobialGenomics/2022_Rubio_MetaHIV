@@ -1,0 +1,112 @@
+---
+title: "Riskgroup2_grouped"
+author: "Elisa Rubio"
+date: "2022-11-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+#### Load data and functions
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/ariba_dist.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+source("code/functions.R")
+```
+
+## Join HTS with PWID
+
+```{r}
+metadata<-metadata%>%
+  mutate(MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))
+```
+
+### Alpha diversity analysis
+
+```{r}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
+alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)
+```
+
+Diversity is higher in MSM group
+
+### Beta diversity analysis
+
+```{r}
+ariba_dist_rpkm<-ariba_dist$dist_rpkm
+beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)
+```
+
+Resistome composition is different according to MSM
+
+## Check differentially abundance AMR
+
+```{r}
+amr_sig_rpkm_MSM_dic<-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, MSM_dic)
+amr_sig_rpkm_MSM_dic$sig_amr%>% kable(caption="**Significant AMR accordig to Gene Richness (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+## Check differentially abundance (grouped by Drug Class)
+
+```{r}
+drugclass_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, MSM_dic)
+drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+drugclass_sig_rpkm_MSM_dic$data_plot%>%
+  ggplot(aes(x=MSM_dic, y=value, color=MSM_dic)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  stat_compare_means(label.y.npc = 0.7, label = "p.signif")+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+
+## Check differentially abundance (grouped by Gene Family)
+
+```{r}
+genefamily_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, MSM_dic)
+genefamily_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Gene Families, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+genefamily_sig_rpkm_MSM_dic$data_plot%>%
+  ggplot(aes(x=MSM_dic, y=value, color=MSM_dic)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  stat_compare_means(label.y.npc = 0.7, label = "p.signif")+
+  facet_wrap(~group_name, scales = "free_y")+
+  labs(x= "RPKM values", y=NULL, title="ARIBA RPKM") +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))
+```
+
+

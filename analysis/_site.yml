@@ -27,8 +27,18 @@ navbar:
     href: contingency_tabe.html
   - text: AMR significance
     href: 08_amr_significance.html
+  - text: Group matrixes
+    href: 09_group_matrixes.html
+  - text: Grouped significance
+    href: 10_grouped_significance.html
   - text: Profile
     href: Profile.html
+  - text: ART
+    href: ART.html
+  - text: Gene Richness
+    href: 11_gene_richness.html
+  - text: Riskgroup2
+    href: Riskgroup2_grouped.html
   - text: About
     href: about.html
   - text: License

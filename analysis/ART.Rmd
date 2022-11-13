@@ -1,0 +1,82 @@
+---
+title: "ART"
+author: "Elisa Rubio"
+date: "2022-11-13"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+```
+
+#### Load data and functions
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/rarefied_ariba.RDA")
+load("output/ariba_dist.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+source("code/functions.R")
+```
+
+## Create varaible ART
+
+```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+metadata<-metadata%>%
+  mutate(ART=ifelse(Profile %in% ART_groups, "ART", "No ART"))
+```
+
+### Alpha diversity analysis
+
+```{r}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
+alpha_div_plot_all(ariba_alpha_rpkm, ART)
+```
+
+No differences in alpha diversity according to ART
+
+### Beta diversity analysis
+
+```{r}
+ariba_dist_rpkm<-ariba_dist$dist_rpkm
+beta_nmds(ariba_dist_rpkm, metadata, ART)
+```
+
+No differences in beta diversity according to ART
+
+## Check differentially abundance AMR
+
+```{r}
+amr_sig_rpkm_ART<-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, ART)
+amr_sig_rpkm_ART$sig_amr
+```
+
+No significant AMR
+
+## Check differentially abundance (grouped by Drug Class)
+
+```{r}
+drugclass_sig_rpkm_ART<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, ART)
+drugclass_sig_rpkm_ART$sig_data%>% kable(caption="**Significant Drug Classes, ART (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+No significant drug classes
+
+

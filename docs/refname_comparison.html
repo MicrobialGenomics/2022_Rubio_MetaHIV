@@ -11,9 +11,9 @@
 
 <meta name="author" content="Elisa Rubio" />
 
-<meta name="date" content="2022-08-31" />
+<meta name="date" content="2022-11-06" />
 
-<title>03_1_procruster</title>
+<title>refname_comparison</title>
 
 <script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -417,9 +417,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">03_1_procruster</h1>
+<h1 class="title toc-ignore">refname_comparison</h1>
 <h4 class="author">Elisa Rubio</h4>
-<h4 class="date">2022-08-31</h4>
+<h4 class="date">2022-11-06</h4>
 
 </div>
 
@@ -581,7 +581,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/03_1_procruster.Rmd</code>) and HTML (<code>docs/03_1_procruster.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/refname_comparison.Rmd</code>) and HTML (<code>docs/refname_comparison.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -610,118 +610,16 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b560dbf00378e36692328735bda85df209b646cd/analysis/03_1_procruster.Rmd" target="_blank">b560dbf</a>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ca28164abc87450428f3e436eb1a22082e078b62/analysis/refname_comparison.Rmd" target="_blank">ca28164</a>
 </td>
 <td>
 Elisa
 </td>
 <td>
-2022-11-08
+2022-11-06
 </td>
 <td>
-procruster_groot2
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/b560dbf00378e36692328735bda85df209b646cd/docs/03_1_procruster.html" target="_blank">b560dbf</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-11-08
-</td>
-<td>
-procruster_groot2
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ec85b62b622c89491c0b6e8155e6b022334e69d1/analysis/03_1_procruster.Rmd" target="_blank">ec85b62</a>
-</td>
-<td>
-Elisa_Linux
-</td>
-<td>
-2022-11-08
-</td>
-<td>
-rocruster groot
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/6646c668f56fb1de45bf0dd1d69b77817863e398/analysis/03_1_procruster.Rmd" target="_blank">6646c66</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-03
-</td>
-<td>
-Procruster with 200 iterations and biplots using envfit
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/6646c668f56fb1de45bf0dd1d69b77817863e398/docs/03_1_procruster.html" target="_blank">6646c66</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-03
-</td>
-<td>
-Procruster with 200 iterations and biplots using envfit
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ef31c926e301e12aac832aa4030b294c79954876/analysis/03_1_procruster.Rmd" target="_blank">ef31c92</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-08-31
-</td>
-<td>
-procruster analysis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/ef31c926e301e12aac832aa4030b294c79954876/docs/03_1_procruster.html" target="_blank">ef31c92</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-08-31
-</td>
-<td>
-procruster analysis
+refname_comparison
 </td>
 </tr>
 </tbody>
@@ -732,256 +630,23 @@ procruster analysis
 </div>
 </div>
 <pre class="r"><code>library(tidyverse)
-library(vegan)
 library(glue)
+library(vegan)
 library(patchwork)</code></pre>
-<div id="ariba" class="section level1">
-<h1>ARIBA</h1>
-<div id="load-distances" class="section level2">
-<h2>Load distances</h2>
-<pre class="r"><code>load(&quot;output/ariba_dist.RDA&quot;)
-dist_rpkm&lt;-ariba_dist$dist_rpkm
-dist_rar&lt;-ariba_dist$dist_rar</code></pre>
-</div>
-<div id="perform-nmds" class="section level2">
-<h2>Perform NMDs</h2>
-<pre class="r"><code>set.seed(200889)
-nmds_rpkm &lt;- metaMDS(dist_rpkm, trymax = 200, trace = 0)
-nmds_rar &lt;- metaMDS(dist_rar,trymax = 300, trace = 0)</code></pre>
-</div>
-<div id="perform-procrusters-test" class="section level2">
-<h2>Perform procrusters test</h2>
-<pre class="r"><code>proc&lt;-procrustes(nmds_rar, nmds_rpkm)
-##plot(pro.test)
-test_ariba&lt;-protest(nmds_rar, nmds_rpkm)
-test_ariba</code></pre>
+<div id="load-summarized-data" class="section level2">
+<h2>Load summarized data</h2>
+<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
+load(&quot;output/summarized_groot.RDA&quot;)</code></pre>
+<pre class="r"><code>all&lt;-rbind(select(refname_all_ariba, `ARO Accession`), select(refname_all_groot, `ARO Accession`))%&gt;%unique()
+all&lt;-all%&gt;%mutate(Ariba=ifelse(`ARO Accession` %in% refname_all_ariba$`ARO Accession`, 1, 0),
+                  Groot=ifelse(`ARO Accession` %in% refname_all_groot$`ARO Accession`, 1, 0),
+                  test=ifelse(Ariba==1 &amp; Groot==1, &quot;Groot+Ariba&quot;, ifelse(Ariba==1, &quot;Ariba&quot;, &quot;Groot&quot;)))
+
+
+prop.table(table(all$test))*100</code></pre>
 <pre><code>
-Call:
-protest(X = nmds_rar, Y = nmds_rpkm) 
-
-Procrustes Sum of Squares (m12 squared):        0.2288 
-Correlation in a symmetric Procrustes rotation: 0.8782 
-Significance:  0.001 
-
-Permutation: free
-Number of permutations: 999</code></pre>
-<p><strong>Null hipotesis</strong>: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.</p>
-<p>Te procruster test is significant (Significance: 0.001), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)</p>
-<pre class="r"><code>pdata &lt;- data.frame(
-  NMDS1=c(proc$Yrot[,1],proc$X[,1]),
-  NMDS2=c(proc$Yrot[,2],proc$X[,2]),
-  Method=c(rep(&quot;RPKM&quot;, 155), rep (&quot;Rarefaction&quot;, 155)),
-  SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
-  
-p_ariba&lt;-pdata%&gt;%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
-  geom_point(size=2)+
-  geom_line(aes(group=SampleID), colour=&quot;gray&quot;, linetype = 2, size=0.7)+
-  theme_bw()+
-  labs(subtitle = glue(&quot;Procruster test significance: {test_ariba$signif}&quot;), title=&quot;ARIBA&quot;)
-
-p_ariba</code></pre>
-<p><img src="figure/03_1_procruster.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b560dbf00378e36692328735bda85df209b646cd/docs/figure/03_1_procruster.Rmd/unnamed-chunk-5-1.png" target="_blank">b560dbf</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-11-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/6646c668f56fb1de45bf0dd1d69b77817863e398/docs/figure/03_1_procruster.Rmd/unnamed-chunk-5-1.png" target="_blank">6646c66</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-09-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ef31c926e301e12aac832aa4030b294c79954876/docs/figure/03_1_procruster.Rmd/unnamed-chunk-5-1.png" target="_blank">ef31c92</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-08-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="groot" class="section level1">
-<h1>GROOT</h1>
-<div id="load-distances-1" class="section level2">
-<h2>Load distances</h2>
-<pre class="r"><code>load(&quot;output/groot_dist.RDA&quot;)
-dist_rpkm&lt;-groot_dist$dist_rpkm
-dist_rar&lt;-groot_dist$dist_rar</code></pre>
-</div>
-<div id="filter-rpkm-distance-to-retain-the-same-samples-as-rarefied-distance-12-samples-were-excluded-after-rarefaction" class="section level2">
-<h2>Filter rpkm distance to retain the same samples as rarefied distance (12 samples were excluded after rarefaction)</h2>
-<pre class="r"><code>dist_matrix&lt;-as.matrix(dist_rpkm)
-dist_tbl &lt;- as_tibble(dist_matrix, rownames=&quot;samples&quot;)
-
-samples_rar &lt;- labels(dist_rar)
-
-dist_rpkm_filt &lt;- dist_tbl %&gt;%
-  pivot_longer(cols=-samples, names_to=&quot;b&quot;, values_to=&quot;distances&quot;) %&gt;%
-  filter(samples %in% samples_rar ) %&gt;%
-  filter(b %in% samples_rar)%&gt;%
-  pivot_wider(names_from=&quot;b&quot;, values_from=&quot;distances&quot;)%&gt;%
-  select(-samples) %&gt;%
-  as.dist()</code></pre>
-</div>
-<div id="perform-nmds-1" class="section level2">
-<h2>Perform NMDs</h2>
-<pre class="r"><code>set.seed(200889)
-nmds_rpkm &lt;- metaMDS(dist_rpkm_filt, trymax = 200, trace = 0)
-nmds_rar &lt;- metaMDS(dist_rar,trymax = 200, trace = 0)</code></pre>
-</div>
-<div id="perform-procrusters-test-1" class="section level2">
-<h2>Perform procrusters test</h2>
-<pre class="r"><code>proc&lt;-procrustes(nmds_rar, nmds_rpkm)
-##plot(pro.test)
-test_groot&lt;-protest(nmds_rar, nmds_rpkm)
-test_groot</code></pre>
-<pre><code>
-Call:
-protest(X = nmds_rar, Y = nmds_rpkm) 
-
-Procrustes Sum of Squares (m12 squared):        0.6515 
-Correlation in a symmetric Procrustes rotation: 0.5903 
-Significance:  0.001 
-
-Permutation: free
-Number of permutations: 999</code></pre>
-<p><strong>Null hipotesis</strong>: The degree of concordance between two (or more) matrices is no greater than expected given random inter-matrix associations.</p>
-<p>Te procruster test is significant (Significance: 0.001), thus the null hipotesis is not confirmed and we can say that both matrices are concordant (statistically similar?)</p>
-<pre class="r"><code>pdata &lt;- data.frame(
-  NMDS1=c(proc$Yrot[,1],proc$X[,1]),
-  NMDS2=c(proc$Yrot[,2],proc$X[,2]),
-  Method=c(rep(&quot;RPKM&quot;, length(samples_rar)), rep (&quot;Rarefaction&quot;, length(samples_rar))),
-  SampleID=c(rownames(proc$Yrot), rownames(proc$X)))
-  
-p_groot&lt;-pdata%&gt;%
-  ggplot(aes(x=NMDS1, y=NMDS2, color=Method)) +
-  geom_point(size=2)+
-  geom_line(aes(group=SampleID), colour=&quot;gray&quot;, linetype = 2, size=0.7)+
-  theme_bw()+
-  labs(subtitle = glue(&quot;Procruster test significance: {test_groot$signif}&quot;), title=&quot;GROOT&quot;)
-
-p_groot</code></pre>
-<p><img src="figure/03_1_procruster.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b560dbf00378e36692328735bda85df209b646cd/docs/figure/03_1_procruster.Rmd/unnamed-chunk-10-1.png" target="_blank">b560dbf</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-11-08
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>patch&lt;-p_ariba+ theme(legend.position = &quot;none&quot;) | p_groot
-patch+ plot_annotation(tag_levels = &#39;A&#39;)</code></pre>
-<p><img src="figure/03_1_procruster.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
-Past versions of unnamed-chunk-11-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-11-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/b560dbf00378e36692328735bda85df209b646cd/docs/figure/03_1_procruster.Rmd/unnamed-chunk-11-1.png" target="_blank">b560dbf</a>
-</td>
-<td>
-Elisa
-</td>
-<td>
-2022-11-08
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+      Ariba       Groot Groot+Ariba 
+   8.009423   63.722026   28.268551 </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1010,32 +675,30 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] patchwork_1.1.1 glue_1.6.2      vegan_2.5-7     lattice_0.20-45
- [5] permute_0.9-7   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
+ [1] patchwork_1.1.1 vegan_2.5-7     lattice_0.20-45 permute_0.9-7  
+ [5] glue_1.6.2      forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
  [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
 [13] ggplot2_3.3.5   tidyverse_1.3.1 workflowr_1.7.0
 
 loaded via a namespace (and not attached):
  [1] httr_1.4.2       sass_0.4.1       jsonlite_1.8.0   splines_4.1.2   
  [5] modelr_0.1.8     bslib_0.3.1      assertthat_0.2.1 getPass_0.2-2   
- [9] highr_0.9        cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0    
-[13] backports_1.4.1  digest_0.6.29    promises_1.2.0.1 rvest_1.0.2     
-[17] colorspace_2.0-3 htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0    
-[21] pkgconfig_2.0.3  broom_1.0.1      haven_2.4.3      scales_1.2.1    
-[25] processx_3.5.3   whisker_0.4      later_1.3.0      tzdb_0.2.0      
-[29] git2r_0.30.1     mgcv_1.8-38      farver_2.1.0     generics_0.1.2  
-[33] ellipsis_0.3.2   withr_2.5.0      cli_3.3.0        magrittr_2.0.2  
-[37] crayon_1.5.1     readxl_1.3.1     evaluate_0.15    ps_1.6.0        
-[41] fs_1.5.2         fansi_1.0.3      nlme_3.1-157     MASS_7.3-56     
-[45] xml2_1.3.3       tools_4.1.2      hms_1.1.1        lifecycle_1.0.1 
-[49] munsell_0.5.0    reprex_2.0.1     cluster_2.1.2    callr_3.7.0     
-[53] compiler_4.1.2   jquerylib_0.1.4  rlang_1.0.2      grid_4.1.2      
-[57] rstudioapi_0.13  labeling_0.4.2   rmarkdown_2.13   gtable_0.3.0    
-[61] DBI_1.1.2        R6_2.5.1         lubridate_1.8.0  knitr_1.38      
-[65] fastmap_1.1.0    utf8_1.2.2       rprojroot_2.0.2  stringi_1.7.6   
-[69] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
-[73] tidyselect_1.1.2 xfun_0.30       </code></pre>
-</div>
+ [9] cellranger_1.1.0 yaml_2.3.5       pillar_1.7.0     backports_1.4.1 
+[13] digest_0.6.29    promises_1.2.0.1 rvest_1.0.2      colorspace_2.0-3
+[17] htmltools_0.5.2  httpuv_1.6.5     Matrix_1.4-0     pkgconfig_2.0.3 
+[21] broom_1.0.1      haven_2.4.3      scales_1.2.1     processx_3.5.3  
+[25] whisker_0.4      later_1.3.0      tzdb_0.2.0       git2r_0.30.1    
+[29] mgcv_1.8-38      generics_0.1.2   ellipsis_0.3.2   withr_2.5.0     
+[33] cli_3.3.0        magrittr_2.0.2   crayon_1.5.1     readxl_1.3.1    
+[37] evaluate_0.15    ps_1.6.0         fs_1.5.2         fansi_1.0.3     
+[41] nlme_3.1-157     MASS_7.3-56      xml2_1.3.3       tools_4.1.2     
+[45] hms_1.1.1        lifecycle_1.0.1  munsell_0.5.0    reprex_2.0.1    
+[49] cluster_2.1.2    callr_3.7.0      compiler_4.1.2   jquerylib_0.1.4 
+[53] rlang_1.0.2      grid_4.1.2       rstudioapi_0.13  rmarkdown_2.13  
+[57] gtable_0.3.0     DBI_1.1.2        R6_2.5.1         lubridate_1.8.0 
+[61] knitr_1.38       fastmap_1.1.0    utf8_1.2.2       rprojroot_2.0.2 
+[65] stringi_1.7.6    parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8     
+[69] dbplyr_2.1.1     tidyselect_1.1.2 xfun_0.30       </code></pre>
 </div>
 </div>
 

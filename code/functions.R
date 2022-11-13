@@ -139,3 +139,152 @@ beta_nmds2<-function(dist, metadata, clin_var){
     theme_bw()+
     theme(legend.text = element_text(size=10))}
 
+##Get significance of each AMR to a clinical variable (dicotomic)
+
+sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
+
+  ##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+  ##merge data with metadata and reference data
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "ref_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")%>%
+    inner_join(., refdata, by="ref_name")
+
+  sig_amr<-data_all%>%
+    nest(data=-ref_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(ref_name, p.adjust)
+
+  data_all<-data_all%>%
+    inner_join(sig_amr, by="ref_name")
+
+  sig_amr<-sig_amr%>%
+    inner_join(refdata, by="ref_name")
+
+  res<-list(data_all, sig_amr)
+  names(res)<-c("data_plot", "sig_amr")
+  return(res)
+}
+
+##Get significance of each AMR to a clinical variable (factor)
+
+sig_AMR_clin_factor<-function(data, metadata, refdata, clin_var){
+
+  ##transpose data
+  ref_name<-pull(data, 1)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+  ##merge data with metadata and reference data
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "ref_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")%>%
+    inner_join(., refdata, by="ref_name")
+
+  sig_amr<-data_all%>%
+    nest(data=-ref_name)%>%
+    mutate(test=map(.x=data, ~kruskal.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(ref_name, p.adjust)
+
+  data_all<-data_all%>%
+    inner_join(sig_amr, by="ref_name")
+
+  sig_amr<-sig_amr%>%
+    inner_join(refdata, by="ref_name")
+
+  res<-list(data_all, sig_amr)
+  names(res)<-c("data_plot", "sig_amr")
+  return(res)
+}
+
+##Get significance of a grouped matrix to a clinical variable (dicotomic)
+
+sig_group_clin_dic<-function(data, metadata, clin_var){
+  ##transpose data
+  group_name<-pull(data, 1)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", group_name)
+
+  ##merge data with metadata
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "group_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")
+
+  ##get significant groups, adjusted p value
+  sig_amr<-data_all%>%
+    nest(data=-group_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(group_name, p.adjust)
+
+  ##obtain data only from significant groups (for the plot)
+  data_all<-data_all%>%
+    inner_join(sig_amr, by="group_name")
+
+  ## get mean counts per significant group and clinical variable
+  sig_data<-data_all%>%
+    group_by(group_name, !!enquo(clin_var))%>%
+    summarise(mean_counts=mean(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+    inner_join(sig_amr, by="group_name")
+
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
+  return(res)
+}
+
+##Get significance of a grouped matrix to a clinical variable (factor)
+
+sig_group_clin_factor<-function(data, metadata, clin_var){
+  ##transpose data
+  group_name<-pull(data, 1)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", group_name)
+
+  ##merge data with metadata
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "group_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")
+
+  ##get significant groups, adjusted p value
+  sig_amr<-data_all%>%
+    nest(data=-group_name)%>%
+    mutate(test=map(.x=data, ~kruskal.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(group_name, p.adjust)
+
+  ##obtain data only from significant groups (for the plot)
+  data_all<-data_all%>%
+    inner_join(sig_amr, by="group_name")
+
+  ## get mean counts per significant group and clinical variable
+  sig_data<-data_all%>%
+    group_by(group_name, !!enquo(clin_var))%>%
+    summarise(mean_counts=mean(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+    inner_join(sig_amr, by="group_name")
+
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
+  return(res)
+}
+
+

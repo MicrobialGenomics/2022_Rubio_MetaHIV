@@ -34,5 +34,20 @@ Welcome to my research website.
 
 ## [AMR significance](08_amr_significance.html)
 
+## [Group matrixes](09_group_matrixes.html)
+
+## [Grouped significance](10_grouped_significance.html)
+
 ## [Profile](Profile.html)
+
+## [ART](ART.html)
+
+## [Gene Richness](11_gene_richness.html)
+
+## [Riskgroup2](Riskgroup2_grouped.html)
+
+
+
+
+
 
