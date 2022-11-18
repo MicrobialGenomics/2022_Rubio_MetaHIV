@@ -80,6 +80,7 @@ beta_nmds<-function(dist, metadata, clin_var){
 
   test<-adonis(dist~clin_var2, permutations = 999)
   ptest<-test$aov.tab$`Pr(>F)`[1]
+  r2test<-round(test$aov.tab$R2[1],2)
 
   set.seed(200889)
   nmds <- metaMDS(dist, trace = 0)
@@ -94,7 +95,7 @@ beta_nmds<-function(dist, metadata, clin_var){
     stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    labs(caption = glue("ADONIS p value= {ptest}"))+
+    labs(caption = glue("ADONIS p={ptest}, r2={r2test}"))+
     scale_color_manual(name=quo_name(clin_var),
                        values = c("blue", "red","green4"))+
     scale_fill_manual(values = c("dodgerblue", "pink", "green"))+
@@ -120,6 +121,7 @@ beta_nmds2<-function(dist, metadata, clin_var){
 
   test<-adonis(dist~clin_var2, permutations = 999)
   ptest<-test$aov.tab$`Pr(>F)`[1]
+  r2test<-round(test$aov.tab$R2[1],2)
 
   set.seed(200889)
   nmds <- metaMDS(dist, trace = 0)
@@ -133,7 +135,7 @@ beta_nmds2<-function(dist, metadata, clin_var){
     stat_ellipse(show.legend = FALSE)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    labs(caption = glue("ADONIS p value= {ptest}"))+
+    labs(caption = glue("ADONIS p={ptest}, r2={r2test}"))+
     scale_color_manual(name=quo_name(clin_var),
                        values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+
     theme_bw()+
