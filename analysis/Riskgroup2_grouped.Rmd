@@ -2,7 +2,7 @@
 title: "Riskgroup2_grouped"
 author: "Elisa Rubio"
 date: "2022-11-13"
-output: workflowr::wflow_html
+output: html_document
 editor_options:
   chunk_output_type: console
 ---
@@ -51,6 +51,24 @@ alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)
 
 Diversity is higher in MSM group
 
+```{r eval=FALSE, include=FALSE}
+## ECCMID figure:
+  ariba_alpha_rpkm%>%
+    filter(!is.na(MSM_dic))%>%
+    ggplot(aes(x=MSM_dic, y=InvSimpson))+
+    geom_boxplot(aes(colour=MSM_dic, fill=MSM_dic, alpha=0.2), outlier.shape = NA)+
+    geom_jitter(width = 0.2, aes(colour=MSM_dic))+
+    scale_color_manual(values = c("red", "gray48"))+
+    scale_fill_manual(values = c("pink", "gray80"))+
+    stat_compare_means(label="p.format", label.x.npc =  'center', label.y.npc = 0.9, size=5)+
+    theme_bw()+
+    theme(legend.position = "none", text = element_text(size = 15))+
+    labs(y="Inverse Simpson", x=element_blank())
+
+ggsave("ECCMID_igures/alpha_div.tiff", height = 5.5, width = 4)
+```
+
+
 ### Beta diversity analysis
 
 ```{r}
@@ -59,6 +77,47 @@ beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)
 ```
 
 Resistome composition is different according to MSM
+
+```{r}
+##ECCMID figure
+  dist_df<-as.data.frame(as.matrix(ariba_dist_rpkm)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(MSM_dic))
+
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+    as.dist()
+
+  clin_var2<-meta_dist%>%pull(MSM_dic) ##clin_var vector for adonis test
+
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  r2test<-round(test$aov.tab$R2[1],2)
+
+  set.seed(200889)
+  nmds <- metaMDS(dist, trace = 0)
+
+  ##scores(nmds) %>%
+  nmds$points %>%
+    as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
+    inner_join(., metadata, by="SampleID") %>%
+    filter(!is.na(MSM_dic))%>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=MSM_dic, fill=MSM_dic)) +
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    annotate("text", x = -0.35, y = 0.4, label = glue("ADONIS p={ptest} \n r2={r2test}"), size=4, hjust=0)+
+    scale_color_manual(name="Sexual \nPractice",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Sexual \nPractice", 
+                      values = c("pink", "gray80"))+
+    theme_bw()+
+    theme(text = element_text(size=15))
+  
+ggsave("ECCMID_igures/beta_div.tiff", height = 5.5, width = 6)
+```
+
 
 ## Check differentially abundance AMR
 
@@ -72,7 +131,7 @@ amr_sig_rpkm_MSM_dic$sig_amr%>% kable(caption="**Significant AMR accordig to Gen
 
 ```{r}
 drugclass_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, MSM_dic)
-drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM)**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
 
 ```{r}
@@ -93,7 +152,18 @@ drugclass_sig_rpkm_MSM_dic$data_plot%>%
 
 ```{r}
 genefamily_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, MSM_dic)
-genefamily_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Gene Families, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+##Add Drug Class to gene family diff table:
+##Create database (refname) grouped by gene family 
+refname<-refname_all_ariba%>%
+  select(group_name=`AMR Gene Family`, `Drug Class`)%>%
+  unique()%>%
+  as_tibble()%>%
+  group_by(group_name)%>%
+  mutate(`Drug Class`=paste0(`Drug Class`, collapse = ""))%>%
+  unique()
+
+genefamily_sig_rpkm_MSM_dic$sig_data%>%left_join(refname, by = "group_name")%>%rename(Gene_Family=group_name)%>% kable(caption="**Significant Gene Families, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
 
 ```{r}

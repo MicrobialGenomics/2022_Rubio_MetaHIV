@@ -238,12 +238,23 @@ sig_group_clin_dic<-function(data, metadata, clin_var){
   data_all<-data_all%>%
     inner_join(sig_amr, by="group_name")
 
-  ## get mean counts per significant group and clinical variable
-  sig_data<-data_all%>%
+  ##get log2 fold change
+  log_data<-data_all%>%
     group_by(group_name, !!enquo(clin_var))%>%
     summarise(mean_counts=mean(value), .groups = 'drop')%>%
     pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
-    inner_join(sig_amr, by="group_name")
+    as.data.frame()
+  log_data$log2f<-log2(log_data[ ,2])-log2(log_data[ ,3])
+  log_data<-log_data%>%select(group_name, log2f)
+
+
+  ## get median counts per significant group and clinical variable
+  sig_data<-data_all%>%
+    group_by(group_name, !!enquo(clin_var))%>%
+    summarise(median_counts=median(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "median_counts")%>%
+    inner_join(sig_amr, by="group_name")%>%
+    inner_join(log_data, by="group_name")
 
   res<-list(data_all, sig_data)
   names(res)<-c("data_plot", "sig_data")
@@ -280,7 +291,7 @@ sig_group_clin_factor<-function(data, metadata, clin_var){
   ## get mean counts per significant group and clinical variable
   sig_data<-data_all%>%
     group_by(group_name, !!enquo(clin_var))%>%
-    summarise(mean_counts=mean(value), .groups = 'drop')%>%
+    summarise(mean_counts=median(value), .groups = 'drop')%>%
     pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
     inner_join(sig_amr, by="group_name")
 
