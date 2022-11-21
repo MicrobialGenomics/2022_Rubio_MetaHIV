@@ -65,7 +65,7 @@ Diversity is higher in MSM group
     theme(legend.position = "none", text = element_text(size = 15))+
     labs(y="Inverse Simpson", x=element_blank())
 
-ggsave("ECCMID_igures/alpha_div.tiff", height = 5.5, width = 4)
+ggsave("ECCMID_figures/alpha_div.tiff", height = 5.5, width = 4)
 ```
 
 
@@ -115,7 +115,7 @@ Resistome composition is different according to MSM
     theme_bw()+
     theme(text = element_text(size=15))
   
-ggsave("ECCMID_igures/beta_div.tiff", height = 5.5, width = 6)
+ggsave("ECCMID_figures/beta_div.tiff", height = 5.5, width = 6)
 ```
 
 
@@ -132,6 +132,10 @@ amr_sig_rpkm_MSM_dic$sig_amr%>% kable(caption="**Significant AMR accordig to Gen
 ```{r}
 drugclass_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, MSM_dic)
 drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM)**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+
+drugclass<-drugclass_sig_rpkm_MSM_dic$sig_data
+write_excel_csv(drugclass, "output/ECCMID_data/drugclass.xlsx")
 ```
 
 ```{r}
@@ -151,19 +155,33 @@ drugclass_sig_rpkm_MSM_dic$data_plot%>%
 ## Check differentially abundance (grouped by Gene Family)
 
 ```{r}
+##Unify the two gene families with mutations at 23S
+rRNA23S<-ariba_rpkm_genefamily%>%
+  filter(`AMR Gene Family` ==  
+"23S rRNA with mutation conferring resistance to macrolide antibiotics" | `AMR Gene Family`== "23S rRNA with mutation conferring resistance to pleuromutilin antibiotics") %>% 
+  summarise(across(where(is.numeric), sum))%>% 
+  mutate(`AMR Gene Family`= "23S rRNA mutation")%>%select(`AMR Gene Family`, everything())
+
+ariba_rpkm_genefamily<-rbind(ariba_rpkm_genefamily, rRNA23S)
+
+
 genefamily_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, MSM_dic)
 
 ##Add Drug Class to gene family diff table:
 ##Create database (refname) grouped by gene family 
 refname<-refname_all_ariba%>%
-  select(group_name=`AMR Gene Family`, `Drug Class`)%>%
+  select(group_name=`AMR Gene Family`, `Drug Class`, `ARO Term`)%>%
   unique()%>%
   as_tibble()%>%
   group_by(group_name)%>%
-  mutate(`Drug Class`=paste0(`Drug Class`, collapse = ""))%>%
+  mutate(`Drug Class`=paste0(`Drug Class`, collapse = ","),
+         `ARO Term`= paste0(`ARO Term`, collapse = ","))%>%
   unique()
 
 genefamily_sig_rpkm_MSM_dic$sig_data%>%left_join(refname, by = "group_name")%>%rename(Gene_Family=group_name)%>% kable(caption="**Significant Gene Families, MSM (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+# genefamily<-genefamily_sig_rpkm_MSM_dic$sig_data%>%left_join(refname, by = "group_name")%>%rename(Gene_Family=group_name)
+# write_excel_csv(genefamily, "output/ECCMID_data/genefamily.xlsx")
 ```
 
 ```{r}
@@ -178,5 +196,63 @@ genefamily_sig_rpkm_MSM_dic$data_plot%>%
   theme_bw()+
   theme(axis.text.x = element_text(angle=45, hjust = 1))
 ```
+
+## ECCMID figure
+
+```{r}
+atbs<-c("cephalosporin", "cephamycin", "penam", "glycopeptide antibiotic", "mupirocin", "sulfonamide antibiotic", "aminoglycoside antibiotic")
+
+
+
+table<-drugclass_sig_rpkm_MSM_dic$sig_data%>%
+  filter(group_name %in% atbs)%>%
+  mutate(group_name2=case_when(
+  group_name == "cephalosporin"~ "Cephalosporin",
+  group_name == "cephamycin"~ "Cephamycin",
+  group_name == "penam"~ "Penam",
+  group_name == "glycopeptide antibiotic"~ "Glycopeptide",
+  group_name == "mupirocin"~ "Mupirocin",
+  group_name == "sulfonamide antibiotic"~ "Sulfonamide",
+  group_name == "aminoglycoside antibiotic"~ "Aminoglycoside",
+  ))%>%
+  mutate(p_adjust=round(p.adjust, 2), 
+         p_adjust=as.character(p_adjust),
+    p_adjust2=ifelse(p_adjust=="0", "<0.005", glue("={p_adjust}")),
+ label=glue("p{p_adjust2}\nlog2FC={round(log2f,2)}"))
+  
+
+drugclass_sig_rpkm_MSM_dic$data_plot%>%
+  filter(group_name %in% atbs)%>%
+mutate(group_name2=case_when(
+  group_name == "cephalosporin"~ "Cephalosporin",
+  group_name == "cephamycin"~ "Cephamycin",
+  group_name == "penam"~ "Penam",
+  group_name == "glycopeptide antibiotic"~ "Glycopeptide",
+  group_name == "mupirocin"~ "Mupirocin",
+  group_name == "sulfonamide antibiotic"~ "Sulfonamide",
+  group_name == "aminoglycoside antibiotic"~ "Aminoglycoside",
+  ))%>%
+  ggplot(aes(x=MSM_dic, y=value, color=MSM_dic)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+   scale_color_manual(name="Sexual \nPractice",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Sexual \nPractice", 
+                      values = c("pink", "gray80"))+
+  facet_wrap(~group_name2, scales = "free_y")+
+    geom_text(data= table,
+    mapping = aes(x = Inf, y = Inf, label = label),
+    hjust   = 1.1,
+    vjust   = 1.1, inherit.aes = FALSE)+
+  labs(y= "RPKM values", x=NULL) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1), legend.position = "none", text = element_text(size=15))
+
+ggsave("ECCMID_figures/drugclass_diff.tiff", height = 10, width = 10)
+```
+
+
+
 
 

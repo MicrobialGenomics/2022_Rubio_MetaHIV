@@ -15,7 +15,7 @@
 
 <title>Beta diversity analysis</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -347,7 +347,13 @@ div.tocify {
   <a href="02_summarize_data.html">Summarize data</a>
 </li>
 <li>
+  <a href="01_1_import_virulome.html">Import virulome</a>
+</li>
+<li>
   <a href="03_rarefaction.html">Rarefy data</a>
+</li>
+<li>
+  <a href="03_1_procruster.html">Procruster test (Rare versus RPKM)</a>
 </li>
 <li>
   <a href="04_alpha_div.html">Alpha diversity analysis</a>
@@ -356,7 +362,34 @@ div.tocify {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
-  <a href="06_biplot.html">Biplot analysis</a>
+  <a href="06_biplot.html">Biplot (Spearman)</a>
+</li>
+<li>
+  <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
+</li>
+<li>
+  <a href="contingency_tabe.html">Contingency table</a>
+</li>
+<li>
+  <a href="08_amr_significance.html">AMR significance</a>
+</li>
+<li>
+  <a href="09_group_matrixes.html">Group matrixes</a>
+</li>
+<li>
+  <a href="10_grouped_significance.html">Grouped significance</a>
+</li>
+<li>
+  <a href="Profile.html">Profile</a>
+</li>
+<li>
+  <a href="ART.html">ART</a>
+</li>
+<li>
+  <a href="11_gene_richness.html">Gene Richness</a>
+</li>
+<li>
+  <a href="Riskgroup2_grouped.html">Riskgroup2</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -393,7 +426,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -402,7 +437,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -411,17 +448,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-08-30
+<strong>Last updated:</strong> 2022-11-21
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -430,91 +477,138 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220202)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220202code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220202)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreed24c180034e0c7d2c2d036c5398ecc00cd9366a5targetblankd24c180a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/d24c180034e0c7d2c2d036c5398ecc00cd9366a5" target="_blank">d24c180</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreead16f39760089128a5c5c2b7f8257a493913ff44targetblankad16f39a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ad16f39760089128a5c5c2b7f8257a493913ff44" target="_blank">ad16f39</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreed24c180034e0c7d2c2d036c5398ecc00cd9366a5targetblankd24c180a" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreead16f39760089128a5c5c2b7f8257a493913ff44targetblankad16f39a"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/d24c180034e0c7d2c2d036c5398ecc00cd9366a5" target="_blank">d24c180</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ad16f39760089128a5c5c2b7f8257a493913ff44" target="_blank">ad16f39</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -523,15 +617,11 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Unstaged changes:
-    Modified:   analysis/04_alpha_div.Rmd
-    Modified:   analysis/05_beta_div.Rmd
-    Modified:   analysis/06_biplot.Rmd
-    Modified:   analysis/_site.yml
-
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -542,7 +632,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/05_beta_div.Rmd</code>) and HTML (<code>docs/05_beta_div.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/05_beta_div.Rmd</code>) and HTML
+(<code>docs/05_beta_div.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -566,6 +661,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/88d1345e302b655f81842dfe8764a4b9f5cf47ba/analysis/05_beta_div.Rmd" target="_blank">88d1345</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+eccmid figures
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/analysis/05_beta_div.Rmd" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+<td>
+better data organization and adding conclusions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/05_beta_div.html" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+<td>
+better data organization and adding conclusions
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -631,7 +777,8 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for
+betadiversity and riskgroup2
 </td>
 </tr>
 <tr>
@@ -648,7 +795,8 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for
+betadiversity and riskgroup2
 </td>
 </tr>
 </tbody>
@@ -672,12 +820,18 @@ metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)</code></pre>
 </div>
 <div id="create-functions" class="section level2">
 <h2>Create functions</h2>
-<div id="bray-curtis-distance-from-rpkm-values-or-rarefied-values-vegdist-function" class="section level3">
-<h3>Bray Curtis Distance from RPKM values or rarefied values (vegdist function)</h3>
+<div
+id="bray-curtis-distance-from-rpkm-values-or-rarefied-values-vegdist-function"
+class="section level3">
+<h3>Bray Curtis Distance from RPKM values or rarefied values (vegdist
+function)</h3>
 <pre class="r"><code>dist_rpkm&lt;-vegdist(t(ariba_rpkm[ ,-1]), method = &quot;bray&quot;)</code></pre>
 </div>
-<div id="bray-curtis-distance-with-avgdist-function-performs-rarefaction" class="section level3">
-<h3>Bray Curtis Distance with avgdist function (performs rarefaction)</h3>
+<div
+id="bray-curtis-distance-with-avgdist-function-performs-rarefaction"
+class="section level3">
+<h3>Bray Curtis Distance with avgdist function (performs
+rarefaction)</h3>
 <pre class="r"><code>nCounts_ariba&lt;-apply(ariba_counts[ ,-1], 2, sum)%&gt;%as.data.frame()%&gt;%rename(counts=1)
 minCounts&lt;-min(nCounts_ariba$counts)
 set.seed(200889)
@@ -700,7 +854,8 @@ set.seed(200889)
 </div>
 <div id="nmds" class="section level3">
 <h3>NMDS</h3>
-<div id="nmds-function-for-variables-with-max-3-levels" class="section level4">
+<div id="nmds-function-for-variables-with-max-3-levels"
+class="section level4">
 <h4>NMDS function (for variables with max 3 levels)</h4>
 <pre class="r"><code>beta_nmds&lt;-function(dist, metadata, clin_var){
   
@@ -718,6 +873,7 @@ set.seed(200889)
   
   test&lt;-adonis(dist~clin_var2, permutations = 999)
   ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  r2test&lt;-round(test$aov.tab$R2[1],2)
   
   set.seed(200889)
   nmds &lt;- metaMDS(dist)
@@ -732,14 +888,15 @@ set.seed(200889)
     stat_ellipse(geom=&quot;polygon&quot;, show.legend = FALSE, alpha=0.2)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    labs(caption = glue(&quot;ADONIS p={ptest}, r2={r2test}&quot;))+
     scale_color_manual(name=quo_name(clin_var), 
                            values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;))+ 
         scale_fill_manual(values = c(&quot;dodgerblue&quot;, &quot;pink&quot;, &quot;green&quot;))+
     theme_bw()+
     theme(legend.text = element_text(size=10))}</code></pre>
 </div>
-<div id="nmds-function-for-variables-with-4-8-levels" class="section level4">
+<div id="nmds-function-for-variables-with-4-8-levels"
+class="section level4">
 <h4>NMDS function (for variables with 4-8 levels)</h4>
 <pre class="r"><code>beta_nmds2&lt;-function(dist, metadata, clin_var){
   
@@ -757,6 +914,7 @@ set.seed(200889)
   
   test&lt;-adonis(dist~clin_var2, permutations = 999)
   ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  r2test&lt;-round(test$aov.tab$R2[1],2)
   
   set.seed(200889)
   nmds &lt;- metaMDS(dist)
@@ -770,7 +928,7 @@ set.seed(200889)
     stat_ellipse(show.legend = FALSE)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    labs(caption = glue(&quot;ADONIS p value= {ptest}&quot;))+
+    labs(caption = glue(&quot;ADONIS p={ptest}, r2={r2test}&quot;))+
     scale_color_manual(name=quo_name(clin_var), 
                            values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
     theme_bw()+
@@ -779,7 +937,8 @@ set.seed(200889)
 </div>
 <div id="pcoa" class="section level3">
 <h3>PCoA</h3>
-<div id="pcoa-function-for-variables-with-max-3-levels" class="section level4">
+<div id="pcoa-function-for-variables-with-max-3-levels"
+class="section level4">
 <h4>PCoA function (for variables with max 3 levels)</h4>
 <pre class="r"><code>beta_pcoa&lt;-function(dist, metadata, clin_var){
   
@@ -814,7 +973,8 @@ set.seed(200889)
     theme_bw()+
     theme(legend.text = element_text(size=10))}</code></pre>
 </div>
-<div id="pcoa-function-for-variables-with-4-8-levels" class="section level4">
+<div id="pcoa-function-for-variables-with-4-8-levels"
+class="section level4">
 <h4>PCoA function (for variables with 4-8 levels)</h4>
 <pre class="r"><code>beta_pcoa2&lt;-function(dist, metadata, clin_var){
   
@@ -860,6 +1020,43 @@ p2&lt;-beta_nmds(ariba_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Rar
 ##beta_nmds(ariba_dist$dist_avgd, metadata, HIV_Status)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Ariba&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-11-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="profile" class="section level3">
 <h3>Profile</h3>
@@ -868,6 +1065,43 @@ p2&lt;-beta_nmds2(ariba_dist$dist_rar, metadata, Profile)+labs(title=&quot;Raref
 ##beta_nmds2(ariba_dist$dist_avgd, metadata, Profile)+labs(title=&quot;Ariba&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Ariba&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-12-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="risk-group2" class="section level3">
 <h3>Risk Group2</h3>
@@ -898,6 +1132,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-13-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/figure/05_beta_div.Rmd/unnamed-chunk-13-1.png" target="_blank">d24c180</a>
@@ -990,6 +1235,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-16-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/figure/05_beta_div.Rmd/unnamed-chunk-16-1.png" target="_blank">d24c180</a>
 </td>
 <td>
@@ -1015,6 +1271,43 @@ p2&lt;-beta_nmds(groot_dist$dist_rar, metadata, HIV_Status)+labs(title=&quot;Rar
 ##beta_nmds(groot_dist$dist_avgd, metadata, HIV_Status)+labs(title=&quot;groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Groot&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
+Past versions of unnamed-chunk-18-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-18-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="profile-1" class="section level3">
 <h3>Profile</h3>
@@ -1023,6 +1316,43 @@ p2&lt;-beta_nmds2(groot_dist$dist_rar, metadata, Profile)+labs(title=&quot;Raref
 ##beta_nmds2(groot_dist$dist_avgd, metadata, Profile)+labs(title=&quot;groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Groot&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-19-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="risk-group2-1" class="section level3">
 <h3>Risk Group2</h3>
@@ -1031,6 +1361,43 @@ p2&lt;-beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title=&quot;Rar
 ##beta_nmds(groot_dist$dist_avgd, metadata, RiskGroup2)+labs(title=&quot;groot&quot;, subtitle = &quot;Bray Curtis distance matrix from rarefied counts (avgdist)&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Groot&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-20-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-20-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="pairwise-comparisons-for-riskgroup2-1" class="section level4">
 <h4>Pairwise comparisons for RiskGroup2</h4>
 <pre class="r"><code>pairwise_riskgroup2(groot_dist$dist_rpkm, metadata)</code></pre>
@@ -1047,17 +1414,60 @@ p2&lt;-beta_nmds(groot_dist$dist_rar, metadata, RiskGroup2)+labs(title=&quot;Rar
 p2&lt;-beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title=&quot;Rarefied&quot;)</code></pre>
 <pre class="r"><code>p1+p2+plot_annotation(title=&quot;Groot&quot;)</code></pre>
 <p><img src="figure/05_beta_div.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
+Past versions of unnamed-chunk-22-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-22-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/05_beta_div.Rmd/unnamed-chunk-22-1.png" target="_blank">961245a</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-08-30
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
 <ul>
 <li><p>Similar results between Groot and Ariba</p></li>
-<li><p>Similar results between Rarefied counts and RPKM values for each <em>pipeline</em></p></li>
-<li><p><strong>HIV status:</strong> no differences in beta diversity</p></li>
-<li><p><strong>Profile:</strong> differences in beta-diversity according to profile (too many groups, not a clear clustering althought ADONIS test is significant)</p></li>
-<li><p><strong>RiskGroup2:</strong> Differences in beta-diversity between msm-hts and msm-pwid</p></li>
-<li><p><strong>Microbiome Cluster:</strong> Differences in beta-diversity between clusters.</p></li>
+<li><p>Similar results between Rarefied counts and RPKM values for each
+<em>pipeline</em></p></li>
+<li><p><strong>HIV status:</strong> no differences in beta
+diversity</p></li>
+<li><p><strong>Profile:</strong> differences in beta-diversity according
+to profile (too many groups, not a clear clustering althought ADONIS
+test is significant)</p></li>
+<li><p><strong>RiskGroup2:</strong> Differences in beta-diversity
+between msm-hts and msm-pwid</p></li>
+<li><p><strong>Microbiome Cluster:</strong> Differences in
+beta-diversity between clusters.</p></li>
 </ul>
 </div>
 <div id="save-distances" class="section level2">
@@ -1067,18 +1477,19 @@ save(groot_dist, file=&quot;output/groot_dist.RDA&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.04.3 LTS
+Running under: Ubuntu 22.04 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
 
 locale:
  [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
@@ -1092,31 +1503,39 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] patchwork_1.1.1 glue_1.6.2      vegan_2.5-7     lattice_0.20-45
- [5] permute_0.9-7   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.8    
- [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.6   
-[13] ggplot2_3.3.5   tidyverse_1.3.1
+ [1] patchwork_1.1.1 glue_1.6.2      vegan_2.6-2     lattice_0.20-45
+ [5] permute_0.9-7   forcats_0.5.1   stringr_1.4.0   dplyr_1.0.9    
+ [9] purrr_0.3.4     readr_2.1.2     tidyr_1.2.0     tibble_3.1.8   
+[13] ggplot2_3.3.6   tidyverse_1.3.2 workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2       sass_0.4.1       bit64_4.0.5      vroom_1.5.7     
- [5] jsonlite_1.8.0   splines_4.1.2    modelr_0.1.8     bslib_0.3.1     
- [9] assertthat_0.2.1 highr_0.9        cellranger_1.1.0 yaml_2.3.5      
-[13] pillar_1.7.0     backports_1.4.1  digest_0.6.29    promises_1.2.0.1
-[17] rvest_1.0.2      colorspace_2.0-3 htmltools_0.5.2  httpuv_1.6.5    
-[21] Matrix_1.4-0     pkgconfig_2.0.3  broom_0.7.12     haven_2.4.3     
-[25] scales_1.1.1     whisker_0.4      later_1.3.0      tzdb_0.2.0      
-[29] git2r_0.30.1     mgcv_1.8-38      farver_2.1.0     generics_0.1.2  
-[33] ellipsis_0.3.2   withr_2.5.0      cli_3.2.0        magrittr_2.0.2  
-[37] crayon_1.5.0     readxl_1.3.1     evaluate_0.15    fs_1.5.2        
-[41] fansi_1.0.3      nlme_3.1-157     MASS_7.3-56      xml2_1.3.3      
-[45] tools_4.1.2      hms_1.1.1        lifecycle_1.0.1  munsell_0.5.0   
-[49] reprex_2.0.1     cluster_2.1.2    compiler_4.1.2   jquerylib_0.1.4 
-[53] rlang_1.0.2      grid_4.1.2       rstudioapi_0.13  labeling_0.4.2  
-[57] rmarkdown_2.13   gtable_0.3.0     DBI_1.1.2        R6_2.5.1        
-[61] lubridate_1.8.0  knitr_1.38       bit_4.0.4        fastmap_1.1.0   
-[65] utf8_1.2.2       workflowr_1.7.0  rprojroot_2.0.2  stringi_1.7.6   
-[69] parallel_4.1.2   Rcpp_1.0.8.3     vctrs_0.3.8      dbplyr_2.1.1    
-[73] tidyselect_1.1.2 xfun_0.30       </code></pre>
+ [1] nlme_3.1-155        fs_1.5.2            bit64_4.0.5        
+ [4] lubridate_1.8.0     httr_1.4.3          rprojroot_2.0.3    
+ [7] tools_4.1.2         backports_1.4.1     bslib_0.4.0        
+[10] utf8_1.2.2          R6_2.5.1            DBI_1.1.3          
+[13] mgcv_1.8-39         colorspace_2.0-3    withr_2.5.0        
+[16] tidyselect_1.1.2    processx_3.7.0      bit_4.0.4          
+[19] compiler_4.1.2      git2r_0.30.1        cli_3.3.0          
+[22] rvest_1.0.2         xml2_1.3.3          labeling_0.4.2     
+[25] sass_0.4.2          scales_1.2.0        callr_3.7.1        
+[28] digest_0.6.29       rmarkdown_2.14      pkgconfig_2.0.3    
+[31] htmltools_0.5.3     highr_0.9           dbplyr_2.2.1       
+[34] fastmap_1.1.0       rlang_1.0.4         readxl_1.4.0       
+[37] rstudioapi_0.13     farver_2.1.1        jquerylib_0.1.4    
+[40] generics_0.1.3      jsonlite_1.8.0      vroom_1.5.7        
+[43] googlesheets4_1.0.0 magrittr_2.0.3      Matrix_1.4-0       
+[46] Rcpp_1.0.9          munsell_0.5.0       fansi_1.0.3        
+[49] lifecycle_1.0.1     stringi_1.7.8       whisker_0.4        
+[52] yaml_2.3.5          MASS_7.3-55         grid_4.1.2         
+[55] parallel_4.1.2      promises_1.2.0.1    crayon_1.5.1       
+[58] haven_2.5.0         splines_4.1.2       hms_1.1.1          
+[61] knitr_1.39          ps_1.7.1            pillar_1.8.0       
+[64] reprex_2.0.1        evaluate_0.15       getPass_0.2-2      
+[67] modelr_0.1.8        vctrs_0.4.1         tzdb_0.3.0         
+[70] httpuv_1.6.5        cellranger_1.1.0    gtable_0.3.0       
+[73] assertthat_0.2.1    cachem_1.0.6        xfun_0.31          
+[76] broom_1.0.0         later_1.3.0         googledrive_2.0.0  
+[79] gargle_1.2.0        cluster_2.1.2       ellipsis_0.3.2     </code></pre>
 </div>
 </div>
 

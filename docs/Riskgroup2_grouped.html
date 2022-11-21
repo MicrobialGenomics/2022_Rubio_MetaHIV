@@ -429,7 +429,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -440,8 +440,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -450,13 +450,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-11-18
+<strong>Last updated:</strong> 2022-11-21
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
@@ -479,21 +479,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -584,15 +581,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree88d1345e302b655f81842dfe8764a4b9f5cf47batargetblank88d1345a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreead16f39760089128a5c5c2b7f8257a493913ff44targetblankad16f39a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/88d1345e302b655f81842dfe8764a4b9f5cf47ba" target="_blank">88d1345</a>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ad16f39760089128a5c5c2b7f8257a493913ff44" target="_blank">ad16f39</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree88d1345e302b655f81842dfe8764a4b9f5cf47batargetblank88d1345a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtreead16f39760089128a5c5c2b7f8257a493913ff44targetblankad16f39a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -602,7 +599,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/88d1345e302b655f81842dfe8764a4b9f5cf47ba" target="_blank">88d1345</a>.
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/ad16f39760089128a5c5c2b7f8257a493913ff44" target="_blank">ad16f39</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -621,10 +618,6 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
-
-Unstaged changes:
-    Modified:   analysis/01_import_data.Rmd
-    Modified:   analysis/Riskgroup2_grouped.Rmd
 
 </code></pre>
 <p>
@@ -670,6 +663,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/analysis/Riskgroup2_grouped.Rmd" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+log2 fold change (manual calculation)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/Riskgroup2_grouped.html" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+log2 fold change (manual calculation)
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -781,10 +808,45 @@ Elisa
 <pre class="r"><code>ariba_dist_rpkm&lt;-ariba_dist$dist_rpkm
 beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)</code></pre>
 <p><img src="figure/Riskgroup2_grouped.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/figure/Riskgroup2_grouped.Rmd/unnamed-chunk-6-1.png" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Resistome composition is different according to MSM</p>
 <pre class="r"><code>##ECCMID figure
-
-
   dist_df&lt;-as.data.frame(as.matrix(ariba_dist_rpkm)); dist_df$SampleID&lt;-rownames(dist_df)
   meta_dist&lt;-inner_join(metadata, dist_df, by=&quot;SampleID&quot;)%&gt;%
     filter(!is.na(MSM_dic))
@@ -820,6 +882,43 @@ beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)</code></pre>
     theme_bw()+
     theme(text = element_text(size=15))</code></pre>
 <p><img src="figure/Riskgroup2_grouped.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/figure/Riskgroup2_grouped.Rmd/unnamed-chunk-7-1.png" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggsave(&quot;ECCMID_igures/beta_div.tiff&quot;, height = 5.5, width = 6)</code></pre>
 </div>
 </div>
@@ -1806,12 +1905,12 @@ antibiotic target alteration
 class="section level2">
 <h2>Check differentially abundance (grouped by Drug Class)</h2>
 <pre class="r"><code>drugclass_sig_rpkm_MSM_dic&lt;-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, MSM_dic)
-drugclass_sig_rpkm_MSM_dic$sig_data%&gt;% kable(caption=&quot;**Significant Drug Classes, MSM (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+drugclass_sig_rpkm_MSM_dic$sig_data%&gt;% kable(caption=&quot;**Significant Drug Classes, MSM (Ariba RPKM)**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div
 style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
-<strong>Significant Drug Classes, MSM (Ariba RPKM</strong>
+<strong>Significant Drug Classes, MSM (Ariba RPKM)</strong>
 </caption>
 <thead>
 <tr>
@@ -1827,6 +1926,9 @@ no MSM
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 p.adjust
 </th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+log2f
+</th>
 </tr>
 </thead>
 <tbody>
@@ -1835,13 +1937,16 @@ p.adjust
 aminoglycoside antibiotic
 </td>
 <td style="text-align:right;">
-186.6697369
+175.490714
 </td>
 <td style="text-align:right;">
-156.3089016
+150.3168902
 </td>
 <td style="text-align:right;">
 0.0469694
+</td>
+<td style="text-align:right;">
+0.2560881
 </td>
 </tr>
 <tr>
@@ -1849,13 +1954,16 @@ aminoglycoside antibiotic
 beta_lactam
 </td>
 <td style="text-align:right;">
-189.2727396
+178.597047
 </td>
 <td style="text-align:right;">
-151.8058845
+133.0078660
 </td>
 <td style="text-align:right;">
 0.0469694
+</td>
+<td style="text-align:right;">
+0.3182389
 </td>
 </tr>
 <tr>
@@ -1863,13 +1971,16 @@ beta_lactam
 cephalosporin
 </td>
 <td style="text-align:right;">
-16.8971325
+5.963062
 </td>
 <td style="text-align:right;">
-31.1029818
+17.9371071
 </td>
 <td style="text-align:right;">
 0.0000164
+</td>
+<td style="text-align:right;">
+-0.8802745
 </td>
 </tr>
 <tr>
@@ -1877,13 +1988,16 @@ cephalosporin
 cephamycin
 </td>
 <td style="text-align:right;">
-173.0399922
+167.577520
 </td>
 <td style="text-align:right;">
-121.8234408
+108.6251482
 </td>
 <td style="text-align:right;">
 0.0024633
+</td>
+<td style="text-align:right;">
+0.5063137
 </td>
 </tr>
 <tr>
@@ -1891,13 +2005,16 @@ cephamycin
 glycopeptide antibiotic
 </td>
 <td style="text-align:right;">
-406.9020001
+389.929560
 </td>
 <td style="text-align:right;">
-352.7683775
+363.3586006
 </td>
 <td style="text-align:right;">
 0.0469694
+</td>
+<td style="text-align:right;">
+0.2059601
 </td>
 </tr>
 <tr>
@@ -1905,13 +2022,16 @@ glycopeptide antibiotic
 mupirocin
 </td>
 <td style="text-align:right;">
-0.0491822
+0.000000
 </td>
 <td style="text-align:right;">
-0.3463487
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0005151
+</td>
+<td style="text-align:right;">
+-2.8160158
 </td>
 </tr>
 <tr>
@@ -1919,13 +2039,16 @@ mupirocin
 nucleoside antibiotic
 </td>
 <td style="text-align:right;">
-152.8905218
+147.732292
 </td>
 <td style="text-align:right;">
-127.1921070
+117.5530231
 </td>
 <td style="text-align:right;">
 0.0415619
+</td>
+<td style="text-align:right;">
+0.2654898
 </td>
 </tr>
 <tr>
@@ -1933,13 +2056,16 @@ nucleoside antibiotic
 oxazolidinone antibiotic
 </td>
 <td style="text-align:right;">
-50.9636596
+42.886576
 </td>
 <td style="text-align:right;">
-75.4057489
+71.5275487
 </td>
 <td style="text-align:right;">
 0.0034164
+</td>
+<td style="text-align:right;">
+-0.5652056
 </td>
 </tr>
 <tr>
@@ -1947,13 +2073,16 @@ oxazolidinone antibiotic
 penam
 </td>
 <td style="text-align:right;">
-18.1473489
+4.044615
 </td>
 <td style="text-align:right;">
-12.1736809
+0.7938741
 </td>
 <td style="text-align:right;">
 0.0000703
+</td>
+<td style="text-align:right;">
+0.5759933
 </td>
 </tr>
 <tr>
@@ -1961,13 +2090,16 @@ penam
 penem
 </td>
 <td style="text-align:right;">
-9.0599167
-</td>
-<td style="text-align:right;">
-4.0956333
+3.693940
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+1.1454112
 </td>
 </tr>
 <tr>
@@ -1975,13 +2107,16 @@ penem
 sulfonamide antibiotic
 </td>
 <td style="text-align:right;">
-0.9079960
+0.000000
 </td>
 <td style="text-align:right;">
-4.4752740
+0.9966082
 </td>
 <td style="text-align:right;">
 0.0000263
+</td>
+<td style="text-align:right;">
+-2.3012181
 </td>
 </tr>
 <tr>
@@ -1989,13 +2124,16 @@ sulfonamide antibiotic
 sulfone antibiotic
 </td>
 <td style="text-align:right;">
-0.9079960
+0.000000
 </td>
 <td style="text-align:right;">
-4.4752740
+0.9966082
 </td>
 <td style="text-align:right;">
 0.0000263
+</td>
+<td style="text-align:right;">
+-2.3012181
 </td>
 </tr>
 </tbody>
@@ -2036,6 +2174,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/figure/Riskgroup2_grouped.Rmd/unnamed-chunk-10-1.png" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/fee17bd2894df7ad2e6d8437e80184b2f73bc209/docs/figure/Riskgroup2_grouped.Rmd/unnamed-chunk-10-1.png" target="_blank">fee17bd</a>
 </td>
 <td>
@@ -2054,7 +2203,18 @@ Elisa
 class="section level2">
 <h2>Check differentially abundance (grouped by Gene Family)</h2>
 <pre class="r"><code>genefamily_sig_rpkm_MSM_dic&lt;-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, MSM_dic)
-genefamily_sig_rpkm_MSM_dic$sig_data%&gt;% kable(caption=&quot;**Significant Gene Families, MSM (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+
+##Add Drug Class to gene family diff table:
+##Create database (refname) grouped by gene family 
+refname&lt;-refname_all_ariba%&gt;%
+  select(group_name=`AMR Gene Family`, `Drug Class`)%&gt;%
+  unique()%&gt;%
+  as_tibble()%&gt;%
+  group_by(group_name)%&gt;%
+  mutate(`Drug Class`=paste0(`Drug Class`, collapse = &quot;&quot;))%&gt;%
+  unique()
+
+genefamily_sig_rpkm_MSM_dic$sig_data%&gt;%left_join(refname, by = &quot;group_name&quot;)%&gt;%rename(Gene_Family=group_name)%&gt;% kable(caption=&quot;**Significant Gene Families, MSM (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
 <div
 style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
@@ -2064,7 +2224,7 @@ style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; o
 <thead>
 <tr>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-group_name
+Gene_Family
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 MSM
@@ -2075,6 +2235,12 @@ no MSM
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 p.adjust
 </th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+log2f
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Drug Class
+</th>
 </tr>
 </thead>
 <tbody>
@@ -2084,13 +2250,21 @@ p.adjust
 antibiotics
 </td>
 <td style="text-align:right;">
-131.3148547
+126.090699
 </td>
 <td style="text-align:right;">
-107.2439930
+101.1275538
 </td>
 <td style="text-align:right;">
 0.0127062
+</td>
+<td style="text-align:right;">
+0.2921333
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 </tr>
 <tr>
@@ -2098,13 +2272,21 @@ antibiotics
 23S rRNA with mutation conferring resistance to macrolide antibiotics
 </td>
 <td style="text-align:right;">
-147.5578728
+142.343377
 </td>
 <td style="text-align:right;">
-114.0304839
+110.8924643
 </td>
 <td style="text-align:right;">
 0.0000010
+</td>
+<td style="text-align:right;">
+0.3718613
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic
 </td>
 </tr>
 <tr>
@@ -2113,13 +2295,21 @@ antibiotics
 antibiotics
 </td>
 <td style="text-align:right;">
-26.0532590
+27.898481
 </td>
 <td style="text-align:right;">
-19.3025879
+20.2589642
 </td>
 <td style="text-align:right;">
 0.0000001
+</td>
+<td style="text-align:right;">
+0.4326696
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic
 </td>
 </tr>
 <tr>
@@ -2127,13 +2317,21 @@ antibiotics
 ABC-F ATP-binding cassette ribosomal protection protein
 </td>
 <td style="text-align:right;">
-4.7572770
+2.268907
 </td>
 <td style="text-align:right;">
-23.4075833
+16.9190666
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+-2.2987680
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;oxazolidinone
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic;tetracycline antibiotic
 </td>
 </tr>
 <tr>
@@ -2141,13 +2339,19 @@ ABC-F ATP-binding cassette ribosomal protection protein
 ACI beta-lactamase
 </td>
 <td style="text-align:right;">
-6.0403684
-</td>
-<td style="text-align:right;">
-0.5958349
+3.298008
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+3.3416521
+</td>
+<td style="text-align:left;">
+cephalosporin;penam;penem
 </td>
 </tr>
 <tr>
@@ -2155,13 +2359,19 @@ ACI beta-lactamase
 ANT(3’’)
 </td>
 <td style="text-align:right;">
-0.2605199
+0.000000
 </td>
 <td style="text-align:right;">
-1.0058934
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0305915
+</td>
+<td style="text-align:right;">
+-1.9490119
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
 </td>
 </tr>
 <tr>
@@ -2169,13 +2379,19 @@ ANT(3’’)
 ANT(6)
 </td>
 <td style="text-align:right;">
-21.7286515
+16.398407
 </td>
 <td style="text-align:right;">
-15.4060313
+4.9907016
 </td>
 <td style="text-align:right;">
 0.0171951
+</td>
+<td style="text-align:right;">
+0.4961034
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
 </td>
 </tr>
 <tr>
@@ -2183,13 +2399,19 @@ ANT(6)
 antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
 </td>
 <td style="text-align:right;">
-0.0491822
+0.000000
 </td>
 <td style="text-align:right;">
-0.3463487
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0009632
+</td>
+<td style="text-align:right;">
+-2.8160159
+</td>
+<td style="text-align:left;">
+mupirocin
 </td>
 </tr>
 <tr>
@@ -2197,13 +2419,19 @@ antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
 APH(3’’)
 </td>
 <td style="text-align:right;">
-0.1643011
+0.000000
 </td>
 <td style="text-align:right;">
-2.6612839
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0009632
+</td>
+<td style="text-align:right;">
+-4.0177080
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
 </td>
 </tr>
 <tr>
@@ -2211,13 +2439,19 @@ APH(3’’)
 APH(6)
 </td>
 <td style="text-align:right;">
-0.2231498
+0.000000
 </td>
 <td style="text-align:right;">
-2.8382351
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0017879
+</td>
+<td style="text-align:right;">
+-3.6689099
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
 </td>
 </tr>
 <tr>
@@ -2225,13 +2459,19 @@ APH(6)
 CblA beta-lactamase
 </td>
 <td style="text-align:right;">
-1.5826900
+0.000000
 </td>
 <td style="text-align:right;">
-19.3428498
+15.2280718
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+-3.6113498
+</td>
+<td style="text-align:left;">
+cephalosporin
 </td>
 </tr>
 <tr>
@@ -2239,13 +2479,19 @@ CblA beta-lactamase
 cepA beta-lactamase
 </td>
 <td style="text-align:right;">
-0.3512120
+0.000000
 </td>
 <td style="text-align:right;">
-1.0721772
+0.0000000
 </td>
 <td style="text-align:right;">
 0.0058267
+</td>
+<td style="text-align:right;">
+-1.6101291
+</td>
+<td style="text-align:left;">
+cephalosporin
 </td>
 </tr>
 <tr>
@@ -2253,13 +2499,19 @@ cepA beta-lactamase
 CfxA beta-lactamase
 </td>
 <td style="text-align:right;">
-168.6451174
+161.714766
 </td>
 <td style="text-align:right;">
-117.8294558
+107.9193077
 </td>
 <td style="text-align:right;">
 0.0033750
+</td>
+<td style="text-align:right;">
+0.5172903
+</td>
+<td style="text-align:left;">
+cephamycin
 </td>
 </tr>
 <tr>
@@ -2267,13 +2519,19 @@ CfxA beta-lactamase
 lincosamide nucleotidyltransferase (LNU)
 </td>
 <td style="text-align:right;">
-10.6931193
+3.282264
 </td>
 <td style="text-align:right;">
-21.9932403
+8.8300284
 </td>
 <td style="text-align:right;">
 0.0072828
+</td>
+<td style="text-align:right;">
+-1.0403774
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic
 </td>
 </tr>
 <tr>
@@ -2281,13 +2539,31 @@ lincosamide nucleotidyltransferase (LNU)
 major facilitator superfamily (MFS) antibiotic efflux pump
 </td>
 <td style="text-align:right;">
-17.0082622
+8.315777
 </td>
 <td style="text-align:right;">
-54.0197334
+39.2127009
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+-1.6672508
+</td>
+<td style="text-align:left;">
+macrolide antibiotictetracycline antibioticfluoroquinolone
+antibioticacridine dye;disinfecting agents and intercalating
+dyes;nucleoside antibioticaminoglycoside
+antibiotic;cephalosporin;macrolide antibiotic;peptide
+antibiotic;rifamycin antibiotic;tetracycline antibioticaminoglycoside
+antibiotic;carbapenem;cephalosporin;fluoroquinolone antibiotic;macrolide
+antibiotic;penam;penem;peptide antibioticbenzalkonium
+chloride;rhodamine;tetracycline antibioticfluoroquinolone
+antibiotic;macrolide antibioticdisinfecting agents and intercalating
+dyesfosfomycinacridine dye;disinfecting agents and intercalating
+dyes;fluoroquinolone antibiotic;lincosamide antibiotic;nucleoside
+antibiotic;phenicol antibioticacridine dye;disinfecting agents and
+intercalating dyes
 </td>
 </tr>
 <tr>
@@ -2295,13 +2571,19 @@ major facilitator superfamily (MFS) antibiotic efflux pump
 sulfonamide resistant sul
 </td>
 <td style="text-align:right;">
-0.4452695
+0.000000
 </td>
 <td style="text-align:right;">
-4.2357495
+0.9966082
 </td>
 <td style="text-align:right;">
 0.0000010
+</td>
+<td style="text-align:right;">
+-3.2498666
+</td>
+<td style="text-align:left;">
+sulfonamide antibiotic;sulfone antibiotic
 </td>
 </tr>
 </tbody>
@@ -2318,6 +2600,43 @@ sulfonamide resistant sul
   theme_bw()+
   theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
 <p><img src="figure/Riskgroup2_grouped.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/figure/Riskgroup2_grouped.Rmd/unnamed-chunk-12-1.png" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2351,42 +2670,43 @@ other attached packages:
  [5] ggpubr_0.4.0      vegan_2.6-2       lattice_0.20-45   permute_0.9-7    
  [9] kableExtra_1.3.4  forcats_0.5.1     stringr_1.4.0     dplyr_1.0.9      
 [13] purrr_0.3.4       readr_2.1.2       tidyr_1.2.0       tibble_3.1.8     
-[17] ggplot2_3.3.6     tidyverse_1.3.2  
+[17] ggplot2_3.3.6     tidyverse_1.3.2   workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] googledrive_2.0.0      colorspace_2.0-3       ggsignif_0.6.3        
- [4] ellipsis_0.3.2         rprojroot_2.0.3        parameters_0.18.2     
- [7] fs_1.5.2               rstudioapi_0.13        farver_2.1.1          
-[10] bit64_4.0.5            fansi_1.0.3            lubridate_1.8.0       
-[13] xml2_1.3.3             splines_4.1.2          cachem_1.0.6          
-[16] knitr_1.39             zeallot_0.1.0          jsonlite_1.8.0        
-[19] workflowr_1.7.0        cluster_2.1.2          dbplyr_2.2.1          
-[22] compiler_4.1.2         httr_1.4.3             backports_1.4.1       
-[25] assertthat_0.2.1       Matrix_1.4-0           fastmap_1.1.0         
-[28] gargle_1.2.0           cli_3.3.0              later_1.3.0           
-[31] htmltools_0.5.3        tools_4.1.2            gtable_0.3.0          
-[34] Rcpp_1.0.9             carData_3.0-5          cellranger_1.1.0      
-[37] jquerylib_0.1.4        vctrs_0.4.1            svglite_2.1.0         
-[40] nlme_3.1-155           insight_0.18.2         xfun_0.31             
-[43] rvest_1.0.2            lifecycle_1.0.1        rstatix_0.7.0         
-[46] googlesheets4_1.0.0    MASS_7.3-55            scales_1.2.0          
-[49] vroom_1.5.7            ragg_1.2.2             hms_1.1.1             
-[52] promises_1.2.0.1       parallel_4.1.2         rematch2_2.1.2        
-[55] yaml_2.3.5             sass_0.4.2             stringi_1.7.8         
-[58] paletteer_1.4.1        highr_0.9              bayestestR_0.12.1     
-[61] rlang_1.0.4            pkgconfig_2.0.3        systemfonts_1.0.4     
-[64] evaluate_0.15          labeling_0.4.2         bit_4.0.4             
-[67] tidyselect_1.1.2       magrittr_2.0.3         R6_2.5.1              
-[70] generics_0.1.3         DBI_1.1.3              pillar_1.8.0          
-[73] haven_2.5.0            whisker_0.4            withr_2.5.0           
-[76] mgcv_1.8-39            datawizard_0.5.1       abind_1.4-5           
-[79] performance_0.9.2      modelr_0.1.8           crayon_1.5.1          
-[82] car_3.1-0              utf8_1.2.2             correlation_0.8.2     
-[85] tzdb_0.3.0             rmarkdown_2.14         grid_4.1.2            
-[88] readxl_1.4.0           git2r_0.30.1           reprex_2.0.1          
-[91] digest_0.6.29          webshot_0.5.3          httpuv_1.6.5          
-[94] textshaping_0.3.6      statsExpressions_1.3.3 munsell_0.5.0         
-[97] viridisLite_0.4.0      bslib_0.4.0           </code></pre>
+  [1] googledrive_2.0.0      colorspace_2.0-3       ggsignif_0.6.3        
+  [4] ellipsis_0.3.2         rprojroot_2.0.3        parameters_0.18.2     
+  [7] fs_1.5.2               rstudioapi_0.13        farver_2.1.1          
+ [10] bit64_4.0.5            fansi_1.0.3            lubridate_1.8.0       
+ [13] xml2_1.3.3             splines_4.1.2          cachem_1.0.6          
+ [16] knitr_1.39             zeallot_0.1.0          jsonlite_1.8.0        
+ [19] cluster_2.1.2          dbplyr_2.2.1           compiler_4.1.2        
+ [22] httr_1.4.3             backports_1.4.1        assertthat_0.2.1      
+ [25] Matrix_1.4-0           fastmap_1.1.0          gargle_1.2.0          
+ [28] cli_3.3.0              later_1.3.0            htmltools_0.5.3       
+ [31] tools_4.1.2            gtable_0.3.0           Rcpp_1.0.9            
+ [34] carData_3.0-5          cellranger_1.1.0       jquerylib_0.1.4       
+ [37] vctrs_0.4.1            svglite_2.1.0          nlme_3.1-155          
+ [40] insight_0.18.2         xfun_0.31              ps_1.7.1              
+ [43] rvest_1.0.2            lifecycle_1.0.1        rstatix_0.7.1         
+ [46] googlesheets4_1.0.0    getPass_0.2-2          MASS_7.3-55           
+ [49] scales_1.2.0           vroom_1.5.7            ragg_1.2.2            
+ [52] hms_1.1.1              promises_1.2.0.1       parallel_4.1.2        
+ [55] rematch2_2.1.2         yaml_2.3.5             sass_0.4.2            
+ [58] stringi_1.7.8          highr_0.9              paletteer_1.4.1       
+ [61] bayestestR_0.12.1      rlang_1.0.4            pkgconfig_2.0.3       
+ [64] systemfonts_1.0.4      evaluate_0.15          labeling_0.4.2        
+ [67] bit_4.0.4              processx_3.7.0         tidyselect_1.1.2      
+ [70] magrittr_2.0.3         R6_2.5.1               generics_0.1.3        
+ [73] DBI_1.1.3              pillar_1.8.0           haven_2.5.0           
+ [76] whisker_0.4            withr_2.5.0            mgcv_1.8-39           
+ [79] datawizard_0.5.1       abind_1.4-5            performance_0.9.2     
+ [82] modelr_0.1.8           crayon_1.5.1           car_3.1-0             
+ [85] utf8_1.2.2             correlation_0.8.2      tzdb_0.3.0            
+ [88] rmarkdown_2.14         grid_4.1.2             readxl_1.4.0          
+ [91] callr_3.7.1            git2r_0.30.1           reprex_2.0.1          
+ [94] digest_0.6.29          webshot_0.5.3          httpuv_1.6.5          
+ [97] textshaping_0.3.6      statsExpressions_1.3.3 munsell_0.5.0         
+[100] viridisLite_0.4.0      bslib_0.4.0           </code></pre>
 </div>
 </div>
 
