@@ -141,6 +141,95 @@ beta_nmds2<-function(dist, metadata, clin_var){
     theme_bw()+
     theme(legend.text = element_text(size=10))}
 
+
+
+##Function to obtain metadata variables correlations with NMDs axes
+corr_meta_envfit<-function(metadata, nmds){
+  nmds_positions<-nmds$points%>%
+    as_tibble(rownames="SampleID")%>%
+    rename(NMDS1=MDS1, NMDS2=MDS2)
+
+  metadata<-metadata%>%
+    filter(SampleID %in% nmds_positions$SampleID)%>%
+    arrange(SampleID)
+
+  meta<-metadata%>%select(where(is.numeric))
+  fit <-envfit(nmds, meta, perm = 999, na.rm=TRUE)
+
+  ##Generate NMDS positions for the plot
+  ##Transform values adjusted by pvalue with fx scores  and multiply by arrowmult   value
+  cor<-scores(fit, "vectors")%>%
+    as_tibble(rownames="Variable")%>%
+    mutate(NMDS1=NMDS1*ordiArrowMul(fit), NMDS2=NMDS2*ordiArrowMul(fit), r2=fit$vectors$r, p.value=fit$vectors$pvals)%>%
+    return(cor)
+}
+
+##Function to obtain AMR correlations with NMDs axes:
+corr_amr_envfit<-function(data, refdata, nmds){
+  ##transpose data
+  ref_name<-pull(data, ref_name)
+  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", ref_name)
+
+  ##Perform envfit
+  fit <-envfit(nmds, data[ ,-1], perm = 999)
+
+  ##Generate NMDS positions for the plot: Transform values adjusted by pvalue with fx scores  and multiply by arrowmult value
+  cor<-scores(fit, "vectors")%>%
+    as_tibble(rownames="ref_name")%>%
+    mutate(NMDS1=NMDS1*ordiArrowMul(fit), NMDS2=NMDS2*ordiArrowMul(fit), r2=fit$vectors$r, p.value=fit$vectors$pvals)%>%
+    left_join(., refdata, by="ref_name")
+  return(cor)}
+
+##Function to obtain functional group correlations with NMDs axes:
+corr_group_envfit<-function(data_group, refdata_group, nmds){
+  ##transpose data
+  group_name<-pull(data_group, 1)
+  data_group<-as_tibble(cbind(SampleID = names(data_group), t(data_group)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data_group)<-c("SampleID", group_name)
+
+  ##Perform envfit
+  fit <-envfit(nmds, data_group[ ,-1], perm = 999)
+
+  refdata_group<-refdata_group%>%rename(group_name=1)
+
+  ##Generate NMDS positions for the plot: Transform values adjusted by pvalue with fx scores  and multiply by arrowmult value
+  cor<-scores(fit, "vectors")%>%
+    as_tibble(rownames="group_name")%>%
+    mutate(NMDS1=NMDS1*ordiArrowMul(fit), NMDS2=NMDS2*ordiArrowMul(fit), r2=fit$vectors$r, p.value=fit$vectors$pvals)%>%
+    left_join(., refdata_group, by="group_name")
+  return(cor)}
+
+##Function to obtain biplot showing selected correlations (AMR, clinical variables or grouped variables):
+
+biplot_amr_envfit<-function(high_cor, nmds, metadata, clin_var, label_var){
+  clin_var<-enquo(clin_var)
+  label_var<-enquo(label_var)
+  nmds_positions<-nmds$points%>%
+    as_tibble(rownames="SampleID")%>%
+    rename(NMDS1=MDS1, NMDS2=MDS2)
+
+  nmds_positions%>%
+    left_join(., metadata, by="SampleID")%>%
+    ##ggplot(aes(x=NMDS1, y=NMDS2)) +
+    ggplot( aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
+    geom_point(alpha=0.5, size=2)+
+    geom_segment(data=high_cor,
+                 aes(x=0, xend=NMDS1, y=0, yend=NMDS2),
+                 arrow = arrow(length = unit(0.2, "cm")), alpha=1,colour="gray",
+                 inherit.aes=FALSE)+
+    geom_text_repel(data=high_cor,
+                    aes(x=NMDS1, y=NMDS2, label=!!label_var),
+                    min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
+                    inherit.aes=FALSE) +
+    theme_bw()+
+    scale_color_manual(values = c("chartreuse4", "red", "gray"))
+}
+
+
+
 ##Get significance of each AMR to a clinical variable (dicotomic)
 
 sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){

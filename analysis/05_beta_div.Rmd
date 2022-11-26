@@ -50,6 +50,17 @@ set.seed(200889)
 ### Function to calculate all distances
 
 ```{r}
+dist_func<-function(d_rpkm, d_rar, metadata){
+  dist_rpkm<-vegdist(t(d_rpkm[ ,-1]), method = "bray")
+  dist_rar<-vegdist(t(d_rar[ ,-1]), method = "bray")
+  d<-list(dist_rpkm, dist_rar)
+  names(d)<-c("dist_rpkm", "dist_rar")
+  return(d)
+}
+```
+
+
+```{r}
 dist_func<-function(d_rpkm, d_rar, d_counts, metadata){
   dist_rpkm<-vegdist(t(d_rpkm[ ,-1]), method = "bray")
   dist_rar<-vegdist(t(d_rar[ ,-1]), method = "bray")

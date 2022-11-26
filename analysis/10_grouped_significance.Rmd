@@ -86,8 +86,6 @@ sig_group_clin_dic<-function(data, metadata, clin_var){
   names(res)<-c("data_plot", "sig_data")
   return(res)
 }
-
-
 sig_group_clin_factor<-function(data, metadata, clin_var){
 ##transpose data
   group_name<-pull(data, 1)
