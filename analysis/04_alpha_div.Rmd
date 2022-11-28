@@ -31,8 +31,12 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
+
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
-  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute)
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"))
 ```
 
 ## Create functions
@@ -88,7 +92,10 @@ data%>%
 
 ```
 
-#### Plot correlation between diversity indexes and quantitative clinical variables
+
+
+
+#### Plot correlation between a diversity indexe and quantitative clinical variables
 
 ```{r}
 alpha_div_cor_all<-function(data, clin_var){
@@ -105,7 +112,6 @@ data%>%
   theme(legend.position = "none", axis.title.x=element_blank(),
         axis.text.x = element_text(angle=45, hjust = 1))}
 ```
-
 ## ARIBA
 
 ```{r ariba_alpha_rpkmdiv}

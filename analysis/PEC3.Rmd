@@ -1,0 +1,102 @@
+---
+title: "PEC3"
+author: "Elisa Rubio"
+date: "2022-11-28"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(wesanderson)
+```
+
+```{r}
+load("output/summarized_ariba.RDA")
+
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"))
+```
+
+```{r}
+alpha_div<-function(d_rpkm, d_counts, metadata){
+shannon<-diversity(d_rpkm[ ,-1], MARGIN = 2, index="shannon")
+simpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="simpson")
+invsimpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="invsimpson")
+nARG<-specnumber(d_rpkm[, -1], MARGIN = 2)
+fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from counts (not possible to calculate for rpkm values)
+metadata%>%
+  filter(SampleID %in% names(d_rpkm))%>%
+  mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
+```
+
+
+#### Plot a diversity index for a clinical variable
+
+```{r}
+alpha_div_plot<-function(data, clin_var, alpha_var){
+  clin_var<-enquo(clin_var)
+  alpha_var<-enquo(alpha_var)
+  
+  data%>%
+  filter(!is.na(!!clin_var))%>%
+  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  stat_compare_means(label.x.npc = 0.4, label.y.npc = 0.8)+
+  theme_classic()+
+  scale_color_brewer(palette="Paired")+
+  theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1)) + labs(x=NULL)}
+
+
+p1<-alpha_div_plot(ariba_alpha_rpkm, HIV_Status, InvSimpson)+labs(title="Infeccion VIH")
+p2<-alpha_div_plot(ariba_alpha_rpkm, Profile, InvSimpson)+
+  labs(y=NULL, title="Fenotipo VIH")
+p3<-alpha_div_plot(ariba_alpha_rpkm, ART, InvSimpson)+
+  labs(y=NULL, title="TAR")
+p1+p2+p3
+
+
+```
+
+
+#### Plot correlation between diversity indexe and quantitative clinical variables
+
+```{r}
+alpha_div_cor<-function(data, clin_var,alpha_var){
+clin_var<-enquo(clin_var)
+alpha_var<-enquo(alpha_var)
+
+data%>%
+  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
+  geom_point(color='#2980B9', size = 2) + 
+  geom_smooth(method=lm, color="black")+
+  stat_cor(method="spearman", label.x.npc = "right", label.y.npc = 0.9)+
+  theme_bw()+
+  labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
+  theme(legend.position = "none", axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}
+
+
+```
+
+```{r}
+alpha_div_cor()
+```
+
+
