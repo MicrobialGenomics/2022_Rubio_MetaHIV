@@ -20,7 +20,6 @@ library(vegan)
 library(ggpubr)
 library(glue)
 library(patchwork)
-library(wesanderson)
 ```
 
 ```{r}
@@ -63,6 +62,7 @@ alpha_div_plot<-function(data, clin_var, alpha_var){
   scale_color_brewer(palette="Paired")+
   theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1)) + labs(x=NULL)}
 
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
 
 p1<-alpha_div_plot(ariba_alpha_rpkm, HIV_Status, InvSimpson)+labs(title="Infeccion VIH")
 p2<-alpha_div_plot(ariba_alpha_rpkm, Profile, InvSimpson)+
@@ -70,12 +70,10 @@ p2<-alpha_div_plot(ariba_alpha_rpkm, Profile, InvSimpson)+
 p3<-alpha_div_plot(ariba_alpha_rpkm, ART, InvSimpson)+
   labs(y=NULL, title="TAR")
 p1+p2+p3
-
-
 ```
 
 
-#### Plot correlation between diversity indexe and quantitative clinical variables
+#### Plot correlation between diversity indexes and quantitative clinical variables
 
 ```{r}
 alpha_div_cor<-function(data, clin_var,alpha_var){
@@ -86,9 +84,9 @@ data%>%
   ggplot(aes(x=!!clin_var, y=!!alpha_var))+
   geom_point(color='#2980B9', size = 2) + 
   geom_smooth(method=lm, color="black")+
-  stat_cor(method="spearman", label.x.npc = "right", label.y.npc = 0.9)+
+  stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.95)+
   theme_bw()+
-  labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
+  labs(y=quo_name(alpha_var), title = clin_var)+
   theme(legend.position = "none", axis.title.x=element_blank(),
         axis.text.x = element_text(angle=45, hjust = 1))}
 
@@ -96,7 +94,16 @@ data%>%
 ```
 
 ```{r}
-alpha_div_cor()
+p1<-alpha_div_cor(ariba_alpha_rpkm, CD4, InvSimpson)+labs(title="CD4")
+p2<-alpha_div_cor(ariba_alpha_rpkm, Nadir_CD4, InvSimpson)+labs(title="Nadir CD4")
+p3<-alpha_div_cor(ariba_alpha_rpkm, CD8_absolute, InvSimpson)+labs(title="CD8")
+
+
+high_ratio<-which(ariba_alpha_rpkm$ratio_CD4_CD8>300)
+
+p4<-alpha_div_cor(slice(ariba_alpha_rpkm, -high_ratio), ratio_CD4_CD8, InvSimpson)+labs(title="CD4/CD8 ratio")
+
+(p1| p2) / (p3 | p4)
 ```
 
 
