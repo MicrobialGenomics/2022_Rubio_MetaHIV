@@ -1,5 +1,5 @@
 ---
-title: "PEC3"
+title: "PEC3_alpha_beta"
 author: "Elisa Rubio"
 date: "2022-11-28"
 output: workflowr::wflow_html
@@ -20,17 +20,72 @@ library(vegan)
 library(ggpubr)
 library(glue)
 library(patchwork)
+library(ggthemes)
+library(grid)
 ```
 
 ```{r}
+theme_Publication <- function(base_size=14, base_family="helvetica") {
+      (theme_foundation(base_size=base_size, base_family=base_family)
+       + theme(plot.title = element_text(face = "bold",
+                                         size = rel(1), hjust = 0.5),
+               plot.subtitle=element_text(
+                                         size = rel(0.7)),
+               text = element_text(),
+               panel.background = element_rect(colour = NA),
+               plot.background = element_rect(colour = NA),
+               panel.border = element_rect(colour = NA),
+               axis.title = element_text(face = "bold",size = rel(1)),
+               axis.title.y = element_text(angle=90,vjust =2),
+               axis.title.x = element_text(vjust = -0.2),
+               axis.text = element_text(), 
+               axis.line = element_line(colour="black"),
+               axis.ticks = element_line(),
+               panel.grid.major = element_line(colour="#f0f0f0"),
+               panel.grid.minor = element_blank(),
+               legend.key = element_rect(colour = NA),
+               legend.position = "bottom",
+               legend.direction = "horizontal",
+               legend.key.size= unit(0.2, "cm"),
+               legend.margin = unit(0, "cm"),
+               legend.title = element_text(face="italic"),
+               plot.margin=unit(c(10,5,5,5),"mm"),
+               strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+               strip.text = element_text(face="bold")
+          ))
+      
+}
+
+scale_fill_Publication <- function(...){
+      library(scales)
+      discrete_scale("fill","Publication",manual_pal(values = c("#386cb0","#fdb462","#7fc97f","#ef3b2c","#662506","#a6cee3","#fb9a99","#984ea3","#ffff33")), ...)
+
+}
+
+scale_colour_Publication <- function(...){
+      library(scales)
+      discrete_scale("colour","Publication",manual_pal(values = c("#386cb0","#fdb462","#7fc97f","#ef3b2c","#662506","#a6cee3","#fb9a99","#984ea3","#ffff33")), ...)
+
+}
+```
+
+
+```{r}
 load("output/summarized_ariba.RDA")
+load("output/ariba_dist.RDA")
 
 ART_groups<-c("concordant", "discordant ", "early_treated")
 
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
-         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"))
+         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+  inner_join(gene_richness, by="SampleID")
 ```
+
 
 ```{r}
 alpha_div<-function(d_rpkm, d_counts, metadata){
@@ -42,6 +97,8 @@ fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from c
 metadata%>%
   filter(SampleID %in% names(d_rpkm))%>%
   mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
+
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
 ```
 
 
@@ -57,14 +114,11 @@ alpha_div_plot<-function(data, clin_var, alpha_var){
   ggplot(aes(x=!!clin_var, y=!!alpha_var))+
   geom_boxplot(aes(colour=!!clin_var))+
   geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  stat_compare_means(label.x.npc = 0.4, label.y.npc = 0.8)+
-  theme_classic()+
-  scale_color_brewer(palette="Paired")+
+  stat_compare_means(label.x.npc = 0.3, label.y.npc = 0.8)+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1)) + labs(x=NULL)}
 
-ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
-
-p1<-alpha_div_plot(ariba_alpha_rpkm, HIV_Status, InvSimpson)+labs(title="Infeccion VIH")
+p1<-alpha_div_plot(ariba_alpha_rpkm, HIV_Status, InvSimpson)+labs(title="Infección VIH")
 p2<-alpha_div_plot(ariba_alpha_rpkm, Profile, InvSimpson)+
   labs(y=NULL, title="Fenotipo VIH")
 p3<-alpha_div_plot(ariba_alpha_rpkm, ART, InvSimpson)+
@@ -85,12 +139,10 @@ data%>%
   geom_point(color='#2980B9', size = 2) + 
   geom_smooth(method=lm, color="black")+
   stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.95)+
-  theme_bw()+
+  scale_colour_Publication()+ theme_Publication()+
   labs(y=quo_name(alpha_var), title = clin_var)+
   theme(legend.position = "none", axis.title.x=element_blank(),
         axis.text.x = element_text(angle=45, hjust = 1))}
-
-
 ```
 
 ```{r}
@@ -104,6 +156,156 @@ high_ratio<-which(ariba_alpha_rpkm$ratio_CD4_CD8>300)
 p4<-alpha_div_cor(slice(ariba_alpha_rpkm, -high_ratio), ratio_CD4_CD8, InvSimpson)+labs(title="CD4/CD8 ratio")
 
 (p1| p2) / (p3 | p4)
+```
+
+## All diversity indexes for a clinical variable 
+```{r}
+alpha_div_plot_all<-function(data, clin_var){
+clin_var<-enquo(clin_var)
+data%>%
+  filter(!is.na(!!clin_var))%>%
+  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+  ggplot(aes(x=!!clin_var, y=Alpha_value))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+  stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
+  # theme_classic2()+
+  # scale_color_brewer(palette="Set1")+
+  scale_colour_Publication()+ theme_Publication()+
+  labs(y="Alfa diversidad", caption = "valores p calculados con Wilcoxon test")+
+  theme(legend.position = "none", axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}
+
+
+```
+
+```{r}
+alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)+labs(title = "Factor de riesgo de infección por VIH")
+alpha_div_plot_all(ariba_alpha_rpkm, Cluster)+labs(title = "Cluster microbioma")
+alpha_div_plot_all(ariba_alpha_rpkm, GCount)+labs(title = "Riqueza de genes")
+
+```
+
+#### NMDS function (for variables with max 3 levels)
+
+```{r}
+
+beta_nmds<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  
+  dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(!!clin_var))
+  
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+  
+  clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  r2test<-round(test$aov.tab$R2[1],2)
+  
+  set.seed(200889)
+  nmds <- metaMDS(dist)
+  
+  ##scores(nmds) %>%
+ nmds$points %>%
+    as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
+    inner_join(., metadata, by="SampleID") %>%
+    filter(!is.na(!!clin_var))%>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var, fill=!!clin_var)) + 
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(subtitle = glue("Permanova p={ptest}, r2={r2test}"))+
+    # scale_color_manual(name=quo_name(clin_var), 
+    #                        values = c("blue", "red","green4"))+ 
+    scale_colour_Publication()+scale_fill_Publication()+
+    ##scale_fill_manual(values = c("dodgerblue", "pink", "green"))+
+    theme_Publication()+
+    theme(legend.title = element_blank())}
+    # theme_bw()+
+    # theme(legend.text = element_text(size=10))
+
+```
+
+
+```{r}
+p5<-beta_nmds(ariba_dist$dist_rpkm, metadata, MSM_dic)
+p5+labs(title="Factor de riesgo de infección por VIH")
+```
+
+```{r}
+metadata$Cluster<-factor(metadata$Cluster, levels=c("Prevotella", "Bacteroides"))
+p6<-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)
+p6+labs(title="Clúster microbioma")
+```
+
+```{r}
+p5+labs(title="Factor de riesgo de infección \n por VIH") | p6+labs(title="Clúster microbioma")
+```
+
+
+```{r}
+p7<-beta_nmds(ariba_dist$dist_rpkm, metadata, GCount)
+p7+labs(title="Riqueza de genes")
+```
+
+#### NMDS function (for variables with 4-8 levels)
+
+```{r}
+beta_nmds2<-function(dist, metadata, clin_var){
+  
+  clin_var<-enquo(clin_var)
+  
+  dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(!!clin_var))
+  
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+  as.dist()
+  
+  clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+  r2test<-round(test$aov.tab$R2[1],2)
+  
+  set.seed(200889)
+  nmds <- metaMDS(dist)
+  
+  ##scores(nmds) %>%
+  nmds$points %>%
+    as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) + 
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(subtitle = glue("Permanova p={ptest}, r2={r2test}"))+
+    scale_colour_Publication()+ theme_Publication()+
+    theme(legend.title = element_blank())}
+    # scale_color_manual(name=quo_name(clin_var), 
+    #                        values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+ 
+    # theme_bw()+
+    ##theme(legend.text = element_text(size=10))
+ 
+
+```
+
+
+```{r}
+p1<-beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)
+
+p1+labs(title="Fenotipo VIH")
+
 ```
 
 

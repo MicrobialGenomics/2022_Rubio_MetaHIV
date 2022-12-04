@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Elisa Rubio" />
+
+<meta name="date" content="2022-11-28" />
+
+<title>PEC3</title>
+
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">2022_Rubio_MetaHIV</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="01_import_data.html">Import data</a>
+</li>
+<li>
+  <a href="02_summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="01_1_import_virulome.html">Import virulome</a>
+</li>
+<li>
+  <a href="03_rarefaction.html">Rarefy data</a>
+</li>
+<li>
+  <a href="03_1_procruster.html">Procruster test (Rare versus RPKM)</a>
+</li>
+<li>
+  <a href="04_alpha_div.html">Alpha diversity analysis</a>
+</li>
+<li>
+  <a href="05_beta_div.html">Beta diversity analysis</a>
+</li>
+<li>
+  <a href="06_biplot.html">Biplot (Spearman)</a>
+</li>
+<li>
+  <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
+</li>
+<li>
+  <a href="contingency_tabe.html">Contingency table</a>
+</li>
+<li>
+  <a href="08_amr_significance.html">AMR significance</a>
+</li>
+<li>
+  <a href="09_group_matrixes.html">Group matrixes</a>
+</li>
+<li>
+  <a href="10_grouped_significance.html">Grouped significance</a>
+</li>
+<li>
+  <a href="Profile.html">Profile</a>
+</li>
+<li>
+  <a href="ART.html">ART</a>
+</li>
+<li>
+  <a href="11_gene_richness.html">Gene Richness</a>
+</li>
+<li>
+  <a href="Riskgroup2_grouped.html">Riskgroup2</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">PEC3</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-11-28</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-12-04
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree94ec2b472ad009f832d7e5304290ceb34c28c0c8targetblank94ec2b4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/94ec2b472ad009f832d7e5304290ceb34c28c0c8" target="_blank">94ec2b4</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree94ec2b472ad009f832d7e5304290ceb34c28c0c8targetblank94ec2b4a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/94ec2b472ad009f832d7e5304290ceb34c28c0c8" target="_blank">94ec2b4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.Rhistory
+    Ignored:    output/aribaData/
+    Ignored:    output/grootData/
+
+Untracked files:
+    Untracked:  alpha_div_nosig.png
+
+Unstaged changes:
+    Modified:   analysis/04_alpha_div.Rmd
+    Modified:   analysis/PEC3.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/PEC3.Rmd</code>) and HTML (<code>docs/PEC3.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/94ec2b472ad009f832d7e5304290ceb34c28c0c8/analysis/PEC3.Rmd" target="_blank">94ec2b4</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-03
+</td>
+<td>
+guardia021222
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/beb29d3d257516bf2992bb87a91f294453f2e4aa/analysis/PEC3.Rmd" target="_blank">beb29d3</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-11-28
+</td>
+<td>
+pec3 figures
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggthemes)
+library(grid)</code></pre>
+<pre class="r"><code>theme_Publication &lt;- function(base_size=14, base_family=&quot;helvetica&quot;) {
+      (theme_foundation(base_size=base_size, base_family=base_family)
+       + theme(plot.title = element_text(face = &quot;bold&quot;,
+                                         size = rel(1), hjust = 0.5),
+               plot.subtitle=element_text(
+                                         size = rel(0.7)),
+               text = element_text(),
+               panel.background = element_rect(colour = NA),
+               plot.background = element_rect(colour = NA),
+               panel.border = element_rect(colour = NA),
+               axis.title = element_text(face = &quot;bold&quot;,size = rel(1)),
+               axis.title.y = element_text(angle=90,vjust =2),
+               axis.title.x = element_text(vjust = -0.2),
+               axis.text = element_text(), 
+               axis.line = element_line(colour=&quot;black&quot;),
+               axis.ticks = element_line(),
+               panel.grid.major = element_line(colour=&quot;#f0f0f0&quot;),
+               panel.grid.minor = element_blank(),
+               legend.key = element_rect(colour = NA),
+               legend.position = &quot;bottom&quot;,
+               legend.direction = &quot;horizontal&quot;,
+               legend.key.size= unit(0.2, &quot;cm&quot;),
+               legend.margin = unit(0, &quot;cm&quot;),
+               legend.title = element_text(face=&quot;italic&quot;),
+               plot.margin=unit(c(10,5,5,5),&quot;mm&quot;),
+               strip.background=element_rect(colour=&quot;#f0f0f0&quot;,fill=&quot;#f0f0f0&quot;),
+               strip.text = element_text(face=&quot;bold&quot;)
+          ))
+      
+}
+
+scale_fill_Publication &lt;- function(...){
+      library(scales)
+      discrete_scale(&quot;fill&quot;,&quot;Publication&quot;,manual_pal(values = c(&quot;#386cb0&quot;,&quot;#fdb462&quot;,&quot;#7fc97f&quot;,&quot;#ef3b2c&quot;,&quot;#662506&quot;,&quot;#a6cee3&quot;,&quot;#fb9a99&quot;,&quot;#984ea3&quot;,&quot;#ffff33&quot;)), ...)
+
+}
+
+scale_colour_Publication &lt;- function(...){
+      library(scales)
+      discrete_scale(&quot;colour&quot;,&quot;Publication&quot;,manual_pal(values = c(&quot;#386cb0&quot;,&quot;#fdb462&quot;,&quot;#7fc97f&quot;,&quot;#ef3b2c&quot;,&quot;#662506&quot;,&quot;#a6cee3&quot;,&quot;#fb9a99&quot;,&quot;#984ea3&quot;,&quot;#ffff33&quot;)), ...)
+
+}</code></pre>
+<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
+load(&quot;output/ariba_dist.RDA&quot;)
+
+ART_groups&lt;-c(&quot;concordant&quot;, &quot;discordant &quot;, &quot;early_treated&quot;)
+
+gene_richness&lt;-read.delim2(&quot;data/Metadata/generichness_data.txt&quot;)%&gt;%
+  select(SampleID, GCount)
+
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)%&gt;%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, &quot;TAR&quot;, &quot;No TAR&quot;),
+         MSM_dic=ifelse(RiskGroup2==&quot;msm&quot;, &quot;MSM&quot;, &quot;no MSM&quot;))%&gt;%
+  inner_join(gene_richness, by=&quot;SampleID&quot;)</code></pre>
+<pre class="r"><code>alpha_div&lt;-function(d_rpkm, d_counts, metadata){
+shannon&lt;-diversity(d_rpkm[ ,-1], MARGIN = 2, index=&quot;shannon&quot;)
+simpson&lt;-diversity(d_rpkm[, -1], MARGIN = 2, index=&quot;simpson&quot;)
+invsimpson&lt;-diversity(d_rpkm[, -1], MARGIN = 2, index=&quot;invsimpson&quot;)
+nARG&lt;-specnumber(d_rpkm[, -1], MARGIN = 2)
+fisher&lt;-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from counts (not possible to calculate for rpkm values)
+metadata%&gt;%
+  filter(SampleID %in% names(d_rpkm))%&gt;%
+  mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
+
+ariba_alpha_rpkm&lt;-alpha_div(ariba_rpkm, ariba_counts, metadata)</code></pre>
+<div id="plot-a-diversity-index-for-a-clinical-variable" class="section level4">
+<h4>Plot a diversity index for a clinical variable</h4>
+<pre class="r"><code>alpha_div_plot&lt;-function(data, clin_var, alpha_var){
+  clin_var&lt;-enquo(clin_var)
+  alpha_var&lt;-enquo(alpha_var)
+  
+  data%&gt;%
+  filter(!is.na(!!clin_var))%&gt;%
+  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  stat_compare_means(label.x.npc = 0.3, label.y.npc = 0.8)+
+  scale_colour_Publication()+ theme_Publication()+
+  theme(legend.position = &quot;none&quot;,  axis.text.x = element_text(angle=45, hjust = 1)) + labs(x=NULL)}
+
+p1&lt;-alpha_div_plot(ariba_alpha_rpkm, HIV_Status, InvSimpson)+labs(title=&quot;Infección VIH&quot;)
+p2&lt;-alpha_div_plot(ariba_alpha_rpkm, Profile, InvSimpson)+
+  labs(y=NULL, title=&quot;Fenotipo VIH&quot;)
+p3&lt;-alpha_div_plot(ariba_alpha_rpkm, ART, InvSimpson)+
+  labs(y=NULL, title=&quot;TAR&quot;)
+p1+p2+p3</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="plot-correlation-between-diversity-indexes-and-quantitative-clinical-variables" class="section level4">
+<h4>Plot correlation between diversity indexes and quantitative clinical variables</h4>
+<pre class="r"><code>alpha_div_cor&lt;-function(data, clin_var,alpha_var){
+clin_var&lt;-enquo(clin_var)
+alpha_var&lt;-enquo(alpha_var)
+
+data%&gt;%
+  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
+  geom_point(color=&#39;#2980B9&#39;, size = 2) + 
+  geom_smooth(method=lm, color=&quot;black&quot;)+
+  stat_cor(method=&quot;spearman&quot;, label.x.npc = &quot;left&quot;, label.y.npc = 0.95)+
+  scale_colour_Publication()+ theme_Publication()+
+  labs(y=quo_name(alpha_var), title = clin_var)+
+  theme(legend.position = &quot;none&quot;, axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}</code></pre>
+<pre class="r"><code>p1&lt;-alpha_div_cor(ariba_alpha_rpkm, CD4, InvSimpson)+labs(title=&quot;CD4&quot;)
+p2&lt;-alpha_div_cor(ariba_alpha_rpkm, Nadir_CD4, InvSimpson)+labs(title=&quot;Nadir CD4&quot;)
+p3&lt;-alpha_div_cor(ariba_alpha_rpkm, CD8_absolute, InvSimpson)+labs(title=&quot;CD8&quot;)
+
+
+high_ratio&lt;-which(ariba_alpha_rpkm$ratio_CD4_CD8&gt;300)
+
+p4&lt;-alpha_div_cor(slice(ariba_alpha_rpkm, -high_ratio), ratio_CD4_CD8, InvSimpson)+labs(title=&quot;CD4/CD8 ratio&quot;)
+
+(p1| p2) / (p3 | p4)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="all-diversity-indexes-for-a-clinical-variable" class="section level2">
+<h2>All diversity indexes for a clinical variable</h2>
+<pre class="r"><code>alpha_div_plot_all&lt;-function(data, clin_var){
+clin_var&lt;-enquo(clin_var)
+data%&gt;%
+  filter(!is.na(!!clin_var))%&gt;%
+  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = &quot;Alpha_Index&quot;, values_to = &quot;Alpha_value&quot;)%&gt;%
+  ggplot(aes(x=!!clin_var, y=Alpha_value))+
+  geom_boxplot(aes(colour=!!clin_var))+
+  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
+  facet_wrap(vars(Alpha_Index), ncol = 3, scales = &quot;free_y&quot;)+
+  stat_compare_means(label=&quot;p.format&quot;, label.x = 1, label.y.npc = 0.9)+
+  # theme_classic2()+
+  # scale_color_brewer(palette=&quot;Set1&quot;)+
+  scale_colour_Publication()+ theme_Publication()+
+  labs(y=&quot;Alfa diversidad&quot;, caption = &quot;valores p calculados con Wilcoxon test&quot;)+
+  theme(legend.position = &quot;none&quot;, axis.title.x=element_blank(),
+        axis.text.x = element_text(angle=45, hjust = 1))}</code></pre>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)+labs(title = &quot;Factor de riesgo de infección por VIH&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rpkm, Cluster)+labs(title = &quot;Cluster microbioma&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-9-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>alpha_div_plot_all(ariba_alpha_rpkm, GCount)+labs(title = &quot;Riqueza de genes&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-9-3.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="nmds-function-for-variables-with-max-3-levels" class="section level4">
+<h4>NMDS function (for variables with max 3 levels)</h4>
+<pre class="r"><code>beta_nmds&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  
+  dist_df&lt;-as.data.frame(as.matrix(dist)); dist_df$SampleID&lt;-rownames(dist_df)
+  meta_dist&lt;-inner_join(metadata, dist_df, by=&quot;SampleID&quot;)%&gt;%
+    filter(!is.na(!!clin_var))
+  
+  dist&lt;-meta_dist%&gt;%
+    select(all_of(.[[&quot;SampleID&quot;]]))%&gt;%
+  as.dist()
+  
+  clin_var2&lt;-meta_dist%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  r2test&lt;-round(test$aov.tab$R2[1],2)
+  
+  set.seed(200889)
+  nmds &lt;- metaMDS(dist)
+  
+  ##scores(nmds) %&gt;%
+ nmds$points %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    filter(!is.na(!!clin_var))%&gt;%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var, fill=!!clin_var)) + 
+    stat_ellipse(geom=&quot;polygon&quot;, show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(subtitle = glue(&quot;Permanova p={ptest}, r2={r2test}&quot;))+
+    # scale_color_manual(name=quo_name(clin_var), 
+    #                        values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;))+ 
+    scale_colour_Publication()+scale_fill_Publication()+
+    ##scale_fill_manual(values = c(&quot;dodgerblue&quot;, &quot;pink&quot;, &quot;green&quot;))+
+    theme_Publication()+
+    theme(legend.title = element_blank())}
+    # theme_bw()+
+    # theme(legend.text = element_text(size=10))</code></pre>
+<pre class="r"><code>p5&lt;-beta_nmds(ariba_dist$dist_rpkm, metadata, MSM_dic)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<pre class="r"><code>p5+labs(title=&quot;Factor de riesgo de infección por VIH&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>metadata$Cluster&lt;-factor(metadata$Cluster, levels=c(&quot;Prevotella&quot;, &quot;Bacteroides&quot;))
+p6&lt;-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)</code></pre>
+<pre><code>Run 0 stress 0.2501852 
+Run 1 stress 0.2502281 
+... Procrustes: rmse 0.003173506  max resid 0.03408934 
+Run 2 stress 0.2501339 
+... New best solution
+... Procrustes: rmse 0.003050584  max resid 0.0241482 
+Run 3 stress 0.2552711 
+Run 4 stress 0.2526234 
+Run 5 stress 0.2501879 
+... Procrustes: rmse 0.004708727  max resid 0.03444833 
+Run 6 stress 0.2512521 
+Run 7 stress 0.2502145 
+... Procrustes: rmse 0.003082962  max resid 0.0242266 
+Run 8 stress 0.2502221 
+... Procrustes: rmse 0.002860792  max resid 0.02352288 
+Run 9 stress 0.2503062 
+... Procrustes: rmse 0.007026902  max resid 0.07260495 
+Run 10 stress 0.2534009 
+Run 11 stress 0.2501555 
+... Procrustes: rmse 0.003091255  max resid 0.03432094 
+Run 12 stress 0.2502147 
+... Procrustes: rmse 0.003098622  max resid 0.0242554 
+Run 13 stress 0.2505752 
+... Procrustes: rmse 0.00800723  max resid 0.05465815 
+Run 14 stress 0.2532196 
+Run 15 stress 0.2513178 
+Run 16 stress 0.2511887 
+Run 17 stress 0.2503463 
+... Procrustes: rmse 0.007419808  max resid 0.07175471 
+Run 18 stress 0.2502996 
+... Procrustes: rmse 0.004517782  max resid 0.02845152 
+Run 19 stress 0.2501565 
+... Procrustes: rmse 0.004171886  max resid 0.03457083 
+Run 20 stress 0.2502236 
+... Procrustes: rmse 0.004040981  max resid 0.03400017 
+*** No convergence -- monoMDS stopping criteria:
+     6: no. of iterations &gt;= maxit
+    14: stress ratio &gt; sratmax</code></pre>
+<pre class="r"><code>p6+labs(title=&quot;Clúster microbioma&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p5+labs(title=&quot;Factor de riesgo de infección \n por VIH&quot;) | p6+labs(title=&quot;Clúster microbioma&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p7&lt;-beta_nmds(ariba_dist$dist_rpkm, metadata, GCount)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<pre class="r"><code>p7+labs(title=&quot;Riqueza de genes&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="nmds-function-for-variables-with-4-8-levels" class="section level4">
+<h4>NMDS function (for variables with 4-8 levels)</h4>
+<pre class="r"><code>beta_nmds2&lt;-function(dist, metadata, clin_var){
+  
+  clin_var&lt;-enquo(clin_var)
+  
+  dist_df&lt;-as.data.frame(as.matrix(dist)); dist_df$SampleID&lt;-rownames(dist_df)
+  meta_dist&lt;-inner_join(metadata, dist_df, by=&quot;SampleID&quot;)%&gt;%
+    filter(!is.na(!!clin_var))
+  
+  dist&lt;-meta_dist%&gt;%
+    select(all_of(.[[&quot;SampleID&quot;]]))%&gt;%
+  as.dist()
+  
+  clin_var2&lt;-meta_dist%&gt;%pull(!!clin_var) ##clin_var vector for adonis test
+  
+  test&lt;-adonis(dist~clin_var2, permutations = 999)
+  ptest&lt;-test$aov.tab$`Pr(&gt;F)`[1]
+  r2test&lt;-round(test$aov.tab$R2[1],2)
+  
+  set.seed(200889)
+  nmds &lt;- metaMDS(dist)
+  
+  ##scores(nmds) %&gt;%
+  nmds$points %&gt;%
+    as_tibble(rownames = &quot;SampleID&quot;) %&gt;%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %&gt;%
+    inner_join(., metadata, by=&quot;SampleID&quot;) %&gt;%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=!!clin_var)) + 
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(subtitle = glue(&quot;Permanova p={ptest}, r2={r2test}&quot;))+
+    scale_colour_Publication()+ theme_Publication()+
+    theme(legend.title = element_blank())}
+    # scale_color_manual(name=quo_name(clin_var), 
+    #                        values = c(&quot;blue&quot;, &quot;red&quot;,&quot;green4&quot;, &quot;orange&quot;, &quot;aquamarine4&quot;, &quot;magenta2&quot;, &quot;gold&quot;, &quot;black&quot;))+ 
+    # theme_bw()+
+    ##theme(legend.text = element_text(size=10))</code></pre>
+<pre class="r"><code>p1&lt;-beta_nmds2(ariba_dist$dist_rpkm, metadata, Profile)</code></pre>
+<pre><code>Run 0 stress 0.2486241 
+Run 1 stress 0.2486688 
+... Procrustes: rmse 0.002921123  max resid 0.03232354 
+Run 2 stress 0.2496518 
+Run 3 stress 0.2486503 
+... Procrustes: rmse 0.002719418  max resid 0.03224038 
+Run 4 stress 0.2488234 
+... Procrustes: rmse 0.007291362  max resid 0.07156585 
+Run 5 stress 0.2487869 
+... Procrustes: rmse 0.006794286  max resid 0.07184174 
+Run 6 stress 0.2524771 
+Run 7 stress 0.2488573 
+... Procrustes: rmse 0.006489633  max resid 0.07181505 
+Run 8 stress 0.249641 
+Run 9 stress 0.2498946 
+Run 10 stress 0.2488563 
+... Procrustes: rmse 0.007030332  max resid 0.07164832 
+Run 11 stress 0.2496531 
+Run 12 stress 0.2486444 
+... Procrustes: rmse 0.001086834  max resid 0.01049294 
+Run 13 stress 0.2486165 
+... New best solution
+... Procrustes: rmse 0.001823109  max resid 0.01580782 
+Run 14 stress 0.2516208 
+Run 15 stress 0.2486463 
+... Procrustes: rmse 0.002706895  max resid 0.03221644 
+Run 16 stress 0.2495862 
+Run 17 stress 0.2496288 
+Run 18 stress 0.2496519 
+Run 19 stress 0.2496403 
+Run 20 stress 0.2496276 
+*** No convergence -- monoMDS stopping criteria:
+     1: no. of iterations &gt;= maxit
+    19: stress ratio &gt; sratmax</code></pre>
+<pre class="r"><code>p1+labs(title=&quot;Fenotipo VIH&quot;)</code></pre>
+<p><img src="figure/PEC3.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 20.04.3 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] scales_1.2.1     ggthemes_4.2.4   patchwork_1.1.1  glue_1.6.2      
+ [5] ggpubr_0.4.0     vegan_2.5-7      lattice_0.20-45  permute_0.9-7   
+ [9] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
+[13] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
+[17] ggplot2_3.3.5    tidyverse_1.3.1 
+
+loaded via a namespace (and not attached):
+ [1] nlme_3.1-157      fs_1.5.2          bit64_4.0.5       lubridate_1.8.0  
+ [5] webshot_0.5.2     httr_1.4.2        rprojroot_2.0.2   tools_4.1.2      
+ [9] backports_1.4.1   bslib_0.3.1       utf8_1.2.2        R6_2.5.1         
+[13] DBI_1.1.2         mgcv_1.8-38       colorspace_2.0-3  withr_2.5.0      
+[17] tidyselect_1.1.2  bit_4.0.4         compiler_4.1.2    git2r_0.30.1     
+[21] cli_3.3.0         rvest_1.0.2       xml2_1.3.3        labeling_0.4.2   
+[25] sass_0.4.1        systemfonts_1.0.4 digest_0.6.29     rmarkdown_2.13   
+[29] svglite_2.1.0     pkgconfig_2.0.3   htmltools_0.5.2   highr_0.9        
+[33] dbplyr_2.1.1      fastmap_1.1.0     rlang_1.0.2       readxl_1.3.1     
+[37] rstudioapi_0.13   farver_2.1.0      jquerylib_0.1.4   generics_0.1.2   
+[41] jsonlite_1.8.0    vroom_1.5.7       car_3.0-12        magrittr_2.0.2   
+[45] Matrix_1.4-0      Rcpp_1.0.8.3      munsell_0.5.0     fansi_1.0.3      
+[49] abind_1.4-5       lifecycle_1.0.1   stringi_1.7.6     whisker_0.4      
+[53] yaml_2.3.5        carData_3.0-5     MASS_7.3-56       parallel_4.1.2   
+[57] promises_1.2.0.1  crayon_1.5.1      haven_2.4.3       splines_4.1.2    
+[61] hms_1.1.1         knitr_1.38        pillar_1.7.0      ggsignif_0.6.3   
+[65] reprex_2.0.1      evaluate_0.15     modelr_0.1.8      vctrs_0.3.8      
+[69] tzdb_0.2.0        httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0     
+[73] assertthat_0.2.1  xfun_0.30         broom_1.0.1       rstatix_0.7.0    
+[77] later_1.3.0       viridisLite_0.4.0 workflowr_1.7.0   cluster_2.1.2    
+[81] ellipsis_0.3.2   </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

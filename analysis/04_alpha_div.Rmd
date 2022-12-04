@@ -31,12 +31,21 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
+```
 
+## Prepare metadata
+
+```{r}
 ART_groups<-c("concordant", "discordant ", "early_treated")
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
 
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
-         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"))
+         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+  inner_join(gene_richness, by="SampleID")
 ```
 
 ## Create functions
@@ -233,11 +242,27 @@ p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Ariba rarefied counts")
 p_invsimp_rpkm + p_shannon_rpkm +plot_annotation(title = "Ariba RPKM")
 ```
 
+
+### Risk Group (Grouped)
+
+```{r}
+alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)+labs(subtitle = "Ariba RPKM")
+alpha_div_plot_all(ariba_alpha_rar, MSM_dic)+labs(subtitle = "Ariba Rarefied counts")
+```
+
 ### Microbiome cluster
 
 ```{r}
 alpha_div_plot_all(ariba_alpha_rpkm, Cluster)+labs(subtitle = "Ariba RPKM")
 alpha_div_plot_all(ariba_alpha_rar, Cluster)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+
+### Gene richness
+
+```{r}
+alpha_div_plot_all(ariba_alpha_rpkm, GCount)+labs(subtitle = "Ariba RPKM")
+alpha_div_plot_all(ariba_alpha_rar, GCount)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
 ### CD4 (absolute)
@@ -267,8 +292,18 @@ There is one CD8_absolute value of: 1.63, probably a mistake in the metadata.
 This sample is removed from the analysis
 
 ```{r}
-alpha_div_cor_all(slice(ariba_alpha_rpkm, -70), ratio_CD4_CD8)+labs(subtitle = "Ariba RPKM")
-alpha_div_cor_all(slice(ariba_alpha_rar, -70), ratio_CD4_CD8)+labs(subtitle = "Ariba Rarefied counts")
+high_ratio<-which(ariba_alpha_rpkm$ratio_CD4_CD8>300)
+
+alpha_div_cor_all(slice(ariba_alpha_rpkm, -high_ratio), ratio_CD4_CD8)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(slice(ariba_alpha_rar, -high_ratio), ratio_CD4_CD8)+labs(subtitle = "Ariba Rarefied counts")
+```
+
+
+### CD8 
+
+```{r}
+alpha_div_cor_all(slice(ariba_alpha_rpkm, -high_ratio), CD8_absolute)+labs(subtitle = "Ariba RPKM")
+alpha_div_cor_all(slice(ariba_alpha_rpkm, -high_ratio), CD8_absolute)+labs(subtitle = "Ariba Rarefied counts")
 ```
 
 ## Groot
@@ -348,11 +383,25 @@ p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Groot rarefied counts")
 p_invsimp_rpkm + p_shannon_rpkm +plot_annotation(title = "Groot RPKM")
 ```
 
+### Risk Group (Grouped)
+
+```{r}
+alpha_div_plot_all(groot_alpha_rpkm, MSM_dic)+labs(subtitle = "Groot RPKM")
+alpha_div_plot_all(groot_alpha_rar, MSM_dic)+labs(subtitle = "Groot Rarefied counts")
+```
+
 ### Microbiome cluster
 
 ```{r}
 alpha_div_plot_all(groot_alpha_rpkm, Cluster)+labs(subtitle = "Groot RPKM")
 alpha_div_plot_all(groot_alpha_rar, Cluster)+labs(subtitle = "Groot Rarefied counts")
+```
+
+### Gene richness
+
+```{r}
+alpha_div_plot_all(groot_alpha_rpkm, GCount)+labs(subtitle = "Groot RPKM")
+alpha_div_plot_all(groot_alpha_rar, GCount)+labs(subtitle = "Groot Rarefied counts")
 ```
 
 ### CD4 (absolute)
@@ -368,6 +417,7 @@ alpha_div_cor_all(groot_alpha_rar, CD4)+labs(subtitle = "Groot Rarefied counts")
 alpha_div_cor_all(groot_alpha_rpkm, CD4_relative)+labs(subtitle = "Groot RPKM")
 alpha_div_cor_all(groot_alpha_rar, CD4_relative)+labs(subtitle = "Groot Rarefied counts")
 ```
+
 
 ### Nadir CD4
 
@@ -389,6 +439,15 @@ high_ratio<-which(groot_alpha_rar$ratio_CD4_CD8>300)
 alpha_div_cor_all(slice(groot_alpha_rar, -high_ratio), ratio_CD4_CD8)+labs(subtitle = "Groot Rarefied counts")
 ```
 
+
+### CD8 
+
+```{r}
+alpha_div_cor_all(slice(groot_alpha_rpkm, -high_ratio), CD8_absolute)+labs(subtitle = "Groot RPKM")
+alpha_div_cor_all(slice(groot_alpha_rpkm, -high_ratio), CD8_absolute)+labs(subtitle = "Groot Rarefied counts")
+```
+
+
 ## Conclusions
 
 -   Similar results between Groot and Ariba
@@ -408,5 +467,5 @@ alpha_div_cor_all(slice(groot_alpha_rar, -high_ratio), ratio_CD4_CD8)+labs(subti
 -   **Microbiome Cluster:** Lower alpha diversity (Simpson/InvSimpson
     and Shannon) in *Bacteroides* cluster
 
--   **CD4, Nadir CD4, CD4/CD8 ratio:** No significant correlation between CD4 levels
+-   **CD4, Nadir CD4, CD8, CD4/CD8 ratio:** No significant correlation between CD4 levels
     and Nadir CD4 and alpha diversity.

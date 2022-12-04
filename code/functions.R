@@ -1,3 +1,47 @@
+theme_Publication <- function(base_size=14, base_family="helvetica") {
+  (theme_foundation(base_size=base_size, base_family=base_family)
+   + theme(plot.title = element_text(face = "bold",
+                                     size = rel(1), hjust = 0.5),
+           plot.subtitle=element_text(
+             size = rel(0.7)),
+           text = element_text(),
+           panel.background = element_rect(colour = NA),
+           plot.background = element_rect(colour = NA),
+           panel.border = element_rect(colour = NA),
+           axis.title = element_text(face = "bold",size = rel(1)),
+           axis.title.y = element_text(angle=90,vjust =2),
+           axis.title.x = element_text(vjust = -0.2),
+           axis.text = element_text(),
+           axis.line = element_line(colour="black"),
+           axis.ticks = element_line(),
+           panel.grid.major = element_line(colour="#f0f0f0"),
+           panel.grid.minor = element_blank(),
+           legend.key = element_rect(colour = NA),
+           legend.position = "bottom",
+           legend.direction = "horizontal",
+           legend.key.size= unit(0.2, "cm"),
+           legend.margin = unit(0, "cm"),
+           legend.title = element_text(face="italic"),
+           plot.margin=unit(c(10,5,5,5),"mm"),
+           strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
+           strip.text = element_text(face="bold")
+   ))
+
+}
+
+scale_fill_Publication <- function(...){
+  library(scales)
+  discrete_scale("fill","Publication",manual_pal(values = c("#386cb0","#fdb462","#7fc97f","#ef3b2c","#662506","#a6cee3","#fb9a99","#984ea3","#ffff33")), ...)
+
+}
+
+scale_colour_Publication <- function(...){
+  library(scales)
+  discrete_scale("colour","Publication",manual_pal(values = c("#386cb0","#fdb462","#7fc97f","#ef3b2c","#662506","#a6cee3","#fb9a99","#984ea3","#ffff33")), ...)
+
+}
+
+
 #### Calculate alpha diversity indexes:
 
 alpha_div<-function(d_rpkm, d_counts, metadata){
@@ -23,7 +67,7 @@ alpha_div_plot<-function(data, clin_var, alpha_var){
     geom_boxplot(aes(colour=!!clin_var))+
     geom_jitter(width = 0.2, aes(colour=!!clin_var))+
     stat_compare_means()+
-    theme_classic()+
+    scale_colour_Publication()+ theme_Publication()+
     theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))}
 
 
@@ -39,7 +83,7 @@ alpha_div_plot_all<-function(data, clin_var){
     geom_jitter(width = 0.2, aes(colour=!!clin_var))+
     facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
     stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
-    theme_bw()+
+    scale_colour_Publication()+ theme_Publication()+
     labs(y="Alpha diversity", caption = "P values calculated by Wilcoxon test", title = clin_var)+
     theme(legend.position = "none", axis.title.x=element_blank(),
           axis.text.x = element_text(angle=45, hjust = 1))}
@@ -56,7 +100,7 @@ alpha_div_cor_all<-function(data, clin_var){
     geom_smooth(method=lm, color="black")+
     facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
     stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.9)+
-    theme_bw()+
+    scale_colour_Publication()+ theme_Publication()+
     labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
     theme(legend.position = "none", axis.title.x=element_blank(),
           axis.text.x = element_text(angle=45, hjust = 1))}
@@ -96,10 +140,7 @@ beta_nmds<-function(dist, metadata, clin_var){
     geom_point()+
     coord_fixed(ratio = 0.8)+
     labs(caption = glue("ADONIS p={ptest}, r2={r2test}"))+
-    scale_color_manual(name=quo_name(clin_var),
-                       values = c("blue", "red","green4"))+
-    scale_fill_manual(values = c("dodgerblue", "pink", "green"))+
-    theme_bw()+
+    scale_colour_Publication()+ theme_Publication()+scale_fill_Publication()+
     theme(legend.text = element_text(size=10))}
 
 
@@ -135,10 +176,10 @@ beta_nmds2<-function(dist, metadata, clin_var){
     stat_ellipse(show.legend = FALSE)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    labs(caption = glue("ADONIS p={ptest}, r2={r2test}"))+
+    labs(subtitle = glue("ADONIS p={ptest}, r2={r2test}"))+
     scale_color_manual(name=quo_name(clin_var),
                        values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+
-    theme_bw()+
+    scale_colour_Publication()+ theme_Publication()+
     theme(legend.text = element_text(size=10))}
 
 
@@ -212,7 +253,7 @@ biplot_amr_envfit<-function(high_cor, nmds, metadata, clin_var, label_var){
     rename(NMDS1=MDS1, NMDS2=MDS2)
 
   nmds_positions%>%
-    left_join(., metadata, by="SampleID")%>%
+    inner_join(., metadata, by="SampleID")%>%
     ##ggplot(aes(x=NMDS1, y=NMDS2)) +
     ggplot( aes(x=NMDS1, y=NMDS2, color=!!clin_var)) +
     geom_point(alpha=0.5, size=2)+
@@ -224,8 +265,9 @@ biplot_amr_envfit<-function(high_cor, nmds, metadata, clin_var, label_var){
                     aes(x=NMDS1, y=NMDS2, label=!!label_var),
                     min.segment.length = 0.15, segment.alpha=1, segment.color="gray",
                     inherit.aes=FALSE) +
-    theme_bw()+
-    scale_color_manual(values = c("chartreuse4", "red", "gray"))
+    # theme_bw()+
+    # scale_color_manual(values = c("chartreuse4", "red", "gray"))
+    scale_colour_Publication()+ theme_Publication()+scale_fill_Publication()
 }
 
 

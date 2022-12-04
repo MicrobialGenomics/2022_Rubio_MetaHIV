@@ -27,8 +27,22 @@ load("output/summarized_ariba.RDA")
 load("output/summarized_groot.RDA")
 load("output/rarefied_ariba.RDA")
 load("output/rarefied2500_groot.RDA")
-metadata<-read_csv("data/Metadata/metadata.csv")
 ```
+
+## Prepare metadata 
+```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+  inner_join(gene_richness, by="SampleID")
+```
+
 
 ## Create functions
 
@@ -347,6 +361,17 @@ pairwise_riskgroup2(ariba_dist$dist_rpkm, metadata)
 pairwise_riskgroup2(ariba_dist$dist_rar, metadata)
 ```
 
+## RiksGroup2 (grouped)
+
+```{r ariba riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, MSM_dic)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, MSM_dic)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
+
 ### Cluster
 
 ```{r ariba cluster, message=FALSE, warning=FALSE, include=FALSE}
@@ -357,6 +382,30 @@ p2<-beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
 ```{r ariba cluster2, message=FALSE, warning=FALSE, include=TRUE, eval=FALSE}
 p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, Cluster)+labs(title="RPKM")+theme(legend.position = "none")
 p2<-beta_nmds(ariba_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
+
+
+## ART
+
+```{r ariba riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, ART)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, ART)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="Ariba")
+```
+
+
+## Gene richness
+
+```{r ariba riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(ariba_dist$dist_rpkm, metadata, GCount)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(ariba_dist$dist_rar, metadata, GCount)+labs(title="Rarefied")
 ```
 
 ```{r}
@@ -446,6 +495,42 @@ p2<-beta_nmds(groot_dist$dist_rar, metadata, Cluster)+labs(title="Rarefied")
 p1+p2+plot_annotation(title="Groot")
 ```
 
+
+## RiksGroup2 (grouped)
+
+```{r groot riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, MSM_dic)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, MSM_dic)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="groot")
+```
+
+
+## ART
+
+```{r groot riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, ART)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, ART)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="groot")
+```
+
+
+## Gene richness
+
+```{r groot riskgroup, message=FALSE, warning=FALSE, include=FALSE}
+p1<-beta_nmds(groot_dist$dist_rpkm, metadata, GCount)+labs(title="RPKM")+theme(legend.position = "none")
+p2<-beta_nmds(groot_dist$dist_rar, metadata, GCount)+labs(title="Rarefied")
+```
+
+```{r}
+p1+p2+plot_annotation(title="groot")
+```
+
 ## Conclusions
 
 -   Similar results between Groot and Ariba
@@ -466,6 +551,8 @@ p1+p2+plot_annotation(title="Groot")
 save(ariba_dist, file="output/ariba_dist.RDA")
 save(groot_dist, file="output/groot_dist.RDA")
 ```
+
+
 
 ```{r eval=FALSE, include=FALSE}
 
