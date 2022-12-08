@@ -446,7 +446,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-12-04
+<strong>Last updated:</strong> 2022-12-08
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -470,7 +470,7 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 </div>
 <div id="strongRMarkdownfilestronguncommittedchanges" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
+<p>The R Markdown file has unstaged changes. To know which version of the R Markdown file created these results, you’ll want to first commit it to the Git repo. If you’re still working on the analysis, you can ignore this warning. When you’re finished, you can run <code>wflow_publish</code> to commit the R Markdown file and build the HTML.</p>
 </div>
 </div>
 </div>
@@ -537,16 +537,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree94ec2b472ad009f832d7e5304290ceb34c28c0c8targetblank94ec2b4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/94ec2b472ad009f832d7e5304290ceb34c28c0c8" target="_blank">94ec2b4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree95e45d02a2c617326e4f97e1a4c6824799a3d146targetblank95e45d0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/95e45d02a2c617326e4f97e1a4c6824799a3d146" target="_blank">95e45d0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree94ec2b472ad009f832d7e5304290ceb34c28c0c8targetblank94ec2b4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree95e45d02a2c617326e4f97e1a4c6824799a3d146targetblank95e45d0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/94ec2b472ad009f832d7e5304290ceb34c28c0c8" target="_blank">94ec2b4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/95e45d02a2c617326e4f97e1a4c6824799a3d146" target="_blank">95e45d0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -559,18 +559,12 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Untracked files:
-    Untracked:  alpha_div_nosig.png
-    Untracked:  analysis/PEC3_biplots.Rmd
-    Untracked:  output/envfit_rpkm_amr_corlev2.csv
-    Untracked:  output/envfit_rpkm_drugclass_corlev2.csv
-    Untracked:  output/envfit_rpkm_genefamily_corlev2.csv
-    Untracked:  output/envfit_rpkm_meta_top10.csv
-
 Unstaged changes:
-    Modified:   analysis/04_alpha_div.Rmd
-    Modified:   analysis/PEC3.Rmd
-    Modified:   code/functions.R
+    Modified:   analysis/09_group_matrixes.Rmd
+    Modified:   analysis/PEC3_biplots.Rmd
+    Modified:   output/envfit_rpkm_drugclass_corlev2.csv
+    Modified:   output/envfit_rpkm_genefamily_corlev2.csv
+    Modified:   output/grouped_refname_ariba.RDA
 
 </code></pre>
 <p>
@@ -583,9 +577,69 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
+
 <p>
-There are no past versions. Publish this analysis with <code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/PEC3_biplots.Rmd</code>) and HTML (<code>docs/PEC3_biplots.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/analysis/PEC3_biplots.Rmd" target="_blank">95e45d0</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-12-04
+</td>
+<td>
+pec3_themepublication
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/PEC3_biplots.html" target="_blank">95e45d0</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-12-04
+</td>
+<td>
+pec3_themepublication
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -791,6 +845,43 @@ Attaching package: &#39;scales&#39;</code></pre>
 behavior use legend.spacing</code></pre>
 <pre class="r"><code>p1</code></pre>
 <p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/PEC3_biplots.Rmd/unnamed-chunk-7-1.png" target="_blank">95e45d0</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-12-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="amr-genes-correlations-with-nmds-axes" class="section level1">
 <h1>AMR genes correlations with NMDs axes</h1>
@@ -1747,6 +1838,49 @@ write_csv(cor_rpkm_amr_corlev2, &quot;output/envfit_rpkm_amr_corlev2.csv&quot;)<
 behavior use legend.spacing</code></pre>
 <pre class="r"><code>p2</code></pre>
 <p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/PEC3_biplots.Rmd/unnamed-chunk-10-1.png" target="_blank">95e45d0</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-12-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>p2b&lt;-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, GCount, `ARO Name`)+
+  labs(title = &quot;Determinantes de resistencia&quot;)+theme(legend.title = element_blank())</code></pre>
+<pre><code>Warning: `legend.margin` must be specified using `margin()`. For the old
+behavior use legend.spacing</code></pre>
+<pre class="r"><code>p2b</code></pre>
+<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="drug-class" class="section level3">
 <h3>Drug Class</h3>
 <pre class="r"><code>set.seed(200889)
@@ -1774,7 +1908,7 @@ p.value
 AMR Gene Family
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ARO Term
+ARO Name
 </th>
 </tr>
 </thead>
@@ -1807,10 +1941,10 @@ cephamycin
 0.001
 </td>
 <td style="text-align:left;">
-CfxA beta-lactamase;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;CfxA beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;CfxA beta-lactamase;ACT beta-lactamase;CMY beta-lactamase
+CfxA beta-lactamase;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase;CMY beta-lactamase
 </td>
 <td style="text-align:left;">
-CfxA2;CfxA6;CfxA3;AcrE;AcrF;AcrS;TolC;porin_OmpC;Klebsiella_aerogenes_Omp36;Klebsiella_pneumoniae_OmpK35;Klebsiella_pneumoniae_OmpK36;Klebsiella_pneumoniae_OmpK37;OmpA;CfxA5;soxS;H_NS;ompF;Streptococcus_pneumoniae_PBP2b;ACT_17;marA;CfxA4;ACT_45;ACT_4;ACT_7;ACT_38;ACT_39;CMY_90;CMY_169
+CfxA2;CfxA6;CfxA3;AcrE;AcrF;AcrS;TolC;porin OmpC;Klebsiella aerogenes Omp36;Klebsiella pneumoniae OmpK35;Klebsiella pneumoniae OmpK36;Klebsiella pneumoniae OmpK37;OmpA;CfxA5;Escherichia coli soxS with mutation conferring antibiotic resistance;H-NS;Escherichia coli ompF with mutation conferring resistance to beta-lactam antibiotics;Streptococcus pneumoniae PBP2b conferring resistance to amoxicillin;ACT-17;marA;CfxA4;ACT-45;ACT-4;ACT-7;ACT-38;ACT-39;CMY-90;CMY-169
 </td>
 </tr>
 <tr>
@@ -1824,10 +1958,10 @@ streptogramin antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;Cfr 23S ribosomal RNA methyltransferase
+23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;Cfr 23S ribosomal RNA methyltransferase
 </td>
 <td style="text-align:left;">
-Clostridioides_difficile_23S;ErmB;ErmF;ErmG;Moraxella_catarrhalis_23S;Mycoplasma_hominis_23S;Neisseria_gonorrhoeae_23S;Staphylococcus_aureus_23S;Streptococcus_pneumoniae_23S;Thermus_thermophilus_23s;mel;Campylobacter_jejuni_23S;Chlamydia_trachomatis_23S;Escherichia_coli_23S;23S_rRNA_<em>adenine_2058<strong>N_6</strong>_methyltransferase;Mycobacterium_intracellulare_23S;ErmX;Brachyspira_hyodysenteriae_23S;Helicobacter_pylori_23S;Mycoplasma_fermentans_23S;Streptomyces_ambofaciens_23S;Erm_49</em>;Mycoplasma_genitalium_23S;Mycolicibacterium_smegmatis_23S;msrC;Mycobacterium_avium_23S;ErmQ;Mycoplasma_gallisepticum_23S;lsaA;Mycobacterium_tuberculosis_23S;Propionibacteria_23S_rRNA;Mycobacteroides_abscessus_23S;Mycobacterium_kansasii_23S;lsaE;Mycoplasma_pneumoniae_23S;Mycobacteroides_chelonae_23S;lsaC;Chlamydomonas_reinhardtii_23S;eatAv;cfr_B_
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin;ErmB;ErmF;ErmG;Moraxella catarrhalis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycoplasma hominis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin;Staphylococcus aureus 23S rRNA with mutation conferring resistance to linezolid;Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins antibiotics;Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics;mel;Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin;Chlamydia trachomatis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Escherichia coli 23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A);Mycobacterium intracellulare 23S rRNA with mutation conferring resistance to azithromycin;ErmX;Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin;Helicobacter pylori 23S rRNA with mutation conferring resistance to clarithromycin;Mycoplasma fermentans 23S rRNA with mutation conferring resistance to macrolide antibiotics;Streptomyces ambofaciens 23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm(49);Mycoplasma genitalium 23S rRNA mutations confers resistance to fluoroquinolone and macrolide antibiotics;Mycolicibacterium smegmatis 23S rRNA with mutation conferring resistance to clarithromycin;msrC;Mycobacterium avium 23S rRNA with mutation conferring resistance to clarithromycin;ErmQ;Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics;lsaA;Mycobacterium tuberculosis 23S rRNA mutation conferring resistance to capreomycin;Propionibacteria 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycobacteroides abscessus 23S rRNA with mutation conferring resistance to clarithromycin;Mycobacterium kansasii 23S rRNA with mutation conferring resistance to clarithromycin;lsaE;Mycoplasma pneumoniae 23S rRNA mutation conferring resistance to erythromycin;Mycobacteroides chelonae 23S rRNA with mutation conferring resistance to clarithromycin;lsaC;Chlamydomonas reinhardtii 23S rRNA with mutation conferring resistance to erythromycin;eatAv;cfr(B)
 </td>
 </tr>
 <tr>
@@ -1841,10 +1975,10 @@ macrolide antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;major facilitator superfamily (MFS) antibiotic efflux pump;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;resistance-nodulation-cell division (RND) antibiotic efflux pump;23S rRNA with mutation conferring resistance to macrolide antibiotics;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;Erm 23S ribosomal RNA methyltransferase;ATP-binding cassette (ABC) antibiotic efflux pump;pmr phosphoethanolamine transferase;major facilitator superfamily (MFS) antibiotic efflux pump;23S rRNA with mutation conferring resistance to macrolide antibiotics;macrolide phosphotransferase (MPH);major facilitator superfamily (MFS) antibiotic efflux pump;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;pmr phosphoethanolamine transferase;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ATP-binding cassette (ABC) antibiotic efflux pump;ABC-F ATP-binding cassette ribosomal protection protein;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;small multidrug resistance (SMR) antibiotic efflux pump;23S rRNA with mutation conferring resistance to macrolide antibiotics;macrolide esterase;ABC-F ATP-binding cassette ribosomal protection protein;major facilitator superfamily (MFS) antibiotic efflux pump
+23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;major facilitator superfamily (MFS) antibiotic efflux pump;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;pmr phosphoethanolamine transferase;macrolide phosphotransferase (MPH);23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;small multidrug resistance (SMR) antibiotic efflux pump;macrolide esterase
 </td>
 <td style="text-align:left;">
-Clostridioides_difficile_23S;ErmB;ErmF;ErmG;Mef_En2_;Moraxella_catarrhalis_23S;Mycoplasma_hominis_23S;Neisseria_gonorrhoeae_23S;Staphylococcus_aureus_23S;Streptococcus_pneumoniae_23S;Thermus_thermophilus_23s;mel;Campylobacter_jejuni_23S;Chlamydia_trachomatis_23S;Escherichia_coli_23S;23S_rRNA_<em>adenine_2058<strong>N_6</strong>_methyltransferase;Mycobacterium_intracellulare_23S;ErmX;Brachyspira_hyodysenteriae_23S;Helicobacter_pylori_23S;CRP;Mycoplasma_fermentans_23S;Streptomyces_ambofaciens_23S;TolC;evgA;evgS;gadW;gadX;mdtE;mdtF;Erm_49</em>;Klebsiella_mutant_PhoP;Klebsiella_pneumoniae_KpnE;Klebsiella_pneumoniae_KpnF;Klebsiella_pneumoniae_KpnG;Mycoplasma_genitalium_23S;Mycolicibacterium_smegmatis_23S;mphA;efmA;msrC;Mycobacterium_avium_23S;ErmQ;H_NS;mgrB;Mycoplasma_gallisepticum_23S;efrA;lsaA;Mycobacterium_tuberculosis_23S;Propionibacteria_23S_rRNA;Mycobacteroides_abscessus_23S;Mycobacterium_kansasii_23S;lsaE;Mycoplasma_pneumoniae_23S;Mycobacteroides_chelonae_23S;lsaC;emrE;Chlamydomonas_reinhardtii_23S;EreD;eatAv;mef_B_
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin;ErmB;ErmF;ErmG;Mef(En2);Moraxella catarrhalis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycoplasma hominis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin;Staphylococcus aureus 23S rRNA with mutation conferring resistance to linezolid;Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins antibiotics;Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics;mel;Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin;Chlamydia trachomatis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Escherichia coli 23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A);Mycobacterium intracellulare 23S rRNA with mutation conferring resistance to azithromycin;ErmX;Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin;Helicobacter pylori 23S rRNA with mutation conferring resistance to clarithromycin;CRP;Mycoplasma fermentans 23S rRNA with mutation conferring resistance to macrolide antibiotics;Streptomyces ambofaciens 23S rRNA with mutation conferring resistance to macrolide antibiotics;TolC;evgA;evgS;gadW;gadX;mdtE;mdtF;Erm(49);Klebsiella mutant PhoP conferring antibiotic resistance to colistin;Klebsiella pneumoniae KpnE;Klebsiella pneumoniae KpnF;Klebsiella pneumoniae KpnG;Mycoplasma genitalium 23S rRNA mutations confers resistance to fluoroquinolone and macrolide antibiotics;Mycolicibacterium smegmatis 23S rRNA with mutation conferring resistance to clarithromycin;mphA;efmA;msrC;Mycobacterium avium 23S rRNA with mutation conferring resistance to clarithromycin;ErmQ;H-NS;mgrB;Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics;efrA;lsaA;Mycobacterium tuberculosis 23S rRNA mutation conferring resistance to capreomycin;Propionibacteria 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycobacteroides abscessus 23S rRNA with mutation conferring resistance to clarithromycin;Mycobacterium kansasii 23S rRNA with mutation conferring resistance to clarithromycin;lsaE;Mycoplasma pneumoniae 23S rRNA mutation conferring resistance to erythromycin;Mycobacteroides chelonae 23S rRNA with mutation conferring resistance to clarithromycin;lsaC;Escherichia coli emrE;Chlamydomonas reinhardtii 23S rRNA with mutation conferring resistance to erythromycin;EreD;eatAv;mef(B)
 </td>
 </tr>
 <tr>
@@ -1858,10 +1992,10 @@ glycylcycline
 0.001
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;tetracycline inactivation enzyme;16S rRNA with mutation conferring resistance to tetracycline derivatives;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;16S rRNA with mutation conferring resistance to tetracycline derivatives;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;16s rRNA with mutation conferring resistance to peptide antibiotics;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;tetracycline inactivation enzyme;16S rRNA with mutation conferring resistance to tetracycline derivatives;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;16s rRNA with mutation conferring resistance to peptide antibiotics;General Bacterial Porin with reduced permeability to beta-lactams
 </td>
 <td style="text-align:left;">
-Mycobacteroides_chelonae_16S;Neisseria_meningitidis_16S;Pasteurella_multocida_16S;rrnS;rrsH;tetX;Tet_X4_;Helicobacter_pylori_16S;Cutibacterium_acnes_16S;Chlamydophila_psittaci_16S;AcrS;TolC;acrA;acrB;acrR;rrsB;soxR;oqxA;oqxB;ramR;rrsD;rrsC;rrsB;soxS;Mycobacterium_tuberculosis_16S;rrsB;Neisseria_gonorrhoeae_16S;marR;marA;Mycobacteroides_abscessus_16S
+Mycobacteroides chelonae 16S rRNA mutation conferring resistance to neomycin;Neisseria meningitidis 16S rRNA mutation conferring resistance to spectinomycin;Pasteurella multocida 16S rRNA mutation conferring resistance to spectinomycin;Chlamydomonas reinhardtii 16S rRNA (rrnS) mutation conferring resistance to streptomycin;Escherichia coli 16S rRNA (rrsH) mutation conferring resistance to spectinomycin;tetX;Tet(X4);Helicobacter pylori 16S rRNA mutation conferring resistance to tetracycline;Cutibacterium acnes 16S rRNA mutation conferring resistance to tetracycline;Chlamydophila psittaci 16S rRNA mutation conferring resistance to spectinomycin;AcrS;TolC;Escherichia coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to tetracycline;Escherichia coli soxR with mutation conferring antibiotic resistance;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;oqxA;oqxB;Klebsiella pneumoniae ramR mutants;Salmonella enterica 16S rRNA (rrsD) mutation conferring resistance to spectinomycin;Escherichia coli 16S rRNA (rrsC) mutation conferring resistance to kasugamicin;Mycolicibacterium smegmatis 16S rRNA (rrsB) mutation conferring resistance to viomycin;Escherichia coli soxS with mutation conferring antibiotic resistance;Mycobacterium tuberculosis 16S rRNA mutation conferring resistance to capreomycin;Mycolicibacterium smegmatis 16S rRNA (rrsB) mutation conferring resistance to hygromycin B;Neisseria gonorrhoeae 16S rRNA mutation conferring resistance to spectinomycin;Escherichia coli marR mutant conferring antibiotic resistance;marA;Mycobacteroides abscessus 16S rRNA mutation conferring resistance to gentamicin
 </td>
 </tr>
 <tr>
@@ -1875,10 +2009,10 @@ sulfonamide antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-sulfonamide resistant sul;sulfonamide resistant dihydropteroate synthase folP;sulfonamide resistant sul
+sulfonamide resistant sul;sulfonamide resistant dihydropteroate synthase folP
 </td>
 <td style="text-align:left;">
-sul2;sul1;folP;sul3
+sul2;sul1;Escherichia coli folP with mutation conferring resistance to sulfonamides;sul3
 </td>
 </tr>
 <tr>
@@ -1892,10 +2026,10 @@ sulfone antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-sulfonamide resistant sul;sulfonamide resistant dihydropteroate synthase folP;sulfonamide resistant sul
+sulfonamide resistant sul;sulfonamide resistant dihydropteroate synthase folP
 </td>
 <td style="text-align:left;">
-sul2;sul1;folP;sul3
+sul2;sul1;Escherichia coli folP with mutation conferring resistance to sulfonamides;sul3
 </td>
 </tr>
 <tr>
@@ -1909,10 +2043,10 @@ lincosamide antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;lincosamide nucleotidyltransferase (LNU);ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;major facilitator superfamily (MFS) antibiotic efflux pump;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;ATP-binding cassette (ABC) antibiotic efflux pump;ABC-F ATP-binding cassette ribosomal protection protein;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;23S rRNA with mutation conferring resistance to macrolide antibiotics;lincosamide nucleotidyltransferase (LNU);23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to macrolide antibiotics;ABC-F ATP-binding cassette ribosomal protection protein;Cfr 23S ribosomal RNA methyltransferase
+23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to linezolid antibiotics;23S rRNA with mutation conferring resistance to streptogramins antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics;lincosamide nucleotidyltransferase (LNU);ABC-F ATP-binding cassette ribosomal protection protein;23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;major facilitator superfamily (MFS) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;23s rRNA with mutation conferring resistance to aminoglycoside antibiotics;Cfr 23S ribosomal RNA methyltransferase
 </td>
 <td style="text-align:left;">
-Clostridioides_difficile_23S;ErmB;ErmF;ErmG;Moraxella_catarrhalis_23S;Mycoplasma_hominis_23S;Neisseria_gonorrhoeae_23S;Staphylococcus_aureus_23S;Streptococcus_pneumoniae_23S;Thermus_thermophilus_23s;lnuC;mel;Campylobacter_jejuni_23S;Chlamydia_trachomatis_23S;Escherichia_coli_23S;23S_rRNA_<em>adenine_2058<strong>N_6</strong>_methyltransferase;Mycobacterium_intracellulare_23S;ErmX;Brachyspira_hyodysenteriae_23S;Helicobacter_pylori_23S;Mycoplasma_fermentans_23S;Streptomyces_ambofaciens_23S;Erm_49</em>;Mycoplasma_genitalium_23S;Mycolicibacterium_smegmatis_23S;msrC;Mycobacterium_avium_23S;ErmQ;mdtM;Mycoplasma_gallisepticum_23S;lmrD;lsaA;Mycobacterium_tuberculosis_23S;Propionibacteria_23S_rRNA;LnuP;Mycobacteroides_abscessus_23S;Mycobacterium_kansasii_23S;lsaE;Mycoplasma_pneumoniae_23S;Mycobacteroides_chelonae_23S;lsaC;Chlamydomonas_reinhardtii_23S;eatAv;cfr_B_
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin;ErmB;ErmF;ErmG;Moraxella catarrhalis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycoplasma hominis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin;Staphylococcus aureus 23S rRNA with mutation conferring resistance to linezolid;Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins antibiotics;Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics;lnuC;mel;Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin;Chlamydia trachomatis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Escherichia coli 23S rRNA with mutation conferring resistance to oxazolidinone antibiotics;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A);Mycobacterium intracellulare 23S rRNA with mutation conferring resistance to azithromycin;ErmX;Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin;Helicobacter pylori 23S rRNA with mutation conferring resistance to clarithromycin;Mycoplasma fermentans 23S rRNA with mutation conferring resistance to macrolide antibiotics;Streptomyces ambofaciens 23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm(49);Mycoplasma genitalium 23S rRNA mutations confers resistance to fluoroquinolone and macrolide antibiotics;Mycolicibacterium smegmatis 23S rRNA with mutation conferring resistance to clarithromycin;msrC;Mycobacterium avium 23S rRNA with mutation conferring resistance to clarithromycin;ErmQ;mdtM;Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics;lmrD;lsaA;Mycobacterium tuberculosis 23S rRNA mutation conferring resistance to capreomycin;Propionibacteria 23S rRNA with mutation conferring resistance to macrolide antibiotics;LnuP;Mycobacteroides abscessus 23S rRNA with mutation conferring resistance to clarithromycin;Mycobacterium kansasii 23S rRNA with mutation conferring resistance to clarithromycin;lsaE;Mycoplasma pneumoniae 23S rRNA mutation conferring resistance to erythromycin;Mycobacteroides chelonae 23S rRNA with mutation conferring resistance to clarithromycin;lsaC;Chlamydomonas reinhardtii 23S rRNA with mutation conferring resistance to erythromycin;eatAv;cfr(B)
 </td>
 </tr>
 <tr>
@@ -1926,10 +2060,10 @@ aminocoumarin antibiotic
 0.002
 </td>
 <td style="text-align:left;">
-ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;aminocoumarin resistant gyrB;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;fluoroquinolone resistant gyrB;resistance-nodulation-cell division (RND) antibiotic efflux pump
+ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;aminocoumarin resistant gyrB;fluoroquinolone resistant gyrB
 </td>
 <td style="text-align:left;">
-TolC;cpxA;gyrB;mdtB;LptD;gyrB;baeR;baeS;mdtA;mdtC
+TolC;cpxA;Escherichia coli gyrB conferring resistance to aminocoumarin;mdtB;LptD;Salmonella serovars gyrB conferring resistance to fluoroquinolones;baeR;baeS;mdtA;mdtC
 </td>
 </tr>
 <tr>
@@ -1946,7 +2080,7 @@ benzalkonium chloride
 major facilitator superfamily (MFS) antibiotic efflux pump
 </td>
 <td style="text-align:left;">
-mdfA
+Escherichia coli mdfA
 </td>
 </tr>
 <tr>
@@ -1963,7 +2097,7 @@ rhodamine
 major facilitator superfamily (MFS) antibiotic efflux pump
 </td>
 <td style="text-align:left;">
-mdfA
+Escherichia coli mdfA
 </td>
 </tr>
 <tr>
@@ -1977,10 +2111,10 @@ penam
 0.001
 </td>
 <td style="text-align:left;">
-ACI beta-lactamase;OXA beta-lactamase;resistance-nodulation-cell division (RND) antibiotic efflux pump;OXA beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ampC-type beta-lactamase;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ACC beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;LEN beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;SHV beta-lactamase;resistance-nodulation-cell division (RND) antibiotic efflux pump;TEM beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase;ampC-type beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;ACC beta-lactamase;OXA beta-lactamase;TEM beta-lactamase;OXA beta-lactamase;TEM beta-lactamase;OXA beta-lactamase;ampC-type beta-lactamase;OXA beta-lactamase;ACT beta-lactamase;TEM beta-lactamase;ACT beta-lactamase;SHV beta-lactamase;TEM beta-lactamase
+ACI beta-lactamase;OXA beta-lactamase;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;ampC-type beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;ACC beta-lactamase;LEN beta-lactamase;SHV beta-lactamase;TEM beta-lactamase;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase
 </td>
 <td style="text-align:left;">
-ACI_1;OXA_660;AcrE;AcrF;AcrS;CRP;OXA_347;TolC;acrA;acrB;acrR;ampH;evgA;evgS;gadW;gadX;mdtE;mdtF;porin_OmpC;soxR;ACC_1d;Klebsiella_aerogenes_Omp36;Klebsiella_pneumoniae_KpnG;Klebsiella_pneumoniae_OmpK35;Klebsiella_pneumoniae_OmpK36;Klebsiella_pneumoniae_OmpK37;LEN_15;OmpA;SHV_100;ramR;TEM_124;TEM_37;soxS;H_NS;marR;ompF;Streptococcus_pneumoniae_PBP2b;ACT_17;Escherichia_coli_ampC1;marA;ACC_1;OXA_63;TEM_82;OXA_471;TEM_93;TEM_95;TEM_34;OXA_472;ampC;OXA_786;ACT_45;ACT_4;ACT_7;TEM_187;TEM_90;ACT_38;ACT_39;SHV_70;TEM_40
+ACI-1;OXA-660;AcrE;AcrF;AcrS;CRP;OXA-347;TolC;Escherichia coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;Escherichia coli ampH beta-lactamase;evgA;evgS;gadW;gadX;mdtE;mdtF;porin OmpC;Escherichia coli soxR with mutation conferring antibiotic resistance;ACC-1d;Klebsiella aerogenes Omp36;Klebsiella pneumoniae KpnG;Klebsiella pneumoniae OmpK35;Klebsiella pneumoniae OmpK36;Klebsiella pneumoniae OmpK37;LEN-15;OmpA;SHV-100;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;Klebsiella pneumoniae ramR mutants;TEM-124;TEM-37;Escherichia coli soxS with mutation conferring antibiotic resistance;H-NS;Escherichia coli marR mutant conferring antibiotic resistance;Escherichia coli ompF with mutation conferring resistance to beta-lactam antibiotics;Streptococcus pneumoniae PBP2b conferring resistance to amoxicillin;ACT-17;Escherichia coli ampC1 beta-lactamase;marA;ACC-1;OXA-63;TEM-82;OXA-471;TEM-93;TEM-95;TEM-34;OXA-472;Escherichia coli ampC beta-lactamase;OXA-786;ACT-45;ACT-4;ACT-7;TEM-187;TEM-90;ACT-38;ACT-39;SHV-70;TEM-40
 </td>
 </tr>
 <tr>
@@ -2011,10 +2145,10 @@ triclosan
 0.002
 </td>
 <td style="text-align:left;">
-resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;triclosan resistant gyrA;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;antibiotic resistant fabG;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;antibiotic resistant fabI;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump
+resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;triclosan resistant gyrA;antibiotic resistant fabG;General Bacterial Porin with reduced permeability to beta-lactams;antibiotic resistant fabI
 </td>
 <td style="text-align:left;">
-AcrS;TolC;acrA;acrB;acrR;gyrA;soxR;fabG;ramR;soxS;fabI;marR;marA
+AcrS;TolC;Escherichia coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;Escherichia coli gyrA with mutation conferring resistance to triclosan;Escherichia coli soxR with mutation conferring antibiotic resistance;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;Escherichia coli fabG mutations conferring resistance to triclosan;Klebsiella pneumoniae ramR mutants;Escherichia coli soxS with mutation conferring antibiotic resistance;Escherichia coli fabI mutations conferring resistance to isoniazid and triclosan;Escherichia coli marR mutant conferring antibiotic resistance;marA;Salmonella enterica gyrA with mutation conferring resistance to triclosan
 </td>
 </tr>
 <tr>
@@ -2028,10 +2162,10 @@ fluoroquinolone antibiotic
 0.003
 </td>
 <td style="text-align:left;">
-fluoroquinolone resistant gyrA;fluoroquinolone resistant parC;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;fluoroquinolone resistant parE;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;fluoroquinolone resistant gyrB;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;MipA-interacting Protein;Sugar Porin (SP);major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump
+fluoroquinolone resistant gyrA;fluoroquinolone resistant parC;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;fluoroquinolone resistant parE;fluoroquinolone resistant gyrB;General Bacterial Porin with reduced permeability to beta-lactams;MipA-interacting Protein;Sugar Porin (SP)
 </td>
 <td style="text-align:left;">
-gyrA;parC;AcrE;AcrF;AcrS;CRP;TolC;acrA;acrB;acrR;emrA;evgA;evgS;gadW;gadX;mdtE;mdtF;parE;soxR;Klebsiella_pneumoniae_KpnG;gyrB;oqxA;oqxB;ramR;soxS;efmA;mipA;Escherichia_coli_LamB;H_NS;emrB;emrR;marR;mdtH;mdtM;efrA;marA;patB
+Haemophilus parainfluenzae gyrA conferring resistance to fluoroquinolones;Haemophilus parainfluenzae parC conferring resistance to fluoroquinolones;AcrE;AcrF;AcrS;CRP;TolC;Escherichia coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;emrA;evgA;evgS;gadW;gadX;mdtE;mdtF;Escherichia coli parC conferring resistance to fluoroquinolones;Escherichia coli parE conferring resistance to fluoroquinolones;Escherichia coli soxR with mutation conferring antibiotic resistance;Klebsiella pneumoniae KpnG;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;Shigella flexneri gyrA conferring resistance to fluoroquinolones;Salmonella serovars gyrB conferring resistance to fluoroquinolones;oqxA;oqxB;Klebsiella pneumoniae ramR mutants;Escherichia coli soxS with mutation conferring antibiotic resistance;efmA;Escherichia coli mipA;Escherichia coli LamB;H-NS;emrB;emrR;Escherichia coli marR mutant conferring antibiotic resistance;mdtH;mdtM;Shigella flexneri parC conferring resistance to fluoroquinolones;efrA;marA;patB
 </td>
 </tr>
 <tr>
@@ -2065,7 +2199,7 @@ isoniazid
 antibiotic resistant fabI
 </td>
 <td style="text-align:left;">
-fabI
+Escherichia coli fabI mutations conferring resistance to isoniazid and triclosan
 </td>
 </tr>
 <tr>
@@ -2079,10 +2213,10 @@ carbapenem
 0.001
 </td>
 <td style="text-align:left;">
-OXA beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;SHV beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;OXA beta-lactamase;CfiA beta-lactamase;OXA beta-lactamase;CfiA beta-lactamase;OXA beta-lactamase;ACT beta-lactamase;SHV beta-lactamase;CfiA beta-lactamase
+OXA beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;SHV beta-lactamase;Penicillin-binding protein mutations conferring resistance to beta-lactam antibiotics;ACT beta-lactamase;CfiA beta-lactamase
 </td>
 <td style="text-align:left;">
-OXA_660;OXA_347;TolC;porin_OmpC;Klebsiella_aerogenes_Omp36;Klebsiella_pneumoniae_KpnG;Klebsiella_pneumoniae_OmpK35;Klebsiella_pneumoniae_OmpK36;Klebsiella_pneumoniae_OmpK37;LptD;OmpA;SHV_100;soxS;ompF;Streptococcus_pneumoniae_PBP2b;ACT_17;marA;OXA_63;OXA_471;CfiA11;OXA_472;CfiA27;OXA_786;ACT_45;ACT_4;ACT_7;ACT_38;ACT_39;SHV_70;CfiA19;CfiA22;CfiA14
+OXA-660;OXA-347;TolC;porin OmpC;Klebsiella aerogenes Omp36;Klebsiella pneumoniae KpnG;Klebsiella pneumoniae OmpK35;Klebsiella pneumoniae OmpK36;Klebsiella pneumoniae OmpK37;LptD;OmpA;SHV-100;Escherichia coli soxS with mutation conferring antibiotic resistance;Escherichia coli ompF with mutation conferring resistance to beta-lactam antibiotics;Streptococcus pneumoniae PBP2b conferring resistance to amoxicillin;ACT-17;marA;OXA-63;OXA-471;CfiA11;OXA-472;CfiA27;OXA-786;ACT-45;ACT-4;ACT-7;ACT-38;ACT-39;SHV-70;CfiA19;CfiA22;CfiA14
 </td>
 </tr>
 <tr>
@@ -2096,10 +2230,10 @@ fosfomycin
 0.002
 </td>
 <td style="text-align:left;">
-antibiotic-resistant UhpT;antibiotic-resistant murA transferase;antibiotic-resistant ptsI phosphotransferase;fosfomycin thiol transferase;antibiotic-resistant GlpT;antibiotic-resistant cya adenylate cyclase;major facilitator superfamily (MFS) antibiotic efflux pump;antibiotic-resistant UhpT
+antibiotic-resistant UhpT;antibiotic-resistant murA transferase;antibiotic-resistant ptsI phosphotransferase;fosfomycin thiol transferase;antibiotic-resistant GlpT;antibiotic-resistant cya adenylate cyclase;major facilitator superfamily (MFS) antibiotic efflux pump
 </td>
 <td style="text-align:left;">
-Escherichia_coli_UhpT;murA;Escherichia_coli_PtsI;FosA6;Escherichia_coli_GlpT;cyaA;mdtG;Escherichia_coli_UhpA
+Escherichia coli UhpT with mutation conferring resistance to fosfomycin;Escherichia coli murA with mutation conferring resistance to fosfomycin;Escherichia coli PtsI with mutation conferring resistance to fosfomycin;FosA6;Escherichia coli GlpT with mutation conferring resistance to fosfomycin;Escherichia coli cyaA with mutation conferring resistance to fosfomycin;mdtG;Escherichia coli UhpA with mutation conferring resistance to fosfomycin
 </td>
 </tr>
 <tr>
@@ -2113,10 +2247,10 @@ rifamycin antibiotic
 0.002
 </td>
 <td style="text-align:left;">
-rifamycin-resistant beta-subunit of RNA polymerase (rpoB);resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;major facilitator superfamily (MFS) antibiotic efflux pump;resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams;resistance-nodulation-cell division (RND) antibiotic efflux pump;rifamycin-resistant beta-subunit of RNA polymerase (rpoB)
+rifamycin-resistant beta-subunit of RNA polymerase (rpoB);resistance-nodulation-cell division (RND) antibiotic efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major facilitator superfamily (MFS) antibiotic efflux pump;General Bacterial Porin with reduced permeability to beta-lactams
 </td>
 <td style="text-align:left;">
-rpoB;AcrS;TolC;acrA;acrB;acrR;soxR;Klebsiella_pneumoniae_KpnE;Klebsiella_pneumoniae_KpnF;LptD;ramR;soxS;marR;efrA;marA;rpoB2
+Bifidobacterium adolescentis rpoB mutants conferring resistance to rifampicin;AcrS;TolC;Escherichia coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;Escherichia coli rpoB mutants conferring resistance to rifampicin;Escherichia coli soxR with mutation conferring antibiotic resistance;Klebsiella pneumoniae KpnE;Klebsiella pneumoniae KpnF;LptD;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;Klebsiella pneumoniae ramR mutants;Escherichia coli soxS with mutation conferring antibiotic resistance;Escherichia coli marR mutant conferring antibiotic resistance;efrA;marA;rpoB2
 </td>
 </tr>
 </tbody>
@@ -2124,17 +2258,19 @@ rpoB;AcrS;TolC;acrA;acrB;acrR;soxR;Klebsiella_pneumoniae_KpnE;Klebsiella_pneumon
 </div>
 <pre class="r"><code>cor_level&lt;-0.2
 cor_rpkm_drugclass_corlev2&lt;-cor_rpkm_drugclass%&gt;%filter(p.value&lt;=0.05 &amp; r2 &gt; cor_level)
-
 write_csv(cor_rpkm_drugclass_corlev2, &quot;output/envfit_rpkm_drugclass_corlev2.csv&quot;)</code></pre>
 <pre class="r"><code>p3&lt;-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, MSM_dic, group_name)+
   labs(title = &quot;Clase de antibiótico&quot;)+theme(legend.title = element_blank())</code></pre>
 <pre><code>Warning: `legend.margin` must be specified using `margin()`. For the old
 behavior use legend.spacing</code></pre>
 <pre class="r"><code>p3</code></pre>
-<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="gene-family" class="section level3">
-<h3>Gene family</h3>
+<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p3b&lt;-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = &quot;Clase de antibiótico&quot;)+theme(legend.title = element_blank())</code></pre>
+<pre><code>Warning: `legend.margin` must be specified using `margin()`. For the old
+behavior use legend.spacing</code></pre>
+<pre class="r"><code>p3b</code></pre>
+<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /> ### Gene family</p>
 <pre class="r"><code>set.seed(200889)
 cor_rpkm_genefamily&lt;-corr_group_envfit(data_group=ariba_rpkm_genefamily, refdata_group = refname_ariba_genefamily, nmds = nmds_rpkm)
 
@@ -2157,7 +2293,7 @@ r2
 p.value
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-ARO Term
+ARO Name
 </th>
 <th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 Drug Class
@@ -2176,10 +2312,10 @@ Erm 23S ribosomal RNA methyltransferase
 0.001
 </td>
 <td style="text-align:left;">
-ErmB;ErmF;ErmG;23S_rRNA_<em>adenine_2058<strong>N_6</strong>_methyltransferase;ErmX;Erm_49</em>;ErmQ
+ErmB;ErmF;ErmG;23S rRNA (adenine(2058)-N(6))-methyltransferase Erm(A);ErmX;Erm(49);ErmQ
 </td>
 <td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic;lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
+lincosamide antibiotic;macrolide antibiotic;streptogramin antibiotic
 </td>
 </tr>
 <tr>
@@ -2193,7 +2329,7 @@ CblA beta-lactamase
 0.001
 </td>
 <td style="text-align:left;">
-CblA_1
+CblA-1
 </td>
 <td style="text-align:left;">
 cephalosporin
@@ -2227,10 +2363,10 @@ tetracycline inactivation enzyme
 0.001
 </td>
 <td style="text-align:left;">
-tetX;Tet_X4_;Tet_X1_;Tet_X6_
+tetX;Tet(X4);Tet(X1);Tet(X6)
 </td>
 <td style="text-align:left;">
-glycylcycline;tetracycline antibiotic;glycylcycline;tetracycline antibiotic
+glycylcycline;tetracycline antibiotic
 </td>
 </tr>
 <tr>
@@ -2247,7 +2383,7 @@ ABC-F ATP-binding cassette ribosomal protection protein
 mel;msrC;lsaA;lsaE;lsaC;eatAv
 </td>
 <td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic;lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic
+lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic
 </td>
 </tr>
 <tr>
@@ -2261,10 +2397,10 @@ lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol an
 0.001
 </td>
 <td style="text-align:left;">
-Clostridioides_difficile_23S;Moraxella_catarrhalis_23S;Mycoplasma_hominis_23S;Neisseria_gonorrhoeae_23S;Campylobacter_jejuni_23S;Chlamydia_trachomatis_23S;Mycobacterium_intracellulare_23S;Brachyspira_hyodysenteriae_23S;Helicobacter_pylori_23S;Mycoplasma_fermentans_23S;Streptomyces_ambofaciens_23S;Mycoplasma_genitalium_23S;Mycolicibacterium_smegmatis_23S;Mycobacterium_avium_23S;Propionibacteria_23S_rRNA;Mycobacteroides_abscessus_23S;Mycobacterium_kansasii_23S;Mycoplasma_pneumoniae_23S;Mycobacteroides_chelonae_23S;Chlamydomonas_reinhardtii_23S
+Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin;Moraxella catarrhalis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycoplasma hominis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring resistance to azithromycin;Campylobacter jejuni 23S rRNA with mutation conferring resistance to erythromycin;Chlamydia trachomatis 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycobacterium intracellulare 23S rRNA with mutation conferring resistance to azithromycin;Brachyspira hyodysenteriae 23S rRNA with mutation conferring resistance to tylosin;Helicobacter pylori 23S rRNA with mutation conferring resistance to clarithromycin;Mycoplasma fermentans 23S rRNA with mutation conferring resistance to macrolide antibiotics;Streptomyces ambofaciens 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycoplasma genitalium 23S rRNA mutations confers resistance to fluoroquinolone and macrolide antibiotics;Mycolicibacterium smegmatis 23S rRNA with mutation conferring resistance to clarithromycin;Mycobacterium avium 23S rRNA with mutation conferring resistance to clarithromycin;Propionibacteria 23S rRNA with mutation conferring resistance to macrolide antibiotics;Mycobacteroides abscessus 23S rRNA with mutation conferring resistance to clarithromycin;Mycobacterium kansasii 23S rRNA with mutation conferring resistance to clarithromycin;Mycoplasma pneumoniae 23S rRNA mutation conferring resistance to erythromycin;Mycobacteroides chelonae 23S rRNA with mutation conferring resistance to clarithromycin;Chlamydomonas reinhardtii 23S rRNA with mutation conferring resistance to erythromycin
 </td>
 <td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
 </td>
 </tr>
 <tr>
@@ -2281,7 +2417,7 @@ sulfonamide resistant sul
 sul2;sul1;sul3
 </td>
 <td style="text-align:left;">
-sulfonamide antibiotic;sulfone antibiotic;sulfonamide antibiotic;sulfone antibiotic;sulfonamide antibiotic;sulfone antibiotic
+sulfonamide antibiotic;sulfone antibiotic
 </td>
 </tr>
 <tr>
@@ -2295,10 +2431,10 @@ major facilitator superfamily (MFS) antibiotic efflux pump
 0.001
 </td>
 <td style="text-align:left;">
-Mef_En2_;tet_40_;emrA;emrK;mdtN;mdtO;Klebsiella_pneumoniae_KpnE;Klebsiella_pneumoniae_KpnF;Klebsiella_pneumoniae_KpnG;tet_A_;mdfA;tetR;tetA_P_;efmA;qacE;tet_C_;emrB;emrR;emrY;mdtG;mdtH;mdtM;mdtP;qacEdelta1;tet_B_;mef_B_;tet_L_;tet_D_
+Mef(En2);tet(40);emrA;emrK;mdtN;mdtO;Klebsiella pneumoniae KpnE;Klebsiella pneumoniae KpnF;Klebsiella pneumoniae KpnG;tet(A);Escherichia coli mdfA;tetR;tetA(P);efmA;qacE;tet(C);emrB;emrR;emrY;mdtG;mdtH;mdtM;mdtP;qacEdelta1;tet(B);mef(B);tet(L);tet(D)
 </td>
 <td style="text-align:left;">
-macrolide antibiotic;tetracycline antibiotic;fluoroquinolone antibiotic;tetracycline antibiotic;acridine dye;disinfecting agents and intercalating dyes;nucleoside antibiotic;acridine dye;disinfecting agents and intercalating dyes;nucleoside antibiotic;aminoglycoside antibiotic;cephalosporin;macrolide antibiotic;peptide antibiotic;rifamycin antibiotic;tetracycline antibiotic;aminoglycoside antibiotic;cephalosporin;macrolide antibiotic;peptide antibiotic;rifamycin antibiotic;tetracycline antibiotic;aminoglycoside antibiotic;carbapenem;cephalosporin;fluoroquinolone antibiotic;macrolide antibiotic;penam;penem;peptide antibiotic;tetracycline antibiotic;benzalkonium chloride;rhodamine;tetracycline antibiotic;fluoroquinolone antibiotic;macrolide antibiotic;disinfecting agents and intercalating dyes;tetracycline antibiotic;fluoroquinolone antibiotic;tetracycline antibiotic;fosfomycin;fluoroquinolone antibiotic;acridine dye;disinfecting agents and intercalating dyes;fluoroquinolone antibiotic;lincosamide antibiotic;nucleoside antibiotic;phenicol antibiotic;acridine dye;disinfecting agents and intercalating dyes;nucleoside antibiotic;acridine dye;disinfecting agents and intercalating dyes;tetracycline antibiotic;macrolide antibiotic;tetracycline antibiotic
+macrolide antibiotic;tetracycline antibiotic;fluoroquinolone antibiotic;acridine dye;disinfecting agents and intercalating dyes;nucleoside antibiotic;aminoglycoside antibiotic;cephalosporin;peptide antibiotic;rifamycin antibiotic;carbapenem;penam;penem;benzalkonium chloride;rhodamine;fosfomycin;lincosamide antibiotic;phenicol antibiotic
 </td>
 </tr>
 <tr>
@@ -2312,7 +2448,7 @@ ANT(6)
 0.001
 </td>
 <td style="text-align:left;">
-ANT_6__Ia;aadS;ANT_6__Ib
+ANT(6)-Ia;aadS;ANT(6)-Ib
 </td>
 <td style="text-align:left;">
 aminoglycoside antibiotic
@@ -2329,7 +2465,7 @@ triclosan resistant gyrA
 0.001
 </td>
 <td style="text-align:left;">
-gyrA
+Escherichia coli gyrA with mutation conferring resistance to triclosan;Salmonella enterica gyrA with mutation conferring resistance to triclosan
 </td>
 <td style="text-align:left;">
 triclosan
@@ -2363,10 +2499,10 @@ ampC-type beta-lactamase
 0.001
 </td>
 <td style="text-align:left;">
-ampH;Escherichia_coli_ampC1;ampC
+Escherichia coli ampH beta-lactamase;Escherichia coli ampC1 beta-lactamase;Escherichia coli ampC beta-lactamase
 </td>
 <td style="text-align:left;">
-cephalosporin;penam;cephalosporin;penam;cephalosporin;penam
+cephalosporin;penam
 </td>
 </tr>
 <tr>
@@ -2380,7 +2516,7 @@ sulfonamide resistant dihydropteroate synthase folP
 0.002
 </td>
 <td style="text-align:left;">
-folP
+Escherichia coli folP with mutation conferring resistance to sulfonamides
 </td>
 <td style="text-align:left;">
 sulfonamide antibiotic;sulfone antibiotic
@@ -2397,10 +2533,10 @@ sulfonamide antibiotic;sulfone antibiotic
 0.001
 </td>
 <td style="text-align:left;">
-Thermus_thermophilus_23s;Mycoplasma_gallisepticum_23S
+Thermus thermophilus 23s rRNA conferring resistance to pleuromutilin antibiotics;Mycoplasma gallisepticum 23S rRNA mutation conferring resistance to pleuromutilin antibiotics
 </td>
 <td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
 </td>
 </tr>
 <tr>
@@ -2431,7 +2567,7 @@ APH(3’’)
 0.004
 </td>
 <td style="text-align:left;">
-APH_3____Ib
+APH(3’’)-Ib
 </td>
 <td style="text-align:left;">
 aminoglycoside antibiotic
@@ -2448,7 +2584,7 @@ fluoroquinolone resistant parC
 0.001
 </td>
 <td style="text-align:left;">
-parC
+Haemophilus parainfluenzae parC conferring resistance to fluoroquinolones;Escherichia coli parC conferring resistance to fluoroquinolones;Shigella flexneri parC conferring resistance to fluoroquinolones
 </td>
 <td style="text-align:left;">
 fluoroquinolone antibiotic
@@ -2465,10 +2601,10 @@ resistance-nodulation-cell division (RND) antibiotic efflux pump
 0.002
 </td>
 <td style="text-align:left;">
-AcrE;AcrF;AcrS;CRP;acrA;acrB;acrD;acrR;cpxA;gadW;gadX;mdtB;mdtE;mdtF;oqxA;oqxB;ramR;baeR;baeS;marR;mdtA;mdtC
+AcrE;AcrF;AcrS;CRP;Escherichia coli acrA;acrB;acrD;Escherichia coli acrR with mutation conferring multidrug antibiotic resistance;cpxA;gadW;gadX;mdtB;mdtE;mdtF;Klebsiella pneumoniae acrA;Enterobacter cloacae acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug antibiotic resistance;oqxA;oqxB;Klebsiella pneumoniae ramR mutants;baeR;baeS;Escherichia coli marR mutant conferring antibiotic resistance;mdtA;mdtC
 </td>
 <td style="text-align:left;">
-cephalosporin;cephamycin;fluoroquinolone antibiotic;penam;cephalosporin;cephamycin;fluoroquinolone antibiotic;penam;cephalosporin;cephamycin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;fluoroquinolone antibiotic;macrolide antibiotic;penam;cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;aminoglycoside antibiotic;cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;aminocoumarin antibiotic;aminoglycoside antibiotic;fluoroquinolone antibiotic;macrolide antibiotic;penam;fluoroquinolone antibiotic;macrolide antibiotic;penam;aminocoumarin antibiotic;fluoroquinolone antibiotic;macrolide antibiotic;penam;fluoroquinolone antibiotic;macrolide antibiotic;penam;diaminopyrimidine antibiotic;fluoroquinolone antibiotic;glycylcycline;nitrofuran antibiotic;tetracycline antibiotic;diaminopyrimidine antibiotic;fluoroquinolone antibiotic;glycylcycline;nitrofuran antibiotic;tetracycline antibiotic;cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;aminocoumarin antibiotic;aminoglycoside antibiotic;aminocoumarin antibiotic;aminoglycoside antibiotic;cephalosporin;fluoroquinolone antibiotic;glycylcycline;penam;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;aminocoumarin antibiotic
+cephalosporin;cephamycin;fluoroquinolone antibiotic;penam;glycylcycline;phenicol antibiotic;rifamycin antibiotic;tetracycline antibiotic;triclosan;macrolide antibiotic;aminoglycoside antibiotic;aminocoumarin antibiotic;diaminopyrimidine antibiotic;nitrofuran antibiotic
 </td>
 </tr>
 <tr>
@@ -2499,7 +2635,7 @@ antibiotic-resistant UhpT
 0.002
 </td>
 <td style="text-align:left;">
-Escherichia_coli_UhpT;Escherichia_coli_UhpA
+Escherichia coli UhpT with mutation conferring resistance to fosfomycin;Escherichia coli UhpA with mutation conferring resistance to fosfomycin
 </td>
 <td style="text-align:left;">
 fosfomycin
@@ -2521,7 +2657,13 @@ p4&lt;-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, MSM_di
 <pre><code>Warning: `legend.margin` must be specified using `margin()`. For the old
 behavior use legend.spacing</code></pre>
 <pre class="r"><code>p4</code></pre>
-<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>p4b&lt;-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = &quot;Familia de determinante de resistencia&quot;)+theme(legend.title = element_blank())</code></pre>
+<pre><code>Warning: `legend.margin` must be specified using `margin()`. For the old
+behavior use legend.spacing</code></pre>
+<pre class="r"><code>p4b</code></pre>
+<p><img src="figure/PEC3_biplots.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -2570,14 +2712,15 @@ loaded via a namespace (and not attached):
 [37] rstudioapi_0.13   farver_2.1.0      jquerylib_0.1.4   generics_0.1.2   
 [41] jsonlite_1.8.0    vroom_1.5.7       car_3.0-12        magrittr_2.0.2   
 [45] Matrix_1.4-0      Rcpp_1.0.8.3      munsell_0.5.0     fansi_1.0.3      
-[49] abind_1.4-5       lifecycle_1.0.1   stringi_1.7.6     yaml_2.3.5       
-[53] carData_3.0-5     MASS_7.3-56       parallel_4.1.2    promises_1.2.0.1 
-[57] crayon_1.5.1      haven_2.4.3       splines_4.1.2     hms_1.1.1        
-[61] knitr_1.38        pillar_1.7.0      ggsignif_0.6.3    reprex_2.0.1     
-[65] evaluate_0.15     modelr_0.1.8      vctrs_0.3.8       tzdb_0.2.0       
-[69] httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0      assertthat_0.2.1 
-[73] xfun_0.30         broom_1.0.1       rstatix_0.7.0     later_1.3.0      
-[77] viridisLite_0.4.0 workflowr_1.7.0   cluster_2.1.2     ellipsis_0.3.2   </code></pre>
+[49] abind_1.4-5       lifecycle_1.0.1   stringi_1.7.6     whisker_0.4      
+[53] yaml_2.3.5        carData_3.0-5     MASS_7.3-56       parallel_4.1.2   
+[57] promises_1.2.0.1  crayon_1.5.1      haven_2.4.3       splines_4.1.2    
+[61] hms_1.1.1         knitr_1.38        pillar_1.7.0      ggsignif_0.6.3   
+[65] reprex_2.0.1      evaluate_0.15     modelr_0.1.8      vctrs_0.3.8      
+[69] tzdb_0.2.0        httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0     
+[73] assertthat_0.2.1  xfun_0.30         broom_1.0.1       rstatix_0.7.0    
+[77] later_1.3.0       viridisLite_0.4.0 workflowr_1.7.0   cluster_2.1.2    
+[81] ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 </div>

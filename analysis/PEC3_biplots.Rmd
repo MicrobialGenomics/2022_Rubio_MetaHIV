@@ -98,6 +98,11 @@ p2<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, MSM_dic, `ARO N
 p2
 ```
 
+```{r}
+p2b<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, GCount, `ARO Name`)+
+  labs(title = "Determinantes de resistencia")+theme(legend.title = element_blank())
+p2b
+```
 
 ### Drug Class
 
@@ -112,7 +117,6 @@ kable(caption="**Top 20 correlated drug classes with NMDS axes** (Ariba RPKM)")%
 ```{r}
 cor_level<-0.2
 cor_rpkm_drugclass_corlev2<-cor_rpkm_drugclass%>%filter(p.value<=0.05 & r2 > cor_level)
-
 write_csv(cor_rpkm_drugclass_corlev2, "output/envfit_rpkm_drugclass_corlev2.csv")
 ```
 
@@ -123,6 +127,13 @@ p3<-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, MSM_dic, 
 p3
 ```
 
+
+```{r}
+p3b<-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = "Clase de antibiótico")+theme(legend.title = element_blank())
+
+p3b
+```
 ### Gene family
 
 ```{r}
@@ -151,4 +162,12 @@ p4<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, MSM_dic, 
 p4
 ```
 
+```{r}
+
+p4b<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = "Familia de determinante de resistencia")+theme(legend.title = element_blank())
+
+p4b
+
+```
 

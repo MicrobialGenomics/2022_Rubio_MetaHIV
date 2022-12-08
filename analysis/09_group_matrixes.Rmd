@@ -162,14 +162,13 @@ save(ariba_rar_drugclass, ariba_rar_genefamily, ariba_rar_resmec, file="output/g
 For each gene family we can identify which drug class it confers resistance to and the AMR genes included in the gene family
 
 ```{r}
-
 refname_ariba_genefamily<-refname_all_ariba%>%
-  select(`AMR Gene Family`, `Drug Class`, `ARO Term`)%>%
+  select(`AMR Gene Family`, `Drug Class`, `ARO Name`)%>%
   unique()%>%
   as_tibble()%>%
   group_by(`AMR Gene Family`)%>%
   mutate(`Drug Class`=paste0(`Drug Class`, collapse = ";"),
-         `ARO Term`= paste0(`ARO Term`, collapse = ";"))%>%
+         `ARO Name`= paste0(`ARO Name`, collapse = ";"))%>%
   ungroup()%>%
   unique()
 
@@ -177,9 +176,9 @@ refname_ariba_genefamily<-refname_all_ariba%>%
 x<-refname_ariba_genefamily%>%
   select(`AMR Gene Family`, `Drug Class`)%>%
   separate_rows(`Drug Class`, sep=";")%>%
+  unique()%>%
   group_by(`AMR Gene Family`)%>%
   summarise(`Drug Class` = paste(rle(`Drug Class`)$values, collapse=";"))
-
 
 refname_ariba_genefamily<-refname_ariba_genefamily%>%
  select(-`Drug Class`)%>%
@@ -192,13 +191,13 @@ For each Drug Class we can identify which gene families are included and which A
 
 ```{r}
 refname_ariba_drugclass<-refname_all_ariba%>%
-  select(`Drug Class`, `AMR Gene Family`, `ARO Term`)%>%
+  select(`Drug Class`, `AMR Gene Family`, `ARO Name`)%>%
   unique()%>%
   as_tibble()%>%
   separate_rows(`Drug Class`, sep=";", convert = TRUE)%>%
     group_by(`Drug Class`)%>%
   mutate(`AMR Gene Family`=paste0(`AMR Gene Family`, collapse = ";"),
-         `ARO Term`= paste0(`ARO Term`, collapse = ";"))%>%
+         `ARO Name`= paste0(`ARO Name`, collapse = ";"))%>%
   ungroup()%>%
   unique()
 
@@ -206,20 +205,22 @@ refname_ariba_drugclass<-refname_all_ariba%>%
 x<-refname_ariba_drugclass%>%
   select(`Drug Class`, `AMR Gene Family`)%>%
   separate_rows(`AMR Gene Family`, sep=";")%>%
+  unique()%>%
   group_by(`Drug Class`)%>%
   summarise(`AMR Gene Family` = paste(rle(`AMR Gene Family`)$values, collapse=";"))
 
 
-##Remove duplicate ARO terms in the variable ARO term
+##Remove duplicate ARO names in the variable ARO term
 
 y<-refname_ariba_drugclass%>%
-  select(`Drug Class`, `ARO Term`)%>%
-  separate_rows(`ARO Term`, sep=";")%>%
+  select(`Drug Class`, `ARO Name`)%>%
+  separate_rows(`ARO Name`, sep=";")%>%
+  unique()%>%
   group_by(`Drug Class`)%>%
-  summarise(`ARO Term` = paste(rle(`ARO Term`)$values, collapse=";"))
+  summarise(`ARO Name` = paste(rle(`ARO Name`)$values, collapse=";"))
 
 refname_ariba_drugclass<-refname_ariba_drugclass%>%
-  select(-`AMR Gene Family`, -`ARO Term`)%>%
+  select(-`AMR Gene Family`, -`ARO Name`)%>%
    full_join(x)%>%
    full_join(y)
 ```
