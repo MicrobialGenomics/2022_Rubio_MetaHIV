@@ -70,7 +70,7 @@ write_csv(cor_rpkm_meta_top10, "output/envfit_rpkm_meta_top10.csv")
 ```{r}
 source("code/functions.R")
 p1<-biplot_amr_envfit(cor_rpkm_meta_top10, nmds_rpkm, metadata, MSM_dic, Variable)+
-  labs(title = "Variables numéricas")+theme(legend.title = element_blank())
+  labs(title = "Variables numéricas")
 p1
 ```
 
@@ -94,13 +94,13 @@ write_csv(cor_rpkm_amr_corlev2, "output/envfit_rpkm_amr_corlev2.csv")
 
 ```{r}
 p2<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, MSM_dic, `ARO Name`)+
-  labs(title = "Determinantes de resistencia")+theme(legend.title = element_blank())
+  labs(title = "Determinantes de resistencia")
 p2
 ```
 
 ```{r}
 p2b<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, GCount, `ARO Name`)+
-  labs(title = "Determinantes de resistencia")+theme(legend.title = element_blank())
+  labs(title = "Determinantes de resistencia")
 p2b
 ```
 

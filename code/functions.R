@@ -21,10 +21,10 @@ theme_Publication <- function(base_size=14, base_family="helvetica") {
            legend.direction = "horizontal",
            legend.key.size= unit(0.2, "cm"),
            legend.margin = unit(0, "cm"),
-           legend.title = element_text(face="italic"),
+           legend.title = element_blank(),
            plot.margin=unit(c(10,5,5,5),"mm"),
            strip.background=element_rect(colour="#f0f0f0",fill="#f0f0f0"),
-           strip.text = element_text(face="bold")
+           strip.text = element_text(face="bold", size = rel(0.7))
    ))
 
 }
@@ -296,16 +296,33 @@ sig_AMR_clin_dic<-function(data, metadata, refdata, clin_var){
     filter(p.adjust<0.05)%>%
     select(ref_name, p.adjust)
 
+  ##Retain data only from significant amr
   data_all<-data_all%>%
     inner_join(sig_amr, by="ref_name")
 
-  sig_amr<-sig_amr%>%
+  ##get log2 fold change
+  log_data<-data_all%>%
+    group_by(ref_name, !!enquo(clin_var))%>%
+    summarise(mean_counts=mean(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+    as.data.frame()
+  log_data$log2f<-log2(log_data[ ,2])-log2(log_data[ ,3])
+  log_data<-log_data%>%select(ref_name, log2f)
+
+  ## get median counts per significant group and clinical variable
+  sig_data<-data_all%>%
+    group_by(ref_name, !!enquo(clin_var))%>%
+    summarise(median_counts=median(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "median_counts")%>%
+    inner_join(sig_amr, by="ref_name")%>%
+    inner_join(log_data, by="ref_name")%>%
     inner_join(refdata, by="ref_name")
 
-  res<-list(data_all, sig_amr)
-  names(res)<-c("data_plot", "sig_amr")
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
   return(res)
 }
+
 
 ##Get significance of each AMR to a clinical variable (factor)
 
@@ -344,7 +361,8 @@ sig_AMR_clin_factor<-function(data, metadata, refdata, clin_var){
 
 ##Get significance of a grouped matrix to a clinical variable (dicotomic)
 
-sig_group_clin_dic<-function(data, metadata, clin_var){
+sig_group_clin_dic<-function(data, metadata, refdata, clin_var){
+
   ##transpose data
   group_name<-pull(data, 1)
   data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
@@ -378,6 +396,7 @@ sig_group_clin_dic<-function(data, metadata, clin_var){
   log_data$log2f<-log2(log_data[ ,2])-log2(log_data[ ,3])
   log_data<-log_data%>%select(group_name, log2f)
 
+  refdata<-refdata%>%rename(group_name=1)
 
   ## get median counts per significant group and clinical variable
   sig_data<-data_all%>%
@@ -385,7 +404,8 @@ sig_group_clin_dic<-function(data, metadata, clin_var){
     summarise(median_counts=median(value), .groups = 'drop')%>%
     pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "median_counts")%>%
     inner_join(sig_amr, by="group_name")%>%
-    inner_join(log_data, by="group_name")
+    inner_join(log_data, by="group_name")%>%
+    inner_join(refdata, by="group_name")
 
   res<-list(data_all, sig_data)
   names(res)<-c("data_plot", "sig_data")
@@ -430,5 +450,78 @@ sig_group_clin_factor<-function(data, metadata, clin_var){
   names(res)<-c("data_plot", "sig_data")
   return(res)
 }
+
+
+sig_boxplot<-function(data_plot, clin_var, wrap_var){
+  clin_var<-enquo(clin_var)
+  wrap_var<-enquo(wrap_var)
+  data_plot%>%
+    rename(wrap_var2=!!wrap_var)%>%
+    ggplot(aes(x=!!clin_var, y=value, color=!!clin_var)) +
+    geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+    geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                                jitter.width = 0.5))+
+    facet_wrap(~wrap_var2, scales = "free_y")+
+    labs(x= NULL, y=NULL) +
+    scale_colour_Publication()+
+    theme_Publication()+scale_fill_Publication()+
+    theme(axis.text.x = element_text(angle=45, hjust = 1),
+          axis.text.y=element_blank(),
+          axis.ticks.y = element_blank())
+}
+
+sig_boxplot_logdata<-function(data_plot, sig_data, clin_var, wrap_var){
+  clin_var<-enquo(clin_var)
+  wrap_var<-enquo(wrap_var)
+
+  table<-sig_data%>%
+    rename(wrap_var2=!!wrap_var)%>%
+    mutate(p_adjust=round(p.adjust, 2),
+           p_adjust=as.character(p_adjust),
+           p_adjust2=ifelse(p_adjust=="0", "<0.005", glue("={p_adjust}")),
+           label=glue("p{p_adjust2}\nlog2FC={round(log2f,2)}"))
+
+  data_plot%>%
+    rename(wrap_var2=!!wrap_var)%>%
+    ggplot(aes(x=!!clin_var, y=value, color=!!clin_var)) +
+    geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+    geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                                jitter.width = 0.5))+
+    facet_wrap(~wrap_var2, scales = "free_y")+
+    geom_text(data= table,
+              mapping = aes(x = Inf, y = Inf, label = label),
+              hjust   = 1.1,
+              vjust   = 1.1, size= rel(2), inherit.aes = FALSE)+
+    labs(x= NULL, y=NULL) +
+    scale_colour_Publication()+
+    theme_Publication()+scale_fill_Publication()+
+    theme(axis.text.x = element_text(angle=45, hjust = 1),
+          axis.text.y=element_blank(),
+          axis.ticks.y = element_blank())
+}
+
+sig_summary_table<-function(genefamily_sigdata, drugclass_sigdata){
+
+  genfam<-genefamily_sigdata%>%
+    select(`AMR Gene Family`=group_name, log2f_gene_family=log2f)
+
+  drugclass<-drugclass_sigdata%>%
+    select(-`ARO Name`)
+
+  data<-drugclass%>%
+    separate_rows(`AMR Gene Family`, sep = ";")%>%
+    inner_join(., genfam, by="AMR Gene Family")%>%
+    mutate(tendency=ifelse(log2f*log2f_gene_family>0, "same tendency", "different tendency"))%>%
+    select(group_name, `AMR Gene Family`, tendency)%>%
+    group_by(group_name, tendency)%>%
+    summarise(gene_family = paste(rle(`AMR Gene Family`)$values, collapse=";"))%>%
+    pivot_wider(names_from = "tendency", values_from = "gene_family")
+
+  data_sum<-drugclass%>%
+    select(-`AMR Gene Family`)%>%
+    left_join(., data, by="group_name")%>%
+    arrange(log2f)
+}
+
 
 
