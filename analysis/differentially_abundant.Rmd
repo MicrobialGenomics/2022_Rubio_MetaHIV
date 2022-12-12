@@ -199,3 +199,13 @@ sig_boxplot_logdata(drugclass_grich$data_plot, drugclass_grich$sig_data,GCount, 
 sumtable_grich<-sig_summary_table(genefamily_grich$sig_data, drugclass_grich$sig_data)
 sumtable_grich%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
+
+
+```{r}
+##https://rdrr.io/cran/sjmisc/man/word_wrap.html
+
+write_csv(sumtable_sexualp, "sumtable_sexualp.csv")
+write_csv(sumtable_mcluster, "sumtable_mcluster.csv")
+write_csv(sumtable_grich, "sumtable_grich.csv")
+```
+

@@ -361,11 +361,11 @@ sig_AMR_clin_factor<-function(data, metadata, refdata, clin_var){
 
 ##Get significance of a grouped matrix to a clinical variable (dicotomic)
 
-sig_group_clin_dic<-function(data, metadata, refdata, clin_var){
+sig_group_clin_dic<-function(data_group, metadata, refdata_group, clin_var){
 
   ##transpose data
-  group_name<-pull(data, 1)
-  data<-as_tibble(cbind(SampleID = names(data), t(data)))%>%slice(-1)%>%
+  group_name<-pull(data_group, 1)
+  data<-as_tibble(cbind(SampleID = names(data_group), t(data_group)))%>%slice(-1)%>%
     mutate_at(vars(-("SampleID")),as.numeric)
   colnames(data)<-c("SampleID", group_name)
 
@@ -396,7 +396,7 @@ sig_group_clin_dic<-function(data, metadata, refdata, clin_var){
   log_data$log2f<-log2(log_data[ ,2])-log2(log_data[ ,3])
   log_data<-log_data%>%select(group_name, log2f)
 
-  refdata<-refdata%>%rename(group_name=1)
+  refdata<-refdata_group%>%rename(group_name=1)
 
   ## get median counts per significant group and clinical variable
   sig_data<-data_all%>%
