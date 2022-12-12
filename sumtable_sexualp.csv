@@ -1,0 +1,12 @@
+group_name,MSM,no MSM,p.adjust,log2f,different tendency,same tendency
+mupirocin,0,0,4.534522682209255e-4,-2.816015755529566,NA,antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
+sulfonamide antibiotic,0,0.99660815,2.699833468366012e-5,-2.30121809600169,NA,sulfonamide resistant sul
+sulfone antibiotic,0,0.99660815,2.699833468366012e-5,-2.30121809600169,NA,sulfonamide resistant sul
+cephalosporin,5.9630623,17.93710705,1.6866148120758617e-5,-0.8802744603865218,ACI beta-lactamase,CblA beta-lactamase;cepA beta-lactamase;major facilitator superfamily (MFS) antibiotic efflux pump
+oxazolidinone antibiotic,42.886576,71.52754873500001,0.003118895756113994,-0.5652056391001752,NA,ABC-F ATP-binding cassette ribosomal protection protein
+glycopeptide antibiotic,389.9295602,363.35860055,0.04452816603025664,0.20596012967262922,NA,23S rRNA with mutation conferring resistance to macrolide antibiotics;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics
+aminoglycoside antibiotic,175.4907141,150.31689015,0.04452816603025664,0.25608811502169093,ANT(3'');APH(3'');APH(6);major facilitator superfamily (MFS) antibiotic efflux pump,16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;ANT(6)
+nucleoside antibiotic,147.732292,117.55302312,0.038416700098785256,0.2654898262065739,major facilitator superfamily (MFS) antibiotic efflux pump,16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+cephamycin,167.57752,108.62514815,0.0022136232894724344,0.5063137477564705,major facilitator superfamily (MFS) antibiotic efflux pump,CfxA beta-lactamase
+penam,4.044615,0.7938741,6.018104498146324e-5,0.5759933499350707,major facilitator superfamily (MFS) antibiotic efflux pump,ACI beta-lactamase
+penem,3.69394,0,2.6350947538104477e-10,1.1454112444358393,major facilitator superfamily (MFS) antibiotic efflux pump,ACI beta-lactamase

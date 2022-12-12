@@ -1,0 +1,11 @@
+group_name,Bacteroides,Prevotella,p.adjust,log2f,different tendency,same tendency
+penem,0,3.69394,6.315276618185734e-9,-0.6554197091119645,major facilitator superfamily (MFS) antibiotic efflux pump,ACI beta-lactamase
+cephamycin,106.8306067,175.5341689,8.995945730348165e-5,-0.6433641747213965,major facilitator superfamily (MFS) antibiotic efflux pump,CfxA beta-lactamase
+penam,1.582714,3.9146605,1.5631167782887264e-4,-0.3248412085372485,major facilitator superfamily (MFS) antibiotic efflux pump,ACI beta-lactamase
+streptogramin antibiotic,341.6890906,394.0682409,0.0035793332590972936,-0.20675100977816996,ABC-F ATP-binding cassette ribosomal protection protein,23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics
+lincosamide antibiotic,347.406516,404.7447377,0.01867330711481779,-0.17353222564914184,ABC-F ATP-binding cassette ribosomal protection protein;major facilitator superfamily (MFS) antibiotic efflux pump,23S rRNA with mutation conferring resistance to macrolide antibiotics;Erm 23S ribosomal RNA methyltransferase;23S rRNA with mutation conferring resistance to pleuromutilin antibiotics
+oxazolidinone antibiotic,69.5715971,43.228885,0.02377463870088053,0.43574094203488833,NA,ABC-F ATP-binding cassette ribosomal protection protein
+cephalosporin,15.600798,5.51545517,5.293548336737336e-6,1.0061858590808885,ACI beta-lactamase,CblA beta-lactamase;cepA beta-lactamase;major facilitator superfamily (MFS) antibiotic efflux pump
+sulfonamide antibiotic,0.6303204,0,1.368441342618239e-4,2.4048129345455345,NA,sulfonamide resistant sul
+sulfone antibiotic,0.6303204,0,1.368441342618239e-4,2.4048129345455345,NA,sulfonamide resistant sul
+mupirocin,0,0,0.0013966495726647683,2.618833719600386,NA,antibiotic-resistant isoleucyl-tRNA synthetase (ileS)
