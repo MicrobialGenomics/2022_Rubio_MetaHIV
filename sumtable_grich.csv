@@ -1,6 +1,0 @@
-group_name,HGC,LGC,p.adjust,log2f,same tendency
-cephalosporin,4.9152173999999995,11.8601206,0.014858540391868307,-0.820838780922597,CblA beta-lactamase
-cephamycin,114.0108904,162.945711,0.03211482033896809,-0.47931633099080084,CfxA beta-lactamase
-glycopeptide antibiotic,403.43719120000003,365.899182,0.014858540391868307,0.20937430163223247,23S rRNA with mutation conferring resistance to macrolide antibiotics;16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;16S rRNA with mutation conferring resistance to tetracycline derivatives
-peptide antibiotic,150.61353115,120.30559265,0.023832803394853833,0.24161114114323112,16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;16S rRNA with mutation conferring resistance to tetracycline derivatives
-nucleoside antibiotic,152.85437935,123.663871,0.014858540391868307,0.26345683958503763,16s rRNA with mutation conferring resistance to aminoglycoside antibiotics;16S rRNA with mutation conferring resistance to tetracycline derivatives

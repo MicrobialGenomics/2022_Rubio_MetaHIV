@@ -23,6 +23,7 @@ library(patchwork)
 library(ggstatsplot)
 library(broom)
 library(ggthemes)
+library(writexl)
 ```
 
 ## Load artifacts and  code
@@ -204,8 +205,12 @@ sumtable_grich%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", 
 ```{r}
 ##https://rdrr.io/cran/sjmisc/man/word_wrap.html
 
-write_csv(sumtable_sexualp, "sumtable_sexualp.csv")
-write_csv(sumtable_mcluster, "sumtable_mcluster.csv")
-write_csv(sumtable_grich, "sumtable_grich.csv")
+write_xlsx(sumtable_sexualp, "output/sumtable_sexualp.xlsx")
+write_xlsx(sumtable_mcluster, "output/sumtable_mcluster.xlsx")
+write_xlsx(sumtable_grich, "output/sumtable_grich.xlsx")
+
+write_xlsx(genefamily_sexualp$sig_data, "output/genefamily_sexualp.xlsx")
+write_xlsx(genefamily_mcluster$sig_data, "output/genefamily_mcluster.xlsx")
+write_xlsx(genefamily_grich$sig_data, "output/genefamily_grich.xlsx")
 ```
 
