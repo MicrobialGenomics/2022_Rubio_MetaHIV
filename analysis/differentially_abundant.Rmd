@@ -76,7 +76,7 @@ genefamily_sexualp$sig_data%>%
 ```
 
 ```{r}
-sig_boxplot_logdata(genefamily_sexualp$data_plot, genefamily_sexualp$sig_data,MSM_dic, group_name)
+sig_boxplot(genefamily_sexualp$data_plot,MSM_dic, group_name)
 ```
 
 
@@ -88,10 +88,17 @@ drugclass_sexualp$sig_data%>%select(-`ARO Name`)%>%
   kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 sig_boxplot_logdata(drugclass_sexualp$data_plot, drugclass_sexualp$sig_data,MSM_dic, group_name)
 ```
 
+```{r}
+excl_atb<-c("beta_lactam", "penam_penem", "penem", "sulfone antibiotic")
+drugclass_sexualp$data_plot<-drugclass_sexualp$data_plot%>%
+  filter(!(group_name %in% excl_atb))
+
+sig_boxplot(drugclass_sexualp$data_plot, MSM_dic, group_name)
+```
 
 ### Summary table
 
@@ -142,6 +149,11 @@ drugclass_mcluster$sig_data%>%select(-`ARO Name`)%>%
 sig_boxplot_logdata(drugclass_mcluster$data_plot, drugclass_mcluster$sig_data,Cluster, group_name)
 ```
 
+```{r}
+drugclass_mcluster$data_plot<-drugclass_mcluster$data_plot%>%
+  filter(!(group_name %in% excl_atb))
+sig_boxplot(drugclass_mcluster$data_plot, Cluster, group_name)
+```
 
 ### Summary table
 
@@ -190,7 +202,10 @@ drugclass_grich$sig_data%>%select(-`ARO Name`)%>%
 ```
 
 ```{r}
-sig_boxplot_logdata(drugclass_grich$data_plot, drugclass_grich$sig_data,GCount, group_name)
+drugclass_grich$data_plot<-drugclass_grich$data_plot%>%
+  filter(group_name != "beta_lactam")
+
+sig_boxplot(drugclass_grich$data_plot,GCount, group_name)
 ```
 
 
@@ -199,6 +214,27 @@ sig_boxplot_logdata(drugclass_grich$data_plot, drugclass_grich$sig_data,GCount, 
 ```{r}
 sumtable_grich<-sig_summary_table(genefamily_grich$sig_data, drugclass_grich$sig_data)
 sumtable_grich%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot<-function(data_plot, clin_var, wrap_var){
+  clin_var<-enquo(clin_var)
+  wrap_var<-enquo(wrap_var)
+  data_plot%>%
+    rename(wrap_var2=!!wrap_var)%>%
+    ggplot(aes(x=!!clin_var, y=value, color=!!clin_var)) +
+    geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+    geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                                jitter.width = 0.5))+
+    facet_wrap(~wrap_var2, scales = "free_y")+
+    labs(x= NULL, y=NULL) +
+    scale_colour_Publication()+
+    theme_Publication()+scale_fill_Publication()+
+    theme(axis.text.x = element_text(angle=45, hjust = 1),
+          axis.text.y=element_blank(),
+          axis.ticks.y = element_blank())
+}
+
 ```
 
 
