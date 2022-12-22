@@ -84,6 +84,7 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
          ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
          MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
   inner_join(gene_richness, by="SampleID")
+
 ```
 
 
@@ -164,7 +165,7 @@ alpha_div_plot_all<-function(data, clin_var){
 clin_var<-enquo(clin_var)
 data%>%
   filter(!is.na(!!clin_var))%>%
-  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+  pivot_longer(cols=c(Shannon, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
   ggplot(aes(x=!!clin_var, y=Alpha_value))+
   geom_boxplot(aes(colour=!!clin_var))+
   geom_jitter(width = 0.2, aes(colour=!!clin_var))+
