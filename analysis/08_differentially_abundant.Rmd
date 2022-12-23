@@ -1,0 +1,253 @@
+---
+title: "Differentially abundance"
+author: "Elisa Rubio"
+date: "2022-11-09"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+library(ggthemes)
+library(writexl)
+```
+
+## Load artifacts and  code
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/ariba_dist.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+load("output/grouped_refname_ariba.RDA")
+source("code/functions.R")
+```
+
+## Load metadata
+```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+  inner_join(gene_richness, by="SampleID")
+
+rm(ART_groups, gene_richness)
+```
+
+## Sexual practice
+
+### AMR level
+
+```{r}
+amr_sexualp<-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, MSM_dic)
+amr_sexualp$sig_data%>%select(-ref_name)%>%select(`ARO Name`, everything())%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+sig_boxplot_logdata(amr_sexualp$data_plot, amr_sexualp$sig_data,MSM_dic, `ARO Term`)
+```
+
+
+### Gene family level
+
+```{r}
+genefamily_sexualp<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, refname_ariba_genefamily, MSM_dic)
+genefamily_sexualp$sig_data%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot(genefamily_sexualp$data_plot,MSM_dic, group_name)
+```
+
+
+### Drug Class level
+
+```{r}
+drugclass_sexualp<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, refname_ariba_drugclass, MSM_dic)
+drugclass_sexualp$sig_data%>%select(-`ARO Name`)%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r eval=FALSE, include=FALSE}
+sig_boxplot_logdata(drugclass_sexualp$data_plot, drugclass_sexualp$sig_data,MSM_dic, group_name)
+```
+
+```{r}
+excl_atb<-c("beta_lactam", "penam_penem", "penem", "sulfone antibiotic")
+drugclass_sexualp$data_plot<-drugclass_sexualp$data_plot%>%
+  filter(!(group_name %in% excl_atb))
+
+sig_boxplot(drugclass_sexualp$data_plot, MSM_dic, group_name)
+```
+
+### Summary table
+
+```{r}
+sumtable_sexualp<-sig_summary_table(genefamily_sexualp$sig_data, drugclass_sexualp$sig_data)
+sumtable_sexualp%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+## Microbiome cluster
+
+### AMR level
+
+```{r}
+amr_mcluster<-sig_AMR_clin_dic(ariba_rpkm, filter(metadata, !is.na(Cluster)), refname_all_ariba, Cluster)
+amr_mcluster$sig_data%>%select(-ref_name)%>%select(`ARO Name`, everything())%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+sig_boxplot_logdata(amr_mcluster$data_plot, amr_mcluster$sig_data,Cluster, `ARO Term`)
+```
+
+
+### Gene family level
+
+```{r}
+genefamily_mcluster<-sig_group_clin_dic(ariba_rpkm_genefamily,filter(metadata, !is.na(Cluster)), refname_ariba_genefamily, Cluster)
+genefamily_mcluster$sig_data%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot_logdata(genefamily_mcluster$data_plot, genefamily_mcluster$sig_data,Cluster, group_name)
+```
+
+
+### Drug Class level
+
+```{r}
+drugclass_mcluster<-sig_group_clin_dic(ariba_rpkm_drugclass, filter(metadata, !is.na(Cluster)), refname_ariba_drugclass, Cluster)
+drugclass_mcluster$sig_data%>%select(-`ARO Name`)%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot_logdata(drugclass_mcluster$data_plot, drugclass_mcluster$sig_data,Cluster, group_name)
+```
+
+```{r}
+drugclass_mcluster$data_plot<-drugclass_mcluster$data_plot%>%
+  filter(!(group_name %in% excl_atb))
+sig_boxplot(drugclass_mcluster$data_plot, Cluster, group_name)
+```
+
+### Summary table
+
+```{r}
+sumtable_mcluster<-sig_summary_table(genefamily_mcluster$sig_data, drugclass_mcluster$sig_data)
+sumtable_mcluster%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+
+## Gene richness
+
+### AMR level
+
+```{r}
+amr_grich<-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, GCount)
+amr_grich$sig_data%>%select(-ref_name)%>%select(`ARO Name`, everything())%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+
+```{r}
+sig_boxplot_logdata(amr_grich$data_plot, amr_grich$sig_data,GCount, `ARO Term`)
+```
+
+
+### Gene family level
+
+```{r}
+genefamily_grich<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, refname_ariba_genefamily, GCount)
+genefamily_grich$sig_data%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot_logdata(genefamily_grich$data_plot, genefamily_grich$sig_data,GCount, group_name)
+```
+
+
+### Drug Class level
+
+```{r}
+drugclass_grich<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, refname_ariba_drugclass, GCount)
+drugclass_grich$sig_data%>%select(-`ARO Name`)%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+drugclass_grich$data_plot<-drugclass_grich$data_plot%>%
+  filter(group_name != "beta_lactam")
+
+sig_boxplot(drugclass_grich$data_plot,GCount, group_name)
+```
+
+
+### Summary table
+
+```{r}
+sumtable_grich<-sig_summary_table(genefamily_grich$sig_data, drugclass_grich$sig_data)
+sumtable_grich%>% kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+sig_boxplot<-function(data_plot, clin_var, wrap_var){
+  clin_var<-enquo(clin_var)
+  wrap_var<-enquo(wrap_var)
+  data_plot%>%
+    rename(wrap_var2=!!wrap_var)%>%
+    ggplot(aes(x=!!clin_var, y=value, color=!!clin_var)) +
+    geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+    geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                                jitter.width = 0.5))+
+    facet_wrap(~wrap_var2, scales = "free_y")+
+    labs(x= NULL, y=NULL) +
+    scale_colour_Publication()+
+    theme_Publication()+scale_fill_Publication()+
+    theme(axis.text.x = element_text(angle=45, hjust = 1),
+          axis.text.y=element_blank(),
+          axis.ticks.y = element_blank())
+}
+
+```
+
+
+```{r}
+##https://rdrr.io/cran/sjmisc/man/word_wrap.html
+
+write_xlsx(sumtable_sexualp, "output/sumtable_sexualp.xlsx")
+write_xlsx(sumtable_mcluster, "output/sumtable_mcluster.xlsx")
+write_xlsx(sumtable_grich, "output/sumtable_grich.xlsx")
+
+write_xlsx(genefamily_sexualp$sig_data, "output/genefamily_sexualp.xlsx")
+write_xlsx(genefamily_mcluster$sig_data, "output/genefamily_mcluster.xlsx")
+write_xlsx(genefamily_grich$sig_data, "output/genefamily_grich.xlsx")
+```
+

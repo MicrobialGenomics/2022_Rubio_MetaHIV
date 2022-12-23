@@ -82,9 +82,11 @@ gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
          ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
-         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
+         Profile=factor(Profile, levels = c("negative", "elite_controllers", "viremic_controllers", 
+                                            "early_treated ", "concordant", "naive", "late_presenters",
+                                            "discordant")))%>%
   inner_join(gene_richness, by="SampleID")
-
 ```
 
 
@@ -169,7 +171,7 @@ data%>%
   ggplot(aes(x=!!clin_var, y=Alpha_value))+
   geom_boxplot(aes(colour=!!clin_var))+
   geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+  facet_wrap(vars(Alpha_Index), ncol = 2, scales = "free_y")+
   stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
   # theme_classic2()+
   # scale_color_brewer(palette="Set1")+
@@ -185,7 +187,6 @@ data%>%
 alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)+labs(title = "Factor de riesgo de infección por VIH")
 alpha_div_plot_all(ariba_alpha_rpkm, Cluster)+labs(title = "Cluster microbioma")
 alpha_div_plot_all(ariba_alpha_rpkm, GCount)+labs(title = "Riqueza de genes")
-
 ```
 
 #### NMDS function (for variables with max 3 levels)

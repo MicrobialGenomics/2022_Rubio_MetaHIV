@@ -346,9 +346,6 @@ div.tocify {
   <a href="02_summarize_data.html">Summarize data</a>
 </li>
 <li>
-  <a href="01_1_import_virulome.html">Import virulome</a>
-</li>
-<li>
   <a href="03_rarefaction.html">Rarefy data</a>
 </li>
 <li>
@@ -361,34 +358,13 @@ div.tocify {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
-  <a href="06_biplot.html">Biplot (Spearman)</a>
+  <a href="06_group_matrixes.html">Create grouped matrixes</a>
 </li>
 <li>
-  <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
+  <a href="07_biplots.html">Biplot</a>
 </li>
 <li>
-  <a href="contingency_tabe.html">Contingency table</a>
-</li>
-<li>
-  <a href="08_amr_significance.html">AMR significance</a>
-</li>
-<li>
-  <a href="09_group_matrixes.html">Group matrixes</a>
-</li>
-<li>
-  <a href="10_grouped_significance.html">Grouped significance</a>
-</li>
-<li>
-  <a href="Profile.html">Profile</a>
-</li>
-<li>
-  <a href="ART.html">ART</a>
-</li>
-<li>
-  <a href="11_gene_richness.html">Gene Richness</a>
-</li>
-<li>
-  <a href="Riskgroup2_grouped.html">Riskgroup2</a>
+  <a href="08_differentially_abundant.html">Differentially abundance</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -425,7 +401,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -436,8 +412,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -446,13 +422,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-11-18
+<strong>Last updated:</strong> 2022-12-23
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
@@ -475,21 +451,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -580,15 +553,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree88d1345e302b655f81842dfe8764a4b9f5cf47batargetblank88d1345a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/88d1345e302b655f81842dfe8764a4b9f5cf47ba" target="_blank">88d1345</a>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree88d1345e302b655f81842dfe8764a4b9f5cf47batargetblank88d1345a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -598,7 +571,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/88d1345e302b655f81842dfe8764a4b9f5cf47ba" target="_blank">88d1345</a>.
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -615,11 +588,59 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.Rhistory
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
+Untracked files:
+    Untracked:  PEC3/alpha_div_nosig.png
+    Untracked:  analysis/06_group_matrixes.Rmd
+    Untracked:  analysis/07_biplots.Rmd
+    Untracked:  analysis/08_differentially_abundant.Rmd
+    Untracked:  analysis/amr_significance.Rmd
+    Untracked:  analysis/biplot_envfit.Rmd
+    Untracked:  analysis/biplot_spearman.Rmd
+    Untracked:  analysis/counts.Rmd
+    Untracked:  analysis/gene_richness.Rmd
+    Untracked:  analysis/grouped_significance.Rmd
+    Untracked:  analysis/import_virulome.Rmd
+    Untracked:  analysis/import_virulome_data.Rmd
+
 Unstaged changes:
-    Modified:   analysis/01_import_data.Rmd
+    Deleted:    analysis/01_1_import_virulome.Rmd
+    Deleted:    analysis/01_2_import_virulome_data.Rmd
+    Modified:   analysis/02_summarize_data.Rmd
+    Modified:   analysis/03_1_procruster.Rmd
+    Deleted:    analysis/04_01_counts.Rmd
+    Modified:   analysis/04_alpha_div.Rmd
+    Modified:   analysis/05_beta_div.Rmd
+    Deleted:    analysis/06_2_biplot_envfit.Rmd
+    Deleted:    analysis/06_biplot.Rmd
+    Deleted:    analysis/07_heatmap.Rmd
+    Deleted:    analysis/08_amr_significance.Rmd
+    Deleted:    analysis/09_group_matrixes.Rmd
+    Deleted:    analysis/10_grouped_significance.Rmd
+    Deleted:    analysis/11_gene_richness.Rmd
+    Modified:   analysis/PEC3.Rmd
+    Deleted:    analysis/PEC3_biplots.Rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/about.Rmd
+    Deleted:    analysis/differentially_abundant.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   analysis/license.Rmd
+    Modified:   code/functions.R
+    Modified:   output/ariba_dist.RDA
+    Modified:   output/envfit_rpkm_amr_corlev2.csv
+    Modified:   output/envfit_rpkm_drugclass_corlev2.csv
+    Modified:   output/envfit_rpkm_genefamily_corlev2.csv
+    Modified:   output/envfit_rpkm_meta_top10.csv
+    Modified:   output/genefamily_grich.xlsx
+    Modified:   output/genefamily_mcluster.xlsx
+    Modified:   output/genefamily_sexualp.xlsx
+    Modified:   output/groot_dist.RDA
+    Modified:   output/sumtable_grich.xlsx
+    Modified:   output/sumtable_mcluster.xlsx
+    Modified:   output/sumtable_sexualp.xlsx
 
 </code></pre>
 <p>
@@ -665,6 +686,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/ad16f39760089128a5c5c2b7f8257a493913ff44/analysis/01_import_data.Rmd" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+log2 fold change (manual calculation)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/ad16f39760089128a5c5c2b7f8257a493913ff44/docs/01_import_data.html" target="_blank">ad16f39</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-11-18
+</td>
+<td>
+log2 fold change (manual calculation)
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -787,17 +842,21 @@ locale:
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+[1] workflowr_1.7.0
+
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.9       rstudioapi_0.13  whisker_0.4      knitr_1.39      
- [5] magrittr_2.0.3   workflowr_1.7.0  R6_2.5.1         rlang_1.0.4     
- [9] fastmap_1.1.0    fansi_1.0.3      stringr_1.4.0    tools_4.1.2     
-[13] xfun_0.31        utf8_1.2.2       cli_3.3.0        git2r_0.30.1    
-[17] jquerylib_0.1.4  htmltools_0.5.3  rprojroot_2.0.3  yaml_2.3.5      
-[21] digest_0.6.29    tibble_3.1.8     lifecycle_1.0.1  later_1.3.0     
-[25] sass_0.4.2       vctrs_0.4.1      promises_1.2.0.1 fs_1.5.2        
-[29] cachem_1.0.6     glue_1.6.2       evaluate_0.15    rmarkdown_2.14  
-[33] stringi_1.7.8    bslib_0.4.0      compiler_4.1.2   pillar_1.8.0    
-[37] jsonlite_1.8.0   httpuv_1.6.5     pkgconfig_2.0.3 </code></pre>
+ [1] Rcpp_1.0.9       compiler_4.1.2   pillar_1.8.0     bslib_0.4.0     
+ [5] later_1.3.0      git2r_0.30.1     jquerylib_0.1.4  tools_4.1.2     
+ [9] getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0   evaluate_0.15   
+[13] tibble_3.1.8     lifecycle_1.0.1  pkgconfig_2.0.3  rlang_1.0.4     
+[17] cli_3.3.0        rstudioapi_0.13  yaml_2.3.5       xfun_0.31       
+[21] fastmap_1.1.0    httr_1.4.3       stringr_1.4.0    knitr_1.39      
+[25] fs_1.5.2         vctrs_0.4.1      sass_0.4.2       rprojroot_2.0.3 
+[29] glue_1.6.2       R6_2.5.1         processx_3.7.0   fansi_1.0.3     
+[33] rmarkdown_2.14   callr_3.7.1      magrittr_2.0.3   whisker_0.4     
+[37] ps_1.7.1         promises_1.2.0.1 htmltools_0.5.3  httpuv_1.6.5    
+[41] utf8_1.2.2       stringi_1.7.8    cachem_1.0.6    </code></pre>
 </div>
 </div>
 </div>

@@ -77,11 +77,11 @@ alpha_div_plot_all<-function(data, clin_var){
   clin_var<-enquo(clin_var)
   data%>%
     filter(!is.na(!!clin_var))%>%
-    pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+    pivot_longer(cols=c(Shannon, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
     ggplot(aes(x=!!clin_var, y=Alpha_value))+
     geom_boxplot(aes(colour=!!clin_var))+
     geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-    facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+    facet_wrap(vars(Alpha_Index), ncol = 2, scales = "free_y")+
     stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
     scale_colour_Publication()+ theme_Publication()+
     labs(y="Alpha diversity", caption = "P values calculated by Wilcoxon test", title = clin_var)+
@@ -94,17 +94,26 @@ alpha_div_plot_all<-function(data, clin_var){
 alpha_div_cor_all<-function(data, clin_var){
   clin_var<-enquo(clin_var)
   data%>%
-    pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+    pivot_longer(cols=c(Shannon, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
     ggplot(aes(x=!!clin_var, y=Alpha_value))+
     geom_point(color='#2980B9', size = 2) +
     geom_smooth(method=lm, color="black")+
-    facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
+    facet_wrap(vars(Alpha_Index), ncol = 2, scales = "free_y")+
     stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.9)+
     scale_colour_Publication()+ theme_Publication()+
     labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
     theme(legend.position = "none", axis.title.x=element_blank(),
           axis.text.x = element_text(angle=45, hjust = 1))}
 
+#### Calculate distances:
+
+dist_func<-function(d_rpkm, d_rar, metadata){
+  dist_rpkm<-vegdist(t(d_rpkm[ ,-1]), method = "bray")
+  dist_rar<-vegdist(t(d_rar[ ,-1]), method = "bray")
+  d<-list(dist_rpkm, dist_rar)
+  names(d)<-c("dist_rpkm", "dist_rar")
+  return(d)
+}
 
 #### NMDS function (for variables with max 3 levels)
 
@@ -180,6 +189,75 @@ beta_nmds2<-function(dist, metadata, clin_var){
     scale_color_manual(name=quo_name(clin_var),
                        values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+
     scale_colour_Publication()+ theme_Publication()+
+    theme(legend.text = element_text(size=10))}
+
+#### PCoA function (for variables with max 3 levels)
+beta_pcoa<-function(dist, metadata, clin_var){
+
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+
+  pcoa <- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions <- pcoa$points
+  colnames(positions) <- c("pcoa1", "pcoa2")
+
+  percent_explained <- 100 * pcoa$eig / sum(pcoa$eig)
+
+  pretty_pe <- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+
+  labels <- c(glue("PCo Axis 1 ({pretty_pe[1]}%)"),
+              glue("PCo Axis 2 ({pretty_pe[2]}%)"))
+
+  positions %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point() +
+    labs(caption = glue("ADONIS p value= {ptest}"), x=labels[1], y=labels[2])+
+    coord_fixed(ratio = 0.8)+
+    scale_color_manual(name=quo_name(clin_var),
+                       values = c("blue", "red", "gray"))+
+    scale_fill_manual(values = c("dodgerblue", "pink", "lightgray"))+
+    theme_bw()+
+    theme(legend.text = element_text(size=10))}
+
+
+#### PCoA function (for variables with 4-8 levels)
+
+beta_pcoa2<-function(dist, metadata, clin_var){
+
+  clin_var<-enquo(clin_var)
+  clin_var2<-metadata%>%pull(!!clin_var) ##clin_var vector for adonis test
+
+  test<-adonis(dist~clin_var2, permutations = 999)
+  ptest<-test$aov.tab$`Pr(>F)`[1]
+
+  pcoa <- cmdscale(dist, eig=TRUE, add=TRUE)
+  positions <- pcoa$points
+  colnames(positions) <- c("pcoa1", "pcoa2")
+
+  percent_explained <- 100 * pcoa$eig / sum(pcoa$eig)
+
+  pretty_pe <- format(round(percent_explained, digits =1), nsmall=1, trim=TRUE)
+
+  labels <- c(glue("PCo Axis 1 ({pretty_pe[1]}%)"),
+              glue("PCo Axis 2 ({pretty_pe[2]}%)"))
+
+  positions %>%
+    as_tibble(rownames = "SampleID") %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ggplot(aes(x=pcoa1, y=pcoa2, color=!!clin_var, fill=!!clin_var)) +
+    stat_ellipse(show.legend = FALSE)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    labs(caption = glue("ADONIS p value= {ptest}"))+
+    scale_color_manual(name=quo_name(clin_var),
+                       values = c("blue", "red","green4", "orange", "aquamarine4", "magenta2", "gold", "black"))+
+    theme_bw()+
     theme(legend.text = element_text(size=10))}
 
 

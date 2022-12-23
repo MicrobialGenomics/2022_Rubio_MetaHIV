@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Elisa Rubio" />
+
+<meta name="date" content="2022-11-13" />
+
+<title>11_gene_richness</title>
+
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">2022_Rubio_MetaHIV</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="01_import_data.html">Import data</a>
+</li>
+<li>
+  <a href="02_summarize_data.html">Summarize data</a>
+</li>
+<li>
+  <a href="03_rarefaction.html">Rarefy data</a>
+</li>
+<li>
+  <a href="03_1_procruster.html">Procruster test (Rare versus RPKM)</a>
+</li>
+<li>
+  <a href="04_alpha_div.html">Alpha diversity analysis</a>
+</li>
+<li>
+  <a href="05_beta_div.html">Beta diversity analysis</a>
+</li>
+<li>
+  <a href="06_group_matrixes.html">Create grouped matrixes</a>
+</li>
+<li>
+  <a href="07_biplots.html">Biplot</a>
+</li>
+<li>
+  <a href="08_differentially_abundant.html">Differentially abundance</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">11_gene_richness</h1>
+<h4 class="author">Elisa Rubio</h4>
+<h4 class="date">2022-11-13</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2022-12-23
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220202)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20220202code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20220202)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis/figure/
+    Ignored:    output/aribaData/
+    Ignored:    output/grootData/
+
+Untracked files:
+    Untracked:  PEC3/alpha_div_nosig.png
+    Untracked:  analysis/06_group_matrixes.Rmd
+    Untracked:  analysis/07_biplots.Rmd
+    Untracked:  analysis/08_differentially_abundant.Rmd
+    Untracked:  analysis/amr_significance.Rmd
+    Untracked:  analysis/biplot_envfit.Rmd
+    Untracked:  analysis/biplot_spearman.Rmd
+    Untracked:  analysis/counts.Rmd
+    Untracked:  analysis/gene_richness.Rmd
+    Untracked:  analysis/grouped_significance.Rmd
+    Untracked:  analysis/heatmap.Rmd
+    Untracked:  analysis/import_virulome.Rmd
+    Untracked:  analysis/import_virulome_data.Rmd
+
+Unstaged changes:
+    Deleted:    analysis/01_1_import_virulome.Rmd
+    Deleted:    analysis/01_2_import_virulome_data.Rmd
+    Deleted:    analysis/04_01_counts.Rmd
+    Modified:   analysis/04_alpha_div.Rmd
+    Modified:   analysis/05_beta_div.Rmd
+    Deleted:    analysis/06_2_biplot_envfit.Rmd
+    Deleted:    analysis/06_biplot.Rmd
+    Deleted:    analysis/07_heatmap.Rmd
+    Deleted:    analysis/08_amr_significance.Rmd
+    Deleted:    analysis/09_group_matrixes.Rmd
+    Deleted:    analysis/10_grouped_significance.Rmd
+    Deleted:    analysis/11_gene_richness.Rmd
+    Modified:   analysis/PEC3.Rmd
+    Deleted:    analysis/PEC3_biplots.Rmd
+    Modified:   analysis/_site.yml
+    Deleted:    analysis/differentially_abundant.Rmd
+    Modified:   analysis/index.Rmd
+    Modified:   code/functions.R
+    Modified:   output/ariba_dist.RDA
+    Modified:   output/envfit_rpkm_amr_corlev2.csv
+    Modified:   output/envfit_rpkm_drugclass_corlev2.csv
+    Modified:   output/envfit_rpkm_genefamily_corlev2.csv
+    Modified:   output/envfit_rpkm_meta_top10.csv
+    Modified:   output/genefamily_grich.xlsx
+    Modified:   output/genefamily_mcluster.xlsx
+    Modified:   output/genefamily_sexualp.xlsx
+    Modified:   output/groot_dist.RDA
+    Modified:   output/sumtable_grich.xlsx
+    Modified:   output/sumtable_mcluster.xlsx
+    Modified:   output/sumtable_sexualp.xlsx
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<pre class="r"><code>library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+library(ggthemes)</code></pre>
+<div id="load-data-and-functions" class="section level4">
+<h4>Load data and functions</h4>
+<pre class="r"><code>load(&quot;output/summarized_ariba.RDA&quot;)
+load(&quot;output/rarefied_ariba.RDA&quot;)
+load(&quot;output/ariba_dist.RDA&quot;)
+load(&quot;output/grouped_rpkm_ariba.RDA&quot;)
+load(&quot;output/grouped_refname_ariba.RDA&quot;)
+metadata&lt;-read_csv(&quot;data/Metadata/metadata.csv&quot;)
+source(&quot;code/functions.R&quot;)</code></pre>
+</div>
+<div id="join-with-gene-richness-data" class="section level2">
+<h2>Join with Gene Richness data</h2>
+<pre class="r"><code>gene_richness&lt;-read.delim2(&quot;data/Metadata/generichness_data.txt&quot;)%&gt;%
+  select(SampleID, GCount)
+metadata&lt;-metadata%&gt;%
+  inner_join(gene_richness, by=&quot;SampleID&quot;)
+
+table(metadata$GCount)</code></pre>
+<pre><code>
+HGC LGC 
+ 53 103 </code></pre>
+<div id="alpha-diversity-analysis" class="section level3">
+<h3>Alpha diversity analysis</h3>
+<pre class="r"><code>ariba_alpha_rpkm&lt;-alpha_div(ariba_rpkm, ariba_counts, metadata)
+alpha_div_plot_all(ariba_alpha_rpkm, GCount)</code></pre>
+<p><img src="figure/gene_richness.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Diversity is lower in LGC group</p>
+</div>
+<div id="beta-diversity-analysis" class="section level3">
+<h3>Beta diversity analysis</h3>
+<pre class="r"><code>ariba_dist_rpkm&lt;-ariba_dist$dist_rpkm
+beta_nmds(ariba_dist_rpkm, metadata, GCount)</code></pre>
+<p><img src="figure/gene_richness.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Resistome composition is different according to Gene Richness</p>
+</div>
+</div>
+<div id="check-differentially-abundance-amr" class="section level2">
+<h2>Check differentially abundance AMR</h2>
+<pre class="r"><code>amr_sig_rpkm_gcount&lt;-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, GCount)
+amr_sig_rpkm_gcount$sig_amr%&gt;% kable(caption=&quot;**Significant AMR accordig to Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Significant AMR accordig to Gene Richness (Ariba RPKM</strong>
+</caption>
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="check-differentially-abundance-grouped-by-drug-class"
+class="section level2">
+<h2>Check differentially abundance (grouped by Drug Class)</h2>
+<pre class="r"><code>drugclass_sig_rpkm_gcount&lt;-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, refname_ariba_drugclass, GCount)
+drugclass_sig_rpkm_gcount$sig_data%&gt;% kable(caption=&quot;**Significant Drug Classes, Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Significant Drug Classes, Gene Richness (Ariba RPKM</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+group_name
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+HGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+LGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.adjust
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+log2f
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+AMR Gene Family
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ARO Name
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+cephalosporin
+</td>
+<td style="text-align:right;">
+4.915217
+</td>
+<td style="text-align:right;">
+11.86012
+</td>
+<td style="text-align:right;">
+0.0148585
+</td>
+<td style="text-align:right;">
+-0.8208388
+</td>
+<td style="text-align:left;">
+CblA beta-lactamase;ACI beta-lactamase;OXA
+beta-lactamase;resistance-nodulation-cell division (RND) antibiotic
+efflux pump;CTX-M beta-lactamase;cepA beta-lactamase;EC
+beta-lactamase;ATP-binding cassette (ABC) antibiotic efflux pump;major
+facilitator superfamily (MFS) antibiotic efflux pump;ampC-type
+beta-lactamase;General Bacterial Porin with reduced permeability to
+beta-lactams;ACC beta-lactamase;SHV beta-lactamase;TEM
+beta-lactamase;Penicillin-binding protein mutations conferring
+resistance to beta-lactam antibiotics;ACT beta-lactamase
+</td>
+<td style="text-align:left;">
+CblA-1;ACI-1;OXA-660;AcrE;AcrF;AcrS;CTX-M-88;CepA-44;EC-5;OXA-347;TolC;Escherichia
+coli acrA;acrB;Escherichia coli acrR with mutation conferring multidrug
+antibiotic resistance;Escherichia coli ampH beta-lactamase;porin
+OmpC;Escherichia coli soxR with mutation conferring antibiotic
+resistance;ACC-1d;Klebsiella aerogenes Omp36;Klebsiella pneumoniae
+KpnE;Klebsiella pneumoniae KpnF;Klebsiella pneumoniae KpnG;Klebsiella
+pneumoniae OmpK35;Klebsiella pneumoniae OmpK36;Klebsiella pneumoniae
+OmpK37;OmpA;SHV-100;Klebsiella pneumoniae acrA;Enterobacter cloacae
+acrA;Klebsiella pneumoniae acrR with mutation conferring multidrug
+antibiotic resistance;Klebsiella pneumoniae ramR
+mutants;TEM-124;TEM-37;cepA;Escherichia coli soxS with mutation
+conferring antibiotic resistance;CepA-29;H-NS;Escherichia coli marR
+mutant conferring antibiotic resistance;Escherichia coli ompF with
+mutation conferring resistance to beta-lactam antibiotics;Streptococcus
+pneumoniae PBP2b conferring resistance to
+amoxicillin;ACT-17;EC-15;Escherichia coli ampC1
+beta-lactamase;marA;CepA-49;ACC-1;OXA-63;TEM-82;OXA-471;TEM-93;EC-8;TEM-95;TEM-34;OXA-472;Escherichia
+coli ampC
+beta-lactamase;OXA-786;ACT-45;EC-16;ACT-4;ACT-7;TEM-187;TEM-90;ACT-38;ACT-39;SHV-70;EC-19;TEM-40
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cephamycin
+</td>
+<td style="text-align:right;">
+114.010890
+</td>
+<td style="text-align:right;">
+162.94571
+</td>
+<td style="text-align:right;">
+0.0321148
+</td>
+<td style="text-align:right;">
+-0.4793163
+</td>
+<td style="text-align:left;">
+CfxA beta-lactamase;resistance-nodulation-cell division (RND) antibiotic
+efflux pump;ATP-binding cassette (ABC) antibiotic efflux pump;major
+facilitator superfamily (MFS) antibiotic efflux pump;General Bacterial
+Porin with reduced permeability to beta-lactams;Penicillin-binding
+protein mutations conferring resistance to beta-lactam antibiotics;ACT
+beta-lactamase;CMY beta-lactamase
+</td>
+<td style="text-align:left;">
+CfxA2;CfxA6;CfxA3;AcrE;AcrF;AcrS;TolC;porin OmpC;Klebsiella aerogenes
+Omp36;Klebsiella pneumoniae OmpK35;Klebsiella pneumoniae
+OmpK36;Klebsiella pneumoniae OmpK37;OmpA;CfxA5;Escherichia coli soxS
+with mutation conferring antibiotic resistance;H-NS;Escherichia coli
+ompF with mutation conferring resistance to beta-lactam
+antibiotics;Streptococcus pneumoniae PBP2b conferring resistance to
+amoxicillin;ACT-17;marA;CfxA4;ACT-45;ACT-4;ACT-7;ACT-38;ACT-39;CMY-90;CMY-169
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide antibiotic
+</td>
+<td style="text-align:right;">
+403.437191
+</td>
+<td style="text-align:right;">
+365.89918
+</td>
+<td style="text-align:right;">
+0.0148585
+</td>
+<td style="text-align:right;">
+0.2093743
+</td>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide
+antibiotics;16s rRNA with mutation conferring resistance to
+aminoglycoside antibiotics;23S rRNA with mutation conferring resistance
+to linezolid antibiotics;23S rRNA with mutation conferring resistance to
+streptogramins antibiotics;23S rRNA with mutation conferring resistance
+to pleuromutilin antibiotics;23S rRNA with mutation conferring
+resistance to oxazolidinone antibiotics;glycopeptide resistance gene
+cluster;vanW;16S rRNA with mutation conferring resistance to
+tetracycline derivatives;vancomycin-resistant beta prime subunit of RNA
+polymerase (rpoC);16s rRNA with mutation conferring resistance to
+peptide antibiotics;van ligase;vanT;vanXY;23s rRNA with mutation
+conferring resistance to aminoglycoside antibiotics;vanS
+</td>
+<td style="text-align:left;">
+Clostridioides difficile 23S rRNA with mutation conferring resistance to
+erythromycin and clindamycin;Moraxella catarrhalis 23S rRNA with
+mutation conferring resistance to macrolide antibiotics;Mycobacteroides
+chelonae 16S rRNA mutation conferring resistance to neomycin;Mycoplasma
+hominis 23S rRNA with mutation conferring resistance to macrolide
+antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring
+resistance to azithromycin;Neisseria meningitidis 16S rRNA mutation
+conferring resistance to spectinomycin;Pasteurella multocida 16S rRNA
+mutation conferring resistance to spectinomycin;Staphylococcus aureus
+23S rRNA with mutation conferring resistance to linezolid;Streptococcus
+pneumoniae 23S rRNA mutation conferring resistance to macrolides and
+streptogramins antibiotics;Thermus thermophilus 23s rRNA conferring
+resistance to pleuromutilin antibiotics;Chlamydomonas reinhardtii 16S
+rRNA (rrnS) mutation conferring resistance to streptomycin;Escherichia
+coli 16S rRNA (rrsH) mutation conferring resistance to
+spectinomycin;Campylobacter jejuni 23S rRNA with mutation conferring
+resistance to erythromycin;Chlamydia trachomatis 23S rRNA with mutation
+conferring resistance to macrolide antibiotics;Escherichia coli 23S rRNA
+with mutation conferring resistance to oxazolidinone
+antibiotics;Mycobacterium intracellulare 23S rRNA with mutation
+conferring resistance to azithromycin;vanWG;Helicobacter pylori 16S rRNA
+mutation conferring resistance to tetracycline;Cutibacterium acnes 16S
+rRNA mutation conferring resistance to tetracycline;Brachyspira
+hyodysenteriae 23S rRNA with mutation conferring resistance to
+tylosin;Chlamydophila psittaci 16S rRNA mutation conferring resistance
+to spectinomycin;Helicobacter pylori 23S rRNA with mutation conferring
+resistance to clarithromycin;Mycoplasma fermentans 23S rRNA with
+mutation conferring resistance to macrolide antibiotics;Streptomyces
+ambofaciens 23S rRNA with mutation conferring resistance to macrolide
+antibiotics;Clostridioides difficile rpoC with mutation conferring
+resistance to vancomycin;Escherichia coli 16S rRNA (rrsB) mutation
+conferring resistance to tetracycline;Salmonella enterica 16S rRNA
+(rrsD) mutation conferring resistance to spectinomycin;Mycoplasma
+genitalium 23S rRNA mutations confers resistance to fluoroquinolone and
+macrolide antibiotics;Escherichia coli 16S rRNA (rrsC) mutation
+conferring resistance to kasugamicin;Mycolicibacterium smegmatis 16S
+rRNA (rrsB) mutation conferring resistance to viomycin;Mycobacterium
+tuberculosis 16S rRNA mutation conferring resistance to
+capreomycin;Mycolicibacterium smegmatis 23S rRNA with mutation
+conferring resistance to clarithromycin;Mycolicibacterium smegmatis 16S
+rRNA (rrsB) mutation conferring resistance to hygromycin
+B;vanG;vanTG;vanXYG;Mycobacterium avium 23S rRNA with mutation
+conferring resistance to clarithromycin;Neisseria gonorrhoeae 16S rRNA
+mutation conferring resistance to spectinomycin;Mycoplasma gallisepticum
+23S rRNA mutation conferring resistance to pleuromutilin
+antibiotics;Mycobacterium tuberculosis 23S rRNA mutation conferring
+resistance to capreomycin;Propionibacteria 23S rRNA with mutation
+conferring resistance to macrolide antibiotics;Mycobacteroides abscessus
+23S rRNA with mutation conferring resistance to
+clarithromycin;Mycobacterium kansasii 23S rRNA with mutation conferring
+resistance to clarithromycin;Mycoplasma pneumoniae 23S rRNA mutation
+conferring resistance to erythromycin;Mycobacteroides chelonae 23S rRNA
+with mutation conferring resistance to
+clarithromycin;vanSD;Mycobacteroides abscessus 16S rRNA mutation
+conferring resistance to gentamicin;Chlamydomonas reinhardtii 23S rRNA
+with mutation conferring resistance to erythromycin
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nucleoside antibiotic
+</td>
+<td style="text-align:right;">
+152.854379
+</td>
+<td style="text-align:right;">
+123.66387
+</td>
+<td style="text-align:right;">
+0.0148585
+</td>
+<td style="text-align:right;">
+0.2634568
+</td>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics;streptothricin acetyltransferase (SAT);16S rRNA with
+mutation conferring resistance to tetracycline derivatives;major
+facilitator superfamily (MFS) antibiotic efflux pump;16s rRNA with
+mutation conferring resistance to peptide antibiotics
+</td>
+<td style="text-align:left;">
+Mycobacteroides chelonae 16S rRNA mutation conferring resistance to
+neomycin;Neisseria meningitidis 16S rRNA mutation conferring resistance
+to spectinomycin;Pasteurella multocida 16S rRNA mutation conferring
+resistance to spectinomycin;SAT-4;Chlamydomonas reinhardtii 16S rRNA
+(rrnS) mutation conferring resistance to streptomycin;Escherichia coli
+16S rRNA (rrsH) mutation conferring resistance to
+spectinomycin;Helicobacter pylori 16S rRNA mutation conferring
+resistance to tetracycline;Cutibacterium acnes 16S rRNA mutation
+conferring resistance to tetracycline;Chlamydophila psittaci 16S rRNA
+mutation conferring resistance to spectinomycin;mdtN;mdtO;Escherichia
+coli 16S rRNA (rrsB) mutation conferring resistance to
+tetracycline;Salmonella enterica 16S rRNA (rrsD) mutation conferring
+resistance to spectinomycin;Escherichia coli 16S rRNA (rrsC) mutation
+conferring resistance to kasugamicin;Mycolicibacterium smegmatis 16S
+rRNA (rrsB) mutation conferring resistance to viomycin;Mycobacterium
+tuberculosis 16S rRNA mutation conferring resistance to
+capreomycin;Mycolicibacterium smegmatis 16S rRNA (rrsB) mutation
+conferring resistance to hygromycin B;Neisseria gonorrhoeae 16S rRNA
+mutation conferring resistance to
+spectinomycin;mdtM;mdtP;Mycobacteroides abscessus 16S rRNA mutation
+conferring resistance to gentamicin
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+peptide antibiotic
+</td>
+<td style="text-align:right;">
+150.613531
+</td>
+<td style="text-align:right;">
+120.30559
+</td>
+<td style="text-align:right;">
+0.0238328
+</td>
+<td style="text-align:right;">
+0.2416111
+</td>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics;rifamycin-resistant beta-subunit of RNA polymerase
+(rpoB);16S rRNA with mutation conferring resistance to tetracycline
+derivatives;ATP-binding cassette (ABC) antibiotic efflux pump;major
+facilitator superfamily (MFS) antibiotic efflux
+pump;resistance-nodulation-cell division (RND) antibiotic efflux
+pump;pmr phosphoethanolamine transferase;MCR phosphoethanolamine
+transferase;16s rRNA with mutation conferring resistance to peptide
+antibiotics;daptomycin resistant cls;undecaprenyl pyrophosphate related
+proteins;daptomycin resistant YybT;daptomycin resistant gshF;daptomycin
+resistant liaF;daptomycin resistant liaR;daptomycin resistant liaS
+</td>
+<td style="text-align:left;">
+Mycobacteroides chelonae 16S rRNA mutation conferring resistance to
+neomycin;Neisseria meningitidis 16S rRNA mutation conferring resistance
+to spectinomycin;Pasteurella multocida 16S rRNA mutation conferring
+resistance to spectinomycin;Bifidobacterium adolescentis rpoB mutants
+conferring resistance to rifampicin;Chlamydomonas reinhardtii 16S rRNA
+(rrnS) mutation conferring resistance to streptomycin;Escherichia coli
+16S rRNA (rrsH) mutation conferring resistance to
+spectinomycin;Helicobacter pylori 16S rRNA mutation conferring
+resistance to tetracycline;Cutibacterium acnes 16S rRNA mutation
+conferring resistance to tetracycline;Chlamydophila psittaci 16S rRNA
+mutation conferring resistance to spectinomycin;TolC;eptA;Escherichia
+coli rpoB mutants conferring resistance to rifampicin;Escherichia coli
+16S rRNA (rrsB) mutation conferring resistance to
+tetracycline;ugd;ArnT;Klebsiella mutant PhoP conferring antibiotic
+resistance to colistin;Klebsiella pneumoniae KpnE;Klebsiella pneumoniae
+KpnF;Klebsiella pneumoniae KpnG;LptD;MCR-9.1;eptB;Salmonella enterica
+16S rRNA (rrsD) mutation conferring resistance to
+spectinomycin;YojI;Escherichia coli 16S rRNA (rrsC) mutation conferring
+resistance to kasugamicin;Mycolicibacterium smegmatis 16S rRNA (rrsB)
+mutation conferring resistance to viomycin;Mycobacterium tuberculosis
+16S rRNA mutation conferring resistance to capreomycin;Mycolicibacterium
+smegmatis 16S rRNA (rrsB) mutation conferring resistance to hygromycin
+B;Enterococcus faecium cls conferring resistance to daptomycin;Neisseria
+gonorrhoeae 16S rRNA mutation conferring resistance to
+spectinomycin;bacA;PmrF;mgrB;Enterococcus faecalis YybT with mutation
+conferring daptomycin resistance;Enterococcus faecalis cls with mutation
+conferring resistance to daptomycin;Enterococcus faecalis gshF with
+mutation conferring daptomycin resistance;Enterococcus faecalis liaF
+mutant conferring daptomycin resistance;Enterococcus faecalis liaR
+mutant conferring daptomycin resistance;Enterococcus faecalis liaS
+mutant conferring daptomycin resistance;rpoB2;Mycobacteroides abscessus
+16S rRNA mutation conferring resistance to gentamicin;Enterococcus
+faecium liaF mutant conferring daptomycin resistance;Enterococcus
+faecium liaR mutant conferring daptomycin resistance;Enterococcus
+faecium liaS mutant conferring daptomycin resistance
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>drugclass_sig_rpkm_gcount$data_plot%&gt;%
+  ggplot(aes(x=GCount, y=value, color=GCount)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = &quot;free_y&quot;)+
+  labs(x= &quot;RPKM values&quot;, y=NULL, title=&quot;ARIBA RPKM&quot;) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
+<p><img src="figure/gene_richness.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-differentially-abundance-grouped-by-gene-family"
+class="section level2">
+<h2>Check differentially abundance (grouped by Gene Family)</h2>
+<pre class="r"><code>genefamily_sig_rpkm_gcount&lt;-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, refname_ariba_genefamily, GCount)
+genefamily_sig_rpkm_gcount$sig_data%&gt;% kable(caption=&quot;**Significant Gene Families, Gene Richness (Ariba RPKM**&quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div
+style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
+<caption>
+<strong>Significant Gene Families, Gene Richness (Ariba RPKM</strong>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+group_name
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+HGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+LGC
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+p.adjust
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+log2f
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+ARO Name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Drug Class
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
+</td>
+<td style="text-align:right;">
+131.341576
+</td>
+<td style="text-align:right;">
+109.3808180
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+<td style="text-align:right;">
+0.2333416
+</td>
+<td style="text-align:left;">
+Mycobacteroides chelonae 16S rRNA mutation conferring resistance to
+neomycin;Neisseria meningitidis 16S rRNA mutation conferring resistance
+to spectinomycin;Pasteurella multocida 16S rRNA mutation conferring
+resistance to spectinomycin;Chlamydomonas reinhardtii 16S rRNA (rrnS)
+mutation conferring resistance to streptomycin;Escherichia coli 16S rRNA
+(rrsH) mutation conferring resistance to spectinomycin;Chlamydophila
+psittaci 16S rRNA mutation conferring resistance to
+spectinomycin;Salmonella enterica 16S rRNA (rrsD) mutation conferring
+resistance to spectinomycin;Escherichia coli 16S rRNA (rrsC) mutation
+conferring resistance to kasugamicin;Mycobacterium tuberculosis 16S rRNA
+mutation conferring resistance to capreomycin;Mycolicibacterium
+smegmatis 16S rRNA (rrsB) mutation conferring resistance to hygromycin
+B;Neisseria gonorrhoeae 16S rRNA mutation conferring resistance to
+spectinomycin;Mycobacteroides abscessus 16S rRNA mutation conferring
+resistance to gentamicin
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+16S rRNA with mutation conferring resistance to tetracycline derivatives
+</td>
+<td style="text-align:right;">
+7.064780
+</td>
+<td style="text-align:right;">
+1.5100110
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+<td style="text-align:right;">
+1.1586526
+</td>
+<td style="text-align:left;">
+Helicobacter pylori 16S rRNA mutation conferring resistance to
+tetracycline;Cutibacterium acnes 16S rRNA mutation conferring resistance
+to tetracycline;Escherichia coli 16S rRNA (rrsB) mutation conferring
+resistance to tetracycline
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+23S rRNA with mutation conferring resistance to macrolide antibiotics
+</td>
+<td style="text-align:right;">
+146.995262
+</td>
+<td style="text-align:right;">
+123.0699310
+</td>
+<td style="text-align:right;">
+0.0003658
+</td>
+<td style="text-align:right;">
+0.2912766
+</td>
+<td style="text-align:left;">
+Clostridioides difficile 23S rRNA with mutation conferring resistance to
+erythromycin and clindamycin;Moraxella catarrhalis 23S rRNA with
+mutation conferring resistance to macrolide antibiotics;Mycoplasma
+hominis 23S rRNA with mutation conferring resistance to macrolide
+antibiotics;Neisseria gonorrhoeae 23S rRNA with mutation conferring
+resistance to azithromycin;Campylobacter jejuni 23S rRNA with mutation
+conferring resistance to erythromycin;Chlamydia trachomatis 23S rRNA
+with mutation conferring resistance to macrolide
+antibiotics;Mycobacterium intracellulare 23S rRNA with mutation
+conferring resistance to azithromycin;Brachyspira hyodysenteriae 23S
+rRNA with mutation conferring resistance to tylosin;Helicobacter pylori
+23S rRNA with mutation conferring resistance to
+clarithromycin;Mycoplasma fermentans 23S rRNA with mutation conferring
+resistance to macrolide antibiotics;Streptomyces ambofaciens 23S rRNA
+with mutation conferring resistance to macrolide antibiotics;Mycoplasma
+genitalium 23S rRNA mutations confers resistance to fluoroquinolone and
+macrolide antibiotics;Mycolicibacterium smegmatis 23S rRNA with mutation
+conferring resistance to clarithromycin;Mycobacterium avium 23S rRNA
+with mutation conferring resistance to clarithromycin;Propionibacteria
+23S rRNA with mutation conferring resistance to macrolide
+antibiotics;Mycobacteroides abscessus 23S rRNA with mutation conferring
+resistance to clarithromycin;Mycobacterium kansasii 23S rRNA with
+mutation conferring resistance to clarithromycin;Mycoplasma pneumoniae
+23S rRNA mutation conferring resistance to erythromycin;Mycobacteroides
+chelonae 23S rRNA with mutation conferring resistance to
+clarithromycin;Chlamydomonas reinhardtii 23S rRNA with mutation
+conferring resistance to erythromycin
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic;lincosamide antibiotic;macrolide
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ABC-F ATP-binding cassette ribosomal protection protein
+</td>
+<td style="text-align:right;">
+2.346433
+</td>
+<td style="text-align:right;">
+7.0115209
+</td>
+<td style="text-align:right;">
+0.0031798
+</td>
+<td style="text-align:right;">
+-1.5632823
+</td>
+<td style="text-align:left;">
+mel;msrC;lsaA;lsaE;lsaC;eatAv
+</td>
+<td style="text-align:left;">
+lincosamide antibiotic;macrolide antibiotic;oxazolidinone
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic;tetracycline antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+APH(3’)
+</td>
+<td style="text-align:right;">
+7.040046
+</td>
+<td style="text-align:right;">
+3.3226447
+</td>
+<td style="text-align:right;">
+0.0167903
+</td>
+<td style="text-align:right;">
+0.0171558
+</td>
+<td style="text-align:left;">
+APH(3’)-IIIa;APH(3’)-Ia
+</td>
+<td style="text-align:left;">
+aminoglycoside antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CblA beta-lactamase
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+4.3719988
+</td>
+<td style="text-align:right;">
+0.0001022
+</td>
+<td style="text-align:right;">
+-2.4625431
+</td>
+<td style="text-align:left;">
+CblA-1
+</td>
+<td style="text-align:left;">
+cephalosporin
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CfxA beta-lactamase
+</td>
+<td style="text-align:right;">
+107.946986
+</td>
+<td style="text-align:right;">
+156.5899621
+</td>
+<td style="text-align:right;">
+0.0344194
+</td>
+<td style="text-align:right;">
+-0.4860038
+</td>
+<td style="text-align:left;">
+CfxA2;CfxA6;CfxA3;CfxA5;CfxA4
+</td>
+<td style="text-align:left;">
+cephamycin
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chloramphenicol acetyltransferase (CAT)
+</td>
+<td style="text-align:right;">
+4.608615
+</td>
+<td style="text-align:right;">
+0.7761886
+</td>
+<td style="text-align:right;">
+0.0001022
+</td>
+<td style="text-align:right;">
+1.2279763
+</td>
+<td style="text-align:left;">
+Campylobacter coli chloramphenicol
+acetyltransferase;catP;catI;plasmid-encoded cat (pp-cat)
+</td>
+<td style="text-align:left;">
+phenicol antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;van ligase
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0023519
+</td>
+<td style="text-align:right;">
+4.3803116
+</td>
+<td style="text-align:left;">
+vanG
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;vanT
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0014589
+</td>
+<td style="text-align:right;">
+1.7776201
+</td>
+<td style="text-align:left;">
+vanTG
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+glycopeptide resistance gene cluster;vanXY
+</td>
+<td style="text-align:right;">
+0.000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0010399
+</td>
+<td style="text-align:right;">
+4.3666394
+</td>
+<td style="text-align:left;">
+vanXYG
+</td>
+<td style="text-align:left;">
+glycopeptide antibiotic
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>genefamily_sig_rpkm_gcount$data_plot%&gt;%
+  ggplot(aes(x=GCount, y=value, color=GCount)) +
+  geom_boxplot(outlier.shape = NA, show.legend = FALSE)+
+  geom_jitter(position = position_jitterdodge(dodge.width = 0.8,
+                                              jitter.width = 0.5))+
+  facet_wrap(~group_name, scales = &quot;free_y&quot;)+
+  labs(x= &quot;RPKM values&quot;, y=NULL, title=&quot;ARIBA RPKM&quot;) +
+  theme_bw()+
+  theme(axis.text.x = element_text(angle=45, hjust = 1))</code></pre>
+<p><img src="figure/gene_richness.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.2 (2021-11-01)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 22.04 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+
+locale:
+ [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=es_ES.UTF-8        LC_COLLATE=es_ES.UTF-8    
+ [5] LC_MONETARY=es_ES.UTF-8    LC_MESSAGES=es_ES.UTF-8   
+ [7] LC_PAPER=es_ES.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=es_ES.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] scales_1.2.0      ggthemes_4.2.4    broom_1.0.0       ggstatsplot_0.9.4
+ [5] patchwork_1.1.1   glue_1.6.2        ggpubr_0.4.0      vegan_2.6-2      
+ [9] lattice_0.20-45   permute_0.9-7     kableExtra_1.3.4  forcats_0.5.1    
+[13] stringr_1.4.0     dplyr_1.0.9       purrr_0.3.4       readr_2.1.2      
+[17] tidyr_1.2.0       tibble_3.1.8      ggplot2_3.3.6     tidyverse_1.3.2  
+[21] workflowr_1.7.0  
+
+loaded via a namespace (and not attached):
+ [1] googledrive_2.0.0      colorspace_2.0-3       ggsignif_0.6.3        
+ [4] ellipsis_0.3.2         rprojroot_2.0.3        parameters_0.18.2     
+ [7] fs_1.5.2               rstudioapi_0.13        farver_2.1.1          
+[10] bit64_4.0.5            fansi_1.0.3            lubridate_1.8.0       
+[13] xml2_1.3.3             splines_4.1.2          cachem_1.0.6          
+[16] knitr_1.39             zeallot_0.1.0          jsonlite_1.8.0        
+[19] cluster_2.1.2          dbplyr_2.2.1           compiler_4.1.2        
+[22] httr_1.4.3             backports_1.4.1        assertthat_0.2.1      
+[25] Matrix_1.4-0           fastmap_1.1.0          gargle_1.2.0          
+[28] cli_3.3.0              later_1.3.0            htmltools_0.5.3       
+[31] tools_4.1.2            gtable_0.3.0           Rcpp_1.0.9            
+[34] carData_3.0-5          cellranger_1.1.0       jquerylib_0.1.4       
+[37] vctrs_0.4.1            svglite_2.1.0          nlme_3.1-155          
+[40] insight_0.18.2         xfun_0.31              ps_1.7.1              
+[43] rvest_1.0.2            lifecycle_1.0.1        rstatix_0.7.1         
+[46] googlesheets4_1.0.0    getPass_0.2-2          MASS_7.3-55           
+[49] vroom_1.5.7            hms_1.1.1              promises_1.2.0.1      
+[52] parallel_4.1.2         rematch2_2.1.2         yaml_2.3.5            
+[55] sass_0.4.2             stringi_1.7.8          highr_0.9             
+[58] paletteer_1.4.1        bayestestR_0.12.1      rlang_1.0.4           
+[61] pkgconfig_2.0.3        systemfonts_1.0.4      evaluate_0.15         
+[64] labeling_0.4.2         bit_4.0.4              processx_3.7.0        
+[67] tidyselect_1.1.2       magrittr_2.0.3         R6_2.5.1              
+[70] generics_0.1.3         DBI_1.1.3              pillar_1.8.0          
+[73] haven_2.5.0            whisker_0.4            withr_2.5.0           
+[76] mgcv_1.8-39            datawizard_0.5.1       abind_1.4-5           
+[79] performance_0.9.2      modelr_0.1.8           crayon_1.5.1          
+[82] car_3.1-0              utf8_1.2.2             correlation_0.8.2     
+[85] tzdb_0.3.0             rmarkdown_2.14         grid_4.1.2            
+[88] readxl_1.4.0           callr_3.7.1            git2r_0.30.1          
+[91] reprex_2.0.1           digest_0.6.29          webshot_0.5.3         
+[94] httpuv_1.6.5           statsExpressions_1.3.3 munsell_0.5.0         
+[97] viridisLite_0.4.0      bslib_0.4.0           </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

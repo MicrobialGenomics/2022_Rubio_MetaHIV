@@ -7,4 +7,18 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+**Analysis of the human gut resistome and its relationship with HIV infection immuno-pathogenesis.** 
+
+The effects of HIV-1 infection and antirretroviral (ART) treatment on the gut microbiome are not well understood.  
+
+
+To date, alterations in the gut microbiota composition have been associated with untreated HIV infection or HIV spontaneous control. HIV related immuno-pathogenesis is linked to depletion of CD4+ T-cells, immune activation, chronic inflammation and increases in gut permeability and bacterial translocation.  
+
+While for most HIV infected patients, ART is able to control viral replication and restore life expectancy, patients infected with HIV still develop diseases associated with chroinc inflammation. Additionally, as for treated HIV infection, several studies seem to indicate that ART by itself does not restore the gut microbiome of HIV-infected individuals to healthy communities comparable to HIV-uninfected patients. This low-level chronic inflammation may be fueled by gut barrier loss of integrity, and thus contribute to alterations in the gut microbiome. 
+
+HIV related alterations in the gut microbiome may be linked to an increase in the gut bacterial resistome, the collection of antimirobial resistance genes in the gut bacterial ecosystem. Previous studies have shown an inverse correlaton between gut microbial richness and genes associated with beta-lactam, lincosamide, tetracycline and macrolide resistance in HIV infected patients. Additionally, some antiretroviral drugs have shown antibacterial activity suggesting that patients under ART could have an altered gut resistome.  
+
+Using a well described HIV population and whole metagenomics data, the master student will lead resistome data analysis as well as the study of resistome association with clinical features related to HIV infection. 
+
+ 
+The student considering this thesis proposal must have a strong Linux(bash), Python and R knowledge. 

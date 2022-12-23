@@ -1,0 +1,182 @@
+---
+title: "Biplots"
+author: "Elisa Rubio"
+date: "2022-12-04"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggthemes)
+library(grid)
+library(ggrepel)
+```
+
+## Load artifacts and  code
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/ariba_dist.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+load("output/grouped_refname_ariba.RDA")
+source("code/functions.R")
+```
+
+## Prepare metadata
+
+```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
+         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
+         Profile=factor(Profile, levels = c("negative", "elite_controllers", "viremic_controllers", 
+                                            "early_treated ", "concordant", "naive", "late_presenters",
+                                            "discordant")))%>%
+  inner_join(gene_richness, by="SampleID")
+```
+
+## Perform NMDS
+
+```{r}
+set.seed(200889)
+nmds_rpkm<-metaMDS(ariba_dist$dist_rpkm, trace = 0, trymax = 200)
+```
+
+## Numerical clinical variables correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm_meta<-corr_meta_envfit(metadata, nmds_rpkm)
+
+cor_rpkm_meta%>%slice_max(r2, n=10)%>%
+  select(-NMDS1, -NMDS2)%>%
+  kable(caption="**Top 10 correlated Clinical variables with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+top_n=10
+cor_rpkm_meta_top10<-cor_rpkm_meta%>%slice_max(r2, n=top_n)
+write_csv(cor_rpkm_meta_top10, "output/envfit_rpkm_meta_top10.csv")
+```
+
+```{r}
+p1<-biplot_amr_envfit(cor_rpkm_meta_top10, nmds_rpkm, metadata, MSM_dic, Variable)+
+  labs(title = "Numerical variables")
+p1
+```
+
+## AMR genes correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm_amr<-corr_amr_envfit(ariba_rpkm, refname_all_ariba, nmds_rpkm)
+
+
+cor_rpkm_amr%>%slice_max(r2, n=20)%>%select(`ARO Name`, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated AMR genes with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+cor_level<-0.2
+cor_rpkm_amr_corlev2<-cor_rpkm_amr%>%filter(p.value<=0.05 & r2 > cor_level)
+write_csv(cor_rpkm_amr_corlev2, "output/envfit_rpkm_amr_corlev2.csv")
+```
+
+```{r}
+p2<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, MSM_dic, `ARO Name`)+
+  labs(title = "Determinantes de resistencia")
+p2
+```
+
+```{r}
+p2b<-biplot_amr_envfit(cor_rpkm_amr_corlev2, nmds_rpkm, metadata, GCount, `ARO Name`)+
+  labs(title = "AMR determinants")
+p2b
+```
+
+## Drug Class correlations with NMDs axes
+
+```{r}
+set.seed(200889)
+cor_rpkm_drugclass<-corr_group_envfit(data_group=ariba_rpkm_drugclass, refdata_group = refname_ariba_drugclass, nmds = nmds_rpkm)
+
+cor_rpkm_drugclass%>%slice_max(r2, n=20)%>%select(group_name, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated drug classes with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+cor_level<-0.2
+cor_rpkm_drugclass_corlev2<-cor_rpkm_drugclass%>%filter(p.value<=0.05 & r2 > cor_level)
+write_csv(cor_rpkm_drugclass_corlev2, "output/envfit_rpkm_drugclass_corlev2.csv")
+```
+
+```{r}
+p3<-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, MSM_dic, group_name)+
+  labs(title = "Drug Class")+theme(legend.title = element_blank())
+
+p3
+```
+
+
+```{r}
+p3b<-biplot_amr_envfit(cor_rpkm_drugclass_corlev2, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = "Drug Class")+theme(legend.title = element_blank())
+
+p3b
+```
+
+## Gene family correlations with NMDS axes
+
+```{r}
+set.seed(200889)
+cor_rpkm_genefamily<-corr_group_envfit(data_group=ariba_rpkm_genefamily, refdata_group = refname_ariba_genefamily, nmds = nmds_rpkm)
+
+cor_rpkm_genefamily%>%slice_max(r2, n=20)%>%select(group_name, r2, p.value, everything(), -NMDS1, -NMDS2)%>%
+kable(caption="**Top 20 correlated gene families with NMDS axes** (Ariba RPKM)")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+```
+
+```{r}
+cor_level<-0.2
+cor_rpkm_genefamily_corlev2<-cor_rpkm_genefamily%>%filter(p.value<=0.05 & r2 > cor_level)
+
+write_csv(cor_rpkm_genefamily_corlev2, "output/envfit_rpkm_genefamily_corlev2.csv")
+```
+
+```{r}
+cor_rpkm_genefamily_corlev<-cor_rpkm_genefamily_corlev2%>%
+   mutate(group_name = replace(group_name, group_name == "23S rRNA with mutation conferring resistance to macrolide antibiotics", "23S rRNA with mutation \n conferring resistance to \n macrolide antibiotics"),
+          group_name = replace(group_name, group_name=="Erm 23S ribosomal RNA methyltransferase", "Erm 23S ribosomal \nRNA methyltransferase" ))
+
+p4<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, MSM_dic, group_name)+
+  labs(title = "Gene family")+theme(legend.title = element_blank())
+
+p4
+```
+
+```{r}
+
+p4b<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, GCount, group_name)+
+  labs(title = "FGene family")+theme(legend.title = element_blank())
+
+p4b
+
+```
+

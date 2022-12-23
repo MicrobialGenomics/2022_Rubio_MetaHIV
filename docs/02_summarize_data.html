@@ -14,7 +14,7 @@
 
 <title>Data summary</title>
 
-<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -348,9 +348,6 @@ div.tocify {
   <a href="02_summarize_data.html">Summarize data</a>
 </li>
 <li>
-  <a href="01_1_import_virulome.html">Import virulome</a>
-</li>
-<li>
   <a href="03_rarefaction.html">Rarefy data</a>
 </li>
 <li>
@@ -363,34 +360,13 @@ div.tocify {
   <a href="05_beta_div.html">Beta diversity analysis</a>
 </li>
 <li>
-  <a href="06_biplot.html">Biplot (Spearman)</a>
+  <a href="06_group_matrixes.html">Create grouped matrixes</a>
 </li>
 <li>
-  <a href="06_2_biplot_envfit.html">Biplot (Envfit)</a>
+  <a href="07_biplots.html">Biplot</a>
 </li>
 <li>
-  <a href="contingency_tabe.html">Contingency table</a>
-</li>
-<li>
-  <a href="08_amr_significance.html">AMR significance</a>
-</li>
-<li>
-  <a href="09_group_matrixes.html">Group matrixes</a>
-</li>
-<li>
-  <a href="10_grouped_significance.html">Grouped significance</a>
-</li>
-<li>
-  <a href="Profile.html">Profile</a>
-</li>
-<li>
-  <a href="ART.html">ART</a>
-</li>
-<li>
-  <a href="11_gene_richness.html">Gene Richness</a>
-</li>
-<li>
-  <a href="Riskgroup2_grouped.html">Riskgroup2</a>
+  <a href="08_differentially_abundant.html">Differentially abundance</a>
 </li>
 <li>
   <a href="about.html">About</a>
@@ -426,7 +402,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -435,7 +413,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -444,17 +424,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-11-13
+<strong>Last updated:</strong> 2022-12-23
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
 </p>
 <p>
-<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -463,115 +453,205 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20220202)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220202code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20220202)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree268283feefde6c79b5e9d2d1eaf5dd623668da58targetblank268283fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/268283feefde6c79b5e9d2d1eaf5dd623668da58" target="_blank">268283f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree268283feefde6c79b5e9d2d1eaf5dd623668da58targetblank268283fa" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/268283feefde6c79b5e9d2d1eaf5dd623668da58" target="_blank">268283f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
+    Ignored:    analysis/.Rhistory
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
 Untracked files:
-    Untracked:  analysis/11_gene_richness.Rmd
-    Untracked:  analysis/ART.Rmd
-    Untracked:  analysis/Riskgroup2_grouped.Rmd
-    Untracked:  data/Metadata/generichness_data.txt
+    Untracked:  PEC3/alpha_div_nosig.png
+    Untracked:  analysis/06_group_matrixes.Rmd
+    Untracked:  analysis/07_biplots.Rmd
+    Untracked:  analysis/08_differentially_abundant.Rmd
+    Untracked:  analysis/amr_significance.Rmd
+    Untracked:  analysis/biplot_envfit.Rmd
+    Untracked:  analysis/biplot_spearman.Rmd
+    Untracked:  analysis/counts.Rmd
+    Untracked:  analysis/gene_richness.Rmd
+    Untracked:  analysis/grouped_significance.Rmd
+    Untracked:  analysis/import_virulome.Rmd
+    Untracked:  analysis/import_virulome_data.Rmd
 
 Unstaged changes:
-    Modified:   analysis/10_grouped_significance.Rmd
+    Deleted:    analysis/01_1_import_virulome.Rmd
+    Deleted:    analysis/01_2_import_virulome_data.Rmd
+    Modified:   analysis/02_summarize_data.Rmd
+    Modified:   analysis/03_1_procruster.Rmd
+    Deleted:    analysis/04_01_counts.Rmd
+    Modified:   analysis/04_alpha_div.Rmd
+    Modified:   analysis/05_beta_div.Rmd
+    Deleted:    analysis/06_2_biplot_envfit.Rmd
+    Deleted:    analysis/06_biplot.Rmd
+    Deleted:    analysis/07_heatmap.Rmd
+    Deleted:    analysis/08_amr_significance.Rmd
+    Deleted:    analysis/09_group_matrixes.Rmd
+    Deleted:    analysis/10_grouped_significance.Rmd
+    Deleted:    analysis/11_gene_richness.Rmd
+    Modified:   analysis/PEC3.Rmd
+    Deleted:    analysis/PEC3_biplots.Rmd
     Modified:   analysis/_site.yml
+    Modified:   analysis/about.Rmd
+    Deleted:    analysis/differentially_abundant.Rmd
     Modified:   analysis/index.Rmd
+    Modified:   analysis/license.Rmd
     Modified:   code/functions.R
+    Modified:   output/ariba_dist.RDA
+    Modified:   output/envfit_rpkm_amr_corlev2.csv
+    Modified:   output/envfit_rpkm_drugclass_corlev2.csv
+    Modified:   output/envfit_rpkm_genefamily_corlev2.csv
+    Modified:   output/envfit_rpkm_meta_top10.csv
+    Modified:   output/genefamily_grich.xlsx
+    Modified:   output/genefamily_mcluster.xlsx
+    Modified:   output/genefamily_sexualp.xlsx
+    Modified:   output/groot_dist.RDA
+    Modified:   output/sumtable_grich.xlsx
+    Modified:   output/sumtable_mcluster.xlsx
+    Modified:   output/sumtable_sexualp.xlsx
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -582,7 +662,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/02_summarize_data.Rmd</code>) and HTML (<code>docs/02_summarize_data.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/02_summarize_data.Rmd</code>) and
+HTML (<code>docs/02_summarize_data.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -606,6 +691,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/fee17bd2894df7ad2e6d8437e80184b2f73bc209/docs/02_summarize_data.html" target="_blank">fee17bd</a>
+</td>
+<td>
+Elisa
+</td>
+<td>
+2022-11-13
+</td>
+<td>
+Gene richness, ART and grouped riskgroup2 analysis.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -654,7 +756,8 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for
+betadiversity and riskgroup2
 </td>
 </tr>
 <tr>
@@ -671,7 +774,8 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for
+betadiversity and riskgroup2
 </td>
 </tr>
 </tbody>
@@ -721,21 +825,26 @@ str(aro_index)</code></pre>
 </div>
 <div id="ariba" class="section level2">
 <h2>ARIBA</h2>
-<div id="get-all-report-files-list-of-dataframes-and-assign-names" class="section level3">
+<div id="get-all-report-files-list-of-dataframes-and-assign-names"
+class="section level3">
 <h3>Get all report files (list of dataframes) and assign names:</h3>
 <pre class="r"><code>ariba_files&lt;-list.files(&quot;output/aribaData&quot;, full.names = TRUE, pattern =&quot;ariba_report.tsv&quot;)
 ariba_data &lt;- lapply(ariba_files, read_tsv)
 names(ariba_data)&lt;-ariba_samples</code></pre>
 </div>
-<div id="remove-contig-and-variant-data-from-ariba" class="section level3">
+<div id="remove-contig-and-variant-data-from-ariba"
+class="section level3">
 <h3>Remove contig and variant data from ARIBA:</h3>
 <pre class="r"><code>vars&lt;-c(&quot;#ariba_ref_name&quot;, &quot;ref_name&quot; , &quot;gene&quot;,  &quot;var_only&quot;, &quot;flag&quot;, &quot;reads&quot;, &quot;cluster&quot;, &quot;ref_len&quot;, &quot;free_text&quot; )
 aribasubs&lt;-function(x){x%&gt;%select(all_of(vars))%&gt;%unique()}
 ##aribasubs2&lt;-function(x){x%&gt;% filter(gene==1)%&gt;%select(c(1:8,31))%&gt;%unique()} ##Only coding sequences
 ariba_data&lt;-lapply(ariba_data, aribasubs)</code></pre>
 </div>
-<div id="merge-with-card-data-in-order-to-obtain-resistance-genes-information-amr-gene-family" class="section level3">
-<h3>Merge with CARD data in order to obtain resistance genes information (AMR gene family…)</h3>
+<div
+id="merge-with-card-data-in-order-to-obtain-resistance-genes-information-amr-gene-family"
+class="section level3">
+<h3>Merge with CARD data in order to obtain resistance genes information
+(AMR gene family…)</h3>
 <pre class="r"><code>## test reference name structures
 
 refname&lt;-lapply(ariba_data, function(x) x%&gt;%select(ref_name))
@@ -753,7 +862,8 @@ refname&lt;-refname%&gt;%
 refname_all_ariba&lt;-left_join(refname, aro_index, by=&quot;ARO Accession&quot;)
 
 head(refname_all_ariba, 8)%&gt;%kable(caption=&quot;**Ariba detected ARG with CARD information** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Ariba detected ARG with CARD information</strong>
@@ -971,7 +1081,8 @@ NR_076234 . 1
 42686
 </td>
 <td style="text-align:left;">
-Clostridioides difficile 23S rRNA with mutation conferring resistance to erythromycin and clindamycin
+Clostridioides difficile 23S rRNA with mutation conferring resistance to
+erythromycin and clindamycin
 </td>
 <td style="text-align:left;">
 NA
@@ -983,7 +1094,9 @@ NR_076234.1
 23S rRNA with mutation conferring resistance to macrolide antibiotics
 </td>
 <td style="text-align:left;">
-glycopeptide antibiotic;lincosamide antibiotic;macrolide antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic
+glycopeptide antibiotic;lincosamide antibiotic;macrolide
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -1140,7 +1253,8 @@ df_transform[is.na(df_transform)] &lt;- 0
 return(df_transform)}</code></pre>
 <pre class="r"><code>ariba_rpkm&lt;-transform_data(ariba_data, ariba_samples, RPKM)
 head(ariba_rpkm, 15)%&gt;%kable(caption=&quot;**Table 1. Ariba RPKM** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Table 1. Ariba RPKM</strong>
@@ -8673,7 +8787,8 @@ Pasteurella_multocida_16S.3003493.NC_002663.1.341427_342977.3252
 </div>
 <pre class="r"><code>ariba_counts&lt;-transform_data(ariba_data, ariba_samples, reads)
 head(ariba_counts, 15)%&gt;%kable(caption=&quot;**Table 1. Ariba Counts** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Table 1. Ariba Counts</strong>
@@ -16208,14 +16323,18 @@ Pasteurella_multocida_16S.3003493.NC_002663.1.341427_342977.3252
 </div>
 <div id="groot" class="section level2">
 <h2>Groot</h2>
-<div id="get-all-report-files-list-of-dataframes-and-assign-names-1" class="section level3">
+<div id="get-all-report-files-list-of-dataframes-and-assign-names-1"
+class="section level3">
 <h3>Get all report files (list of dataframes) and assign names:</h3>
 <pre class="r"><code>groot_files&lt;-list.files(&quot;output/grootData&quot;, full.names = TRUE, pattern =&quot;groot.report.tsv&quot;)
 groot_data &lt;- lapply(groot_files, function(x) read_tsv (x, col_names = c(&quot;ref_name&quot;, &quot;read_count&quot;, &quot;gene_length&quot;, &quot;coverage_cigar&quot;)))
 names(groot_data)&lt;-groot_samples</code></pre>
 </div>
-<div id="merge-with-card-data-in-order-to-obtain-resistance-genes-information-amr-gene-family-1" class="section level3">
-<h3>Merge with CARD data in order to obtain resistance genes information (AMR gene family…)</h3>
+<div
+id="merge-with-card-data-in-order-to-obtain-resistance-genes-information-amr-gene-family-1"
+class="section level3">
+<h3>Merge with CARD data in order to obtain resistance genes information
+(AMR gene family…)</h3>
 <pre class="r"><code>## test reference name structures
 
 refname_groot&lt;-lapply(groot_data, function(x) x%&gt;%select(ref_name))%&gt;%unlist()%&gt;%unique()%&gt;%as.data.frame()%&gt;%rename(ref_name=1)
@@ -16245,7 +16364,8 @@ which(is.na(refname_all_groot$`AMR Gene Family`))</code></pre>
 <pre class="r"><code>##Searched for the ARO accession and the NCBI accession and there was nothing as a resistance gene to chloramphenicol. 
 
 head(refname_all_groot, 8)%&gt;%kable(caption=&quot;**Groot detected ARG with CARD information** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Groot detected ARG with CARD information</strong>
@@ -16317,7 +16437,8 @@ U00096
 39917
 </td>
 <td style="text-align:left;">
-Escherichia coli 16S rRNA (rrsC) mutation conferring resistance to kasugamicin
+Escherichia coli 16S rRNA (rrsC) mutation conferring resistance to
+kasugamicin
 </td>
 <td style="text-align:left;">
 NA
@@ -16326,10 +16447,13 @@ NA
 U00096
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -16370,7 +16494,9 @@ AF227521.1
 ABC-F ATP-binding cassette ribosomal protection protein
 </td>
 <td style="text-align:left;">
-lincosamide antibiotic;macrolide antibiotic;oxazolidinone antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin antibiotic;tetracycline antibiotic
+lincosamide antibiotic;macrolide antibiotic;oxazolidinone
+antibiotic;phenicol antibiotic;pleuromutilin antibiotic;streptogramin
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target protection
@@ -16399,7 +16525,8 @@ U00096
 39986
 </td>
 <td style="text-align:left;">
-Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to neomycin
+Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to
+neomycin
 </td>
 <td style="text-align:left;">
 NA
@@ -16408,10 +16535,13 @@ NA
 U00096
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -16481,7 +16611,8 @@ AE006468
 40114
 </td>
 <td style="text-align:left;">
-Salmonella enterica 16S rRNA (rrsD) mutation conferring resistance to spectinomycin
+Salmonella enterica 16S rRNA (rrsD) mutation conferring resistance to
+spectinomycin
 </td>
 <td style="text-align:left;">
 NA
@@ -16490,10 +16621,13 @@ NA
 AE006468
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -16563,7 +16697,8 @@ U00096
 39992
 </td>
 <td style="text-align:left;">
-Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to tobramycin
+Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to
+tobramycin
 </td>
 <td style="text-align:left;">
 NA
@@ -16572,10 +16707,13 @@ NA
 U00096
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -16604,7 +16742,8 @@ U00096
 39960
 </td>
 <td style="text-align:left;">
-Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to spectinomycin
+Escherichia coli 16S rRNA (rrsB) mutation conferring resistance to
+spectinomycin
 </td>
 <td style="text-align:left;">
 NA
@@ -16613,10 +16752,13 @@ NA
 U00096
 </td>
 <td style="text-align:left;">
-16s rRNA with mutation conferring resistance to aminoglycoside antibiotics
+16s rRNA with mutation conferring resistance to aminoglycoside
+antibiotics
 </td>
 <td style="text-align:left;">
-aminoglycoside antibiotic;glycopeptide antibiotic;glycylcycline;nucleoside antibiotic;peptide antibiotic;tetracycline antibiotic
+aminoglycoside antibiotic;glycopeptide
+antibiotic;glycylcycline;nucleoside antibiotic;peptide
+antibiotic;tetracycline antibiotic
 </td>
 <td style="text-align:left;">
 antibiotic target alteration
@@ -16649,7 +16791,8 @@ groot_data&lt;-lapply(groot_data, function (x) grootnotation (x, aro_index ))</c
 <h3>Transform data to obtain matrix</h3>
 <pre class="r"><code>groot_rpkm&lt;-transform_data(groot_data, groot_samples, RPKM)
 head(groot_rpkm, 15)%&gt;%kable(caption=&quot;**Table. Groot RPKM** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Table. Groot RPKM</strong>
@@ -24230,7 +24373,8 @@ Tet(X4).3004720.MK134376.1.324-1482.5597
 </div>
 <pre class="r"><code>groot_counts&lt;-transform_data(groot_data, groot_samples, read_count)
 head(groot_counts, 15)%&gt;%kable(caption=&quot;**Table. Groot Counts** &quot;)%&gt;%kable_paper(&quot;striped&quot;)%&gt;%scroll_box(width = &quot;100%&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<div
+style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
 <table class=" lightable-paper lightable-striped" style="font-family: &quot;Arial Narrow&quot;, arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;">
 <caption>
 <strong>Table. Groot Counts</strong>
@@ -31811,7 +31955,8 @@ Tet(X4).3004720.MK134376.1.324-1482.5597
 </div>
 </div>
 </div>
-<div id="save-obtained-matrix-and-amr-genes-metadata" class="section level2">
+<div id="save-obtained-matrix-and-amr-genes-metadata"
+class="section level2">
 <h2>Save obtained matrix and AMR genes metadata</h2>
 <pre class="r"><code>save(groot_rpkm, groot_counts, refname_all_groot, file=&quot;output/summarized_groot.RDA&quot;)
 save(ariba_rpkm, ariba_counts, refname_all_ariba, file=&quot;output/summarized_ariba.RDA&quot;)</code></pre>
@@ -31823,18 +31968,19 @@ write_excel_csv(refname_all_groot, &quot;output/refname_all_groot.csv&quot;)</co
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 20.04.3 LTS
+Running under: Ubuntu 22.04 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
 
 locale:
  [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
@@ -31848,30 +31994,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
- [5] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
- [9] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+ [1] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9     
+ [5] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.8    
+ [9] ggplot2_3.3.6    tidyverse_1.3.2  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2        sass_0.4.1        bit64_4.0.5       vroom_1.5.7      
- [5] jsonlite_1.8.0    viridisLite_0.4.0 modelr_0.1.8      bslib_0.3.1      
- [9] assertthat_0.2.1  getPass_0.2-2     highr_0.9         cellranger_1.1.0 
-[13] yaml_2.3.5        pillar_1.7.0      backports_1.4.1   glue_1.6.2       
-[17] digest_0.6.29     promises_1.2.0.1  rvest_1.0.2       colorspace_2.0-3 
-[21] htmltools_0.5.2   httpuv_1.6.5      pkgconfig_2.0.3   broom_1.0.1      
-[25] haven_2.4.3       scales_1.2.1      webshot_0.5.2     processx_3.5.3   
-[29] svglite_2.1.0     whisker_0.4       later_1.3.0       tzdb_0.2.0       
-[33] git2r_0.30.1      generics_0.1.2    ellipsis_0.3.2    withr_2.5.0      
-[37] cli_3.3.0         magrittr_2.0.2    crayon_1.5.1      readxl_1.3.1     
-[41] evaluate_0.15     ps_1.6.0          fs_1.5.2          fansi_1.0.3      
-[45] xml2_1.3.3        tools_4.1.2       hms_1.1.1         lifecycle_1.0.1  
-[49] munsell_0.5.0     reprex_2.0.1      callr_3.7.0       compiler_4.1.2   
-[53] jquerylib_0.1.4   systemfonts_1.0.4 rlang_1.0.2       grid_4.1.2       
-[57] rstudioapi_0.13   rmarkdown_2.13    gtable_0.3.0      DBI_1.1.2        
-[61] R6_2.5.1          lubridate_1.8.0   knitr_1.38        fastmap_1.1.0    
-[65] bit_4.0.4         utf8_1.2.2        rprojroot_2.0.2   stringi_1.7.6    
-[69] parallel_4.1.2    Rcpp_1.0.8.3      vctrs_0.3.8       dbplyr_2.1.1     
-[73] tidyselect_1.1.2  xfun_0.30        </code></pre>
+ [1] httr_1.4.3          sass_0.4.2          bit64_4.0.5        
+ [4] vroom_1.5.7         jsonlite_1.8.0      viridisLite_0.4.0  
+ [7] modelr_0.1.8        bslib_0.4.0         assertthat_0.2.1   
+[10] getPass_0.2-2       highr_0.9           googlesheets4_1.0.0
+[13] cellranger_1.1.0    yaml_2.3.5          pillar_1.8.0       
+[16] backports_1.4.1     glue_1.6.2          digest_0.6.29      
+[19] promises_1.2.0.1    rvest_1.0.2         colorspace_2.0-3   
+[22] htmltools_0.5.3     httpuv_1.6.5        pkgconfig_2.0.3    
+[25] broom_1.0.0         haven_2.5.0         scales_1.2.0       
+[28] webshot_0.5.3       processx_3.7.0      svglite_2.1.0      
+[31] whisker_0.4         later_1.3.0         tzdb_0.3.0         
+[34] git2r_0.30.1        googledrive_2.0.0   generics_0.1.3     
+[37] ellipsis_0.3.2      cachem_1.0.6        withr_2.5.0        
+[40] cli_3.3.0           magrittr_2.0.3      crayon_1.5.1       
+[43] readxl_1.4.0        evaluate_0.15       ps_1.7.1           
+[46] fs_1.5.2            fansi_1.0.3         xml2_1.3.3         
+[49] tools_4.1.2         hms_1.1.1           gargle_1.2.0       
+[52] lifecycle_1.0.1     munsell_0.5.0       reprex_2.0.1       
+[55] callr_3.7.1         compiler_4.1.2      jquerylib_0.1.4    
+[58] systemfonts_1.0.4   rlang_1.0.4         grid_4.1.2         
+[61] rstudioapi_0.13     rmarkdown_2.14      gtable_0.3.0       
+[64] DBI_1.1.3           R6_2.5.1            lubridate_1.8.0    
+[67] knitr_1.39          bit_4.0.4           fastmap_1.1.0      
+[70] utf8_1.2.2          rprojroot_2.0.3     stringi_1.7.8      
+[73] parallel_4.1.2      Rcpp_1.0.9          vctrs_0.4.1        
+[76] dbplyr_2.2.1        tidyselect_1.1.2    xfun_0.31          </code></pre>
 </div>
 </div>
 

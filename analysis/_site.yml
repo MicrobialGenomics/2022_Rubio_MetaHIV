@@ -9,8 +9,6 @@ navbar:
     href: 01_import_data.html
   - text: Summarize data
     href: 02_summarize_data.html
-  - text: Import virulome
-    href: 01_1_import_virulome.html
   - text: Rarefy data
     href: 03_rarefaction.html
   - text: Procruster test (Rare versus RPKM)
@@ -19,26 +17,12 @@ navbar:
     href: 04_alpha_div.html
   - text: Beta diversity analysis
     href: 05_beta_div.html
-  - text: Biplot (Spearman)
-    href: 06_biplot.html
-  - text: Biplot (Envfit)
-    href: 06_2_biplot_envfit.html
-  - text: Contingency table
-    href: contingency_tabe.html
-  - text: AMR significance
-    href: 08_amr_significance.html
-  - text: Group matrixes
-    href: 09_group_matrixes.html
-  - text: Grouped significance
-    href: 10_grouped_significance.html
-  - text: Profile
-    href: Profile.html
-  - text: ART
-    href: ART.html
-  - text: Gene Richness
-    href: 11_gene_richness.html
-  - text: Riskgroup2
-    href: Riskgroup2_grouped.html
+  - text: Create grouped matrixes
+    href: 06_group_matrixes.html
+  - text: Biplot
+    href: 07_biplots.html
+  - text: Differentially abundance
+    href: 08_differentially_abundant.html
   - text: About
     href: about.html
   - text: License

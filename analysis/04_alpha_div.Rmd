@@ -22,6 +22,7 @@ library(vegan)
 library(ggpubr)
 library(glue)
 library(patchwork)
+library(ggthemes)
 ```
 
 ## Load summarized and rarefied data
@@ -43,84 +44,19 @@ gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
 
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(ratio_CD4_CD8=CD4_absolute/CD8_absolute,
-         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"),
-         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"))%>%
+         ART=ifelse(Profile %in% ART_groups, "TAR", "No TAR"),
+         MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
+         Profile=factor(Profile, levels = c("negative", "elite_controllers", "viremic_controllers", 
+                                            "early_treated ", "concordant", "naive", "late_presenters",
+                                            "discordant")))%>%
   inner_join(gene_richness, by="SampleID")
 ```
 
-## Create functions
-
-#### Calculate alpha diversity indexes:
-
+## Load functions
 ```{r}
-alpha_div<-function(d_rpkm, d_counts, metadata){
-shannon<-diversity(d_rpkm[ ,-1], MARGIN = 2, index="shannon")
-simpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="simpson")
-invsimpson<-diversity(d_rpkm[, -1], MARGIN = 2, index="invsimpson")
-nARG<-specnumber(d_rpkm[, -1], MARGIN = 2)
-fisher<-fisher.alpha(d_counts[ ,-1], MARGIN = 2) ##we obtain fisher index from counts (not possible to calculate for rpkm values)
-metadata%>%
-  filter(SampleID %in% names(d_rpkm))%>%
-  mutate(Shannon=shannon, Simpson=simpson, InvSimpson= invsimpson, nARG=nARG, Fisher=fisher)}
+source("code/functions.R")
 ```
 
-#### Plot a diversity index for a clinical variable
-
-```{r}
-alpha_div_plot<-function(data, clin_var, alpha_var){
-  clin_var<-enquo(clin_var)
-  alpha_var<-enquo(alpha_var)
-  
-  data%>%
-  filter(!is.na(!!clin_var))%>%
-  ggplot(aes(x=!!clin_var, y=!!alpha_var))+
-  geom_boxplot(aes(colour=!!clin_var))+
-  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  stat_compare_means()+
-  theme_classic()+
-  theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))}
-```
-
-#### Plot all diversity indexes for a clinical variable
-
-```{r}
-alpha_div_plot_all<-function(data, clin_var){
-clin_var<-enquo(clin_var)
-data%>%
-  filter(!is.na(!!clin_var))%>%
-  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
-  ggplot(aes(x=!!clin_var, y=Alpha_value))+
-  geom_boxplot(aes(colour=!!clin_var))+
-  geom_jitter(width = 0.2, aes(colour=!!clin_var))+
-  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
-  stat_compare_means(label="p.format", label.x = 1, label.y.npc = 0.9)+
-  theme_bw()+
-  labs(y="Alpha diversity", caption = "P values calculated by Wilcoxon test", title = clin_var)+
-  theme(legend.position = "none", axis.title.x=element_blank(),
-        axis.text.x = element_text(angle=45, hjust = 1))}
-
-```
-
-
-
-
-#### Plot correlation between a diversity indexe and quantitative clinical variables
-
-```{r}
-alpha_div_cor_all<-function(data, clin_var){
-clin_var<-enquo(clin_var)
-data%>%
-  pivot_longer(cols=c(Shannon, Simpson, InvSimpson, nARG, Fisher), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
-  ggplot(aes(x=!!clin_var, y=Alpha_value))+
-  geom_point(color='#2980B9', size = 2) + 
-  geom_smooth(method=lm, color="black")+
-  facet_wrap(vars(Alpha_Index), ncol = 3, scales = "free_y")+
-  stat_cor(method="spearman", label.x.npc = "left", label.y.npc = 0.9)+
-  theme_bw()+
-  labs(y="Alpha diversity", caption = "Spearman correlation", title = clin_var)+
-  theme(legend.position = "none", axis.title.x=element_blank(),
-        axis.text.x = element_text(angle=45, hjust = 1))}
-```
 ## ARIBA
 
 ```{r ariba_alpha_rpkmdiv}
@@ -169,7 +105,7 @@ p1<-ariba_alpha_rar%>%
   geom_boxplot(aes(colour=Profile))+
   geom_jitter(width = 0.2, aes(colour=Profile))+
   ##stat_compare_means()+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))+
   labs(title = "Ariba rarefied counts")
 
@@ -179,7 +115,7 @@ p2<-ariba_alpha_rpkm%>%
   geom_boxplot(aes(colour=Profile))+
   geom_jitter(width = 0.2, aes(colour=Profile))+
   ##stat_compare_means()+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none",  axis.text.x = element_text(angle=45, hjust = 1))+
   labs(title = "Ariba RPKM")
 
@@ -205,7 +141,7 @@ p_invsimp_rar<-ariba_alpha_rar%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 45)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_shannon_rar<-ariba_alpha_rar%>%
@@ -215,7 +151,7 @@ p_shannon_rar<-ariba_alpha_rar%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 5)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_invsimp_rpkm<-ariba_alpha_rpkm%>%
@@ -225,7 +161,7 @@ p_invsimp_rpkm<-ariba_alpha_rpkm%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 65)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_shannon_rpkm<-ariba_alpha_rpkm%>%
@@ -235,7 +171,7 @@ p_shannon_rpkm<-ariba_alpha_rpkm%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 5.5)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Ariba rarefied counts")
@@ -346,7 +282,7 @@ p_invsimp_rar<-groot_alpha_rar%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 90)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_shannon_rar<-groot_alpha_rar%>%
@@ -356,7 +292,7 @@ p_shannon_rar<-groot_alpha_rar%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 6)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_invsimp_rpkm<-groot_alpha_rpkm%>%
@@ -366,7 +302,7 @@ p_invsimp_rpkm<-groot_alpha_rpkm%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 110)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_shannon_rpkm<-groot_alpha_rpkm%>%
@@ -376,7 +312,7 @@ p_shannon_rpkm<-groot_alpha_rpkm%>%
   geom_jitter(width = 0.2, aes(colour=RiskGroup2))+
   stat_compare_means(comparisons = my_comparisons)+ 
   stat_compare_means(label.y = 6)+
-  theme_classic()+
+  scale_colour_Publication()+ theme_Publication()+
   theme(legend.position = "none")
 
 p_invsimp_rar + p_shannon_rar +plot_annotation(title = "Groot rarefied counts")
@@ -466,6 +402,9 @@ alpha_div_cor_all(slice(groot_alpha_rpkm, -high_ratio), CD8_absolute)+labs(subti
 
 -   **Microbiome Cluster:** Lower alpha diversity (Simpson/InvSimpson
     and Shannon) in *Bacteroides* cluster
-
+  
+-   **Gene richness:** Lower alpha diversity (Simpson/InvSimpson
+    and Shannon) in LGC. 
+    
 -   **CD4, Nadir CD4, CD8, CD4/CD8 ratio:** No significant correlation between CD4 levels
     and Nadir CD4 and alpha diversity.
