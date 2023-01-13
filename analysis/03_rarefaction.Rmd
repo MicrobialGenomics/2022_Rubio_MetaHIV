@@ -36,6 +36,8 @@ Srare <- rarefy(t(ariba_counts[ ,-1]), raremax)
 plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR genes", main=glue("Rarefaction at {raremax} counts (Ariba data)"))
 abline(0, 1)
 rarecurve(t(ariba_counts[ ,-1]), step = 1000, sample = raremax, col = "blue", cex = 0.6, ylab = "AMR genes", main=glue("Rarefaction plot at {raremax} counts (Ariba data)"))
+
+
 ```
 
 All samples arrive to the plateau at `r raremax` AMR genes. 
@@ -116,6 +118,7 @@ ggplot(nCounts_groot, aes(ncount))+
     x=40000,y=10)+
   theme_bw()+
   labs(title = "Counts of AMR genes per sample distribution (Groot data)")
+
 ```
 
 We rarefy groot samples at 2500 counts (we exlcude those samples with less than 2500 counts and AMR genes not present in any sample after the filtering)
@@ -154,4 +157,13 @@ plot(S, Srare, xlab = "Observed No. of AMR genes", ylab = "Rarefied No. of AMR g
 abline(0, 1)
 ```
 
+```{r}
+fivenum(nCounts_groot$ncount)
+fivenum(nCounts_ariba$counts)
+
+nCounts_all<-nCounts_ariba%>%rownames_to_column(var="sample")%>%rename(ncount_ariba=counts)%>%inner_join(nCounts_groot, by="sample")
+
+cor(nCounts_all$ncount_ariba, nCounts_all$ncount, method = "spearman")
+wilcox.test(nCounts_all$ncount_ariba, nCounts_all$ncount)
+```
 
