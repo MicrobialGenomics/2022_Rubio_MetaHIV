@@ -31,6 +31,9 @@ groot_samples<-list.files("data/grootData")%>%str_extract(pattern = "Sample_\\d+
 all.equal(ariba_samples, groot_samples)
 all.equal(ariba_samples, metadata$SampleID) ## One Ariba sample is missing
 all.equal(groot_samples, metadata$SampleID) ##Groot samples match with metadata
+
+metadata$SampleID[!(metadata$SampleID %in% ariba_samples)] ##missing ariba sample
+
 ```
 
 Get CARD database: 
@@ -104,14 +107,25 @@ ariba_data<-lapply(ariba_data, function (x) aribanotation (x, aro_index ))
 
 ```
 
-### Calculate RPKM
+### Calculate RPKM 
 
-
-```{r eval=TRUE, include=TRUE}
+Old way to calculate (taking into account all reads per sample)
+```{r eval=FALSE, include=FALSE}
 metadata_ariba<-metadata%>%filter(SampleID %in% ariba_samples)
 
 for (i in 1:length(ariba_data)){
  ariba_data[[i]]$RPKM<-ariba_data[[i]]$`reads`/(ariba_data[[i]]$`ref_len`/1000 * metadata_ariba$InitialReads[i]/1000000)}
+```
+
+RPKM: reads per million mapped reads (we take into account mapped reads instead of all reads)
+```{r eval=TRUE, include=TRUE}
+ariba_mapped_reads<-lapply(ariba_data, function(x) sum(x$reads))%>%unlist()%>%as.data.frame()%>%
+  rownames_to_column("SampleID")%>%tibble()%>%rename(mapped_reads=2)
+
+all.equal(ariba_mapped_reads$SampleID, ariba_samples)
+
+for (i in 1:length(ariba_data)){
+ ariba_data[[i]]$RPKM<-ariba_data[[i]]$`reads`/(ariba_data[[i]]$`ref_len`/1000 * ariba_mapped_reads$mapped_reads[i]/1000000)}
 ```
 
 
@@ -195,13 +209,23 @@ groot_data<-lapply(groot_data, function (x) grootnotation (x, aro_index ))
 
 ### Calculate RPKM
 
-
-```{r}
+```{r eval=FALSE, include=FALSE}
 for (i in 1:length(groot_data)){
  groot_data[[i]]$RPKM<-groot_data[[i]]$read_count/(groot_data[[i]]$gene_length/1000 * metadata$InitialReads[i]/1000000)
 }
 ```
 
+RPKM: reads per million mapped reads (we take into account mapped reads instead of all reads)
+```{r eval=TRUE, include=TRUE}
+groot_mapped_reads<-lapply(groot_data, function(x) sum(x$read_count))%>%unlist()%>%as.data.frame()%>%
+  rownames_to_column("SampleID")%>%tibble()%>%rename(mapped_reads=2)
+
+all.equal(groot_mapped_reads$SampleID, groot_samples)
+
+for (i in 1:length(groot_data)){
+ groot_data[[i]]$RPKM<-groot_data[[i]]$read_count/(groot_data[[i]]$gene_length/1000 * groot_mapped_reads$mapped_reads[i]/1000000)
+}
+```
 
 ### Transform data to obtain matrix 
 
