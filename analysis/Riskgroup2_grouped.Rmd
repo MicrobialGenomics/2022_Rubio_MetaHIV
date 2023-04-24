@@ -22,17 +22,18 @@ library(glue)
 library(patchwork)
 library(ggstatsplot)
 library(broom)
+library(ggthemes)
 ```
 
 #### Load data and functions
 
 ```{r}
 load("output/summarized_ariba.RDA")
-load("output/rarefied_ariba.RDA")
 load("output/ariba_dist.RDA")
 load("output/grouped_rpkm_ariba.RDA")
+load("output/grouped_refname_ariba.RDA")
 metadata<-read_csv("data/Metadata/metadata.csv")
-source("code/functions.R")
+source("code/functions_paper.R")
 ```
 
 ## Join HTS with PWID
@@ -49,7 +50,7 @@ ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata)
 alpha_div_plot_all(ariba_alpha_rpkm, MSM_dic)
 ```
 
-Diversity is higher in MSM group
+No differences in alpha diversity 
 
 ```{r eval=FALSE, include=FALSE}
 ## ECCMID figure:
@@ -73,7 +74,7 @@ ggsave("ECCMID_figures/alpha_div.tiff", height = 5.5, width = 4)
 
 ```{r}
 ariba_dist_rpkm<-ariba_dist$dist_rpkm
-beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)
+##beta_nmds(ariba_dist_rpkm, metadata, MSM_dic)
 ```
 
 Resistome composition is different according to MSM
@@ -95,7 +96,7 @@ Resistome composition is different according to MSM
   r2test<-round(test$aov.tab$R2[1],2)
 
   set.seed(200889)
-  nmds <- metaMDS(dist, trace = 0)
+  nmds <- metaMDS(dist, trace = 0, trymax = 200)
 
   ##scores(nmds) %>%
   nmds$points %>%
@@ -107,10 +108,10 @@ Resistome composition is different according to MSM
     stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    annotate("text", x = -0.35, y = 0.4, label = glue("ADONIS p={ptest} \n r2={r2test}"), size=4, hjust=0)+
-    scale_color_manual(name="Sexual \nPractice",
+    annotate("text", x = -0.35, y = 0.22, label = glue("ADONIS p={ptest} \n r2={r2test}"), size=4, hjust=0)+
+    scale_color_manual(name="Sexual \nPreference",
                       values = c("red", "gray48"))+
-    scale_fill_manual(name="Sexual \nPractice", 
+    scale_fill_manual(name="Sexual \nPreference", 
                       values = c("pink", "gray80"))+
     theme_bw()+
     theme(text = element_text(size=15))
@@ -118,21 +119,96 @@ Resistome composition is different according to MSM
 ggsave("ECCMID_figures/beta_div.tiff", height = 5.5, width = 6)
 ```
 
+## Biplot
+
+## Gene family correlations with NMDS axes
+
+```{r}
+set.seed(200889)
+cor_rpkm_genefamily<-corr_group_envfit(data_group=ariba_rpkm_genefamily, refdata_group = refname_ariba_genefamily, nmds = nmds)
+
+cor_level<-0.2
+cor_rpkm_genefamily_corlev2<-cor_rpkm_genefamily%>%filter(p.value<=0.05 & r2 > cor_level)
+```
+
+
+```{r}
+cor_rpkm_genefamily_corlev<-cor_rpkm_genefamily_corlev2%>%
+   mutate(group_name = replace(group_name, group_name == "23S rRNA with mutation conferring resistance to macrolide antibiotics", "23S rRNA with mutation \n conferring resistance to \n macrolide antibiotics"),
+          group_name = replace(group_name, group_name=="Erm 23S ribosomal RNA methyltransferase", "Erm 23S ribosomal \nRNA methyltransferase" ))
+
+biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds, metadata, MSM_dic, group_name)+
+  labs(title = "AMR Gene family")+theme(legend.title = element_blank())
+```
+
 
 ## Check differentially abundance AMR
 
 ```{r}
 amr_sig_rpkm_MSM_dic<-sig_AMR_clin_dic(ariba_rpkm, metadata, refname_all_ariba, MSM_dic)
-amr_sig_rpkm_MSM_dic$sig_amr%>% kable(caption="**Significant AMR accordig to Gene Richness (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+amr_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant AMR accordig to Sexual preference (Ariba RPKM**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 ```
 
 
 ## Check differentially abundance (grouped by Drug Class)
 
 ```{r}
-drugclass_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, MSM_dic)
-drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM)**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+sig_group_clin_dic<-function(data_group, metadata, refdata_group, clin_var){
 
+  ##transpose data
+  group_name<-pull(data_group, 1)
+  data<-as_tibble(cbind(SampleID = names(data_group), t(data_group)))%>%slice(-1)%>%
+    mutate_at(vars(-("SampleID")),as.numeric)
+  colnames(data)<-c("SampleID", group_name)
+
+  ##merge data with metadata
+  data_all<-data%>%
+    pivot_longer(-SampleID, names_to = "group_name", values_to = "value")%>%
+    inner_join(., metadata, by="SampleID")
+
+  ##get significant groups, adjusted p value
+  sig_amr<-data_all%>%
+    nest(data=-group_name)%>%
+    mutate(test=map(.x=data, ~wilcox.test(value~!!ensym(clin_var), data=.x)%>%tidy))%>%
+    unnest(test)%>%
+    mutate(p.adjust=p.adjust(p.value, method = "BH"))%>%
+    filter(p.adjust<0.05)%>%
+    select(group_name, p.adjust)
+
+  ##obtain data only from significant groups (for the plot)
+  data_all<-data_all%>%
+    inner_join(sig_amr, by="group_name")
+
+  ##get log2 fold change
+  log_data<-data_all%>%
+    group_by(group_name, !!enquo(clin_var))%>%
+    summarise(mean_counts=mean(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "mean_counts")%>%
+    as.data.frame()
+  log_data$log2f<-log2(log_data[ ,2])-log2(log_data[ ,3])
+  log_data<-log_data%>%select(group_name, log2f)
+
+  refdata<-refdata_group%>%rename(group_name=1)
+
+  ## get median counts per significant group and clinical variable
+  sig_data<-data_all%>%
+    group_by(group_name, !!enquo(clin_var))%>%
+    summarise(median_counts=median(value), .groups = 'drop')%>%
+    pivot_wider(names_from = quo_name(enquo(clin_var)), values_from = "median_counts")%>%
+    inner_join(sig_amr, by="group_name")%>%
+    inner_join(log_data, by="group_name")%>%
+    inner_join(refdata, by="group_name")
+
+  res<-list(data_all, sig_data)
+  names(res)<-c("data_plot", "sig_data")
+  return(res)
+}
+```
+
+
+```{r}
+drugclass_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_drugclass, metadata, refname_ariba_drugclass, MSM_dic)
+drugclass_sig_rpkm_MSM_dic$sig_data%>% kable(caption="**Significant Drug Classes, MSM (Ariba RPKM)**")%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
 
 drugclass<-drugclass_sig_rpkm_MSM_dic$sig_data
 write_excel_csv(drugclass, "output/ECCMID_data/drugclass.xlsx")
@@ -155,6 +231,16 @@ drugclass_sig_rpkm_MSM_dic$data_plot%>%
 ## Check differentially abundance (grouped by Gene Family)
 
 ```{r}
+genefamily_sexualp<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, refname_ariba_genefamily, MSM_dic)
+genefamily_sexualp$sig_data%>%
+  kable()%>%kable_paper("striped")%>%scroll_box(width = "100%", height = "500px")
+
+write_excel_csv(genefamily, "output/ECCMID_data/genefamily.xlsx")
+```
+
+
+
+```{r eval=FALSE, include=FALSE}
 ##Unify the two gene families with mutations at 23S
 rRNA23S<-ariba_rpkm_genefamily%>%
   filter(`AMR Gene Family` ==  
@@ -165,7 +251,7 @@ rRNA23S<-ariba_rpkm_genefamily%>%
 ariba_rpkm_genefamily<-rbind(ariba_rpkm_genefamily, rRNA23S)
 
 
-genefamily_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, MSM_dic)
+genefamily_sig_rpkm_MSM_dic<-sig_group_clin_dic(ariba_rpkm_genefamily, metadata, refname_ariba_genefamily, MSM_dic)
 
 ##Add Drug Class to gene family diff table:
 ##Create database (refname) grouped by gene family 
@@ -184,7 +270,7 @@ genefamily_sig_rpkm_MSM_dic$sig_data%>%left_join(refname, by = "group_name")%>%r
 # write_excel_csv(genefamily, "output/ECCMID_data/genefamily.xlsx")
 ```
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 genefamily_sig_rpkm_MSM_dic$data_plot%>%
   ggplot(aes(x=MSM_dic, y=value, color=MSM_dic)) +
   geom_boxplot(outlier.shape = NA, show.legend = FALSE)+

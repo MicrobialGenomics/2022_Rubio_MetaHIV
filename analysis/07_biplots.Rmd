@@ -174,7 +174,7 @@ p4
 ```{r}
 
 p4b<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds_rpkm, metadata, GCount, group_name)+
-  labs(title = "FGene family")+theme(legend.title = element_blank())
+  labs(title = "Gene family")+theme(legend.title = element_blank())
 
 p4b
 

@@ -15,7 +15,7 @@
 
 <title>Alpha diversity analysis</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.13/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -402,9 +402,7 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -413,9 +411,7 @@ aria-hidden="true"></span>
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -424,27 +420,17 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-12-23
+<strong>Last updated:</strong> 2023-04-24
 </p>
 <p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
+<strong>Knit directory:</strong> <code>2022_Rubio_MetaHIV/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -453,141 +439,91 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
-class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20220202)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20220202code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20220202)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20220202code"
-class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20220202code" class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20220202)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
+<p>The command <code>set.seed(20220202)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree52a8f6c734e9ef42ea32729d075b1cf998e6786ctargetblank52a8f6ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/52a8f6c734e9ef42ea32729d075b1cf998e6786c" target="_blank">52a8f6c</a> </a>
 </p>
 </div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree0145fcb74f84c4b5a83565eb6db476825ecdad2dtargetblank0145fcba"
-class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomMicrobialGenomics2022RubioMetaHIVtree52a8f6c734e9ef42ea32729d075b1cf998e6786ctargetblank52a8f6ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version
-<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/0145fcb74f84c4b5a83565eb6db476825ecdad2d" target="_blank">0145fcb</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/tree/52a8f6c734e9ef42ea32729d075b1cf998e6786c" target="_blank">52a8f6c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
@@ -597,61 +533,9 @@ Ignored files:
     Ignored:    output/aribaData/
     Ignored:    output/grootData/
 
-Untracked files:
-    Untracked:  PEC3/alpha_div_nosig.png
-    Untracked:  analysis/06_group_matrixes.Rmd
-    Untracked:  analysis/07_biplots.Rmd
-    Untracked:  analysis/08_differentially_abundant.Rmd
-    Untracked:  analysis/amr_significance.Rmd
-    Untracked:  analysis/biplot_envfit.Rmd
-    Untracked:  analysis/biplot_spearman.Rmd
-    Untracked:  analysis/counts.Rmd
-    Untracked:  analysis/gene_richness.Rmd
-    Untracked:  analysis/grouped_significance.Rmd
-    Untracked:  analysis/import_virulome.Rmd
-    Untracked:  analysis/import_virulome_data.Rmd
-
-Unstaged changes:
-    Deleted:    analysis/01_1_import_virulome.Rmd
-    Deleted:    analysis/01_2_import_virulome_data.Rmd
-    Modified:   analysis/02_summarize_data.Rmd
-    Modified:   analysis/03_1_procruster.Rmd
-    Deleted:    analysis/04_01_counts.Rmd
-    Modified:   analysis/04_alpha_div.Rmd
-    Modified:   analysis/05_beta_div.Rmd
-    Deleted:    analysis/06_2_biplot_envfit.Rmd
-    Deleted:    analysis/06_biplot.Rmd
-    Deleted:    analysis/07_heatmap.Rmd
-    Deleted:    analysis/08_amr_significance.Rmd
-    Deleted:    analysis/09_group_matrixes.Rmd
-    Deleted:    analysis/10_grouped_significance.Rmd
-    Deleted:    analysis/11_gene_richness.Rmd
-    Modified:   analysis/PEC3.Rmd
-    Deleted:    analysis/PEC3_biplots.Rmd
-    Modified:   analysis/_site.yml
-    Modified:   analysis/about.Rmd
-    Deleted:    analysis/differentially_abundant.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/license.Rmd
-    Modified:   code/functions.R
-    Modified:   output/ariba_dist.RDA
-    Modified:   output/envfit_rpkm_amr_corlev2.csv
-    Modified:   output/envfit_rpkm_drugclass_corlev2.csv
-    Modified:   output/envfit_rpkm_genefamily_corlev2.csv
-    Modified:   output/envfit_rpkm_meta_top10.csv
-    Modified:   output/genefamily_grich.xlsx
-    Modified:   output/genefamily_mcluster.xlsx
-    Modified:   output/genefamily_sexualp.xlsx
-    Modified:   output/groot_dist.RDA
-    Modified:   output/sumtable_grich.xlsx
-    Modified:   output/sumtable_mcluster.xlsx
-    Modified:   output/sumtable_sexualp.xlsx
-
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
 </p>
 </div>
 </div>
@@ -662,12 +546,7 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/04_alpha_div.Rmd</code>) and HTML
-(<code>docs/04_alpha_div.html</code>) files. If you’ve configured a
-remote Git repository (see <code>?wflow_git_remote</code>), click on the
-hyperlinks in the table below to view the files as they were in that
-past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/04_alpha_div.Rmd</code>) and HTML (<code>docs/04_alpha_div.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -691,6 +570,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/analysis/04_alpha_div.Rmd" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+<td>
+wflowr page organization
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/MicrobialGenomics/2022_Rubio_MetaHIV/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/04_alpha_div.html" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+<td>
+wflowr page organization
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -892,8 +805,7 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for
-betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
 </td>
 </tr>
 <tr>
@@ -910,8 +822,7 @@ Elisa
 2022-08-21
 </td>
 <td>
-Alpha diversity correlations with CD4 and pairwise comparison for
-betadiversity and riskgroup2
+Alpha diversity correlations with CD4 and pairwise comparison for betadiversity and riskgroup2
 </td>
 </tr>
 </tbody>
@@ -963,17 +874,164 @@ ariba_alpha_rar&lt;-alpha_div(ariba_rar, ariba_rar, metadata)</code></pre>
 <h3>HIV status</h3>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha_rpkm, HIV_Status)+labs(subtitle = &quot;Ariba RPKM&quot;)</code></pre>
 <p><img src="figure/04_alpha_div.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-5-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, HIV_Status)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
 <p><img src="figure/04_alpha_div.Rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-5-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="profile" class="section level3">
 <h3>Profile</h3>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha_rpkm, Profile)+labs(subtitle = &quot;Ariba RPKM&quot;)</code></pre>
 <p><img src="figure/04_alpha_div.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-6-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>alpha_div_plot_all(ariba_alpha_rar, Profile)+labs(subtitle = &quot;Ariba Rarefied counts&quot;)</code></pre>
 <p><img src="figure/04_alpha_div.Rmd/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Pairwise comparisons of InvSimpson and Simpson according to
-Profile:</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-2">
+Past versions of unnamed-chunk-6-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-6-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Pairwise comparisons of InvSimpson and Simpson according to Profile:</p>
 <pre class="r"><code>pairwise_test&lt;-function(alpha, clin_var){
   p_values&lt;-pairwise.wilcox.test(alpha, clin_var, p.adjust.method = &quot;BH&quot;)$p.value
   pos_sigpvalue&lt;-which(p_values&lt;=0.05, arr.ind = TRUE)
@@ -1039,6 +1097,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-9-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-9-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -1092,6 +1161,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-10-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95466a886ccf8e889ac2c6ab2504dabb31eb99b4/docs/figure/04_alpha_div.Rmd/unnamed-chunk-10-1.png" target="_blank">95466a8</a>
 </td>
 <td>
@@ -1129,6 +1209,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-10-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95466a886ccf8e889ac2c6ab2504dabb31eb99b4/docs/figure/04_alpha_div.Rmd/unnamed-chunk-10-2.png" target="_blank">95466a8</a>
@@ -1212,6 +1303,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-11-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/04_alpha_div.Rmd/unnamed-chunk-11-1.png" target="_blank">961245a</a>
 </td>
 <td>
@@ -1273,6 +1375,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-11-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/d24c180034e0c7d2c2d036c5398ecc00cd9366a5/docs/figure/04_alpha_div.Rmd/unnamed-chunk-11-2.png" target="_blank">d24c180</a>
 </td>
 <td>
@@ -1324,6 +1437,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-12-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-12-1.png" target="_blank">95e45d0</a>
@@ -1398,6 +1522,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-12-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/961245ad37430fc7aa218c091f1590ae5ca4f20e/docs/figure/04_alpha_div.Rmd/unnamed-chunk-12-2.png" target="_blank">961245a</a>
 </td>
 <td>
@@ -1460,6 +1595,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-13-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-13-1.png" target="_blank">95e45d0</a>
@@ -1532,6 +1678,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-13-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-13-2.png" target="_blank">95e45d0</a>
@@ -1609,6 +1766,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-14-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-14-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -1679,6 +1847,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-14-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-14-2.png" target="_blank">95e45d0</a>
@@ -1754,6 +1933,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-15-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-15-1.png" target="_blank">95e45d0</a>
@@ -1837,6 +2027,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-15-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-15-2.png" target="_blank">95e45d0</a>
@@ -1925,6 +2126,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-16-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-16-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2006,6 +2218,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-16-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-16-2.png" target="_blank">95e45d0</a>
@@ -2094,6 +2317,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-17-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-17-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2177,6 +2411,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-17-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-17-2.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2237,8 +2482,7 @@ Elisa
 </div>
 <div id="cd4cd8-ratio" class="section level3">
 <h3>CD4/CD8 ratio</h3>
-<p>There is one CD8_absolute value of: 1.63, probably a mistake in the
-metadata. This sample is removed from the analysis</p>
+<p>There is one CD8_absolute value of: 1.63, probably a mistake in the metadata. This sample is removed from the analysis</p>
 <pre class="r"><code>high_ratio&lt;-which(ariba_alpha_rpkm$ratio_CD4_CD8&gt;300)
 
 alpha_div_cor_all(slice(ariba_alpha_rpkm, -high_ratio), ratio_CD4_CD8)+labs(subtitle = &quot;Ariba RPKM&quot;)</code></pre>
@@ -2265,6 +2509,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-18-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-18-1.png" target="_blank">95e45d0</a>
@@ -2359,6 +2614,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-18-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-18-2.png" target="_blank">95e45d0</a>
@@ -2458,6 +2724,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-19-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-19-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2528,6 +2805,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-19-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-19-2.png" target="_blank">95e45d0</a>
@@ -2610,6 +2898,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-20-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-20-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2680,6 +2979,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-20-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-20-2.png" target="_blank">95e45d0</a>
@@ -2757,6 +3067,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-21-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-21-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2827,6 +3148,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-21-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-21-2.png" target="_blank">95e45d0</a>
@@ -2904,6 +3236,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-22-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-22-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -2974,6 +3317,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-22-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-22-2.png" target="_blank">95e45d0</a>
@@ -3091,6 +3445,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-23-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-23-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3150,6 +3515,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-23-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-23-2.png" target="_blank">95e45d0</a>
@@ -3214,6 +3590,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-24-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-24-1.png" target="_blank">95e45d0</a>
@@ -3286,6 +3673,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-24-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-24-2.png" target="_blank">95e45d0</a>
@@ -3363,6 +3761,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-25-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-25-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3433,6 +3842,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-25-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-25-2.png" target="_blank">95e45d0</a>
@@ -3510,6 +3930,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-26-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-26-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3569,6 +4000,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-26-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-26-2.png" target="_blank">95e45d0</a>
@@ -3635,6 +4077,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-27-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-27-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3694,6 +4147,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-27-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-27-2.png" target="_blank">95e45d0</a>
@@ -3760,6 +4224,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-28-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-28-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3797,6 +4272,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-28-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-28-2.png" target="_blank">95e45d0</a>
@@ -3841,6 +4327,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-29-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-29-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3880,6 +4377,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-29-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-29-2.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -3896,8 +4404,7 @@ Elisa
 </div>
 <div id="cd4cd8-ratio-1" class="section level3">
 <h3>CD4/CD8 ratio</h3>
-<p>There is one CD8_absolute value of: 1.63, probably a mistake in the
-metadata. This sample is removed from the analysis</p>
+<p>There is one CD8_absolute value of: 1.63, probably a mistake in the metadata. This sample is removed from the analysis</p>
 <pre class="r"><code>high_ratio&lt;-which(groot_alpha_rpkm$ratio_CD4_CD8&gt;300)
 alpha_div_cor_all(slice(groot_alpha_rpkm, -high_ratio), ratio_CD4_CD8)+labs(subtitle = &quot;Groot RPKM&quot;)</code></pre>
 <p><img src="figure/04_alpha_div.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -3923,6 +4430,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-30-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-30-1.png" target="_blank">95e45d0</a>
@@ -3963,6 +4481,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-30-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-30-2.png" target="_blank">95e45d0</a>
@@ -4007,6 +4536,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-31-1.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-31-1.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -4046,6 +4586,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/03e7096defe4948ce1a6d27a80b77148eb9d2afe/docs/figure/04_alpha_div.Rmd/unnamed-chunk-31-2.png" target="_blank">03e7096</a>
+</td>
+<td>
+Elisa_Linux
+</td>
+<td>
+2022-12-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/MicrobialGenomics/2022_Rubio_MetaHIV/blob/95e45d02a2c617326e4f97e1a4c6824799a3d146/docs/figure/04_alpha_div.Rmd/unnamed-chunk-31-2.png" target="_blank">95e45d0</a>
 </td>
 <td>
@@ -4065,40 +4616,29 @@ Elisa
 <h2>Conclusions</h2>
 <ul>
 <li><p>Similar results between Groot and Ariba</p></li>
-<li><p>Similar results between Rarefied counts and RPKM values for each
-<em>pipeline</em></p></li>
-<li><p><strong>HIV status:</strong> no differences in alpha
-diversity</p></li>
-<li><p><strong>Profile:</strong> Higher Simpson/InvSimpson diverstiy
-index in naive compared to elite controllers only for Ariba analyisis,
-no differences in Groot analysis</p></li>
-<li><p><strong>Risk Group2:</strong> Lower alpha diversity
-(Simpson/InvSimpson and Shannon) in hts group compared to msm</p></li>
-<li><p><strong>Microbiome Cluster:</strong> Lower alpha diversity
-(Simpson/InvSimpson and Shannon) in <em>Bacteroides</em>
-cluster</p></li>
-<li><p><strong>Gene richness:</strong> Lower alpha diversity
-(Simpson/InvSimpson and Shannon) in LGC.</p></li>
-<li><p><strong>CD4, Nadir CD4, CD8, CD4/CD8 ratio:</strong> No
-significant correlation between CD4 levels and Nadir CD4 and alpha
-diversity.</p></li>
+<li><p>Similar results between Rarefied counts and RPKM values for each <em>pipeline</em></p></li>
+<li><p><strong>HIV status:</strong> no differences in alpha diversity</p></li>
+<li><p><strong>Profile:</strong> Higher Simpson/InvSimpson diverstiy index in naive compared to elite controllers only for Ariba analyisis, no differences in Groot analysis</p></li>
+<li><p><strong>Risk Group2:</strong> Lower alpha diversity (Simpson/InvSimpson and Shannon) in hts group compared to msm</p></li>
+<li><p><strong>Microbiome Cluster:</strong> Lower alpha diversity (Simpson/InvSimpson and Shannon) in <em>Bacteroides</em> cluster</p></li>
+<li><p><strong>Gene richness:</strong> Lower alpha diversity (Simpson/InvSimpson and Shannon) in LGC.</p></li>
+<li><p><strong>CD4, Nadir CD4, CD8, CD4/CD8 ratio:</strong> No significant correlation between CD4 levels and Nadir CD4 and alpha diversity.</p></li>
 </ul>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
-Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 22.04 LTS
+Running under: Ubuntu 20.04.3 LTS
 
 Matrix products: default
-BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0
-LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.9.0
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.9.0
 
 locale:
  [1] LC_CTYPE=es_ES.UTF-8       LC_NUMERIC=C              
@@ -4112,43 +4652,34 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] scales_1.2.0     ggthemes_4.2.4   patchwork_1.1.1  glue_1.6.2      
- [5] ggpubr_0.4.0     vegan_2.6-2      lattice_0.20-45  permute_0.9-7   
- [9] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.9     
-[13] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.8    
-[17] ggplot2_3.3.6    tidyverse_1.3.2  workflowr_1.7.0 
+ [1] scales_1.2.1     ggthemes_4.2.4   patchwork_1.1.1  glue_1.6.2      
+ [5] ggpubr_0.4.0     vegan_2.5-7      lattice_0.20-45  permute_0.9-7   
+ [9] kableExtra_1.3.4 forcats_0.5.1    stringr_1.4.0    dplyr_1.0.8     
+[13] purrr_0.3.4      readr_2.1.2      tidyr_1.2.0      tibble_3.1.6    
+[17] ggplot2_3.3.5    tidyverse_1.3.1 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-155        fs_1.5.2            bit64_4.0.5        
- [4] lubridate_1.8.0     webshot_0.5.3       httr_1.4.3         
- [7] rprojroot_2.0.3     tools_4.1.2         backports_1.4.1    
-[10] bslib_0.4.0         utf8_1.2.2          R6_2.5.1           
-[13] DBI_1.1.3           mgcv_1.8-39         colorspace_2.0-3   
-[16] withr_2.5.0         tidyselect_1.1.2    processx_3.7.0     
-[19] bit_4.0.4           compiler_4.1.2      git2r_0.30.1       
-[22] cli_3.3.0           rvest_1.0.2         xml2_1.3.3         
-[25] labeling_0.4.2      sass_0.4.2          callr_3.7.1        
-[28] systemfonts_1.0.4   digest_0.6.29       rmarkdown_2.14     
-[31] svglite_2.1.0       pkgconfig_2.0.3     htmltools_0.5.3    
-[34] highr_0.9           dbplyr_2.2.1        fastmap_1.1.0      
-[37] rlang_1.0.4         readxl_1.4.0        rstudioapi_0.13    
-[40] farver_2.1.1        jquerylib_0.1.4     generics_0.1.3     
-[43] jsonlite_1.8.0      vroom_1.5.7         car_3.1-0          
-[46] googlesheets4_1.0.0 magrittr_2.0.3      Matrix_1.4-0       
-[49] Rcpp_1.0.9          munsell_0.5.0       fansi_1.0.3        
-[52] abind_1.4-5         lifecycle_1.0.1     stringi_1.7.8      
-[55] whisker_0.4         yaml_2.3.5          carData_3.0-5      
-[58] MASS_7.3-55         grid_4.1.2          parallel_4.1.2     
-[61] promises_1.2.0.1    crayon_1.5.1        haven_2.5.0        
-[64] splines_4.1.2       hms_1.1.1           knitr_1.39         
-[67] ps_1.7.1            pillar_1.8.0        ggsignif_0.6.3     
-[70] reprex_2.0.1        evaluate_0.15       getPass_0.2-2      
-[73] modelr_0.1.8        vctrs_0.4.1         tzdb_0.3.0         
-[76] httpuv_1.6.5        cellranger_1.1.0    gtable_0.3.0       
-[79] assertthat_0.2.1    cachem_1.0.6        xfun_0.31          
-[82] broom_1.0.0         rstatix_0.7.1       later_1.3.0        
-[85] googledrive_2.0.0   viridisLite_0.4.0   gargle_1.2.0       
-[88] cluster_2.1.2       ellipsis_0.3.2     </code></pre>
+ [1] nlme_3.1-157      fs_1.5.2          bit64_4.0.5       lubridate_1.8.0  
+ [5] webshot_0.5.2     httr_1.4.2        rprojroot_2.0.2   tools_4.1.2      
+ [9] backports_1.4.1   bslib_0.3.1       utf8_1.2.2        R6_2.5.1         
+[13] DBI_1.1.2         mgcv_1.8-38       colorspace_2.0-3  withr_2.5.0      
+[17] tidyselect_1.1.2  bit_4.0.4         compiler_4.1.2    git2r_0.30.1     
+[21] cli_3.3.0         rvest_1.0.2       xml2_1.3.3        labeling_0.4.2   
+[25] sass_0.4.1        systemfonts_1.0.4 digest_0.6.29     rmarkdown_2.13   
+[29] svglite_2.1.0     pkgconfig_2.0.3   htmltools_0.5.2   highr_0.9        
+[33] dbplyr_2.1.1      fastmap_1.1.0     rlang_1.0.2       readxl_1.3.1     
+[37] rstudioapi_0.13   farver_2.1.0      jquerylib_0.1.4   generics_0.1.2   
+[41] jsonlite_1.8.0    vroom_1.5.7       car_3.0-12        magrittr_2.0.2   
+[45] Matrix_1.4-0      Rcpp_1.0.8.3      munsell_0.5.0     fansi_1.0.3      
+[49] abind_1.4-5       lifecycle_1.0.1   stringi_1.7.6     whisker_0.4      
+[53] yaml_2.3.5        carData_3.0-5     MASS_7.3-56       grid_4.1.2       
+[57] parallel_4.1.2    promises_1.2.0.1  crayon_1.5.1      haven_2.4.3      
+[61] splines_4.1.2     hms_1.1.1         knitr_1.38        pillar_1.7.0     
+[65] ggsignif_0.6.3    reprex_2.0.1      evaluate_0.15     modelr_0.1.8     
+[69] vctrs_0.3.8       tzdb_0.2.0        httpuv_1.6.5      cellranger_1.1.0 
+[73] gtable_0.3.0      assertthat_0.2.1  xfun_0.30         broom_1.0.1      
+[77] rstatix_0.7.0     later_1.3.0       viridisLite_0.4.0 workflowr_1.7.0  
+[81] cluster_2.1.2     ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 
