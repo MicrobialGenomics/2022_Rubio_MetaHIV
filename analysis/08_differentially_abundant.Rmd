@@ -50,6 +50,7 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
   inner_join(gene_richness, by="SampleID")
 
 rm(ART_groups, gene_richness)
+write_csv(metadata, "output/metadata_processed.csv")
 ```
 
 ## Sexual practice
