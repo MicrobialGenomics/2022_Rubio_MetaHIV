@@ -1,0 +1,103 @@
+---
+title: "clinical_table"
+author: "Elisa Rubio"
+date: "2023-05-03"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+https://cran.r-project.org/web/packages/gtsummary/vignettes/tbl_summary.html
+
+```{r}
+library(tidyverse)
+library(vegan)
+library(broom)
+library(ggrepel)
+library(glue)
+library(usedist)
+library(patchwork)
+library(kableExtra)
+library(gtsummary)
+library(openxlsx)
+```
+
+```{r}
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
+         CD4_CD8_ratio=CD4/CD8_absolute)
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+metadata<-metadata%>%
+  inner_join(gene_richness, by="SampleID")
+
+metadata_filt<-metadata%>%select(Age, Gender, Ethnicity=EthnicGroup,
+                                 `HIV-1 risk group`=MSM_dic, 
+                                 `HIV-1 status`=HIV_Status,
+                                 `HIV-1 phenotype`=Profile, BMI, 
+                                 `Gene richness`=GCount, 
+                                 `Microbiome cluster`=Cluster, 
+                                 `Antibiotic intake, previous 3 months`=ATB3, 
+                                 `Antibiotic intake, previous 6 months`=ATB6,
+                                 `HIV-1 RNA, copies/mL`=Viral_load, 
+                                 `CD4+ T-cell counts`=CD4, 
+                                 `Nadir CD4+ T-cell counts`=Nadir_CD4, 
+                                 `CD8+ T-cell counts`=CD8_absolute, 
+                                 `CD4+/CD8+ ratio`=CD4_CD8_ratio)
+```
+
+
+
+
+## Grouped by sexual preference
+
+```{r}
+tbl_sexpref<-metadata_filt%>%tbl_summary(
+  by = `HIV-1 risk group`, 
+  statistic = list(all_continuous()~"{median} ({p25}-{p75})", all_categorical() ~ "{n} ({p})"))%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_footnote(
+    all_stat_cols() ~ "n(%); median (IQR)")%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Sexual preference**") %>%
+  modify_header(label ~ "")%>% 
+  bold_labels()
+
+tbl_sexpref
+```
+
+## Grouped by Gene Richness
+
+```{r}
+tbl_gcount<-metadata_filt%>%tbl_summary(
+  by = `Gene richness`, 
+  statistic = list(all_continuous()~"{median} ({p25}-{p75})", all_categorical() ~ "{n} ({p})"))%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_footnote(
+    all_stat_cols() ~ "n(%); median (IQR)")%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Gene Richness**") %>%
+  modify_header(label ~ "")%>% 
+  bold_labels()
+
+tbl_gcount
+```
+
+
+## Grouped by Microbiome Cluster: 
+
+```{r}
+tbl_cluster<-metadata_filt%>%tbl_summary(
+  by = `Microbiome cluster`, 
+  statistic = list(all_continuous()~"{median} ({p25}-{p75})", all_categorical() ~ "{n} ({p})"))%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_footnote(
+    all_stat_cols() ~ "n(%); median (IQR)")%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Microbiome Cluster**") %>%
+  modify_header(label ~ "")%>% 
+  bold_labels()
+
+tbl_cluster
+```
