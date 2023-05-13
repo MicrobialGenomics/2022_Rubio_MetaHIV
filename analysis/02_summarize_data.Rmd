@@ -29,10 +29,10 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%inner_join(., dataTable, by="
 ariba_samples<-list.files("data/aribaData")%>%str_extract(pattern = "Sample_\\d+")
 groot_samples<-list.files("data/grootData")%>%str_extract(pattern = "Sample_\\d+")
 all.equal(ariba_samples, groot_samples)
-all.equal(ariba_samples, metadata$SampleID) ## One Ariba sample is missing
+all.equal(ariba_samples, metadata$SampleID)
 all.equal(groot_samples, metadata$SampleID) ##Groot samples match with metadata
 
-metadata$SampleID[!(metadata$SampleID %in% ariba_samples)] ##missing ariba sample
+metadata$SampleID[!(metadata$SampleID %in% ariba_samples)] ##missing ariba sample (Sample 83 is now included)
 
 ```
 

@@ -67,6 +67,7 @@ p1<-ariba_alpha_rpkm%>%
     ##filter(!is.na(!!clin_var))%>%
   rename(`Inverse Simpson` = InvSimpson)%>%
     pivot_longer(cols=c(Shannon, `Inverse Simpson`), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+    mutate(Alpha_Index=factor(Alpha_Index, levels = c("Shannon", "Inverse Simpson")))%>%
     ggplot(aes(x=MSM_dic, y=Alpha_value))+
     geom_boxplot(aes(colour=MSM_dic))+
     geom_jitter(width = 0.2, aes(colour=MSM_dic))+
@@ -84,6 +85,7 @@ p2<-ariba_alpha_rpkm%>%
   rename(`Inverse Simpson` = InvSimpson)%>%
     ##filter(!is.na(!!clin_var))%>%
     pivot_longer(cols=c(Shannon, `Inverse Simpson`), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
+    mutate(Alpha_Index=factor(Alpha_Index, levels = c("Shannon", "Inverse Simpson")))%>%
     ggplot(aes(x=GCount, y=Alpha_value))+
     geom_boxplot(aes(colour=GCount))+
     geom_jitter(width = 0.2, aes(colour=GCount))+
@@ -109,7 +111,7 @@ ggsave("output/Paper/figure1.tiff", height = 6, width = 6)
 ```{r}
 sfigure1<-ariba_alpha_rpkm%>%
   rename(`Inverse Simpson` = InvSimpson)%>%
-    filter(!is.na(Cluster))%>%
+    ##filter(!is.na(Cluster))%>%
     pivot_longer(cols=c(Shannon, `Inverse Simpson`), names_to = "Alpha_Index", values_to = "Alpha_value")%>%
     ggplot(aes(x=Cluster, y=Alpha_value))+
     geom_boxplot(aes(colour=Cluster))+
@@ -129,55 +131,120 @@ ggsave("output/Paper/sfigure1.tiff", height = 3, width = 6)
 
 
 
-### Beta diversity analysis
+### Beta diversity analysis 
 
 ```{r}
 ariba_dist_rpkm<-ariba_dist$dist_rpkm
 ```
 
+#### Figure 2
 Resistome composition is different according to MSM
 
 ```{r}
 ##ECCMID figure
   dist_df<-as.data.frame(as.matrix(ariba_dist_rpkm)); dist_df$SampleID<-rownames(dist_df)
-  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
-    filter(!is.na(MSM_dic))
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")
+    ##filter(!is.na(Cluster))
 
   dist<-meta_dist%>%
     select(all_of(.[["SampleID"]]))%>%
     as.dist()
 
-  clin_var2<-meta_dist%>%pull(MSM_dic) ##clin_var vector for adonis test
-
-  test<-adonis(dist~clin_var2, permutations = 999)
-  ptest<-test$aov.tab$`Pr(>F)`[1]
-  r2test<-round(test$aov.tab$R2[1],2)
+  msm_dic<-meta_dist%>%pull(MSM_dic) ##clin_var vector for adonis test
+  test_msm<-adonis(dist~msm_dic, permutations = 999)
+  ptest_msm<-test_msm$aov.tab$`Pr(>F)`[1]
+  r2test_msm<-round(test_msm$aov.tab$R2[1],2)
+  
+  GCount<-meta_dist%>%pull(GCount) ##clin_var vector for adonis test
+  test_Gcount<-adonis(dist~GCount, permutations = 999)
+  ptest_GCount<-test_Gcount$aov.tab$`Pr(>F)`[1]
+  r2test_GCount<-round(test_Gcount$aov.tab$R2[1],2)
+  
+  Cluster<-meta_dist%>%pull(Cluster) ##clin_var vector for adonis test
+  test_Cluster<-adonis(dist~Cluster, permutations = 999)
+  ptest_Cluster<-test_Cluster$aov.tab$`Pr(>F)`[1]
+  r2test_Cluster<-round(test_Cluster$aov.tab$R2[1],2)
+  
 
   set.seed(200889)
   nmds <- metaMDS(dist, trace = 0, trymax = 200)
 
   ##scores(nmds) %>%
-  nmds$points %>%
+p1<-nmds$points %>%
     as_tibble(rownames = "SampleID") %>%
     rename(NMDS1=MDS1, NMDS2=MDS2) %>%
     inner_join(., metadata, by="SampleID") %>%
-    filter(!is.na(MSM_dic))%>%
+    ##filter(!is.na(MSM_dic))%>%
     ggplot(aes(x=NMDS1, y=NMDS2, color=MSM_dic, fill=MSM_dic)) +
     stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
     geom_point()+
     coord_fixed(ratio = 0.8)+
-    annotate("text", x = -0.35, y = 0.22, label = glue("ADONIS p={ptest} \n r2={r2test}"), size=4, hjust=0)+
+    annotate("text", x = -0.35, y = 0.22, label = glue("ADONIS p={ptest_msm} \n r²={r2test_msm}"), size=4, hjust=0)+
     scale_color_manual(name="Sexual \nPreference",
                       values = c("red", "gray48"))+
     scale_fill_manual(name="Sexual \nPreference", 
                       values = c("pink", "gray80"))+
     theme_bw()+
     theme(text = element_text(size=15))
+  
+  
+p2<-nmds$points %>%
+    as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ##filter(!is.na(MSM_dic))%>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=GCount, fill=GCount)) +
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    annotate("text", x = -0.35, y = 0.22, label = glue("ADONIS p={ptest_GCount} \n r²={r2test_GCount}"), size=4, hjust=0)+
+    scale_color_manual(name="Gene \nRichness",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Gene \nRichness", 
+                      values = c("pink", "gray80"))+
+    theme_bw()+
+    theme(text = element_text(size=15))
+  
+
+figure2<-p1/p2
+figure2 + plot_annotation(tag_levels = 'A') 
+  
+ggsave("output/Paper/figure2.tiff", height = 8, width = 6)
 ```
+
+
+#### Supplementary figure 2 (missing value!)
+
+```{r}
+
+sfigure2<-nmds$points %>%
+    as_tibble(rownames = "SampleID") %>%
+    rename(NMDS1=MDS1, NMDS2=MDS2) %>%
+    inner_join(., metadata, by="SampleID") %>%
+    ##filter(!is.na(MSM_dic))%>%
+    ggplot(aes(x=NMDS1, y=NMDS2, color=Cluster, fill=Cluster)) +
+    stat_ellipse(geom="polygon", show.legend = FALSE, alpha=0.2)+
+    geom_point()+
+    coord_fixed(ratio = 0.8)+
+    annotate("text", x = -0.35, y = 0.22, label = glue("ADONIS p={ptest_Cluster} \n r²={r2test_Cluster}"), size=4, hjust=0)+
+    scale_color_manual(name="Microbiome \nCluster",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Microbiome \nCluster", 
+                      values = c("pink", "gray80"))+
+    theme_bw()+
+    theme(text = element_text(size=15))
+
+sfigure2
+ggsave("output/Paper/sfigure2.tiff", height = 4, width = 6)
+```
+
+
 
 ## Biplot
 
 ## Gene family correlations with NMDS axes
+
+### Figure 3
 
 ```{r}
 set.seed(200889)
@@ -193,9 +260,41 @@ cor_rpkm_genefamily_corlev<-cor_rpkm_genefamily_corlev2%>%
    mutate(group_name = replace(group_name, group_name == "23S rRNA with mutation conferring resistance to macrolide antibiotics", "23S rRNA with mutation \n conferring resistance to \n macrolide antibiotics"),
           group_name = replace(group_name, group_name=="Erm 23S ribosomal RNA methyltransferase", "Erm 23S ribosomal \nRNA methyltransferase" ),
           group_name = replace(group_name, group_name=="ABC-F ATP-binding cassette ribosomal protection protein", "ABC-F ATP-binding cassette \nribosomal protection protein"))
+```
 
-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds, metadata, MSM_dic, group_name)+
-  labs(title = "AMR Gene family")+theme(legend.title = element_blank())
+```{r}
+figure3<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds, metadata, MSM_dic, group_name)+
+    scale_color_manual(name="Sexual \nPreference",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Sexual \nPreference", 
+                      values = c("pink", "gray80"))+
+  labs(caption = "Gene family significant correlations (p<0.05) with r²>0.2")
+
+figure3
+
+ggsave("output/Paper/figure3.tiff", height = 6, width = 8)
+```
+
+
+```{r}
+p1<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds, metadata, GCount, group_name)+
+    scale_color_manual(name="Gene \nRichness",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Gene \nRichness", 
+                      values = c("pink", "gray80"))
+
+p2<-biplot_amr_envfit(cor_rpkm_genefamily_corlev, nmds, metadata, Cluster, group_name)+
+    scale_color_manual(name="Microbiome \nCluster",
+                      values = c("red", "gray48"))+
+    scale_fill_manual(name="Microbiome \nCluster", 
+                      values = c("pink", "gray80"))+
+  labs(caption = "Gene family significant correlations (p<0.05) with r²>0.2")
+
+sfigure3<-p1/p2
+sfigure3 + plot_annotation(tag_levels = 'A') 
+
+ggsave("output/Paper/sfigure3.tiff", height = 12, width = 8)
+
 ```
 
 
