@@ -1,0 +1,111 @@
+---
+title: "multivariate"
+author: "Elisa Rubio"
+date: "2023-05-14"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE,
+                      echo=TRUE, warning=FALSE, message=FALSE, results ='markup')
+options(warn=-1)
+```
+
+```{r message=FALSE}
+library(tidyverse)
+library(kableExtra)
+library(vegan)
+library(ggpubr)
+library(glue)
+library(patchwork)
+library(ggstatsplot)
+library(broom)
+library(ggthemes)
+library(ggrepel)
+```
+
+#### Load data and functions
+
+```{r}
+load("output/summarized_ariba.RDA")
+load("output/ariba_dist.RDA")
+load("output/grouped_rpkm_ariba.RDA")
+load("output/grouped_refname_ariba.RDA")
+metadata<-read_csv("data/Metadata/metadata.csv")
+source("code/functions_paper.R")
+```
+
+## Load metadata
+
+```{r}
+metadata<-read_csv("data/Metadata/metadata.csv")%>%
+  mutate(MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
+         CD4_CD8_ratio=CD4/CD8_absolute,
+         Viral_load2=case_when(Viral_load<=40 ~ "Undetectable",
+                               Viral_load>10000 ~ "> 10.000",
+                               is.na(Viral_load) ~ NA,
+                               .default = "<=10.000"),
+         Viral_load2=factor(Viral_load2, levels = c("Undetectable", "<=10.000", "> 10.000")))
+
+
+gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
+  select(SampleID, GCount)
+metadata<-metadata%>%
+  inner_join(gene_richness, by="SampleID")
+```
+
+## ADONIS univariate
+
+```{r}
+ariba_dist_rpkm<-ariba_dist$dist_rpkm
+
+dist_df<-as.data.frame(as.matrix(ariba_dist_rpkm)); dist_df$SampleID<-rownames(dist_df)
+meta_dist<-inner_join(metadata, dist_df, by="SampleID")
+##filter(!is.na(Cluster))
+dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+    as.dist()
+
+##Variables with missing values: Viral_load2,CD4,Nadir_CD4, CD8_absolute,CD4_CD8_ratio, BMI
+
+
+metadata_filt<-meta_dist%>%select(Age, Gender, EthnicGroup, MSM_dic,HIV_Status,Profile, GCount,Cluster,ATB3,ATB6)
+univariate<-lapply(metadata_filt, function(x) adonis(dist~x, permutations = 999))
+
+
+meta_dist[["MSM_dic"]]
+meta_dist[[2]]
+test_msm<-adonis(dist~meta_dist[["MSM_dic"]], permutations = 999)
+  ptest_msm<-test_msm$aov.tab$`Pr(>F)`[1]
+  r2test_msm<-round(test_msm$aov.tab$R2[1],2)
+
+```
+
+## univariate for variables with missing values (create dist excluding missing values)
+
+```{r}
+
+adonis_missing<-function(dist, metadata, clin_var){
+  clin_var<-enquo(clin_var)
+  dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
+  meta_dist<-inner_join(metadata, dist_df, by="SampleID")%>%
+    filter(!is.na(!!clin_var))
+  dist<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+    as.dist()
+  ##clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
+  test<-adonis(dist~clin_var, permutations = 999)}
+
+adonis_missing(dist, metadata, BMI)
+
+
+metadata_filt<-meta_dist%>%select(Age, Gender, EthnicGroup, MSM_dic,HIV_Status,Profile, GCount,Cluster,ATB3,ATB6,Viral_load2,CD4,Nadir_CD4, CD8_absolute,CD4_CD8_ratio, BMI)
+
+univariate<-lapply(metadata_filt, function(x) adonis_missing (dist, metadata, x))
+univariate<-lapply(metadata_filt, function(x) print(names(x)))
+
+```
+
+Problema: al hacer lapply coge el contenido de cada variable del data frame y no el nombre de la variable, la función adonis no funciona
