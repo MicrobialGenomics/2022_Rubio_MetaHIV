@@ -23,6 +23,14 @@ library(openxlsx)
 ```
 
 ```{r}
+load("output/summarized_ariba.RDA")
+source("code/functions_paper.R")
+```
+
+
+```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
          CD4_CD8_ratio=CD4/CD8_absolute,
@@ -30,9 +38,8 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
                                Viral_load>10000 ~ "> 10.000",
                                is.na(Viral_load) ~ NA,
                                .default = "<=10.000"),
-         Viral_load2=factor(Viral_load2, levels = c("Undetectable", "<=10.000", "> 10.000")))
-
-
+         Viral_load2=factor(Viral_load2, levels = c("Undetectable", "<=10.000", "> 10.000")),
+         ART=ifelse(Profile %in% ART_groups, "Yes", "No"))
 gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
   select(SampleID, GCount)
 metadata<-metadata%>%
@@ -41,10 +48,11 @@ metadata<-metadata%>%
 ##x<-metadata%>%filter(HIV_Status=="positive")%>%select(MSM_dic, GCount, Cluster, CD4, CD8_absolute, Nadir_CD4, CD4_CD8_ratio, Viral_load2)
 
 
-metadata_filt<-metadata%>%select(Age, Gender, Ethnicity=EthnicGroup,
+metadata_filt2<-metadata%>%select(SampleID, Age, Gender, Ethnicity=EthnicGroup, BMI,
                                  `HIV-1 risk group`=MSM_dic, 
                                  `HIV-1 status`=HIV_Status,
-                                 `HIV-1 phenotype`=Profile, BMI, 
+                                 `HIV-1 phenotype`=Profile,
+                                 `Antiretroviral treatment`=ART,
                                  `Gene richness`=GCount, 
                                  `Microbiome cluster`=Cluster, 
                                  `Antibiotic intake, previous 3 months`=ATB3, 
@@ -54,6 +62,8 @@ metadata_filt<-metadata%>%select(Age, Gender, Ethnicity=EthnicGroup,
                                  `Nadir CD4+ T-cell counts`=Nadir_CD4, 
                                  `CD8+ T-cell counts`=CD8_absolute, 
                                  `CD4+/CD8+ ratio`=CD4_CD8_ratio)
+
+metadata_filt<-metadata_filt2%>%select(-SampleID)
 ```
 
 
@@ -108,3 +118,39 @@ tbl_cluster<-metadata_filt%>%tbl_summary(
 
 tbl_cluster
 ```
+
+```{r eval=FALSE, include=FALSE}
+ariba_alpha_rpkm<-alpha_div(ariba_rpkm, ariba_counts, metadata_filt2)%>%select(-Fisher, -nARG, -Simpson, -SampleID)
+
+
+tbl_gcount<-metadata_filt%>%tbl_summary(
+  by = `Gene richness`, 
+  statistic = list(all_continuous()~"{median} ({p25}-{p75})", all_categorical() ~ "{n} ({p})"))%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_footnote(
+    all_stat_cols() ~ "n(%); median (IQR)")%>%
+  modify_spanning_header(c("stat_1", "stat_2") ~ "**Gene Richness**") %>%
+  modify_header(label ~ "")%>% 
+  bold_labels()
+
+
+tbl_alpha<-ariba_alpha_rpkm%>%
+  select(Gender, Shannon, InvSimpson)%>%
+  tbl_summary(
+  by = Gender, 
+  statistic = list(all_continuous()~"{median} ({p25}-{p75})", all_categorical() ~ "{n} ({p})"))%>%
+  add_overall()%>%
+  add_p()%>%bold_p()%>%
+  modify_footnote(
+    all_stat_cols() ~ "n(%); median (IQR)")%>%
+  ##modify_spanning_header(c("stat_1", "stat_2") ~ "**Microbiome Cluster**") %>%
+  modify_header(label ~ "")%>% 
+  bold_labels()
+
+
+
+
+```
+
+

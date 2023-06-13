@@ -24,7 +24,16 @@ library(ggstatsplot)
 library(broom)
 library(ggthemes)
 library(ggrepel)
+library(gtsummary)
+library(devtools)
 ```
+
+https://github.com/pmartinezarbizu/pairwiseAdonis
+```{r}
+##install_github("pmartinezarbizu/pairwiseAdonis/pairwiseAdonis")
+library(pairwiseAdonis)
+```
+
 
 #### Load data and functions
 
@@ -40,6 +49,8 @@ source("code/functions_paper.R")
 ## Load metadata
 
 ```{r}
+ART_groups<-c("concordant", "discordant ", "early_treated")
+
 metadata<-read_csv("data/Metadata/metadata.csv")%>%
   mutate(MSM_dic=ifelse(RiskGroup2=="msm", "MSM", "no MSM"),
          CD4_CD8_ratio=CD4/CD8_absolute,
@@ -47,16 +58,17 @@ metadata<-read_csv("data/Metadata/metadata.csv")%>%
                                Viral_load>10000 ~ "> 10.000",
                                is.na(Viral_load) ~ NA,
                                .default = "<=10.000"),
-         Viral_load2=factor(Viral_load2, levels = c("Undetectable", "<=10.000", "> 10.000")))
-
+         Viral_load2=factor(Viral_load2, levels = c("Undetectable", "<=10.000", "> 10.000")),
+         ART=ifelse(Profile %in% ART_groups, "ART", "No ART"))
 
 gene_richness<-read.delim2("data/Metadata/generichness_data.txt")%>%
   select(SampleID, GCount)
+
 metadata<-metadata%>%
   inner_join(gene_richness, by="SampleID")
 ```
 
-## ADONIS univariate
+## Univariate
 
 ```{r}
 ariba_dist_rpkm<-ariba_dist$dist_rpkm
@@ -70,23 +82,13 @@ dist<-meta_dist%>%
 
 ##Variables with missing values: Viral_load2,CD4,Nadir_CD4, CD8_absolute,CD4_CD8_ratio, BMI
 
-
-metadata_filt<-meta_dist%>%select(Age, Gender, EthnicGroup, MSM_dic,HIV_Status,Profile, GCount,Cluster,ATB3,ATB6)
+metadata_filt<-meta_dist%>%select(Age, Gender, EthnicGroup, MSM_dic,HIV_Status,Profile,ART, GCount,Cluster,ATB3,ATB6)
 univariate<-lapply(metadata_filt, function(x) adonis(dist~x, permutations = 999))
-
-
-meta_dist[["MSM_dic"]]
-meta_dist[[2]]
-test_msm<-adonis(dist~meta_dist[["MSM_dic"]], permutations = 999)
-  ptest_msm<-test_msm$aov.tab$`Pr(>F)`[1]
-  r2test_msm<-round(test_msm$aov.tab$R2[1],2)
-
 ```
 
-## univariate for variables with missing values (create dist excluding missing values)
+### Univariate for variables with missing values (create dist excluding missing values)
 
 ```{r}
-
 adonis_missing<-function(dist, metadata, clin_var){
   clin_var<-enquo(clin_var)
   dist_df<-as.data.frame(as.matrix(dist)); dist_df$SampleID<-rownames(dist_df)
@@ -95,17 +97,82 @@ adonis_missing<-function(dist, metadata, clin_var){
   dist<-meta_dist%>%
     select(all_of(.[["SampleID"]]))%>%
     as.dist()
-  ##clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
-  test<-adonis(dist~clin_var, permutations = 999)}
+  clin_var2<-meta_dist%>%pull(!!clin_var) ##clin_var vector for adonis test
+  test<-adonis(dist~clin_var2, permutations = 999)}
 
-adonis_missing(dist, metadata, BMI)
+test_bmi<-adonis_missing(dist, metadata, BMI)
+test_viral_load<-adonis_missing(dist, metadata, Viral_load2)
+test_CD4<-adonis_missing(dist, metadata, CD4)
+test_Nadir<-adonis_missing(dist, metadata, Nadir_CD4)
+test_CD8<-adonis_missing(dist, metadata, CD8_absolute)
+test_CD4CD8<-adonis_missing(dist, metadata, CD4_CD8_ratio)
+
+univariate_missing<-list(test_bmi, test_viral_load, test_CD4,test_Nadir, test_CD8, test_CD4CD8)
+names(univariate_missing)<-c("BMI", "Viral_load2", "CD4", "Nadir_CD4", "CD8_absolute","CD4_CD8_ratio")
+```
+
+```{r}
+univariate_all<-append(univariate, univariate_missing)
+
+p_value_univ<-lapply(univariate_all, function(x) x$aov.tab$`Pr(>F)`[1])%>%unlist()
+r2_value_univ<-lapply(univariate_all, function(x) round(x$aov.tab$R2[1],2))%>%unlist()
+
+univariate_summary<-tibble(variable=names(p_value_univ), p_value_univ, r2_value_univ)%>%arrange(p_value_univ, desc(r2_value_univ))
+```
+
+## Paired adonois (Profile)
+
+```{r}
+pairwise_profile<-pairwise.adonis(dist, metadata_filt$Profile, perm = 999)%>%
+  as_tibble()%>%arrange(p.adjusted, desc(R2))
+
+writexl::write_xlsx(pairwise_profile, "output/Paper/pairwise_profile.xlsx")
+```
 
 
-metadata_filt<-meta_dist%>%select(Age, Gender, EthnicGroup, MSM_dic,HIV_Status,Profile, GCount,Cluster,ATB3,ATB6,Viral_load2,CD4,Nadir_CD4, CD8_absolute,CD4_CD8_ratio, BMI)
+## Multivariate
 
-univariate<-lapply(metadata_filt, function(x) adonis_missing (dist, metadata, x))
-univariate<-lapply(metadata_filt, function(x) print(names(x)))
+Only variable with missing values that is significant is Nadir CD4, but r2 is not very high.
+We will perform multivariate analysis using significant variables without missing values:
+
+```{r}
+metadata_multiv<-meta_dist%>%select(MSM_dic,Cluster,Profile,GCount,Gender,Age)
+multivariate<-adonis(dist~., metadata_multiv, permutations = 999)
+multivariate_summary<-as_tibble(multivariate$aov.tab, rownames="variable")%>%
+  select(variable, p_value_multi=`Pr(>F)`, r2_value_multi=R2)%>%
+  mutate(r2_value_multi=round(r2_value_multi,2))
+```
+
+
+## Multivariate (missing)
+
+We will perform multivariate analysis using all significant variables (including Nadir CD4), so we must exclude missing values from the analysis
+
+```{r}
+metadata_multiv_missing<-metadata%>%select(SampleID, MSM_dic,Cluster,Profile,GCount,Gender,Age, Nadir_CD4)%>%drop_na()
+
+ariba_dist_rpkm<-ariba_dist$dist_rpkm
+dist_df<-as.data.frame(as.matrix(ariba_dist_rpkm)); dist_df$SampleID<-rownames(dist_df)
+meta_dist<-inner_join(metadata_multiv_missing, dist_df, by="SampleID")
+
+dist_missing<-meta_dist%>%
+    select(all_of(.[["SampleID"]]))%>%
+    as.dist()
+
+metadata_multiv_missing<-metadata_multiv_missing%>%select(-SampleID)
+
+multivariate_missing<-adonis(dist_missing~., metadata_multiv_missing, permutations = 999)
+
+multivariate_missing_summary<-as_tibble(multivariate_missing$aov.tab, rownames="variable")%>%
+  select(variable, p_value_multi_missing=`Pr(>F)`, r2_value_multi_missing=R2)%>%
+  mutate(r2_value_multi_missing=round(r2_value_multi_missing,2))
 
 ```
 
-Problema: al hacer lapply coge el contenido de cada variable del data frame y no el nombre de la variable, la función adonis no funciona
+
+```{r}
+all<-left_join(univariate_summary, multivariate_summary, by="variable")
+all<-left_join(all, multivariate_missing_summary, by="variable")
+writexl::write_xlsx(all, "output/Paper/adonis_uni_multi.xlsx")
+```
+
