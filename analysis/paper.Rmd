@@ -60,6 +60,17 @@ rel_abund_refname<-ariba_rpkm%>%pivot_longer(-ref_name, names_to = "Sample", val
   mutate(rel_abund=count*100/sum(count))%>%
   arrange(desc(count))
 
+rel_abund_genefamily<-ariba_rpkm_genefamily%>%
+  pivot_longer(-`AMR Gene Family`, names_to = "Sample", values_to = "RPKM")%>%
+  group_by(`AMR Gene Family`)%>%
+  summarize(count=sum(RPKM))%>%
+  ungroup()%>%
+  mutate(rel_abund=count*100/sum(count))%>%
+  arrange(desc(count))
+
+writexl::write_xlsx(rel_abund_refname, "output/rel_abund_refname.xlsx")
+writexl::write_xlsx(rel_abund_genefamily, "output/rel_abund_genefamily.xlsx")
+
 abund_genefamily<-ariba_rpkm_genefamily%>%
   pivot_longer(-`AMR Gene Family`, names_to = "Sample", values_to = "RPKM")%>%
   group_by(`AMR Gene Family`)%>%
