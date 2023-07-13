@@ -51,6 +51,49 @@ metadata<-metadata%>%
   inner_join(gene_richness, by="SampleID")
 ```
 
+## Relative Abundances
+```{r}
+rel_abund_refname<-ariba_rpkm%>%pivot_longer(-ref_name, names_to = "Sample", values_to = "RPKM")%>%
+  group_by(ref_name)%>%
+  summarize(count=sum(RPKM))%>%
+  ungroup()%>%
+  mutate(rel_abund=count*100/sum(count))%>%
+  arrange(desc(count))
+
+abund_genefamily<-ariba_rpkm_genefamily%>%
+  pivot_longer(-`AMR Gene Family`, names_to = "Sample", values_to = "RPKM")%>%
+  group_by(`AMR Gene Family`)%>%
+  summarize(count=sum(RPKM))%>%
+  ungroup()%>%
+  arrange(desc(count))
+  
+ colors<-c("darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "deeppink", "khaki2", "firebrick", "brown1",
+            "darkorange1", "cyan1", "royalblue4", "darksalmon", "chartreuse1","darkorchid4",
+            "gold","forestgreen", "lightpink","green", "red","darkgrey","blue","aquamarine", "burlywood1",
+            "darkslateblue", "chartreuse3","firebrick3", "aquamarine4","azure1","chocolate1","deeppink4","aquamarine2", "burlywood1",
+            "darkblue", "darkgoldenrod1", "darkseagreen", "darkorchid", "darkolivegreen1",
+            "lightskyblue", "darkgreen", "darkseagreen3", "khaki2", "firebrick", "brown1", "darkslateblue")
+
+abund_genefamily%>%
+  slice(1:20)%>%
+  mutate(rel_abund=count*100/sum(count))%>%
+  mutate(x="Overall")%>%
+  ggplot(aes(x=x, y=rel_abund, fill=`AMR Gene Family`))+
+  geom_bar(aes(), stat="identity", position="stack") +
+  scale_fill_manual(values =colors) +
+  theme(legend.position="bottom",
+          axis.text.y.left = element_blank(),
+          axis.text.x = element_text(size = 10),
+          axis.title.y = element_text(size = 10),
+          axis.ticks.y=element_blank(),
+          strip.text.x = element_text(face = "bold"),
+          title = element_text(size = 10) ) + guides(fill=guide_legend(nrow=5))
+  
+
+```
+
+
 ### Alpha diversity analysis 
 
 ```{r}
